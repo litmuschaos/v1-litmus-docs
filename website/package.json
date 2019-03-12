@@ -1,0 +1,21 @@
+{
+  "scripts": {
+    "examples": "docusaurus-examples",
+    "start": "docusaurus-start",
+    "build": "docusaurus-build",
+    "publish-gh-pages": "docusaurus-publish",
+    "write-translations": "docusaurus-write-translations",
+    "version": "docusaurus-version",
+    "rename-version": "docusaurus-rename-version"
+  },
+  "devDependencies": {
+    "docusaurus": "^1.0.12"
+  },
+  "dependencies": {
+    "extend":">=3.0.2",
+    "lodash":">=4.17.11",
+    "cryptiles": "^4.1.2",
+    "hawk": "^7.0.7",
+    "macaddress": "^0.2.9"
+  }
+}

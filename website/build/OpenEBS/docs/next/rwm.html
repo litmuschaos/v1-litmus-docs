@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Provisioning Read-Write-Many (RWM) PVCs · </title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta property="og:title" content="Provisioning Read-Write-Many (RWM) PVCs · "/><meta property="og:type" content="website"/><meta property="og:url" content="https://docs.openebs.io/index.html"/><meta property="og:description" content="------"/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/img/favicon.ico"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><link rel="stylesheet" href="/css/code-blocks-buttons.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script><script type="text/javascript" src="/js/code-blocks-buttons.js"></script><link rel="stylesheet" href="/css/main.css"/></head><body class="sideNavVisible doc separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img id="logo" src="/img/OpenEBS-logo.svg" alt=""/><img class="logo-text" src="/img/openebs-docs-logo.svg" alt=""/><h2 class="headerTitle"></h2></a><div class="dropdown"><span class="ver-link">0.8.1</span><span class="ver-link-span"><i class="arrow down"></i></span><div class="dropdown-menu" id="versions-list" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" id="0" href="https://docs.openebs.io">0.8.1</a><a class="dropdown-item" id="1" href="https://v08-docs.openebs.io">0.8.0</a><a class="dropdown-item" id="2" href="https://v07-docs.openebs.io">0.7.0</a><a class="dropdown-item" id="3" href="https://v06-docs.openebs.io">0.6.0</a><a class="dropdown-item" id="4" href="https://v05-docs.openebs.io">0.5.0</a></div></div><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><a href="https://app.mayaonline.io" target="_blank" rel="noreferrer noopener"><div class="float rotate"><img src="../../../../../../docs/assets/mo-logo.png" alt="MayaOnline" height="45px" width="45px" title="Connect to MayaOnline"/></div></a><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Stateful Applications</span></h2></div><div class="navGroups"><div class="navGroup navGroupActive"><h3 id="Introduction" class="languages-menu">Introduction</h3><div class="hide" id="Introduction dropdown-content-div"><ul id="languages-dropdown-items"><li class="navListItem"><a class="navItem" href="/docs/next/overview.html">Overview</a></li><li class="navListItem"><a class="navItem" href="/docs/next/features.html">Features and Benefits</a></li><li class="navListItem"><a class="navItem" href="/docs/next/usecases.html">Use cases</a></li><li class="navListItem"><a class="navItem" href="/docs/next/releases.html">Releases</a></li><li class="navListItem"><a class="navItem" href="/docs/next/support.html">Support</a></li><li class="navListItem"><a class="navItem" href="/docs/next/mayaonline.html">MayaOnline</a></li></ul></div></div><div class="navGroup navGroupActive"><h3 id="Concepts" class="languages-menu">Concepts</h3><div class="hide" id="Concepts dropdown-content-div"><ul id="languages-dropdown-items"><li class="navListItem"><a class="navItem" href="/docs/next/cas.html">Container Attached Storage</a></li><li class="navListItem"><a class="navItem" href="/docs/next/architecture.html">OpenEBS Architecture</a></li><li class="navListItem"><a class="navItem" href="/docs/next/casengines.html">CAS Engines (cStor &amp; Jiva)</a></li><li class="navListItem"><a class="navItem" href="/docs/next/cstor.html">cStor</a></li><li class="navListItem"><a class="navItem" href="/docs/next/jiva.html">Jiva</a></li></ul></div></div><div class="navGroup navGroupActive"><h3 id="User Guides" class="languages-menu">User Guides</h3><div class="hide" id="User Guides dropdown-content-div"><ul id="languages-dropdown-items"><li class="navListItem"><a class="navItem" href="/docs/next/quickstart.html">Quickstart</a></li><li class="navListItem"><a class="navItem" href="/docs/next/prerequisites.html">Prerequisites</a></li><li class="navListItem"><a class="navItem" href="/docs/next/installation.html">Installation</a></li><li class="navListItem"><a class="navItem" href="/docs/next/configurepools.html">Configure StoragePools</a></li><li class="navListItem"><a class="navItem" href="/docs/next/configuresc.html">Configuring StorageClasses</a></li><li class="navListItem"><a class="navItem" href="/docs/next/provisionvols.html">Provisioning Volumes</a></li><li class="navListItem"><a class="navItem" href="/docs/next/operations.html">Day 2 Operations</a></li><li class="navListItem"><a class="navItem" href="/docs/next/jivaguide.html">Jiva user guide</a></li><li class="navListItem"><a class="navItem" href="/docs/next/mayactl.html">Mayactl</a></li><li class="navListItem"><a class="navItem" href="/docs/next/backup.html">Backup and Restore</a></li><li class="navListItem"><a class="navItem" href="/docs/next/upgrade.html">Upgrade</a></li><li class="navListItem"><a class="navItem" href="/docs/next/uninstall.html">Uninstall</a></li></ul></div></div><div class="navGroup navGroupActive"><h3 id="Stateful Applications" class="languages-menu">Stateful Applications</h3><div class="hide" id="Stateful Applications dropdown-content-div"><ul id="languages-dropdown-items"><li class="navListItem"><a class="navItem" href="/docs/next/mysql.html">RDS like MySQL</a></li><li class="navListItem"><a class="navItem" href="/docs/next/prometheus.html">Prometheus</a></li><li class="navListItem"><a class="navItem" href="/docs/next/minio.html">Minio</a></li><li class="navListItem"><a class="navItem" href="/docs/next/gitlab.html">GitLab</a></li><li class="navListItem"><a class="navItem" href="/docs/next/percona.html">Percona</a></li><li class="navListItem"><a class="navItem" href="/docs/next/elasticsearch.html">ElasticSearch</a></li><li class="navListItem"><a class="navItem" href="/docs/next/cassandra.html">Cassandra</a></li><li class="navListItem"><a class="navItem" href="/docs/next/nuodb.html">NuoDB</a></li><li class="navListItem"><a class="navItem" href="/docs/next/postgres.html">PostgreSQL</a></li><li class="navListItem"><a class="navItem" href="/docs/next/redis.html">Redis</a></li><li class="navListItem"><a class="navItem" href="/docs/next/mongo.html">MongoDB</a></li><li class="navListItem navListItemActive"><a class="navItem navItemActive" href="/docs/next/rwm.html">Read-Write-Many (RWM)</a></li></ul></div></div><div class="navGroup navGroupActive"><h3 id="Advanced Topics" class="languages-menu">Advanced Topics</h3><div class="hide" id="Advanced Topics dropdown-content-div"><ul id="languages-dropdown-items"><li class="navListItem"><a class="navItem" href="/docs/next/performance.html">Performance testing</a></li><li class="navListItem"><a class="navItem" href="/docs/next/faq.html">FAQs</a></li><li class="navListItem"><a class="navItem" href="/docs/next/k8supgrades.html">Kubernetes upgrades</a></li><li class="navListItem"><a class="navItem" href="/docs/next/troubleshooting.html">Troubleshooting</a></li></ul></div></div></div></section></div><script>
+          var toggler = document.getElementById('navToggler');
+          var nav = document.getElementById('docsNav');
+          toggler.onclick = function() {
+            nav.classList.toggle('docsSliderActive');
+          };
+        </script><script>
+            var navGroupElem = document.getElementsByClassName("hide");
+            for(var k=0; k<navGroupElem.length; k++){
+              if (navGroupElem[k].innerHTML.indexOf("navItem navItemActive") != -1) {
+                document.getElementById(navGroupElem[k].id).className = "visible";
+              }
+            }
+            var elem = document.getElementsByClassName("languages-menu");
+            for (var i=0; i < elem.length; i++){
+              document.getElementById(String(elem[i].id)).addEventListener("click", function() {
+                sessionStorage.setItem("name", document.getElementById(this.id+" dropdown-content-div").className);
+                sessionStorage.setItem("Id", document.getElementById(this.id).id);
+                if ( document.getElementById(this.id+" dropdown-content-div").className == "hide") {
+                  document.getElementById(this.id+" dropdown-content-div").className = "visible";
+                }
+                else {
+                  document.getElementById(this.id+" dropdown-content-div").className = "hide";
+                }
+            })};</script><script>
+          var SelectedItemClassName = sessionStorage.getItem("name");
+          var SelectedItemId = sessionStorage.getItem("Id");
+          if (SelectedItemClassName == "hide"){
+            document.getElementById( SelectedItemId +" dropdown-content-div").className = "visible";
+          }
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/openebs/openebs-docs/edit/staging/docs/rwm.md" target="_blank" rel="noreferrer noopener">Edit</a><a class="edit-page-link button" href="https://github.com/openebs/openebs/issues/new/" target="_blank" rel="noreferrer noopener">Create An Issue</a><h1>Provisioning Read-Write-Many (RWM) PVCs</h1></header><article><div><span><hr>
+<p>NFS server provisioner stable helm chart is widely used for deploying NFS servers on Kubernetes cluster. This server provides PVCs in RWM mode so that multiple web applications can access the data in a shared fashion. OpenEBS cStor volumes are used as persistent backend storage for these nfs servers to provide a scalable and manageable RWM shared storage solution.</p>
+<p><br><br></p>
+<p><img src="/docs/assets/svg/rwm-single.svg" alt="OpenEBS and NFS provisioner" style="width:100%;"></p>
+<p><br></p>
+<p>Below are advantage of using NFS provisioner over OpenEBS cStor volumes</p>
+<ul>
+<li>NFS data is replicated, highly available across zones if configured accordingly</li>
+<li>Data is thin provisioned. Persistent volume mounts are configured at the required size and cStor physical pools can be started with as low as one disk per pool instance and grow as the storage is used up</li>
+</ul>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2><a class="anchor" aria-hidden="true" id="setting-up-a-single-nfs-server"></a><a href="#setting-up-a-single-nfs-server" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Setting up a single NFS server</h2>
+<p><br></p>
+<p><strong>Select or create a cStor pool</strong></p>
+<p>Select or <a href="/docs/next/configurepools.html">create a cStor pool</a> that satisfies the performance, and availability requirements</p>
+<p><br></p>
+<p><strong>Select or create a cStor storage Class</strong></p>
+<p><a href="/docs/next/configuresc.html">Create a storage class</a> to point to the above selected pool and also select number of replicas and default size of the volume</p>
+<p><br></p>
+<p><strong>Create a namespace for deploying NFS server provisioner</strong></p>
+<pre><code class="hljs">kubectl create ns <span class="hljs-tag">&lt;<span class="hljs-name">ns-nfs-wordpress1</span>&gt;</span>
+</code></pre>
+<p><br></p>
+<p><strong>Deploy NFS server provisioner</strong></p>
+<p>Deploy NFS server provisioner into the above namespace using stable helm chart. Pass the following two main parameter values</p>
+<ul>
+<li>OpenEBS StorageClass to be used for the persistent data storage</li>
+<li>NFS StorageClass to be created which can be used by the web application PVCs</li>
+</ul>
+<pre><code class="hljs"> helm install stable/nfs-server-provisioner --<span class="hljs-built_in">name</span>=&lt;provisioner-<span class="hljs-built_in">name</span>&gt; --<span class="hljs-built_in">set</span>=persistence.enabled=<span class="hljs-literal">true</span>,persistence.storageClass=openebs-cstor-sparse,persistence.<span class="hljs-built_in">size</span>=<span class="hljs-number">5</span>Gi,storageClass.<span class="hljs-built_in">name</span>=&lt;nfs-sc-<span class="hljs-built_in">name</span>&gt;
+</code></pre>
+<p>An example helm install command is</p>
+<p><font color="maroon" ><code>helm install stable/nfs-server-provisioner --name=openebs-nfs-wordpress --set=persistence.enabled=true,persistence.storageClass=openebs-sc-cstor-pool1,persistence.size=5Gi,storageClass.name=wordpress-nfs-sc1</code></font></p>
+<p><br></p>
+<p><strong>Provision RWX volume using the PVC</strong></p>
+<p>Use the above storage class and create a new PVC and mount it inside the pod at a required mount point.</p>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2><a class="anchor" aria-hidden="true" id="setting-up-multiple-nfs-servers"></a><a href="#setting-up-multiple-nfs-servers" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Setting up multiple NFS servers</h2>
+<p>When multiple NFS shares are needed, use multiple NFS provisioners. Each NFS server manages one NFS server. Same or different OpenEBS StorageClass can be used for multiple NFS provisioners.</p>
+<p><img src="/docs/assets/svg/rwm-multiple.svg" alt="OpenEBS and NFS provisioner" style="width:100%;"></p>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2><a class="anchor" aria-hidden="true" id="see-also"></a><a href="#see-also" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>See Also:</h2>
+<h3><a class="anchor" aria-hidden="true" id="cstor-overview-docs-next-cstorhtml"></a><a href="#cstor-overview-docs-next-cstorhtml" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><a href="/docs/next/cstor.html">cStor Overview</a></h3>
+<h3><a class="anchor" aria-hidden="true" id="cstorpools-docs-next-configurepoolshtml"></a><a href="#cstorpools-docs-next-configurepoolshtml" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><a href="/docs/next/configurepools.html">cStorPools</a></h3>
+<h3><a class="anchor" aria-hidden="true" id="setting-up-object-storage-docs-next-miniohtml"></a><a href="#setting-up-object-storage-docs-next-miniohtml" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><a href="/docs/next/minio.html">Setting up Object Storage</a></h3>
+<p><br></p>
+<hr>
+<p><br></p>
+<p>​</p>
+<!-- Hotjar Tracking Code for https://docs.openebs.io -->
+<script>
+   (function(h,o,t,j,a,r){
+       h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+       h._hjSettings={hjid:785693,hjsv:6};
+       a=o.getElementsByTagName('head')[0];
+       r=o.createElement('script');r.async=1;
+       r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+       a.appendChild(r);
+   })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-92076314-12"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+<p>gtag('config', 'UA-92076314-12');</p>
+</script>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="mongo.html">← OpenEBS for MongoDB</a><a class="docs-next button" href="performance.html">Performance testing of OpenEBS →</a></div></div></div><nav class="onPageNav"><div id="global-on-page-heading"><h4 style="font-weight:400;">On this page:</h4><ul class="toc-headings"><li><a href="#setting-up-a-single-nfs-server">Setting up a single NFS server</a></li><li><a href="#setting-up-multiple-nfs-servers">Setting up multiple NFS servers</a></li><li><a href="#see-also">See Also:</a><ul class="toc-headings"><li><a href="#cstor-overview-docs-next-cstorhtml">cStor Overview</a></li><li><a href="#cstorpools-docs-next-configurepoolshtml">cStorPools</a></li><li><a href="#setting-up-object-storage-docs-next-miniohtml">Setting up Object Storage</a></li></ul></li></ul></div></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div><br/><div><a href="https://openebs.io" target="_blank"><img src="/docs/assets/openebs-logo.svg" alt="" width="130" height="110"/></a></div><div><a href="https://slack.openebs.io">Get in touch with OpenEBS community via Slack</a></div></div><div><br/><div><a href="https://mayadata.io" target="_blank"><img src="https://openebs.io/assets/images/mayadata.svg" alt="mayadata.io" width="130" height="110"/></a></div><div><a href="https://app.mayaonline.io">Get OpenEBS support through MayaOnline</a></div></div></section><section class="copyright"></section></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+              var search = docsearch({
+                
+                apiKey: 'dc657dfe30f42f228671f557f49ced7a',
+                indexName: 'openebs',
+                inputSelector: '#search_input_react'
+              });
+            </script><script>(function(){ window.ldfdr = window.ldfdr || {}; (function(d, s, ss, fs){ fs = d.getElementsByTagName(s)[0]; function ce(src){ var cs = d.createElement(s); cs.async=1; cs.src = src; setTimeout(function(){fs.parentNode.insertBefore(cs,fs)}, 1); } ce(ss); })(document, 'script', 'https://lftracker.leadfeeder.com/lftracker_v1_bMwm7E2pzw4gOZyA.js'); })();</script></body></html>

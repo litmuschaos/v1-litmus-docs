@@ -1,0 +1,25 @@
+language: node_js
+node_js: stable
+env:
+  global:
+   - COMMIT=${TRAVIS_COMMIT::6}
+
+sudo: required
+services:
+- docker
+script:
+  - python tag.py
+  - cd website
+  - npm run build
+  - cd ..
+  - 
+after_success:
+  - if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then export REPO=mayadataio/litmus-docs;
+     docker login -u "$DOCKER_USER" -p "$DOCKER_PASS" && docker build -t $REPO:$TRAVIS_BRANCH-$COMMIT . && docker push $REPO; 
+    fi
+  
+  - if [ "$TRAVIS_BRANCH" = "staging" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then export REPO=mayadataio/stage-litmus-docs;
+       docker login -u "$DOCKER_USER" -p "$DOCKER_PASS" && docker build -t $REPO:$TRAVIS_BRANCH-$COMMIT . && docker push $REPO; 
+    fi
+
+
