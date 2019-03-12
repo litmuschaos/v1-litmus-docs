@@ -1,0 +1,256 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Mayactl · </title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta property="og:title" content="Mayactl · "/><meta property="og:type" content="website"/><meta property="og:url" content="https://docs.openebs.io/index.html"/><meta property="og:description" content="------"/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/img/favicon.ico"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><link rel="stylesheet" href="/css/code-blocks-buttons.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script><script type="text/javascript" src="/js/code-blocks-buttons.js"></script><link rel="stylesheet" href="/css/main.css"/></head><body class="sideNavVisible doc separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img id="logo" src="/img/OpenEBS-logo.svg" alt=""/><img class="logo-text" src="/img/openebs-docs-logo.svg" alt=""/><h2 class="headerTitle"></h2></a><div class="dropdown"><span class="ver-link">0.8.1</span><span class="ver-link-span"><i class="arrow down"></i></span><div class="dropdown-menu" id="versions-list" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" id="0" href="https://docs.openebs.io">0.8.1</a><a class="dropdown-item" id="1" href="https://v08-docs.openebs.io">0.8.0</a><a class="dropdown-item" id="2" href="https://v07-docs.openebs.io">0.7.0</a><a class="dropdown-item" id="3" href="https://v06-docs.openebs.io">0.6.0</a><a class="dropdown-item" id="4" href="https://v05-docs.openebs.io">0.5.0</a></div></div><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><a href="https://app.mayaonline.io" target="_blank" rel="noreferrer noopener"><div class="float rotate"><img src="../../../../../../docs/assets/mo-logo.png" alt="MayaOnline" height="45px" width="45px" title="Connect to MayaOnline"/></div></a><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>User Guides</span></h2></div><div class="navGroups"><div class="navGroup navGroupActive"><h3 id="Introduction" class="languages-menu">Introduction</h3><div class="hide" id="Introduction dropdown-content-div"><ul id="languages-dropdown-items"><li class="navListItem"><a class="navItem" href="/docs/next/overview.html">Overview</a></li><li class="navListItem"><a class="navItem" href="/docs/next/features.html">Features and Benefits</a></li><li class="navListItem"><a class="navItem" href="/docs/next/usecases.html">Use cases</a></li><li class="navListItem"><a class="navItem" href="/docs/next/releases.html">Releases</a></li><li class="navListItem"><a class="navItem" href="/docs/next/support.html">Support</a></li><li class="navListItem"><a class="navItem" href="/docs/next/mayaonline.html">MayaOnline</a></li></ul></div></div><div class="navGroup navGroupActive"><h3 id="Concepts" class="languages-menu">Concepts</h3><div class="hide" id="Concepts dropdown-content-div"><ul id="languages-dropdown-items"><li class="navListItem"><a class="navItem" href="/docs/next/cas.html">Container Attached Storage</a></li><li class="navListItem"><a class="navItem" href="/docs/next/architecture.html">OpenEBS Architecture</a></li><li class="navListItem"><a class="navItem" href="/docs/next/casengines.html">CAS Engines (cStor &amp; Jiva)</a></li><li class="navListItem"><a class="navItem" href="/docs/next/cstor.html">cStor</a></li><li class="navListItem"><a class="navItem" href="/docs/next/jiva.html">Jiva</a></li></ul></div></div><div class="navGroup navGroupActive"><h3 id="User Guides" class="languages-menu">User Guides</h3><div class="hide" id="User Guides dropdown-content-div"><ul id="languages-dropdown-items"><li class="navListItem"><a class="navItem" href="/docs/next/quickstart.html">Quickstart</a></li><li class="navListItem"><a class="navItem" href="/docs/next/prerequisites.html">Prerequisites</a></li><li class="navListItem"><a class="navItem" href="/docs/next/installation.html">Installation</a></li><li class="navListItem"><a class="navItem" href="/docs/next/configurepools.html">Configure StoragePools</a></li><li class="navListItem"><a class="navItem" href="/docs/next/configuresc.html">Configuring StorageClasses</a></li><li class="navListItem"><a class="navItem" href="/docs/next/provisionvols.html">Provisioning Volumes</a></li><li class="navListItem"><a class="navItem" href="/docs/next/operations.html">Day 2 Operations</a></li><li class="navListItem"><a class="navItem" href="/docs/next/jivaguide.html">Jiva user guide</a></li><li class="navListItem navListItemActive"><a class="navItem navItemActive" href="/docs/next/mayactl.html">Mayactl</a></li><li class="navListItem"><a class="navItem" href="/docs/next/backup.html">Backup and Restore</a></li><li class="navListItem"><a class="navItem" href="/docs/next/upgrade.html">Upgrade</a></li><li class="navListItem"><a class="navItem" href="/docs/next/uninstall.html">Uninstall</a></li></ul></div></div><div class="navGroup navGroupActive"><h3 id="Stateful Applications" class="languages-menu">Stateful Applications</h3><div class="hide" id="Stateful Applications dropdown-content-div"><ul id="languages-dropdown-items"><li class="navListItem"><a class="navItem" href="/docs/next/mysql.html">RDS like MySQL</a></li><li class="navListItem"><a class="navItem" href="/docs/next/prometheus.html">Prometheus</a></li><li class="navListItem"><a class="navItem" href="/docs/next/minio.html">Minio</a></li><li class="navListItem"><a class="navItem" href="/docs/next/gitlab.html">GitLab</a></li><li class="navListItem"><a class="navItem" href="/docs/next/percona.html">Percona</a></li><li class="navListItem"><a class="navItem" href="/docs/next/elasticsearch.html">ElasticSearch</a></li><li class="navListItem"><a class="navItem" href="/docs/next/cassandra.html">Cassandra</a></li><li class="navListItem"><a class="navItem" href="/docs/next/nuodb.html">NuoDB</a></li><li class="navListItem"><a class="navItem" href="/docs/next/postgres.html">PostgreSQL</a></li><li class="navListItem"><a class="navItem" href="/docs/next/redis.html">Redis</a></li><li class="navListItem"><a class="navItem" href="/docs/next/mongo.html">MongoDB</a></li><li class="navListItem"><a class="navItem" href="/docs/next/rwm.html">Read-Write-Many (RWM)</a></li></ul></div></div><div class="navGroup navGroupActive"><h3 id="Advanced Topics" class="languages-menu">Advanced Topics</h3><div class="hide" id="Advanced Topics dropdown-content-div"><ul id="languages-dropdown-items"><li class="navListItem"><a class="navItem" href="/docs/next/performance.html">Performance testing</a></li><li class="navListItem"><a class="navItem" href="/docs/next/faq.html">FAQs</a></li><li class="navListItem"><a class="navItem" href="/docs/next/k8supgrades.html">Kubernetes upgrades</a></li><li class="navListItem"><a class="navItem" href="/docs/next/troubleshooting.html">Troubleshooting</a></li></ul></div></div></div></section></div><script>
+          var toggler = document.getElementById('navToggler');
+          var nav = document.getElementById('docsNav');
+          toggler.onclick = function() {
+            nav.classList.toggle('docsSliderActive');
+          };
+        </script><script>
+            var navGroupElem = document.getElementsByClassName("hide");
+            for(var k=0; k<navGroupElem.length; k++){
+              if (navGroupElem[k].innerHTML.indexOf("navItem navItemActive") != -1) {
+                document.getElementById(navGroupElem[k].id).className = "visible";
+              }
+            }
+            var elem = document.getElementsByClassName("languages-menu");
+            for (var i=0; i < elem.length; i++){
+              document.getElementById(String(elem[i].id)).addEventListener("click", function() {
+                sessionStorage.setItem("name", document.getElementById(this.id+" dropdown-content-div").className);
+                sessionStorage.setItem("Id", document.getElementById(this.id).id);
+                if ( document.getElementById(this.id+" dropdown-content-div").className == "hide") {
+                  document.getElementById(this.id+" dropdown-content-div").className = "visible";
+                }
+                else {
+                  document.getElementById(this.id+" dropdown-content-div").className = "hide";
+                }
+            })};</script><script>
+          var SelectedItemClassName = sessionStorage.getItem("name");
+          var SelectedItemId = sessionStorage.getItem("Id");
+          if (SelectedItemClassName == "hide"){
+            document.getElementById( SelectedItemId +" dropdown-content-div").className = "visible";
+          }
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/openebs/openebs-docs/edit/staging/docs/mayactl.md" target="_blank" rel="noreferrer noopener">Edit</a><a class="edit-page-link button" href="https://github.com/openebs/openebs/issues/new/" target="_blank" rel="noreferrer noopener">Create An Issue</a><h1>Mayactl</h1></header><article><div><span><hr>
+<p>The <code>mayactl</code> is the command line tool for interacting with OpenEBS volumes and Pools. The  <code>mayactl</code> is not used or required while provisioning or managing the OpenEBS volumes, but it is currently used while debugging and troubleshooting.  OpenEBS volume and pool status can be get using the <code>mayactl</code> command.</p>
+<p><h3><a class="anchor" aria-hidden="true" id="summary"></a>Summary</h3></p>
+<p><a href="#Commands-used-with-mayactl">Command used with mayactl</a></p>
+<p><a href="#Accesssing-mayactl">Accesssing mayactl</a></p>
+<p><a href="#Using-mayactl">Using mayactl</a></p>
+<h2><a class="anchor" aria-hidden="true" id="commands-used-with-mayactl"></a><a href="#commands-used-with-mayactl" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Commands used with mayactl</h2>
+<p>The following commands can be run using mayactl to get the details of OpenEBS volume, StoragePool and installed version.</p>
+<ol>
+<li>OpenEBS volume related
+<ul>
+<li>mayactl volume list</li>
+<li>mayactl volume stats</li>
+<li>mayactl volume describe</li>
+</ul></li>
+<li>OpenEBS StoragePool related
+<ul>
+<li>mayactl pool list</li>
+<li>mayactl pool describe</li>
+</ul></li>
+<li>OpenEBS version related
+<ul>
+<li>mayactl version</li>
+</ul></li>
+</ol>
+<h2><a class="anchor" aria-hidden="true" id="accesssing-mayactl"></a><a href="#accesssing-mayactl" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Accesssing mayactl</h2>
+<p>For getting access to <code>mayactl</code> command line tool, you have to login or execute into the maya-apiserver pod on Kubernetes. The steps are outlined below.</p>
+<ol>
+<li><p>Find out the name of the maya-apiserver</p>
+<pre><code class="hljs">kubectl <span class="hljs-builtin-name">get</span> pod -n openebs | grep -i api
+</code></pre>
+<p>Following is an example output.</p>
+   <div class="co">maya-apiserver-7f5689b96b-tfssh                                   1/1       Running   0          10d</div>
+</li>
+</ol>
+<ol start="2">
+<li><p>It is possible that there are multiple instances of maya-apiserver pods for scaling purposes. You can run mayactl in any one of them. Shell into one of the pods using <code>kubectl exec</code> command . You can do as following way.</p>
+<pre><code class="hljs"><span class="hljs-symbol">kubectl</span> exec -<span class="hljs-keyword">it </span>&lt;maya-apiserver-podname&gt; /<span class="hljs-keyword">bin/bash </span> -n openebs
+</code></pre>
+<p>You will get access to the bash shell of maya-apiserver pod like shown below.</p>
+   <div class="co">bash-4.3#</div>
+</li>
+</ol>
+<h2><a class="anchor" aria-hidden="true" id="using-mayactl"></a><a href="#using-mayactl" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Using mayactl</h2>
+<p>Once you are inside the maya -apiserver,use mayactl help command for more details.</p>
+<pre><code class="hljs">mayactl <span class="hljs-built_in">help</span>
+</code></pre>
+<p><strong>Example Output:</strong></p>
+<div class="co">Maya means 'Magic' a tool for storage orchestration
+Usage:
+  mayactl [command]
+Available Commands:
+  completion  Outputs shell completion code for the specified shell (bash or zsh)
+  help        Help about any command
+  pool        Provides operations related to a storage pool
+  version     Prints version and other details relevant to maya
+  volume      Provides operations related to a Volume</div>
+<p><h3><a class="anchor" aria-hidden="true" id="mayactl-for-OpenEBS-Storage-Volume"></a>mayactl for OpenEBS Storage Volume</h3></p>
+<p>OpenEBS storage volume command usage examples are shown below.</p>
+<pre><code class="hljs">mayactl <span class="hljs-keyword">volume</span><span class="bash">
+</span></code></pre>
+<p><strong>Example Output:</strong></p>
+<div class="co">The following commands helps in operating a Volume such as create, list, and so on.
+Usage: mayactl volume <subcommand> [options] [args]
+Examples:
+ > List Volumes: 
+   $ mayactl volume list
+ > Statistics of a Volume:
+   $ mayactl volume stats --volname <vol>
+ > Statistics of a Volume created in 'test' namespace:
+   $ mayactl volume stats --volname <vol> --namespace test
+ > Info of a Volume:
+   $ mayactl volume describe --volname <vol>
+ > Info of a Volume created in 'test' namespace:
+   $ mayactl volume describe --volname <vol> --namespace test
+Usage:
+  mayactl volume [command]
+Available Commands:
+  describe    Displays Openebs Volume information
+  list        Displays status information about Volume(s)
+  stats       Displays the runtime statisics of Volume
+</div>
+<p>The following command shows the list of all OpenEBS volumes including both Jiva and cStor.</p>
+<pre><code class="hljs"> mayactl <span class="hljs-keyword">volume</span><span class="bash"> list
+</span></code></pre>
+<p><strong>Example Output:</strong></p>
+<div class="co">Namespace   Name                                      Status   Type   Capacity  StorageClass            Access Mode
+---------   ----                                      ------   ----   --------           -------------           -----------
+openebs     pvc-448deccf-40d9-11e9-a23b-0050569331ce  Running  cstor  5G            cstor081-demo-pool1     ReadWriteOnce</div>
+<p>The following command shows the description of a OpenEBS volume.</p>
+<pre><code class="hljs"> mayactl volume describe --volname pvc<span class="hljs-number">-448</span>deccf<span class="hljs-number">-40</span>d9<span class="hljs-number">-11e9</span>-a23b<span class="hljs-number">-0050569331</span>ce -n openebs
+</code></pre>
+<p><strong>Example Output:</strong></p>
+<div class="co">Portal Details :
+------- ---------
+IQN               :   iqn.2016-09.com.openebs.cstor:pvc-448deccf-40d9-11e9-a23b-0050569331ce
+Volume            :   pvc-448deccf-40d9-11e9-a23b-0050569331ce
+Portal            :   172.28.9.26:3260
+Size              :   5G
+Controller Status :   running,running,running
+Controller Node   :   node7.mayalab.com
+Replica Count     :   3
+Application Details:
+--------- -----------
+Application Pod Name      : N/A
+Application Pod Namespace : N/A
+Replica Details :
+--------- --------
+NAME                                                          STATUS      POOL NAME                NODE
+----                                                          ------      ---------                -----
+pvc-448deccf-40d9-11e9-a23b-0050569331ce-cstor-pool1-5lwv     Running     cstor-pool1-5lwv     node3.mayalab.com
+pvc-448deccf-40d9-11e9-a23b-0050569331ce-cstor-pool1-qba6     Running     cstor-pool1-qba6     node2.mayalab.com
+pvc-448deccf-40d9-11e9-a23b-0050569331ce-cstor-pool1-v4oy     Running     cstor-pool1-v4oy     node4.mayalab.com
+</div>
+<p>The following command shows the live statistics of OpenEBS volume.</p>
+<pre><code class="hljs">mayactl volume stats --volname pvc<span class="hljs-number">-448</span>deccf<span class="hljs-number">-40</span>d9<span class="hljs-number">-11e9</span>-a23b<span class="hljs-number">-0050569331</span>ce -n openebs
+</code></pre>
+<p><strong>Example Output:</strong></p>
+<div class="co">Portal Details :
+------ ---------
+IQN     :
+Volume  :   pvc-448deccf-40d9-11e9-a23b-0050569331ce
+Portal  :
+Size    :   5.000000
+Performance Stats :
+------ ---------
+r/s      w/s      r(MB/s)      w(MB/s)      rLat(ms)      wLat(ms)
+----     ----     --------     --------     ---------     ---------
+0        121      0.000        0.013        0.000         9.495
+Capacity Stats :
+------ ---------
+LOGICAL(GB)      USED(GB)
+------------     ---------
+0.000            3.246
+</div>
+<p><h3><a class="anchor" aria-hidden="true" id="mayactl-for-OpenEBS-Storage-Pools"></a>mayactl for OpenEBS Storage Pools</h3></p>
+<p>OpenEBS storage pool command usage examples are shown below.</p>
+<pre><code class="hljs">mayactl<span class="hljs-built_in"> pool
+</span></code></pre>
+<p>It will show the available commands which can run with <code>mayactl</code> for getting details of OpenEBS pools.</p>
+<div class="co">Command provides operations related to a storage pools.
+Usage: mayactl pool <subcommand> [options] [args]
+Examples:
+  > Lists pool:
+    $ mayactl pool list
+Usage:
+  mayactl pool [command]
+Available Commands:
+  describe    Describes the pools
+  list        Lists all the pools
+</div>
+<p>The following command shows the list of all OpenEBS StoragePools.</p>
+<pre><code class="hljs">mayactl<span class="hljs-built_in"> pool </span>list
+</code></pre>
+<p><strong>Example Output:</strong></p>
+<div class="co">POOL NAME                  NODE NAME              POOL TYPE
+---------                  ---------              ---------
+cstor-pool1-5lwv           node3.mayalab.com      striped
+cstor-pool1-qba6           node2.mayalab.com      striped
+cstor-pool1-v4oy           node4.mayalab.com      striped
+</div>
+<p>The following command show the description of OpenEBS StoragePool.</p>
+<pre><code class="hljs"> mayactl<span class="hljs-built_in"> pool </span>describe --poolname cstor-pool1-5lwv
+</code></pre>
+<p><strong>Example Output:</strong></p>
+<div class="co">Pool Details :
+------ ------
+Storage Pool Name  : cstor-pool1-5lwv
+Node Name          : node3.mayalab.com
+CAS Template Used  : cstor-pool-create-default-0.8.1
+CAS Type           : cstor
+StoragePoolClaim   : cstor-pool1
+UID                : fb2bd1d8-2f88-11e9-a23b-0050569331ce
+Pool Type          : striped
+Over Provisioning  : false
+Disk List :
+------ ------
+disk-42b4fb20cd36896dfc2a486b977363de
+</div>
+<p><h3><a class="anchor" aria-hidden="true" id="mayactl-Version"></a>mayactl Version</h3></p>
+<p>OpenEBS installed version can be obtained using the following command. This will show the status of maya-apiserver and its URL.</p>
+<pre><code class="hljs">mayactl <span class="hljs-built_in">version</span>
+</code></pre>
+<p><strong>Example Output:</strong></p>
+<div class="co">Version: 0.8.1-released
+Git commit: 43ad5ca8f3d36995afbce3914d0be8ecd8a8de13
+GO Version: go1.11.2
+GO ARCH: amd64
+GO OS: linux
+m-apiserver url:  http://192.29.0.188:5656
+m-apiserver status:  running
+</div>
+<p><br></p>
+<h2><a class="anchor" aria-hidden="true" id="see-also"></a><a href="#see-also" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>See Also:</h2>
+<h3><a class="anchor" aria-hidden="true" id="day-2-operations-docs-next-operationshtml"></a><a href="#day-2-operations-docs-next-operationshtml" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><a href="/docs/next/operations.html">Day 2 Operations</a></h3>
+<h3><a class="anchor" aria-hidden="true" id="jiva-user-guide-docs-next-jivaguidehtml"></a><a href="#jiva-user-guide-docs-next-jivaguidehtml" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><a href="/docs/next/jivaguide.html">Jiva User Guide</a></h3>
+<h3><a class="anchor" aria-hidden="true" id="br"></a><a href="#br" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><br></h3>
+<hr>
+<p><br></p>
+<!-- Hotjar Tracking Code for https://docs.openebs.io -->
+<script>
+   (function(h,o,t,j,a,r){
+       h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+       h._hjSettings={hjid:785693,hjsv:6};
+       a=o.getElementsByTagName('head')[0];
+       r=o.createElement('script');r.async=1;
+       r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+       a.appendChild(r);
+   })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-92076314-12"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+<p>gtag('config', 'UA-92076314-12');</p>
+</script>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="jivaguide.html">← Jiva user guide</a><a class="docs-next button" href="backup.html">Backup and Restore of OpenEBS volumes →</a></div></div></div><nav class="onPageNav"><div id="global-on-page-heading"><h4 style="font-weight:400;">On this page:</h4><ul class="toc-headings"><li><a href="#commands-used-with-mayactl">Commands used with mayactl</a></li><li><a href="#accesssing-mayactl">Accesssing mayactl</a></li><li><a href="#using-mayactl">Using mayactl</a></li><li><a href="#see-also">See Also:</a><ul class="toc-headings"><li><a href="#day-2-operations-docs-next-operationshtml">Day 2 Operations</a></li><li><a href="#jiva-user-guide-docs-next-jivaguidehtml">Jiva User Guide</a></li><li><a href="#br"></a></li></ul></li></ul></div></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div><br/><div><a href="https://openebs.io" target="_blank"><img src="/docs/assets/openebs-logo.svg" alt="" width="130" height="110"/></a></div><div><a href="https://slack.openebs.io">Get in touch with OpenEBS community via Slack</a></div></div><div><br/><div><a href="https://mayadata.io" target="_blank"><img src="https://openebs.io/assets/images/mayadata.svg" alt="mayadata.io" width="130" height="110"/></a></div><div><a href="https://app.mayaonline.io">Get OpenEBS support through MayaOnline</a></div></div></section><section class="copyright"></section></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+              var search = docsearch({
+                
+                apiKey: 'dc657dfe30f42f228671f557f49ced7a',
+                indexName: 'openebs',
+                inputSelector: '#search_input_react'
+              });
+            </script><script>(function(){ window.ldfdr = window.ldfdr || {}; (function(d, s, ss, fs){ fs = d.getElementsByTagName(s)[0]; function ce(src){ var cs = d.createElement(s); cs.async=1; cs.src = src; setTimeout(function(){fs.parentNode.insertBefore(cs,fs)}, 1); } ce(ss); })(document, 'script', 'https://lftracker.leadfeeder.com/lftracker_v1_bMwm7E2pzw4gOZyA.js'); })();</script></body></html>
