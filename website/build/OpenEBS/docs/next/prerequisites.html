@@ -1,0 +1,355 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Prerequisites (iSCSI client) · </title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta property="og:title" content="Prerequisites (iSCSI client) · "/><meta property="og:type" content="website"/><meta property="og:url" content="https://docs.openebs.io/index.html"/><meta property="og:description" content="------"/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/img/favicon.ico"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><link rel="stylesheet" href="/css/code-blocks-buttons.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script><script type="text/javascript" src="/js/code-blocks-buttons.js"></script><link rel="stylesheet" href="/css/main.css"/></head><body class="sideNavVisible doc separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img id="logo" src="/img/OpenEBS-logo.svg" alt=""/><img class="logo-text" src="/img/openebs-docs-logo.svg" alt=""/><h2 class="headerTitle"></h2></a><div class="dropdown"><span class="ver-link">0.8.1</span><span class="ver-link-span"><i class="arrow down"></i></span><div class="dropdown-menu" id="versions-list" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" id="0" href="https://docs.openebs.io">0.8.1</a><a class="dropdown-item" id="1" href="https://v08-docs.openebs.io">0.8.0</a><a class="dropdown-item" id="2" href="https://v07-docs.openebs.io">0.7.0</a><a class="dropdown-item" id="3" href="https://v06-docs.openebs.io">0.6.0</a><a class="dropdown-item" id="4" href="https://v05-docs.openebs.io">0.5.0</a></div></div><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><a href="https://app.mayaonline.io" target="_blank" rel="noreferrer noopener"><div class="float rotate"><img src="../../../../../../docs/assets/mo-logo.png" alt="MayaOnline" height="45px" width="45px" title="Connect to MayaOnline"/></div></a><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>User Guides</span></h2></div><div class="navGroups"><div class="navGroup navGroupActive"><h3 id="Introduction" class="languages-menu">Introduction</h3><div class="hide" id="Introduction dropdown-content-div"><ul id="languages-dropdown-items"><li class="navListItem"><a class="navItem" href="/docs/next/overview.html">Overview</a></li><li class="navListItem"><a class="navItem" href="/docs/next/features.html">Features and Benefits</a></li><li class="navListItem"><a class="navItem" href="/docs/next/usecases.html">Use cases</a></li><li class="navListItem"><a class="navItem" href="/docs/next/releases.html">Releases</a></li><li class="navListItem"><a class="navItem" href="/docs/next/support.html">Support</a></li><li class="navListItem"><a class="navItem" href="/docs/next/mayaonline.html">MayaOnline</a></li></ul></div></div><div class="navGroup navGroupActive"><h3 id="Concepts" class="languages-menu">Concepts</h3><div class="hide" id="Concepts dropdown-content-div"><ul id="languages-dropdown-items"><li class="navListItem"><a class="navItem" href="/docs/next/cas.html">Container Attached Storage</a></li><li class="navListItem"><a class="navItem" href="/docs/next/architecture.html">OpenEBS Architecture</a></li><li class="navListItem"><a class="navItem" href="/docs/next/casengines.html">CAS Engines (cStor &amp; Jiva)</a></li><li class="navListItem"><a class="navItem" href="/docs/next/cstor.html">cStor</a></li><li class="navListItem"><a class="navItem" href="/docs/next/jiva.html">Jiva</a></li></ul></div></div><div class="navGroup navGroupActive"><h3 id="User Guides" class="languages-menu">User Guides</h3><div class="hide" id="User Guides dropdown-content-div"><ul id="languages-dropdown-items"><li class="navListItem"><a class="navItem" href="/docs/next/quickstart.html">Quickstart</a></li><li class="navListItem navListItemActive"><a class="navItem navItemActive" href="/docs/next/prerequisites.html">Prerequisites</a></li><li class="navListItem"><a class="navItem" href="/docs/next/installation.html">Installation</a></li><li class="navListItem"><a class="navItem" href="/docs/next/configurepools.html">Configure StoragePools</a></li><li class="navListItem"><a class="navItem" href="/docs/next/configuresc.html">Configuring StorageClasses</a></li><li class="navListItem"><a class="navItem" href="/docs/next/provisionvols.html">Provisioning Volumes</a></li><li class="navListItem"><a class="navItem" href="/docs/next/operations.html">Day 2 Operations</a></li><li class="navListItem"><a class="navItem" href="/docs/next/jivaguide.html">Jiva user guide</a></li><li class="navListItem"><a class="navItem" href="/docs/next/mayactl.html">Mayactl</a></li><li class="navListItem"><a class="navItem" href="/docs/next/backup.html">Backup and Restore</a></li><li class="navListItem"><a class="navItem" href="/docs/next/upgrade.html">Upgrade</a></li><li class="navListItem"><a class="navItem" href="/docs/next/uninstall.html">Uninstall</a></li></ul></div></div><div class="navGroup navGroupActive"><h3 id="Stateful Applications" class="languages-menu">Stateful Applications</h3><div class="hide" id="Stateful Applications dropdown-content-div"><ul id="languages-dropdown-items"><li class="navListItem"><a class="navItem" href="/docs/next/mysql.html">RDS like MySQL</a></li><li class="navListItem"><a class="navItem" href="/docs/next/prometheus.html">Prometheus</a></li><li class="navListItem"><a class="navItem" href="/docs/next/minio.html">Minio</a></li><li class="navListItem"><a class="navItem" href="/docs/next/gitlab.html">GitLab</a></li><li class="navListItem"><a class="navItem" href="/docs/next/percona.html">Percona</a></li><li class="navListItem"><a class="navItem" href="/docs/next/elasticsearch.html">ElasticSearch</a></li><li class="navListItem"><a class="navItem" href="/docs/next/cassandra.html">Cassandra</a></li><li class="navListItem"><a class="navItem" href="/docs/next/nuodb.html">NuoDB</a></li><li class="navListItem"><a class="navItem" href="/docs/next/postgres.html">PostgreSQL</a></li><li class="navListItem"><a class="navItem" href="/docs/next/redis.html">Redis</a></li><li class="navListItem"><a class="navItem" href="/docs/next/mongo.html">MongoDB</a></li><li class="navListItem"><a class="navItem" href="/docs/next/rwm.html">Read-Write-Many (RWM)</a></li></ul></div></div><div class="navGroup navGroupActive"><h3 id="Advanced Topics" class="languages-menu">Advanced Topics</h3><div class="hide" id="Advanced Topics dropdown-content-div"><ul id="languages-dropdown-items"><li class="navListItem"><a class="navItem" href="/docs/next/performance.html">Performance testing</a></li><li class="navListItem"><a class="navItem" href="/docs/next/faq.html">FAQs</a></li><li class="navListItem"><a class="navItem" href="/docs/next/k8supgrades.html">Kubernetes upgrades</a></li><li class="navListItem"><a class="navItem" href="/docs/next/troubleshooting.html">Troubleshooting</a></li></ul></div></div></div></section></div><script>
+          var toggler = document.getElementById('navToggler');
+          var nav = document.getElementById('docsNav');
+          toggler.onclick = function() {
+            nav.classList.toggle('docsSliderActive');
+          };
+        </script><script>
+            var navGroupElem = document.getElementsByClassName("hide");
+            for(var k=0; k<navGroupElem.length; k++){
+              if (navGroupElem[k].innerHTML.indexOf("navItem navItemActive") != -1) {
+                document.getElementById(navGroupElem[k].id).className = "visible";
+              }
+            }
+            var elem = document.getElementsByClassName("languages-menu");
+            for (var i=0; i < elem.length; i++){
+              document.getElementById(String(elem[i].id)).addEventListener("click", function() {
+                sessionStorage.setItem("name", document.getElementById(this.id+" dropdown-content-div").className);
+                sessionStorage.setItem("Id", document.getElementById(this.id).id);
+                if ( document.getElementById(this.id+" dropdown-content-div").className == "hide") {
+                  document.getElementById(this.id+" dropdown-content-div").className = "visible";
+                }
+                else {
+                  document.getElementById(this.id+" dropdown-content-div").className = "hide";
+                }
+            })};</script><script>
+          var SelectedItemClassName = sessionStorage.getItem("name");
+          var SelectedItemId = sessionStorage.getItem("Id");
+          if (SelectedItemClassName == "hide"){
+            document.getElementById( SelectedItemId +" dropdown-content-div").className = "visible";
+          }
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/openebs/openebs-docs/edit/staging/docs/prerequisites.md" target="_blank" rel="noreferrer noopener">Edit</a><a class="edit-page-link button" href="https://github.com/openebs/openebs/issues/new/" target="_blank" rel="noreferrer noopener">Create An Issue</a><h1>Prerequisites (iSCSI client)</h1></header><article><div><span><hr>
+<p><br></p>
+<p><a href="/docs/next/installation.html"><img src="/docs/assets/svg/0-config-sequence.svg" alt="OpenEBS configuration flow" style="width:100%"></a></p>
+<p><br></p>
+<p>OpenEBS provides block volume support through the iSCSI protocol. Therefore,
+the iSCSI client (initiator) presence on all Kubernetes nodes is required.
+Choose the platform below to find the steps to verify if the iSCSI client
+is installed and running or to find the steps to install the iSCSI client.
+<br></p>
+<p><font size="5">Choose the platform for iSCSI client settings</font></p>
+<div class="divrow">
+    <div class="divcol">
+        <a href="/docs/next/prerequisites.html#ubuntu"><img src="/docs/assets/l-ubuntu.png" width="50px;">Ubuntu</a>
+    </div>
+    <div class="divcol">
+        <a href="/docs/next/prerequisites.html#rhel"><img src="/docs/assets/l-rhel.png" width="50px;">RHEL</a>
+    </div>
+    <div class="divcol">
+        <a href="/docs/next/prerequisites.html#centos"><img src="/docs/assets/l-centos.png" width="50px;">CentOS</a>
+    </div>
+</div>
+<div class="divrow">
+    <div class="divcol">
+        <a href="/docs/next/prerequisites.html#eks"><img src="/docs/assets/l-eks.png" width="50px;">EKS</a>
+    </div>
+    <div class="divcol">
+        <a href="/docs/next/prerequisites.html#gke"><img src="/docs/assets/l-gke.png" width="50px;">GKE</a>
+    </div>
+    <div class="divcol">
+        <a href="/docs/next/prerequisites.html#aks"><img src="/docs/assets/l-aks.png" width="50px;">AKS</a>
+    </div>
+</div>
+<div class="divrow">
+    <div class="divcol">
+        <a href="/docs/next/prerequisites.html#openshift"><img src="/docs/assets/l-openshift.png" width="50px;">OpenShift</a>
+    </div>
+    <div class="divcol">
+        <a href="/docs/next/prerequisites.html#rancher"><img src="/docs/assets/l-rancher.png" width="50px;">Rancher</a>
+    </div>
+    <div class="divcol">
+        <a href="/docs/next/prerequisites.html#icp"><img src="/docs/assets/l-icp.png" width="50px;">ICP</a>
+    </div>
+</div>
+<p><a href="https://github.com/openebs/openebs-docs/edit/staging/docs/quickstart.md">Provide feedback</a> if a platform is missing in the above list.</p>
+<h2><a class="anchor" aria-hidden="true" id="linux-platforms"></a><a href="#linux-platforms" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Linux platforms</h2>
+<p>Installation of the iSCSI initiator service and tools depends on your
+host O/S or the kubelet container. You can follow the below steps for
+installation/verification of the required packages. It is a mandatory
+step to verify the iSCSI services and make sure that it is running on
+all the worker nodes. OpenEBS uses the iSCSI protocol to connect to the
+block volumes.</p>
+<p><h3><a class="anchor" aria-hidden="true" id="ubuntu"></a>Ubuntu</h3></p>
+<p><strong>Verify iSCSI services are configured</strong></p>
+<p>If an iSCSI initiator is already installed on your node, check that the
+initiator name is configured and iSCSI service is running using the
+following commands.</p>
+<pre><code class="hljs">sudo cat /etc/iscsi/initiatorname<span class="hljs-selector-class">.iscsi</span>
+systemctl status iscsid 
+</code></pre>
+<p>If service status is showing as <code>Inactive</code>, then you may have to enable and
+start the iscsid service using the following command.</p>
+<pre><code class="hljs">sudo systemctl <span class="hljs-builtin-name">enable</span> iscsid &amp;&amp; sudo systemctl start iscsid
+</code></pre>
+<p>The following is the expected output.</p>
+<pre><code class="hljs">systemctl status iscsid
+● iscsid.service - iSCSI initiator daemon (iscsid)
+<span class="hljs-symbol">   Loaded:</span> loaded (<span class="hljs-meta-keyword">/lib/</span>systemd<span class="hljs-meta-keyword">/system/</span>iscsid.service; disabled; vendor preset: enabled)
+<span class="hljs-symbol">   Active:</span> active (running) since Mon <span class="hljs-number">2019</span><span class="hljs-number">-02</span><span class="hljs-number">-18</span> <span class="hljs-number">11</span>:<span class="hljs-number">00</span>:<span class="hljs-number">07</span> UTC; <span class="hljs-number">1</span>min <span class="hljs-number">51</span>s ago
+<span class="hljs-symbol">     Docs:</span> man:iscsid(<span class="hljs-number">8</span>)
+<span class="hljs-symbol">  Process:</span> <span class="hljs-number">11185</span> ExecStart=<span class="hljs-meta-keyword">/sbin/</span>iscsid (code=exited, status=<span class="hljs-number">0</span>/SUCCESS)
+<span class="hljs-symbol">  Process:</span> <span class="hljs-number">11170</span> ExecStartPre=<span class="hljs-meta-keyword">/lib/</span>open-iscsi/startup-checks.sh (code=exited, status=<span class="hljs-number">0</span>/SUCCESS)
+ Main PID: <span class="hljs-number">11187</span> (iscsid)
+<span class="hljs-symbol">    Tasks:</span> <span class="hljs-number">2</span> (limit: <span class="hljs-number">4915</span>)
+<span class="hljs-symbol">   CGroup:</span> /system.slice/iscsid.service
+           ├─<span class="hljs-number">11186</span> <span class="hljs-meta-keyword">/sbin/</span>iscsid
+           └─<span class="hljs-number">11187</span> <span class="hljs-meta-keyword">/sbin/</span>iscsid
+</code></pre>
+<p><strong>Install the iSCSI tools</strong></p>
+<p>If an iSCSI initiator is not installed on your node, install
+<code>open-iscsi</code> packages using the following commands.</p>
+<pre><code class="hljs">sudo apt-<span class="hljs-builtin-name">get</span> update
+sudo apt-<span class="hljs-builtin-name">get</span> install open-iscsi
+sudo<span class="hljs-built_in"> service </span>open-iscsi restart
+</code></pre>
+<p>You can verify the iSCSI installation from above section.</p>
+<p><br></p>
+<p><h3><a class="anchor" aria-hidden="true" id="rhel"></a>Red Hat Enterprise Linux</h3></p>
+<p><strong>Verify iSCSI services are configured</strong></p>
+<p>In Red Hat Enterprise Linux 7, the iSCSI service is lazily started by
+default: the service starts after running the <code>iscsiadm</code> command. If
+an iSCSI initiator is already installed on the node, check that
+the initiator name is configured using the following command.</p>
+<pre><code class="hljs"> cat /etc/iscsi/initiatorname<span class="hljs-selector-class">.iscsi</span>
+</code></pre>
+<p>Check iSCSI service is running using the following command.</p>
+<pre><code class="hljs"><span class="hljs-attribute"> systemctl status iscsid</span>
+</code></pre>
+<p>If the status is showing as <code>Inactive</code>, then you may have to enable and
+start the iscsid service using the following command.</p>
+<pre><code class="hljs">sudo systemctl <span class="hljs-builtin-name">enable</span> iscsid &amp;&amp; sudo systemctl start iscsid
+</code></pre>
+<p>The following is the expected output.</p>
+<pre><code class="hljs">systemctl status iscsid
+● iscsid.service - Open-iSCSI
+   Loaded: loaded (/usr/lib/systemd/system/iscsid.service<span class="hljs-comment">; enabled; vendor preset: disabled)</span>
+   Active: active (running) since Tue <span class="hljs-number">2019-02-19</span> <span class="hljs-number">12</span>:<span class="hljs-number">19</span>:<span class="hljs-number">08</span> IST<span class="hljs-comment">; 2h 37min ago</span>
+     Docs: man:iscsid(<span class="hljs-number">8</span>)
+           man:iscsiadm(<span class="hljs-number">8</span>)
+ Main PID: <span class="hljs-number">2138</span> (iscsid)
+    Tasks: <span class="hljs-number">2</span>
+   CGroup: /system.slice/iscsid.service
+           ├─<span class="hljs-number">2137</span> /usr/sbin/iscsid
+           └─<span class="hljs-number">2138</span> /usr/sbin/iscsid
+
+Feb <span class="hljs-number">19 12:19:08</span> master-<span class="hljs-number">1550555590</span>.mayalab.com systemd[<span class="hljs-number">1</span>]: Starting Open-iSCSI...
+Feb <span class="hljs-number">19 12:19:08</span> master-<span class="hljs-number">1550555590</span>.mayalab.com iscsid[<span class="hljs-number">2136</span>]: iSCSI logger with pid=<span class="hljs-number">2137</span> started!
+Feb <span class="hljs-number">19 12:19:08</span> master-<span class="hljs-number">1550555590</span>.mayalab.com systemd[<span class="hljs-number">1</span>]: Failed to read PID from file /var/run/iscsid.pid: Invalid argument
+Feb <span class="hljs-number">19 12:19:08</span> master-<span class="hljs-number">1550555590</span>.mayalab.com systemd[<span class="hljs-number">1</span>]: Started Open-iSCSI.
+Feb <span class="hljs-number">19 12:19:09</span> master-<span class="hljs-number">1550555590</span>.mayalab.com iscsid[<span class="hljs-number">2137</span>]: iSCSI daemon with pid=<span class="hljs-number">2138</span> started!
+</code></pre>
+<p><strong>Install the iSCSI tools</strong></p>
+<p>If an iSCSI initiator is not installed on your node, install
+<code>iscsi-initiator-utils</code> packages using the following command.</p>
+<pre><code class="hljs">yum <span class="hljs-keyword">install</span> iscsi-initiator-utils -y
+</code></pre>
+<p>You can verify the iSCSI installation from above section.</p>
+<p><br></p>
+<p><h3><a class="anchor" aria-hidden="true" id="centos"></a>CentOS</h3></p>
+<p><strong>Verify iSCSI services are configured</strong></p>
+<p>If an iSCSI initiator is already installed on your node, check that
+the initiator name is configured using the following commands.</p>
+<pre><code class="hljs"> cat /etc/iscsi/initiatorname<span class="hljs-selector-class">.iscsi</span>
+</code></pre>
+<p>Check iSCSI service is running using the following command.</p>
+<pre><code class="hljs"><span class="hljs-attribute"> systemctl status iscsid</span>
+</code></pre>
+<p>If the status is showing as <code>Inactive</code>, then you may have to enable and
+start the iscsid service using the following command.</p>
+<pre><code class="hljs">sudo systemctl <span class="hljs-builtin-name">enable</span> iscsid &amp;&amp; sudo systemctl start iscsid
+</code></pre>
+<p><strong>Install the iSCSI tools</strong></p>
+<p>If an iSCSI initiator is not installed on your node, install
+<code>iscsi-initiator-utils</code> packages using the following command.</p>
+<pre><code class="hljs">yum <span class="hljs-keyword">install</span> iscsi-initiator-utils -y
+</code></pre>
+<p>You can verify the iSCSI installation from the above section.</p>
+<p><br></p>
+<hr>
+<h2><a class="anchor" aria-hidden="true" id="managed-kubernetes-services-on-public-cloud"></a><a href="#managed-kubernetes-services-on-public-cloud" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Managed Kubernetes Services on Public Cloud</h2>
+<p><h3><a class="anchor" aria-hidden="true" id="eks"></a>Amazon Elastic
+Container Service for Kubernetes (EKS)</h3>
+Amazon EKS clusters can be brought up with either an AmazonLinux AMI
+or an Ubuntu 18.04 AMI.</p>
+<p><h4><a class="anchor" aria-hidden="true" id="eks-linux-ami"></a>For clusters running with the AmazonLinux AMI</h4></p>
+<p><strong>Verify iSCSI services are configured</strong></p>
+<p>If an iSCSI initiator is already installed on your node, check that
+the initiator name is configured using the following commands.</p>
+<pre><code class="hljs"> cat /etc/iscsi/initiatorname<span class="hljs-selector-class">.iscsi</span>
+</code></pre>
+<p>Check the iSCSI service is running using the following command.</p>
+<pre><code class="hljs"><span class="hljs-attribute"> systemctl status iscsid</span>
+</code></pre>
+<p>If the status is showing as <code>Inactive</code>, then you may have to enable and
+start the iscsid service using the following command.</p>
+<pre><code class="hljs">sudo systemctl <span class="hljs-builtin-name">enable</span> iscsid &amp;&amp; sudo systemctl start iscsid
+</code></pre>
+<p><strong>Install the iSCSI tools</strong></p>
+<p>If an iSCSI initiator is not installed on your node, install
+<code>iscsi-initiator-utils</code> packages using the following command.</p>
+<pre><code class="hljs">yum <span class="hljs-keyword">install</span> iscsi-initiator-utils -y
+</code></pre>
+<p>You can verify the iSCSI installation from the above section.</p>
+<p><h4><a class="anchor" aria-hidden="true" id="eks-linux-ami"></a>For clusters running with the Ubuntu 18.04 AMI</h4></p>
+<p>For setting up iSCSI clients on Ubuntu nodes, see the
+<a href="#ubuntu">instructions above.</a></p>
+<p><br></p>
+<p><h3><a class="anchor" aria-hidden="true" id="gke"></a>Google Kubernetes
+Engine (GKE)</h3></p>
+<p>GKE Container-Optimized OS does not come with an iSCSI client preinstalled and does not allow installation of an iSCSI client. Therefore, OpenEBS does not work on Kubernetes clusters which are running GKE Container-Optimized OS version of the image on the worker nodes.</p>
+<p>Select Ubuntu as the image version for the node pools in the custom settings. For setting up iSCSI clients on Ubuntu nodes, see the <a href="#ubuntu">instructions above.</a></p>
+<p><br></p>
+<p><h3><a class="anchor" aria-hidden="true" id="aks"></a>Azure Kubernetes Service (AKS)</h3></p>
+<p>On Azure Kubernetes Service you need to verify that the <code>open-iscsi</code>
+packages are installed and running the service on the kubelet.
+This can be checked by connecting to the nodes through SSH using the
+public IP addresses by running the following command.</p>
+<pre><code class="hljs"><span class="hljs-selector-tag">ssh</span> <span class="hljs-selector-tag">azureuser</span>@<span class="hljs-keyword">40</span>.<span class="hljs-keyword">xx</span>.<span class="hljs-keyword">yyy</span>.<span class="hljs-keyword">zzz</span>
+</code></pre>
+<p><strong>Note</strong>: <code>azureuser</code> is a default username.</p>
+<p><strong>Verify iSCSI services are configured</strong></p>
+<p>Obtain the container ID of the hyperkube kubelet on each node
+using the following command.</p>
+<pre><code class="hljs">sudo docker <span class="hljs-keyword">ps</span> | <span class="hljs-keyword">grep</span> <span class="hljs-string">"hyperkube kubelet"</span> 
+</code></pre>
+<p>Following is the example output:</p>
+<pre><code class="hljs"><span class="hljs-number">3</span>aab0f9a48e2    k8s-gcrio<span class="hljs-selector-class">.azureedge</span><span class="hljs-selector-class">.net</span>/hyperkube-amd64:v1.<span class="hljs-number">8.7</span>   <span class="hljs-string">"/hyperkube kubele..."</span>   <span class="hljs-number">48</span> minutes ago      Up <span class="hljs-number">48</span> minutes                           eager_einstein
+</code></pre>
+<p>Once kubelet container ID is obtained, you need to get to the shell
+of this container using the following command.</p>
+<pre><code class="hljs"><span class="hljs-symbol">sudo</span> docker exec -<span class="hljs-keyword">it </span>&lt;container ID&gt; <span class="hljs-keyword">bash
+</span></code></pre>
+<p>Example:</p>
+<pre><code class="hljs"><span class="hljs-symbol">sudo</span> docker exec -<span class="hljs-keyword">it </span><span class="hljs-number">3</span>aab0f9a48e2 <span class="hljs-keyword">bash
+</span></code></pre>
+<p>Check the status of the iSCSI service by using the following command.</p>
+<pre><code class="hljs">service <span class="hljs-built_in">open</span>-iscsi <span class="hljs-built_in">status</span>
+</code></pre>
+<p><strong>Install the iSCSI tools</strong></p>
+<p>You have to get the kubelet container ID using the steps mentioned in
+the above section. Once kubelet container ID is obtained, you need to
+get to the shell of this container using the following command.</p>
+<pre><code class="hljs"><span class="hljs-symbol">sudo</span> docker exec -<span class="hljs-keyword">it </span>&lt;container ID&gt; <span class="hljs-keyword">bash
+</span></code></pre>
+<p>Example:</p>
+<pre><code class="hljs"><span class="hljs-symbol">sudo</span> docker exec -<span class="hljs-keyword">it </span><span class="hljs-number">3</span>aab0f9a48e2 <span class="hljs-keyword">bash
+</span></code></pre>
+<p>Run the following commands to install and configure iSCSI service
+in the kubelet.</p>
+<pre><code class="hljs">apt-get update
+apt install -y open-iscsi
+<span class="hljs-keyword">exit</span>
+</code></pre>
+<p>You can verify the iSCSI installation from the above section.</p>
+<p><br></p>
+<hr>
+<h2><a class="anchor" aria-hidden="true" id="kubernetes-on-prem-solutions"></a><a href="#kubernetes-on-prem-solutions" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Kubernetes On-Prem Solutions</h2>
+<p><h3><a class="anchor" aria-hidden="true" id="openshift"></a>Red Hat OpenShift</h3></p>
+<p>OpenEBS can be installed using Openshift on the following Operating
+Systems. Tested OpenShift versions are 3.9 and 3.10.</p>
+<ol>
+<li>On RHEL 7</li>
+<li>On CentOS 7</li>
+</ol>
+<p><h4><a class="anchor" aria-hidden="true" id="On-RHEL"></a>On RHEL</h4></p>
+<p>Latest tested RHEL versions are 7.5, 7.6.</p>
+<p>For setting up iSCSI clients on RHEL nodes, see the [instructions above][#rhel].</p>
+<p><h4><a class="anchor" aria-hidden="true" id="On-Centos"></a>On CentOS</h4></p>
+<p>Latest tested CentOS version is CentOS 7.</p>
+<p>For setting up iSCSI clients on CentOS nodes, see the [instructions above][#centOS].</p>
+<p><br></p>
+<p><h3><a class="anchor" aria-hidden="true" id="rancher"></a>Rancher</h3></p>
+<ul>
+<li>If you are using RancherOS as the operating system for your Kubernetes cluster, you simply need to enable the iSCSI service and start it on all the hosts or nodes.</li>
+<li>If you are using Ubuntu or RHEL as the operating system for your Kubernetes cluster, you need to
+<ul>
+<li>Verify iSCSI initiators are installed on all nodes (and )</li>
+<li>Add the extra_binds under Kubelet service  in cluster YAML file to  mount the iSCSI binary and configuration inside the <code>Kubelet</code>.</li>
+</ul></li>
+</ul>
+<p><h4><a class="anchor" aria-hidden="true" id="rancher"></a>iSCSI services On RancherOS</h4></p>
+<p>To run iSCSI services, execute the following commands on each of the cluster hosts or nodes.</p>
+<pre><code class="hljs">sudo ros s <span class="hljs-keyword">enable</span> <span class="hljs-keyword">open</span>-iscsi
+sudo ros s up <span class="hljs-keyword">open</span>-iscsi
+</code></pre>
+<p><h4><a class="anchor" aria-hidden="true" id="rancher"></a>iSCSI services on RHEL or Ubuntu</h4></p>
+<p><strong>Step1:</strong> Verify iSCSI initiator is installed and services are running</p>
+<table>
+<thead>
+<tr><th>Operating system</th><th>iSCSI Package</th><th>Commands</th></tr>
+</thead>
+<tbody>
+<tr><td>RHEL / CentOS</td><td>iscsi-initiator-utils</td><td>yum install iscsi-initiator-utils -y <br />sudo systemctl enable iscsid &amp;&amp; sudo systemctl start iscsid<br />modprobe iscsi_tcp</td></tr>
+<tr><td>Ubuntu/Debian</td><td>open-iscsi</td><td>sudo apt install open-iscsi<br />sudo systemctl enable iscsid &amp;&amp; sudo systemctl start iscsid<br />modprobe iscsi_tcp</td></tr>
+</tbody>
+</table>
+<p><strong>Step2:</strong> Add extra_binds under kubelet service in cluster YAML</p>
+<p>After installing the initiator tool on your nodes, edit the YAML for your cluster, editing the kubelet configuration to mount the iSCSI binary and configuration, as shown in the sample below.</p>
+<pre><code class="hljs">services:
+    kubelet: 
+      extra_binds: 
+        - &quot;/etc/iscsi:/etc/iscsi&quot;
+        - &quot;/sbin/iscsiadm:/sbin/iscsiadm&quot;
+        - &quot;/var/lib/iscsi:/var/lib/iscsi&quot;
+        - &quot;/lib/modules&quot;
+</code></pre>
+<p><br></p>
+<p><h3><a class="anchor" aria-hidden="true" id="icp"></a>IBM Cloud
+Private (ICP)</h3></p>
+<p>OpenEBS can be installed using ICP on the following Operating Systems. Latest tested ICP versions are 2.1.0.3 and 3.1.1.</p>
+<ol>
+<li><p>On RHEL 7</p></li>
+<li><p>On Ubuntu</p></li>
+</ol>
+<p><h4><a class="anchor" aria-hidden="true" id="On-RHEL"></a>On RHEL</h4></p>
+<p>Latest tested RHEL versions are 7.5, 7.6.</p>
+<p>For setting up iSCSI clients on RHEL nodes, see the
+<a href="#rhel">instructions above</a>.</p>
+<p><h4><a class="anchor" aria-hidden="true" id="On-Ubuntu"></a>On Ubuntu</h4></p>
+<p>Latest tested Ubuntu version are Ubuntu 16.04 LTS and 18.04 LTS.</p>
+<p>For setting up iSCSI clients on Ubuntu nodes, see the
+<a href="#ubuntu">instructions above</a>.</p>
+<p><br></p>
+<h2><a class="anchor" aria-hidden="true" id="see-also"></a><a href="#see-also" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>See Also:</h2>
+<h3><a class="anchor" aria-hidden="true" id="openebs-installation-docs-next-installationhtml"></a><a href="#openebs-installation-docs-next-installationhtml" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><a href="/docs/next/installation.html">OpenEBS Installation</a></h3>
+<h3><a class="anchor" aria-hidden="true" id="openebs-architecture-docs-next-architecturehtml"></a><a href="#openebs-architecture-docs-next-architecturehtml" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><a href="/docs/next/architecture.html">OpenEBS Architecture</a></h3>
+<p><br></p>
+<hr>
+<p><br></p>
+<!-- Hotjar Tracking Code for https://docs.openebs.io -->
+<script>
+   (function(h,o,t,j,a,r){
+       h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+       h._hjSettings={hjid:785693,hjsv:6};
+       a=o.getElementsByTagName('head')[0];
+       r=o.createElement('script');r.async=1;
+       r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+       a.appendChild(r);
+   })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-92076314-12"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-92076314-12');
+</script>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="quickstart.html">← Quickstart Guide to OpenEBS</a><a class="docs-next button" href="installation.html">Installing OpenEBS →</a></div></div></div><nav class="onPageNav"><div id="global-on-page-heading"><h4 style="font-weight:400;">On this page:</h4><ul class="toc-headings"><li><a href="#linux-platforms">Linux platforms</a></li><li><a href="#managed-kubernetes-services-on-public-cloud">Managed Kubernetes Services on Public Cloud</a></li><li><a href="#kubernetes-on-prem-solutions">Kubernetes On-Prem Solutions</a></li><li><a href="#see-also">See Also:</a><ul class="toc-headings"><li><a href="#openebs-installation-docs-next-installationhtml">OpenEBS Installation</a></li><li><a href="#openebs-architecture-docs-next-architecturehtml">OpenEBS Architecture</a></li></ul></li></ul></div></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div><br/><div><a href="https://openebs.io" target="_blank"><img src="/docs/assets/openebs-logo.svg" alt="" width="130" height="110"/></a></div><div><a href="https://slack.openebs.io">Get in touch with OpenEBS community via Slack</a></div></div><div><br/><div><a href="https://mayadata.io" target="_blank"><img src="https://openebs.io/assets/images/mayadata.svg" alt="mayadata.io" width="130" height="110"/></a></div><div><a href="https://app.mayaonline.io">Get OpenEBS support through MayaOnline</a></div></div></section><section class="copyright"></section></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+              var search = docsearch({
+                
+                apiKey: 'dc657dfe30f42f228671f557f49ced7a',
+                indexName: 'openebs',
+                inputSelector: '#search_input_react'
+              });
+            </script><script>(function(){ window.ldfdr = window.ldfdr || {}; (function(d, s, ss, fs){ fs = d.getElementsByTagName(s)[0]; function ce(src){ var cs = d.createElement(s); cs.async=1; cs.src = src; setTimeout(function(){fs.parentNode.insertBefore(cs,fs)}, 1); } ce(ss); })(document, 'script', 'https://lftracker.leadfeeder.com/lftracker_v1_bMwm7E2pzw4gOZyA.js'); })();</script></body></html>

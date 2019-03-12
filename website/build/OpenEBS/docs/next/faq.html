@@ -1,0 +1,370 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>OpenEBS FAQ · </title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta property="og:title" content="OpenEBS FAQ · "/><meta property="og:type" content="website"/><meta property="og:url" content="https://docs.openebs.io/index.html"/><meta property="og:description" content="------"/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/img/favicon.ico"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><link rel="stylesheet" href="/css/code-blocks-buttons.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script><script type="text/javascript" src="/js/code-blocks-buttons.js"></script><link rel="stylesheet" href="/css/main.css"/></head><body class="sideNavVisible doc separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img id="logo" src="/img/OpenEBS-logo.svg" alt=""/><img class="logo-text" src="/img/openebs-docs-logo.svg" alt=""/><h2 class="headerTitle"></h2></a><div class="dropdown"><span class="ver-link">0.8.1</span><span class="ver-link-span"><i class="arrow down"></i></span><div class="dropdown-menu" id="versions-list" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" id="0" href="https://docs.openebs.io">0.8.1</a><a class="dropdown-item" id="1" href="https://v08-docs.openebs.io">0.8.0</a><a class="dropdown-item" id="2" href="https://v07-docs.openebs.io">0.7.0</a><a class="dropdown-item" id="3" href="https://v06-docs.openebs.io">0.6.0</a><a class="dropdown-item" id="4" href="https://v05-docs.openebs.io">0.5.0</a></div></div><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="navSearchWrapper reactNavSearchWrapper"><input type="text" id="search_input_react" placeholder="Search" title="Search"/></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><a href="https://app.mayaonline.io" target="_blank" rel="noreferrer noopener"><div class="float rotate"><img src="../../../../../../docs/assets/mo-logo.png" alt="MayaOnline" height="45px" width="45px" title="Connect to MayaOnline"/></div></a><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Advanced Topics</span></h2></div><div class="navGroups"><div class="navGroup navGroupActive"><h3 id="Introduction" class="languages-menu">Introduction</h3><div class="hide" id="Introduction dropdown-content-div"><ul id="languages-dropdown-items"><li class="navListItem"><a class="navItem" href="/docs/next/overview.html">Overview</a></li><li class="navListItem"><a class="navItem" href="/docs/next/features.html">Features and Benefits</a></li><li class="navListItem"><a class="navItem" href="/docs/next/usecases.html">Use cases</a></li><li class="navListItem"><a class="navItem" href="/docs/next/releases.html">Releases</a></li><li class="navListItem"><a class="navItem" href="/docs/next/support.html">Support</a></li><li class="navListItem"><a class="navItem" href="/docs/next/mayaonline.html">MayaOnline</a></li></ul></div></div><div class="navGroup navGroupActive"><h3 id="Concepts" class="languages-menu">Concepts</h3><div class="hide" id="Concepts dropdown-content-div"><ul id="languages-dropdown-items"><li class="navListItem"><a class="navItem" href="/docs/next/cas.html">Container Attached Storage</a></li><li class="navListItem"><a class="navItem" href="/docs/next/architecture.html">OpenEBS Architecture</a></li><li class="navListItem"><a class="navItem" href="/docs/next/casengines.html">CAS Engines (cStor &amp; Jiva)</a></li><li class="navListItem"><a class="navItem" href="/docs/next/cstor.html">cStor</a></li><li class="navListItem"><a class="navItem" href="/docs/next/jiva.html">Jiva</a></li></ul></div></div><div class="navGroup navGroupActive"><h3 id="User Guides" class="languages-menu">User Guides</h3><div class="hide" id="User Guides dropdown-content-div"><ul id="languages-dropdown-items"><li class="navListItem"><a class="navItem" href="/docs/next/quickstart.html">Quickstart</a></li><li class="navListItem"><a class="navItem" href="/docs/next/prerequisites.html">Prerequisites</a></li><li class="navListItem"><a class="navItem" href="/docs/next/installation.html">Installation</a></li><li class="navListItem"><a class="navItem" href="/docs/next/configurepools.html">Configure StoragePools</a></li><li class="navListItem"><a class="navItem" href="/docs/next/configuresc.html">Configuring StorageClasses</a></li><li class="navListItem"><a class="navItem" href="/docs/next/provisionvols.html">Provisioning Volumes</a></li><li class="navListItem"><a class="navItem" href="/docs/next/operations.html">Day 2 Operations</a></li><li class="navListItem"><a class="navItem" href="/docs/next/jivaguide.html">Jiva user guide</a></li><li class="navListItem"><a class="navItem" href="/docs/next/mayactl.html">Mayactl</a></li><li class="navListItem"><a class="navItem" href="/docs/next/backup.html">Backup and Restore</a></li><li class="navListItem"><a class="navItem" href="/docs/next/upgrade.html">Upgrade</a></li><li class="navListItem"><a class="navItem" href="/docs/next/uninstall.html">Uninstall</a></li></ul></div></div><div class="navGroup navGroupActive"><h3 id="Stateful Applications" class="languages-menu">Stateful Applications</h3><div class="hide" id="Stateful Applications dropdown-content-div"><ul id="languages-dropdown-items"><li class="navListItem"><a class="navItem" href="/docs/next/mysql.html">RDS like MySQL</a></li><li class="navListItem"><a class="navItem" href="/docs/next/prometheus.html">Prometheus</a></li><li class="navListItem"><a class="navItem" href="/docs/next/minio.html">Minio</a></li><li class="navListItem"><a class="navItem" href="/docs/next/gitlab.html">GitLab</a></li><li class="navListItem"><a class="navItem" href="/docs/next/percona.html">Percona</a></li><li class="navListItem"><a class="navItem" href="/docs/next/elasticsearch.html">ElasticSearch</a></li><li class="navListItem"><a class="navItem" href="/docs/next/cassandra.html">Cassandra</a></li><li class="navListItem"><a class="navItem" href="/docs/next/nuodb.html">NuoDB</a></li><li class="navListItem"><a class="navItem" href="/docs/next/postgres.html">PostgreSQL</a></li><li class="navListItem"><a class="navItem" href="/docs/next/redis.html">Redis</a></li><li class="navListItem"><a class="navItem" href="/docs/next/mongo.html">MongoDB</a></li><li class="navListItem"><a class="navItem" href="/docs/next/rwm.html">Read-Write-Many (RWM)</a></li></ul></div></div><div class="navGroup navGroupActive"><h3 id="Advanced Topics" class="languages-menu">Advanced Topics</h3><div class="hide" id="Advanced Topics dropdown-content-div"><ul id="languages-dropdown-items"><li class="navListItem"><a class="navItem" href="/docs/next/performance.html">Performance testing</a></li><li class="navListItem navListItemActive"><a class="navItem navItemActive" href="/docs/next/faq.html">FAQs</a></li><li class="navListItem"><a class="navItem" href="/docs/next/k8supgrades.html">Kubernetes upgrades</a></li><li class="navListItem"><a class="navItem" href="/docs/next/troubleshooting.html">Troubleshooting</a></li></ul></div></div></div></section></div><script>
+          var toggler = document.getElementById('navToggler');
+          var nav = document.getElementById('docsNav');
+          toggler.onclick = function() {
+            nav.classList.toggle('docsSliderActive');
+          };
+        </script><script>
+            var navGroupElem = document.getElementsByClassName("hide");
+            for(var k=0; k<navGroupElem.length; k++){
+              if (navGroupElem[k].innerHTML.indexOf("navItem navItemActive") != -1) {
+                document.getElementById(navGroupElem[k].id).className = "visible";
+              }
+            }
+            var elem = document.getElementsByClassName("languages-menu");
+            for (var i=0; i < elem.length; i++){
+              document.getElementById(String(elem[i].id)).addEventListener("click", function() {
+                sessionStorage.setItem("name", document.getElementById(this.id+" dropdown-content-div").className);
+                sessionStorage.setItem("Id", document.getElementById(this.id).id);
+                if ( document.getElementById(this.id+" dropdown-content-div").className == "hide") {
+                  document.getElementById(this.id+" dropdown-content-div").className = "visible";
+                }
+                else {
+                  document.getElementById(this.id+" dropdown-content-div").className = "hide";
+                }
+            })};</script><script>
+          var SelectedItemClassName = sessionStorage.getItem("name");
+          var SelectedItemId = sessionStorage.getItem("Id");
+          if (SelectedItemClassName == "hide"){
+            document.getElementById( SelectedItemId +" dropdown-content-div").className = "visible";
+          }
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/openebs/openebs-docs/edit/staging/docs/faq.md" target="_blank" rel="noreferrer noopener">Edit</a><a class="edit-page-link button" href="https://github.com/openebs/openebs/issues/new/" target="_blank" rel="noreferrer noopener">Create An Issue</a><h1>OpenEBS FAQ</h1></header><article><div><span><hr>
+<p><br></p>
+<p><font size="6" id="general">General</font></p>
+<p><a href="/docs/next/faq.html#what-is-most-distinctive-about-the-openebs-architecture">What is most distinctive about the OpenEBS architecture?</a></p>
+<p><a href="/docs/next/faq.html#why-did-you-choose-iscsi-does-it-introduce-latency-and-decrease-performance">Why did you choose iSCSI? Does it introduce latency and decrease performance? </a></p>
+<p><a href="/docs/next/faq.html#where-is-my-data-stored-and-how-can-i-see-that">Where is my data stored and how can I see that?</a></p>
+<p><a href="/docs/next/faq.html#what-changes-are-needed-for-kubernetes-or-other-subsystems-to-leverage-openebs">What changes are needed for Kubernetes or other subsystems to leverage OpenEBS?</a></p>
+<p><a href="/docs/next/faq.html#how-do-you-get-started-and-what-is-the-typical-trial-deployment">How do you get started and what is the typical trial deployment?</a></p>
+<p><a href="/docs/next/faq.html#what-are-the-most-common-use-case-and-most-common-workloads">What are the most common use case and most common workloads?</a></p>
+<p><a href="/docs/next/faq.html#what-is-the-default-openebs-reclaim-policy">What is the default OpenEBS Reclaim policy?</a></p>
+<p><font size="6">Data Protection</font></p>
+<p><a href="/docs/next/faq.html#how-is-data-protected-what-happens-when-a-host-client-workload-or-a-data-center-fails">How is data protected? What happens when a host, client workload, or a data center fails?</a></p>
+<p><a href="/docs/next/faq.html#how-does-openebs-provide-high-availability-for-stateful-workloads">How does OpenEBS provide high availability for stateful workloads?</a></p>
+<p><font size="6">Miscellaneous</font></p>
+<p><a href="/docs/next/faq.html#what-changes-must-be-made-to-the-containers-on-which-openebs-runs">What changes must be made to the containers on which OpenEBS runs?</a></p>
+<p><a href="/docs/next/faq.html#what-are-the-minimum-requirements-and-supported-container-orchestrators">What are the minimum requirements and supported container orchestrators?</a></p>
+<p><a href="/docs/next/faq.html#why-would-you-use-openebs-on-ebs">Why would you use OpenEBS on EBS?</a></p>
+<p><a href="/docs/next/faq.html#can-i-use-the-same-pvc-for-multiple-pods">Can I use the same PVC for multiple Pods?</a></p>
+<p><a href="/docs/next/faq.html#warning-messages-while-launching-pvc">Warning Messages while Launching PVC</a></p>
+<p><a href="/docs/next/faq.html#why-openebs-logical-size-and-openebs-actual-used-are-showing-in-different-size">Why <em>OpenEBS_logical_size</em> and <em>OpenEBS_actual_used</em> are showing in different size?</a></p>
+<p><a href="/docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume">What must be the disk mount status on Node for provisioning OpenEBS volume?</a></p>
+<p><a href="/docs/next/faq.html#how-openebs-detects-disks-for-creating-cstor-pool">How OpenEBS detects disks for creating cStor Pool?</a></p>
+<p><a href="#provision-pvc-higher-than-physical-sapce">Can I provision OpenEBS volume if the request in PVC is more than the available physical capacity of the pools in the Storage Nodes?</a></p>
+<p><a href="/docs/next/faq.html#what-is-the-difference-between-cstor-pool-creation-using-manual-method-and-auto-method">What is the difference between cStor Pool creation using manual method and auto method?</a></p>
+<p><a href="/docs/next/faq.html#how-the-data-is-distributed-when-cstor-maxpools-count-is-3-and-replicacount-as-2-in-storageclass">How the data is distributed when cStor maxPools count is 3 and replicaCount as 2 in StorageClass?</a></p>
+<p><a href="/docs/next/faq.html#how-to-setup-default-podsecuritypolicy-to-allow-the-openebs-pods-to-work-with-all-permissions">How to setup default PodSecurityPolicy to allow the OpenEBS pods to work with all permissions?</a></p>
+<p><a href="#create-cstor-volume-single-disk-pool">How to create a cStor volume on single cStor disk pool?</a></p>
+<p><a href="#more-info-pool-cvr-cv-disk">How to get the details of cStor Pool,cStor Volume Replica ,Cstor Volumes and Disks ?</a></p>
+<p><a href="#encryption-rest">Does OpenEBS support encryption at rest?</a></p>
+<p><br><br></p>
+<hr>
+<p><font size="6" color="blue">General</font></p>
+<hr>
+<h3><a class="anchor" aria-hidden="true" id="what-is-most-distinctive-about-the-openebs-architecture"></a><a href="#what-is-most-distinctive-about-the-openebs-architecture" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>What is most distinctive about the OpenEBS architecture?</h3>
+<p>The OpenEBS architecture is an example of Container Attached Storage (CAS). These approaches containerize the storage controller, called IO controllers, and underlying storage targets, called “replicas”, allowing an orchestrator such as Kubernetes to automate the management of storage. Benefits include automation of management, a delegation of responsibility to developer teams, and the granularity of the storage policies which in turn can improve performance.</p>
+<p><a href="#top">Go to top</a></p>
+<h3><a class="anchor" aria-hidden="true" id="why-did-you-choose-iscsi-does-it-introduce-latency-and-decrease-performance"></a><a href="#why-did-you-choose-iscsi-does-it-introduce-latency-and-decrease-performance" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Why did you choose iSCSI? Does it introduce latency and decrease performance?</h3>
+<p>We at OpenEBS strive to make OpenEBS simple to use using Kubernetes as much as possible to manage OpenEBS itself. iSCSI allows you to be more resilient in cases where the workload and the controller are not on the same host. In other words, the OpenEBS user or architect will not suffer an outage when the storage IO controller is not scheduled locally to the workload in need of storage. OpenEBS does a variety of things to improve performance elsewhere in the stack. More is to come via the cStor storage engine in order to have this level of flexibility.</p>
+<p><a href="#top">Go to top</a></p>
+<h3><a class="anchor" aria-hidden="true" id="where-is-my-data-stored-and-how-can-i-see-that"></a><a href="#where-is-my-data-stored-and-how-can-i-see-that" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Where is my data stored and how can I see that?</h3>
+<p>OpenEBS stores data in a configurable number of replicas. These are placed to maximize resiliency. For example, they are placed in different racks or availability zones.</p>
+<p>To determine exactly where your data is physically stored, you can run the following kubectl commands.</p>
+<ul>
+<li>Run <code>kubectl get pvc</code> to fetch the volume name. The volume name looks like: <em>pvc-ee171da3-07d5-11e8-a5be-42010a8001be</em>.</li>
+<li>For each volume, you will notice one IO controller pod and one or more replicas (as per the storage class configuration). For the above PVC, run the following command to get the IO controller and replica pods.</li>
+</ul>
+<pre><code class="hljs">kubectl get pods --all-namespaces | grep pvc-ee171da3<span class="hljs-number">-07</span>d5<span class="hljs-number">-11e8</span>-a5be<span class="hljs-number">-42010</span>a8001be
+</code></pre>
+<p>The output displays the following pods.</p>
+<pre><code class="hljs"> IO Controller: pvc-ee171da3<span class="hljs-string">-07</span>d5<span class="hljs-string">-11</span>e8-a5be<span class="hljs-string">-42010</span>a8001be-ctrl<span class="hljs-string">-6798475</span>d8c<span class="hljs-string">-7</span>dcqd
+ Replica 1: pvc-ee171da3<span class="hljs-string">-07</span>d5<span class="hljs-string">-11</span>e8-a5be<span class="hljs-string">-42010</span>a8001be-rep<span class="hljs-string">-86</span>f8b8c758-hls6s     
+ Replica 2: pvc-ee171da3<span class="hljs-string">-07</span>d5<span class="hljs-string">-11</span>e8-a5be<span class="hljs-string">-42010</span>a8001be-rep<span class="hljs-string">-86</span>f8b8c758-tr28f  
+</code></pre>
+<ul>
+<li>To check the location where the data is stored, get the details of the replica pod. For getting the details of Replica 1 above, use the <code>kubectl get pod -o yaml pvc-ee171da3-07d5-11e8-a5be-42010a8001be-rep-86f8b8c758-hls6s</code> command. Check the volumes section.</li>
+</ul>
+<pre><code class="hljs"><span class="hljs-symbol">volumes:</span>
+  - hostPath:
+<span class="hljs-symbol">      path:</span> <span class="hljs-meta-keyword">/var/</span>openebs/pvc-ee171da3<span class="hljs-number">-07</span>d5<span class="hljs-number">-11e8</span>-a5be<span class="hljs-number">-42010</span>a8001be
+<span class="hljs-symbol">      type:</span> <span class="hljs-string">""</span>
+<span class="hljs-symbol">    name:</span> openebs
+</code></pre>
+<p><a href="#top">Go to top</a></p>
+<h3><a class="anchor" aria-hidden="true" id="what-changes-are-needed-for-kubernetes-or-other-subsystems-to-leverage-openebs"></a><a href="#what-changes-are-needed-for-kubernetes-or-other-subsystems-to-leverage-openebs" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>What changes are needed for Kubernetes or other subsystems to leverage OpenEBS?</h3>
+<p>One of the major differences of OpenEBS versus other similar approaches is that no changes are required to run OpenEBS on Kubernetes. However, OpenEBS itself is a workload and the easy management of it is crucial especially as the Container Attached Storage (CAS) approach entails putting containers that are IO controller and replica controllers.</p>
+<p>You can access the OpenEBS IO controller via iSCSI, exposed as a service. The nodes require iSCSI initiator to be installed. In case the kubelet is running in a container for example, as in the case of Rancher and so on, the iSCSI initiator should be installed within the kubelet container.</p>
+<p><a href="#top">Go to top</a></p>
+<h3><a class="anchor" aria-hidden="true" id="how-do-you-get-started-and-what-is-the-typical-trial-deployment"></a><a href="#how-do-you-get-started-and-what-is-the-typical-trial-deployment" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>How do you get started and what is the typical trial deployment?</h3>
+<p>If you have a Kubernetes environment, you can deploy OpenEBS using the following command.</p>
+<p><code>kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml</code></p>
+<p>You can then begin running a workload against OpenEBS. There is a large and growing number of workload that have storage classes that use OpenEBS. You need not use these specific storage classes. However, they may be helpful as they save time and allow for per workload customization. You can join the Slack channel at  <a href="https://openebs-community.slack.com">https://openebs-community.slack.com</a>.</p>
+<p>Register at MayaOnline.io to receive free monitoring and a single view of stateful workloads of your Kubernetes environment. MayaOnline incorporates customized versions of Prometheus for monitoring, Grafana for metrics visualization and Scope to see the overall environment, and our MuleBot for ChatOps integration and more.</p>
+<p><a href="#top">Go to top</a></p>
+<h3><a class="anchor" aria-hidden="true" id="what-are-the-most-common-use-case-and-most-common-workloads"></a><a href="#what-are-the-most-common-use-case-and-most-common-workloads" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>What are the most common use case and most common workloads?</h3>
+<p>Any stateful workload running on KuberWhat is most distinctive about the OpenEBS architecture?</p>
+<p>The OpenEBS architecture is an example of Container Attached Storage (CAS). These approaches containerize the storage controller, called IO controllers, and underlying storage targets, called “replicas”, allowing an orchestrator such as Kubernetes to automate the management of storage. Benefits include automation of management, delegation of responsibility to developer teams, and the granularity of the storage policies which in turn can improve performance.</p>
+<p><a href="#top">Go to top</a></p>
+<h3><a class="anchor" aria-hidden="true" id="what-is-the-default-openebs-reclaim-policy"></a><a href="#what-is-the-default-openebs-reclaim-policy" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>What is the default OpenEBS Reclaim policy?</h3>
+<p>The default retention is the same used by K8s. For dynamically provisioned PersistentVolumes, the default reclaim policy is “Delete”. This means that a dynamically provisioned volume is automatically deleted when a user deletes the corresponding PersistentVolumeClaim. In case of cStor volumes, data was being deleted as well. For jiva, from 0.8.0 version, the data is deleted via scrub jobs.</p>
+<p><a href="#top">Go to top</a></p>
+<p><font size="6" color="orange">Data Protection</font></p>
+<hr>
+<h3><a class="anchor" aria-hidden="true" id="how-is-data-protected-what-happens-when-a-host-client-workload-or-a-data-center-fails"></a><a href="#how-is-data-protected-what-happens-when-a-host-client-workload-or-a-data-center-fails" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>How is data protected? What happens when a host, client workload, or a data center fails?</h3>
+<p>Kubernetes provides many ways to enable resilience. OpenEBS leverages these wherever possible.  For example, say the IO container that has the iSCSI target fails. Well, it is spun back up by Kubernetes. The same applies to the underlying replica containers, where the data is actually stored. They are spun back up by Kubernetes. Now, the point of replicas is to ensure that when one or more of these replicas are being respun and then repopulated in the background by OpenEBS, the client applications still run.  OpenEBS takes a simple approach to ensuring that multiple replicas can be accessed by an IO controller using a configurable quorum or the minimum number of replica requirements. In addition, our new cStor checks for silent data corruption and in some cases can fix it in the background.  Silent data corruption, unfortunately, can occur from poorly engineered hardware and from other underlying conditions including those that your cloud provider is unlikely to report or identify.</p>
+<p><a href="#top">Go to top</a></p>
+<h3><a class="anchor" aria-hidden="true" id="how-does-openebs-provide-high-availability-for-stateful-workloads"></a><a href="#how-does-openebs-provide-high-availability-for-stateful-workloads" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>How does OpenEBS provide high availability for stateful workloads?</h3>
+<p>An OpenEBS Jiva volume is a controller deployed during OpenEBS installation. Volume replicas are defined by the parameter that you set. The controller is an iSCSI target while the replicas play the role of a disk. The controller exposes the iSCSI target while the actual data is written. The controller and each replica run inside a dedicated container. An OpenEBS Jiva volume controller exists as a single instance, but there can be multiple instances of OpenEBS Jiva volume replicas. Persistent data is synchronized between replicas. OpenEBS Jiva volume high availability is based on various scenarios as explained in the following sections.</p>
+<p><strong>Note:</strong> Each replica is scheduled in a unique K8s node, and a K8s node never has two replicas of one OpenEBS volume.</p>
+<ul>
+<li><p><strong>What happens when an OpenEBS volume controller pod crashes?</strong></p>
+<p>Kubernetes automatically re-schedules the controller as a new Kubernetes pod. Policies are in place that ensures faster rescheduling.</p></li>
+<li><p><strong>What happens when a K8s node that hosts OpenEBS volume controller goes offline?</strong></p>
+<p>The controller is automatically re-scheduled as a new Kubernetes pod. Policies are in place that ensures faster rescheduling. If the Kubernetes node is unavailable, the controller gets scheduled on one of the available nodes.</p></li>
+<li><p><strong>What happens when an OpenEBS volume replica pod crashes?</strong></p>
+<p>The replica is automatically rescheduled as a new Kubernetes pod when an OpenEBS volume replica pod crashes for reasons other than node not-ready and node unreachable. The replica may or may not be rescheduled on the same K8s node. There is data loss with this newly scheduled replica if it gets rescheduled on a different K8s node.</p></li>
+<li><p><strong>What happens when a K8s node that hosts OpenEBS volume replica goes offline?</strong></p>
+<p>There is no storage downtime as the other available replica displays inputs/outputs. Policies are in place that does not allow rescheduling of crashed replica (as the replica is tied to a node’s resources) on any other node.</p></li>
+</ul>
+<p><a href="#top">Go to top</a></p>
+<p><font size="6" color="red">Miscellaneous</font></p>
+<hr>
+<h3><a class="anchor" aria-hidden="true" id="what-changes-must-be-made-to-the-containers-on-which-openebs-runs"></a><a href="#what-changes-must-be-made-to-the-containers-on-which-openebs-runs" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>What changes must be made to the containers on which OpenEBS runs?</h3>
+<p>OpenEBS has been engineered so that it does not require any changes to the containers on which it runs. Similarly, Kubernetes itself does not require to be altered and no additional external orchestrator is required. However, the workloads that need storage must be running on hosts that have iSCSI initiators, which is a default configuration in almost all operating systems.</p>
+<p><a href="#top">Go to top</a></p>
+<h3><a class="anchor" aria-hidden="true" id="what-are-the-minimum-requirements-and-supported-container-orchestrators"></a><a href="#what-are-the-minimum-requirements-and-supported-container-orchestrators" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>What are the minimum requirements and supported container orchestrators?</h3>
+<p>OpenEBS is currently tightly integrated into Kubernetes. Support for Docker Swarm is something OpenEBS is looking at in future releases.</p>
+<p>The system requirements depend on the number of volumes being provisioned and can horizontally scale with the number of nodes in the Kubernetes cluster. The OpenEBS control plane comprises of minimum two pods i.e. apiserver and dynamic provisioner. You can run these using 2GB RAM and 2 CPUs.</p>
+<p>Each volume will spin up IO controller and replica pods. Each of these will require 1GB RAM and 0.5 CPU by default.</p>
+<p>For enabling high availability, OpenEBS recommends having a minimum of 3 nodes in the Kubernetes cluster.</p>
+<p><a href="#top">Go to top</a></p>
+<h3><a class="anchor" aria-hidden="true" id="why-would-you-use-openebs-on-ebs"></a><a href="#why-would-you-use-openebs-on-ebs" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Why would you use OpenEBS on EBS?</h3>
+<p>There are at least four common reasons for running OpenEBS on Amazon EBS that are listed as follows:</p>
+<p>Attach / Detach: The attach / detach process can slow the environment operations dependent on EBS.</p>
+<p>No volume management needed: OpenEBS removes the need for volume management, enabling the combination of multiple underlying EBS volumes without the user needing to run LVM or other volume manager. This saves time and reduces operational complexity.</p>
+<p>Expansion and inclusion of NVMe: OpenEBS allows users to add additional capacity without experiencing downtime. This online addition of capacity can include NVMe and SSD instances from cloud providers or deployed in physical servers. This means that as performance requirements increase, or decrease, you can use Kubernetes via storage policies to instruct OpenEBS to change capacity accordingly.</p>
+<p>Other enterprise capabilities: OpenEBS adds other capabilities such as extremely efficient snapshots and clones as well as forthcoming capabilities such as encryption. Snapshots and clones facilitate much more efficient CI/CD workflows as zero space copies of databases and other stateful workloads can be used in these and other workflows, improving these without incurring additional storage space or administrative effort. The snapshot capabilities can also be used for replication. As of February 2018 these replication capabilities are under development.</p>
+<p><a href="#top">Go to top</a></p>
+<h3><a class="anchor" aria-hidden="true" id="can-i-use-the-same-pvc-for-multiple-pods"></a><a href="#can-i-use-the-same-pvc-for-multiple-pods" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Can I use the same PVC for multiple Pods?</h3>
+<p>Jiva and cStor volumes are exposed via block storage using iSCSI. Currently, only RWO is supported.</p>
+<p><a href="#top">Go to top</a></p>
+<h3><a class="anchor" aria-hidden="true" id="warning-messages-while-launching-pvc"></a><a href="#warning-messages-while-launching-pvc" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Warning Messages while Launching PVC</h3>
+<p>If the following warning messages are displayed while launching an application, you can ignore these messages. These message are displayed only while launching an application pod initially and gets cleared on the subsequent attempt.What is most distinctive about the OpenEBS architecture?</p>
+<p>The OpenEBS architecture is an example of Container Attached Storage (CAS). These approaches containerize the storage controller, called IO controllers, and underlying storage targets, called “replicas”, allowing an orchestrator such as Kubernetes to automate the management of storage. Benefits include automation of management, delegation of responsibility to developer teams, and the granularity of the storage policies which in turn can improve performance.</p>
+<p><a href="#top">Go to top</a></p>
+<h3><a class="anchor" aria-hidden="true" id="why-openebs-logical-size-and-openebs-actual-used-are-showing-in-different-size"></a><a href="#why-openebs-logical-size-and-openebs-actual-used-are-showing-in-different-size" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Why <em>OpenEBS_logical_size</em> and <em>OpenEBS_actual_used</em> are showing in different size?</h3>
+<p>The <code>OpenEBS_logical_size</code> and <code>OpenEBS_actual_used</code> parameters will start showing different sizes when there are replica node restarts and internal snapshots are created for synchronizing replicas.</p>
+<p><a href="#top">Go to top</a></p>
+<h3><a class="anchor" aria-hidden="true" id="what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume"></a><a href="#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>What must be the disk mount status on Node for provisioning OpenEBS volume?</h3>
+<p>OpenEBS have two storage Engines, Jiva and cStor which can be used to provision volume.</p>
+<p>Jiva requires the disk to be mounted (i.e., attached, formatted with a filesystem and mounted).</p>
+<p>cStor can consume disks that are attached (are visible to OS as SCSI devices) to the Nodes and no need of format these disks. This means disks should not have any filesystem and it should be unmounted on the Node. It is optional to wipe out the data from the disk if you use existing disks for cStor pool creation.</p>
+<p><a href="#top">Go to top</a></p>
+<h3><a class="anchor" aria-hidden="true" id="how-openebs-detects-disks-for-creating-cstor-pool"></a><a href="#how-openebs-detects-disks-for-creating-cstor-pool" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>How OpenEBS detects disks for creating cStor Pool?</h3>
+<p>Any block disks available on the node (that can be listed with say <code>lsblk</code>) will be discovered by OpenEBS.
+Node Disk Manager(NDM) forms the DISK CRs in the following way</p>
+<ul>
+<li>Scan the list of disks that are unmounted</li>
+<li>Filter out the OS disks</li>
+<li>Filter out any other disk patterns that are mentioned in <code>openebs-operator.yaml</code>.</li>
+</ul>
+<p>NDM do some filters on the disks to exclude, for example boot disk.
+NDM is excluding following device path to avoid from creating cStor pools. This configuration is added in <code>openebs-ndm-config</code> under Configmap in <code>openebs-operator.yaml</code>.</p>
+<pre><code class="hljs"><span class="hljs-regexp">/dev/</span>loop - loop devices.
+<span class="hljs-regexp">/dev/</span>fd - <span class="hljs-keyword">file</span> descriptors.
+<span class="hljs-regexp">/dev/</span>sr - CD-ROM devices.
+<span class="hljs-regexp">/dev/</span>ram - ramdisks.
+<span class="hljs-regexp">/dev/</span>dm -lvm.
+<span class="hljs-regexp">/dev/m</span>d -multiple device ( software RAID devices).
+</code></pre>
+<p>It is also possible to customize by adding more disk types associated with your nodes. For example, used disks, unwanted disks and so on. Following is the default filters added in <code>openebs-operator.yaml</code>. This change must be done in the 'openebs-operator.yaml' file that you have downloaded before OpenEBS installation.</p>
+<p><code>exclude: &quot;loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-,/dev/md&quot;</code></p>
+<p>Example:</p>
+<pre><code class="hljs">  filterconfigs:
+    - key: path-filter
+      name: path<span class="hljs-built_in"> filter
+</span>      state: <span class="hljs-literal">true</span>
+      include: <span class="hljs-string">""</span>
+      exclude: <span class="hljs-string">"loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-,/dev/md"</span>
+</code></pre>
+<p><a href="#top">Go to top</a></p>
+<p><h3><a class="anchor" aria-hidden="true" id="provision-pvc-higher-than-physical-sapce"></a>Can I provision OpenEBS volume if the request in PVC is more than the available physical capacity of the pools in the Storage Nodes?</h3></p>
+<p>As of 0.8.0, the user is allowed to create PVCs that cross the available capacity of the pools in the Nodes. In the future release, it will validate with an option <code>overProvisioning=false</code>, the PVC request should be denied if there is not enough available capacity to provision the volume.</p>
+<p><a href="#top">Go to top</a></p>
+<h3><a class="anchor" aria-hidden="true" id="what-is-the-difference-between-cstor-pool-creation-using-manual-method-and-auto-method"></a><a href="#what-is-the-difference-between-cstor-pool-creation-using-manual-method-and-auto-method" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>What is the difference between cStor Pool creation using manual method and auto method?</h3>
+<p>By using manual method, you must give the selected disk name which is listed by NDM. This details has to be entered in the StoragePoolClaim YAML under <code>diskList</code>. See <a href="/docs/next/setupstoragepools.html#by-using-manual-method">storage pool</a> for more info.
+It is also possible to change <code>maxPools</code> count and <code>poolType</code> in the StoragePoolClaim YAML.
+Consider you have 4 nodes with 2 disks each. You can select <code>maxPools</code> count as 3, then cStor pool will create in any 3 nodes out of 4. The remaining disks belongs to 4th Node can be used for horizontal scale up in future.
+Advantage is that there is no restriction in the number of disks for the creation of cStor storage pool using <code>striped</code> or <code>mirrored</code> Type.</p>
+<p>By auto method, its not need to provide the disk details in the StoragePoolClaim YAML. You have to specify <code>maxPools</code> count to limit the storage pool creation in OpenEBS cluster and <code>poolType</code> for the type of storage pool such as Mirrored or Striped.  See <a href="/docs/next/setupstoragepools.html#by-using-auto-method">storage pool</a> for more info.</p>
+<p>But the following are the limitations with this approach.</p>
+<ol>
+<li>For Striped pool, it will take only one disk per Node even Node have multiple disks.</li>
+<li>For Mirrored pool, it will take only 2 disks attached per Node even Node have multiple disks.</li>
+</ol>
+<p>Consider you have 4 nodes with 4 disks each. If you set <code>maxPools</code> as 3 and <code>poolType</code> as <code>striped</code>, then Striped pool will created with Single disk on 3 Nodes out of 4 Nodes.
+If you set <code>maxPools</code> as 3 and <code>poolType</code> as <code>mirrored</code>, then Mirrored cStor pool will create with single Mirrored pool with 2 disks on 3 Nodes out of 4 Nodes.</p>
+<p><a href="#top">Go to top</a></p>
+<h3><a class="anchor" aria-hidden="true" id="how-the-data-is-distributed-when-cstor-maxpools-count-is-3-and-replicacount-as-2-in-storageclass"></a><a href="#how-the-data-is-distributed-when-cstor-maxpools-count-is-3-and-replicacount-as-2-in-storageclass" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>How the data is distributed when cStor maxPools count is 3 and replicaCount as 2 in StorageClass?</h3>
+<p>If <code>maxPool</code> count is 3 in StoragePoolClaim, then 3 cStor storage pool will create if it meet the required number of Nodes,say 3 in this example.
+If <code>replicaCount</code> is 2 in StorageClass, then 2 OpenEBS volume will create on the top of any 2 cStor storage pool out of 3.</p>
+<p><a href="#top">Go to top</a></p>
+<h3><a class="anchor" aria-hidden="true" id="how-to-setup-default-podsecuritypolicy-to-allow-the-openebs-pods-to-work-with-all-permissions"></a><a href="#how-to-setup-default-podsecuritypolicy-to-allow-the-openebs-pods-to-work-with-all-permissions" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>How to setup default PodSecurityPolicy to allow the OpenEBS pods to work with all permissions?</h3>
+<p>Apply the following YAML in your cluster.</p>
+<ul>
+<li><p>Create a Privileged PSP</p>
+<pre><code class="hljs"><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">extensions/v1beta1</span>
+<span class="hljs-attr">kind:</span> <span class="hljs-string">PodSecurityPolicy</span>
+<span class="hljs-attr"> metadata:</span>
+<span class="hljs-attr">   name:</span> <span class="hljs-string">privileged</span>
+<span class="hljs-attr">   annotations:</span>
+     <span class="hljs-string">seccomp.security.alpha.kubernetes.io/allowedProfileNames:</span> <span class="hljs-string">'*'</span>
+<span class="hljs-attr"> spec:</span>
+<span class="hljs-attr">   privileged:</span> <span class="hljs-literal">true</span>
+<span class="hljs-attr">   allowPrivilegeEscalation:</span> <span class="hljs-literal">true</span>
+<span class="hljs-attr">   allowedCapabilities:</span>
+<span class="hljs-bullet">   -</span> <span class="hljs-string">'*'</span>
+<span class="hljs-attr">   volumes:</span>
+<span class="hljs-bullet">   -</span> <span class="hljs-string">'*'</span>
+<span class="hljs-attr">   hostNetwork:</span> <span class="hljs-literal">true</span>
+<span class="hljs-attr">   hostPorts:</span>
+<span class="hljs-attr">   - min:</span> <span class="hljs-number">0</span>
+<span class="hljs-attr">     max:</span> <span class="hljs-number">65535</span>
+<span class="hljs-attr">   hostIPC:</span> <span class="hljs-literal">true</span>
+<span class="hljs-attr">   hostPID:</span> <span class="hljs-literal">true</span>
+<span class="hljs-attr">   runAsUser:</span>
+<span class="hljs-attr">     rule:</span> <span class="hljs-string">'RunAsAny'</span>
+<span class="hljs-attr">   seLinux:</span>
+<span class="hljs-attr">     rule:</span> <span class="hljs-string">'RunAsAny'</span>
+<span class="hljs-attr">   supplementalGroups:</span>
+<span class="hljs-attr">     rule:</span> <span class="hljs-string">'RunAsAny'</span>
+<span class="hljs-attr">   fsGroup:</span>
+<span class="hljs-attr">     rule:</span> <span class="hljs-string">'RunAsAny'</span>    
+</code></pre></li>
+<li><p>Associate the above PSP to a ClusterRole</p>
+<pre><code class="hljs"><span class="hljs-attribute">kind</span>: ClusterRole
+<span class="hljs-attribute">apiVersion</span>: rbac.authorization.k8s.io/v1
+<span class="hljs-attribute">metadata</span>:
+  <span class="hljs-attribute">name</span>: privilegedpsp
+<span class="hljs-attribute">rules</span>:
+- <span class="hljs-attribute">apiGroups</span>: [<span class="hljs-string">'extensions'</span>]
+  <span class="hljs-attribute">resources</span>: [<span class="hljs-string">'podsecuritypolicies'</span>]
+  <span class="hljs-attribute">verbs</span>:     [<span class="hljs-string">'use'</span>]
+  <span class="hljs-attribute">resourceNames</span>:
+  - privileged
+</code></pre></li>
+<li><p>Associate the above Privileged ClusterRole to OpenEBS Service Account</p>
+<pre><code class="hljs"><span class="hljs-attribute">apiVersion</span>: rbac.authorization.k8s.io/v1
+<span class="hljs-attribute">kind</span>: ClusterRoleBinding
+<span class="hljs-attribute">metadata</span>:
+  <span class="hljs-attribute">annotations</span>:
+    rbac.authorization.kubernetes.io/<span class="hljs-attribute">autoupdate</span>: <span class="hljs-string">"true"</span>
+  <span class="hljs-attribute">name</span>: openebspsp
+<span class="hljs-attribute">roleRef</span>:
+  <span class="hljs-attribute">apiGroup</span>: rbac.authorization.k8s.io
+  <span class="hljs-attribute">kind</span>: ClusterRole
+  <span class="hljs-attribute">name</span>: privilegedpsp
+<span class="hljs-attribute">subjects</span>:
+- <span class="hljs-attribute">kind</span>: ServiceAccount
+  <span class="hljs-attribute">name</span>: openebs-maya-operator
+  <span class="hljs-attribute">namespace</span>: openebs
+</code></pre></li>
+<li><p>Proceed to install the OpenEBS. Note that the namespace and service account name used by the OpenEBS should match what is provided in   the above ClusterRoleBinding.</p></li>
+</ul>
+<p><a href="#top">Go to top</a></p>
+<p><h3><a class="anchor" aria-hidden="true" id="create-cstor-volume-single-disk-pool"></a>How to create a cStor volume on single cStor disk pool?</h3></p>
+<p>You can give the maxPools count as 1 in StoragePoolClaim YAML and <code>replicaCount</code> as <code>1</code>in StorageClass YAML. In the following sample SPC and SC YAML, cStor pool is created using auto method. After applying this YAML, one cStor pool named cstor-disk will be created only in one Node and <code>StorageClass</code> named <code>openebs-cstor-disk</code>. Only requirement is that one node has at least one disk attached but unmounted. See <a href="docs/next/faq.html#what-must-be-the-disk-mount-status-on-node-for-provisioning-openebs-volume">here</a> to understand more about disk mount status.</p>
+<pre><code class="hljs"><span class="hljs-meta">---</span>
+<span class="hljs-attr">apiVersion:</span> <span class="hljs-string">openebs.io/v1alpha1</span>
+<span class="hljs-attr">kind:</span> <span class="hljs-string">StoragePoolClaim</span>
+<span class="hljs-attr">metadata:</span>
+<span class="hljs-attr">  name:</span> <span class="hljs-string">cstor-disk</span>
+<span class="hljs-attr">spec:</span>
+<span class="hljs-attr">  name:</span> <span class="hljs-string">cstor-disk</span>
+<span class="hljs-attr">  type:</span> <span class="hljs-string">disk</span>
+<span class="hljs-attr">  maxPools:</span> <span class="hljs-number">1</span>
+<span class="hljs-attr">  poolSpec:</span>
+<span class="hljs-attr">    poolType:</span> <span class="hljs-string">striped</span>
+<span class="hljs-meta">---</span>
+<span class="hljs-attr">apiVersion:</span> <span class="hljs-string">storage.k8s.io/v1</span>
+<span class="hljs-attr">kind:</span> <span class="hljs-string">StorageClass</span>
+<span class="hljs-attr">metadata:</span>
+<span class="hljs-attr">  name:</span> <span class="hljs-string">openebs-cstor-disk</span>
+<span class="hljs-attr">  annotations:</span>
+    <span class="hljs-string">openebs.io/cas-type:</span> <span class="hljs-string">cstor</span>
+    <span class="hljs-string">cas.openebs.io/config:</span> <span class="hljs-string">|
+</span><span class="hljs-attr">      - name:</span> <span class="hljs-string">StoragePoolClaim</span>
+<span class="hljs-attr">        value:</span> <span class="hljs-string">"cstor-disk"</span>
+<span class="hljs-attr">      - name:</span> <span class="hljs-string">ReplicaCount</span>
+<span class="hljs-attr">        value:</span> <span class="hljs-string">"1"</span>
+<span class="hljs-attr">provisioner:</span> <span class="hljs-string">openebs.io/provisioner-iscsi</span>
+</code></pre>
+<p><a href="#top">Go to top</a></p>
+<p><h3><a class="anchor" aria-hidden="true" id="more-info-pool-cvr-cv-disk"></a>How to get the details like status, capacity etc. of cStor Pool, cStor Volume Replica, cStor Volumes and Disks using kubectl command?</h3></p>
+<p>From 0.8.1 onwards, following command list down the info like status, size etc. using <code>kubectl get</code> command. These command will output similar to the following only if Kubernetes version of client and server are above 1.11.</p>
+<p>The following command  will give the details of cStor Storage Pool.</p>
+<pre><code class="hljs">kubectl <span class="hljs-builtin-name">get</span> csp -n openebs
+</code></pre>
+<p>Following is an example output.</p>
+<pre><code class="hljs">NAME                     ALLOCATED   FREE    CAPACITY    STATUS   <span class="hljs-built_in"> TYPE </span>      AGE
+sparse-claim-auto-lja7   125K        9.94G   9.94G       Healthy   striped    1h
+</code></pre>
+<p>The following command  will give the details of replica status of each cStor volume created in <code>openebs</code> namespace.</p>
+<pre><code class="hljs">kubectl <span class="hljs-builtin-name">get</span> cvr -n openebs
+</code></pre>
+<p>Following is an example output.</p>
+<pre><code class="hljs">NAME                                                              USED  ALLOCATED  STATUS    AGE
+pvc<span class="hljs-number">-9</span>ca83170<span class="hljs-number">-01e3</span><span class="hljs-number">-11e9</span><span class="hljs-number">-812</span>f<span class="hljs-number">-54e1</span>ad0c1ccc-sparse-claim-auto-lja7   <span class="hljs-number">6</span>K    <span class="hljs-number">6</span>K         Healthy   <span class="hljs-number">1</span>h
+</code></pre>
+<p>The following command  will give the details of cStor volume created in <code>openebs</code> namespace.</p>
+<pre><code class="hljs">kubectl <span class="hljs-builtin-name">get</span> cstorvolume -n openebs
+</code></pre>
+<p>Following is an example output.</p>
+<pre><code class="hljs">NAME                                        STATUS    AGE
+pvc<span class="hljs-number">-9</span>ca83170<span class="hljs-number">-01e3</span><span class="hljs-number">-11e9</span><span class="hljs-number">-812</span>f<span class="hljs-number">-54e1</span>ad0c1ccc    Healthy   <span class="hljs-number">4</span>h
+</code></pre>
+<p>The following command will give the details disks that are attached to all Nodes in the cluster.</p>
+<pre><code class="hljs">kubectl <span class="hljs-builtin-name">get</span> disk
+</code></pre>
+<p>Following is an example output.</p>
+<pre><code class="hljs">NAME                                      SIZE          STATUS   AGE<span class="hljs-built_in">
+sparse-5a92ced3e2ee21eac7b930f670b5eab5 </span>  10737418240   Active   10m
+</code></pre>
+<p><h3><a class="anchor" aria-hidden="true" id="encryption-rest"></a>Does OpenEBS support encryption at rest?</h3></p>
+<p>You can achieve encryption at rest using LUKS. Example tutorial for enabling LUKS on CentOS is at: <a  href="https://wiki.centos.org/HowTos/EncryptedFilesystem" target="_blank">https://wiki.centos.org/HowTos/EncryptedFilesystem</a></p>
+<p><br></p>
+<h2><a class="anchor" aria-hidden="true" id="see-also"></a><a href="#see-also" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>See Also:</h2>
+<h3><a class="anchor" aria-hidden="true" id="creating-cstor-pool-docs-next-configurepoolshtml"></a><a href="#creating-cstor-pool-docs-next-configurepoolshtml" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><a href="/docs/next/configurepools.html">Creating cStor Pool</a></h3>
+<h3><a class="anchor" aria-hidden="true" id="provisioning-cstor-volumes-docs-next-deploycstorhtml"></a><a href="#provisioning-cstor-volumes-docs-next-deploycstorhtml" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><a href="/docs/next/deploycstor.html">Provisioning cStor volumes</a></h3>
+<h3><a class="anchor" aria-hidden="true" id="backup-and-restore-docs-next-backuphtml"></a><a href="#backup-and-restore-docs-next-backuphtml" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><a href="/docs/next/backup.html">BackUp and Restore</a></h3>
+<h3><a class="anchor" aria-hidden="true" id="uninstall-docs-next-uninstallhtml"></a><a href="#uninstall-docs-next-uninstallhtml" aria-hidden="true" class="hash-link" ><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><a href="/docs/next/uninstall.html">Uninstall</a></h3>
+<p><br></p>
+<hr>
+<p><br></p>
+<!-- Hotjar Tracking Code for https://docs.openebs.io -->
+<script>
+   (function(h,o,t,j,a,r){
+       h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+       h._hjSettings={hjid:785693,hjsv:6};
+       a=o.getElementsByTagName('head')[0];
+       r=o.createElement('script');r.async=1;
+       r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+       a.appendChild(r);
+   })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-92076314-12"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+<p>gtag('config', 'UA-92076314-12');</p>
+</script>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="performance.html">← Performance testing of OpenEBS</a><a class="docs-next button" href="k8supgrades.html">Best practices to follow when upgrading Kubernetes →</a></div></div></div><nav class="onPageNav"><div id="global-on-page-heading"><h4 style="font-weight:400;">On this page:</h4><ul class="toc-headings"><li><a href="#see-also">See Also:</a><ul class="toc-headings"><li><a href="#creating-cstor-pool-docs-next-configurepoolshtml">Creating cStor Pool</a></li><li><a href="#provisioning-cstor-volumes-docs-next-deploycstorhtml">Provisioning cStor volumes</a></li><li><a href="#backup-and-restore-docs-next-backuphtml">BackUp and Restore</a></li><li><a href="#uninstall-docs-next-uninstallhtml">Uninstall</a></li></ul></li></ul></div></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div><br/><div><a href="https://openebs.io" target="_blank"><img src="/docs/assets/openebs-logo.svg" alt="" width="130" height="110"/></a></div><div><a href="https://slack.openebs.io">Get in touch with OpenEBS community via Slack</a></div></div><div><br/><div><a href="https://mayadata.io" target="_blank"><img src="https://openebs.io/assets/images/mayadata.svg" alt="mayadata.io" width="130" height="110"/></a></div><div><a href="https://app.mayaonline.io">Get OpenEBS support through MayaOnline</a></div></div></section><section class="copyright"></section></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>
+              var search = docsearch({
+                
+                apiKey: 'dc657dfe30f42f228671f557f49ced7a',
+                indexName: 'openebs',
+                inputSelector: '#search_input_react'
+              });
+            </script><script>(function(){ window.ldfdr = window.ldfdr || {}; (function(d, s, ss, fs){ fs = d.getElementsByTagName(s)[0]; function ce(src){ var cs = d.createElement(s); cs.async=1; cs.src = src; setTimeout(function(){fs.parentNode.insertBefore(cs,fs)}, 1); } ce(ss); })(document, 'script', 'https://lftracker.leadfeeder.com/lftracker_v1_bMwm7E2pzw4gOZyA.js'); })();</script></body></html>
