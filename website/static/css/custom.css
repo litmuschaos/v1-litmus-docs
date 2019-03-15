@@ -110,10 +110,13 @@ footer .sitemap .nav-home {
 .fixedHeaderContainer header img#logo {
     height: 100%;
     margin-right: 3px;
+    padding-bottom: 15px;
+    padding-right: 2px;
 }
 .fixedHeaderContainer header img {
     height: 50%;
     margin-right: 3px;
+    padding-top: 17px;
 }
 
 .fixedHeaderContainer header h2 {
@@ -180,12 +183,6 @@ input::placeholder{
 }
 .navSearchWrapper::before {
     border: 3px solid #c8b7b7;
-}
-._hj-f5b2a1eb-9b07_widget ._hj-f5b2a1eb-9b07_icon_emotion_default._hj-f5b2a1eb-9b07_bottom_position_launcher .path1::before {
-    color: #1BE0E6 !important;;
-}
-#_hj-f5b2a1eb-9b07_feedback_open_close {
-    background-color: #1BE0E6 !important;
 }
 nav.toc .toggleNav .navGroup.navGroupActive {
     background: #f5f7fa;
@@ -311,6 +308,9 @@ input#search_input_react:focus, input#search_input_react:active {
     cursor: pointer;
 }
 
+.dropdown{
+    padding-top: 7px;
+}
 @media (max-width: 320px) {
     .ver-link-span {
       display: none;

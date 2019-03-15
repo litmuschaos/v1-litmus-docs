@@ -9,14 +9,14 @@ const users = [
 
 const siteConfig = {
   title: '' /* title for your website */,
-  tagline: 'A website for OpenEBS Documentation',
-  url: 'https://docs.openebs.io' /* your website url */,
+  tagline: 'A website for Litmus Documentation',
+  url: 'https://litmusdocs.openebsio' /* your website url */,
   baseUrl: '/' /* base url for your project */,
-  projectName: 'OpenEBS',
+  projectName: 'Guide',
 
   algolia: {
     apiKey: "dc657dfe30f42f228671f557f49ced7a",
-    indexName: "openebs",
+    indexName: "litmus",
     inputSelector: "### REPLACE ME ####",
     debug: true
     },
@@ -30,11 +30,11 @@ const siteConfig = {
   ],
   users,
   onPageNav: 'separate',
-  editUrl: 'https://github.com/openebs/openebs-docs/edit/staging/docs/',
+  editUrl: 'https://github.com/openebs/litmus-docs/edit/staging/docs/',
   createIssueUrl: 'https://github.com/openebs/openebs/issues/new/',
   /* path to images for header/footer */
-  headerIcon: 'img/OpenEBS-logo.svg',
-  headerText: 'img/openebs-docs-logo.svg',
+  headerIcon: 'img/Litmus.svg',
+  headerText: 'img/Docs.svg',
   favicon: 'img/favicon.ico',
   /* colors for website */
   colors: {
