@@ -1,5 +1,7 @@
 {
   "docs": {
-    "Introduction": ["overview"]
+    "Introduction": ["overview", "features"],
+    "Concepts": ["components", "workflow", "chaos","ci"],
+    "User Guides": ["prerequisites", "gettingstarted", "running", "logs", "result"]
   }
 }
