@@ -111,7 +111,7 @@ footer .sitemap .nav-home {
     height: 100%;
     margin-right: 3px;
     padding-bottom: 15px;
-    padding-right: 2px;
+    padding-right: 5px;
 }
 .fixedHeaderContainer header img {
     height: 50%;
@@ -192,6 +192,9 @@ nav.toc .toggleNav .navGroup.navGroupActive {
 /* Right side menu */
 nav.onPageNav > ul.toc-headings > li > a {
     font-weight: bold;
+}
+.article p img{
+    max-width: 60%;
 }
 
 /*Doc body*/

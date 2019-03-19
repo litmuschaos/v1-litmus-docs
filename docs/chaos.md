@@ -21,7 +21,7 @@ makes use of multiple opensource chaos tools, combined with the power of kubectl
 
 This flowchart,  details the steps in the execution of a chaos test. 
 
-<chaos-flowchart>
+![Litmus Image](/docs/assets/chaos.svg)
 
 Subsequent sections discuss the tools and approaches behind some of the most used Litmus 
 chaos experiments. 

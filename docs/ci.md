@@ -26,6 +26,8 @@ Openebs.ci is a reference implementation of the above, where a gitlab-based CI f
 makes use of Litmus to power the e2e phase upon commits to the storage control plane 
 and data plane code repositories.
 
+![Litmus Image](/docs/assets/litmuse2e.svg)
+
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 

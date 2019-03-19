@@ -17,6 +17,8 @@ the following sections, in the order of execution:
 - [Test Facilitator Containers](/docs/next/components.html#font-size-6-test-facilitator-containers-font)
 - [Result Custom Resource](/docs/next/components.html#font-size-6-result-custom-resource-font)
 
+![Litmus Image](/docs/assets/archi.svg)
+</br>
 ## <font size="6">Chaos Experiment</font>
 
 This is the end user deployable/executable unit that corresponds to an independent “test”
