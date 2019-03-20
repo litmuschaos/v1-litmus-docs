@@ -18,6 +18,8 @@ persistent workloads and to catch hard-to-find or unacceptable issues. It provid
 and also hosts a ready set of “deployable tests” called “Litmusbooks”, or “Litmus experiments” 
 or “Chaos experiments” which are essentially kubernetes jobs running test containers. 
 
+![Litmus Image](/docs/assets/litmus.svg)
+
 ## <font size="6">Why Litmus ?</font>
 
 Kubernetes is the de-facto standard for container orchestration today with an ever-growing increase 

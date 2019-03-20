@@ -2,10 +2,6 @@
   "docs": {
     "Introduction": ["overview", "features"],
     "Concepts": ["components", "workflow", "chaos","ci"],
-    "User Guides": ["prerequisites", "gettingstarted", "running", "logs", "result"],
-    "Building E2E Pipelines": ["GitLab"],
-    "Reference Implementations": ["Packet", "GKE", "EKS", "AKS", "GCP", "AWS", "OpenShift"],
-    "OpenEBS.ci": ["Overview", "e2edashboard", "workloads"],
-    "E2E for OpenEBS EE": ["Overview", "OpenEBS CAS", "Prometheus", "ElasticSearch"]
+    "User Guides": ["prerequisites", "gettingstarted", "running", "logs", "result"]
   }
 }

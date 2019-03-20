@@ -35,7 +35,7 @@ const siteConfig = {
   /* path to images for header/footer */
   headerIcon: 'img/Litmus.svg',
   headerText: 'img/Docs.svg',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/favicon.svg',
   /* colors for website */
   colors: {
     primaryColor: '#a9a9a9',
