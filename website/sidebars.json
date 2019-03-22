@@ -2,6 +2,8 @@
   "docs": {
     "Introduction": ["overview", "features"],
     "Concepts": ["components", "workflow", "chaos","ci"],
-    "User Guides": ["prerequisites", "gettingstarted", "running", "logs", "result"]
+    "User Guides": ["prerequisites", "gettingstarted", "running", "logs", "result"],
+    "OpenEBS CI": ["ci-overview", "gitlabinfra", "ci-workflow", "e2e", "gitlabrunner", "logging", "platforms"],
+    "CI/E2E Portal": ["dashboard-overview", "ci-dashboard", "workloads-dashboard"]
   }
 }
