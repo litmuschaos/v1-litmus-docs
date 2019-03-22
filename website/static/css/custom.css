@@ -142,7 +142,10 @@ nav.toc .toggleNav {
     background: #EFEFF2;
     padding: 3%;
 }
-
+nav.toc .toggleNav ul li {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
 nav.toc .toggleNav ul li a {
     color: #262B3E;
     font-size: 14px;
@@ -231,16 +234,31 @@ pre code {
 
 @media (max-width: 375px) {
     .fixedHeaderContainer header img#logo {
-        width: 20px;
+        width: 78px;
+        padding-top: 18px;
     }
     .fixedHeaderContainer header img {
-        width: 108px;
+        width: 29px;
         height: auto;
+        padding-top: 12px;
     }
     .fixedHeaderContainer header h2{
         color: #fff;
     }
-
+    .reactNavSearchWrapper input#search_input_react{
+        background-color: #EFEFF2;
+        border-radius: 6px;
+    }
+    .reactNavSearchWrapper input#search_input_react:focus, .reactNavSearchWrapper input#search_input_react:active{
+        background-color: #EFEFF2;
+        color: black;
+    }
+    .ver-link {
+        padding: 0px 4px;
+    }
+    .algolia-autocomplete{
+        padding-top: 2px;
+    }
 }
 
 @media (max-width: 376px) and (min-width: 576px) {
