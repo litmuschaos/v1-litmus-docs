@@ -1,25 +1,40 @@
 ---
 id: components
-title: Building Blocks Of Litmus
+title: Litmus Architecture
 sidebar_label: Litmus Architecture
 ---
 ------
 
-## <font size="6">Understanding the Litmus Framework Components</font>
+
+
+<br><img src="/docs/assets/archi.svg" alt="Litmus Overview" width="800"/>
+
+<br>
+
+<br>
 
 The main components or building blocks of the Litmus framework are described in 
 the following sections, in the order of execution: 
 
-- [Chaos experiment](/docs/next/components.html#font-size-6-chaos-experiment-font)
-- [Ansible-Runner](/docs/next/components.html#font-size-6-ansible-runner-font)
-- [Test Playbook](/docs/next/components.html#font-size-6-test-playbook-font)
-- [Test Libraries](/docs/next/components.html#font-size-6-test-libraries-font)
-- [Test Facilitator Containers](/docs/next/components.html#font-size-6-test-facilitator-containers-font)
-- [Result Custom Resource](/docs/next/components.html#font-size-6-result-custom-resource-font)
+[Litmus experiment](/docs/next/components.html#font-size-6-litmus-experiment-font)
 
-![Litmus Image](/docs/assets/archi.svg)
-</br>
-## <font size="6">Chaos Experiment</font>
+[Ansible-Runner](/docs/next/components.html#font-size-6-ansible-runner-font)
+
+[Test Playbook](/docs/next/components.html#font-size-6-test-playbook-font)
+
+[Test Libraries](/docs/next/components.html#font-size-6-test-libraries-font)
+
+[Test Facilitator Containers](/docs/next/components.html#font-size-6-test-facilitator-containers-font)
+
+[Result Custom Resource](/docs/next/components.html#font-size-6-result-custom-resource-font)
+
+<br>
+
+<br>
+
+
+
+## <font size="6">Litmus Experiment</font>
 
 This is the end user deployable/executable unit that corresponds to an independent “test”
 (such as deploying a stateful application, running a chaos scenario), which may be part of a
