@@ -18,7 +18,9 @@ persistent workloads and to catch hard-to-find or unacceptable issues. It provid
 and also hosts a ready set of “deployable tests” called “Litmusbooks”, or “Litmus experiments” 
 or “Chaos experiments” which are essentially kubernetes jobs running test containers. 
 
-![Litmus Image](/docs/assets/litmus.svg)
+<br><img src="/docs/assets/litmus.svg" alt="Litmus Overview" width="800"/>
+
+<br>
 
 ## <font size="6">Why Litmus ?</font>
 
