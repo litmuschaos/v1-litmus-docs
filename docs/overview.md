@@ -5,38 +5,65 @@ sidebar_label: Overview
 ---
 ------
 
-## <font size="6">Overview - What is Litmus ?</font>
+## Litmus Overview
 
 Modern cloud native systems are expected to have a high degree of resiliency and sustain failures. 
 To achieve this most of the enterprises are either already practicing or advised to practice 
-chaos engineering both during the implementation of systems and in productions. Through chaos engineering, 
+chaos engineering both during the implementation of systems and in production. By using Litmus powered chaos engineering practices, 
 failures are converted to resiliency. 
 
 Litmus is a framework for e2e testing and chaos engineering for Kubernetes, focusing on stateful workloads.
 The primary objective of Litmus is to ensure a consistent and reliable behavior of Kubernetes for various 
 persistent workloads and to catch hard-to-find or unacceptable issues. It provides the pieces to construct 
 and also hosts a ready set of “deployable tests” called “Litmusbooks”, or “Litmus experiments” 
-or “Chaos experiments” which are essentially kubernetes jobs running test containers. 
+or “Chaos experiments” which are essentially Kubernetes jobs running test containers. 
 
 <br><img src="/docs/assets/litmus.svg" alt="Litmus Overview" width="800"/>
 
 <br>
 
-## <font size="6">Why Litmus ?</font>
+## Who uses Litmus ?
+
+Kubernetes developers writing stateful applications use Litmus books to easily perform chaos experiments or litmus experiments. DevOps administrators use Litmus to build CI/E2E pipelines where most of the pipeline jobs are already available as Litmus books and can tune the remaining jobs quickly. 
+
+
+
+## How to use Litmus ?
+
+Litmus books are defined as Kubernetes jobs. All Litmus experiments are conducted using the standard kubectl command.
+
+```
+kubectl apply -f <litmus-experiment.yaml>
+```
+
+
+
+## Why Litmus ?
 
 Kubernetes is the de-facto standard for container orchestration today with an ever-growing increase 
 in the adoption of stateful applications. DevOps teams managing stateful workloads have an increasing need 
 to validate real world performance of their environments, especially for day-1/day-2 operations around 
 application/storage maintenance and resiliency to various component failures, something which is typically 
-not covered by unit or integration tests. DevOps teams need an easy to use framework mainly for two reasons :
+not covered by unit or integration tests. DevOps teams need an easy to use framework mainly for the following reasons :
 
 - Building various jobs in CI pipelines that are part of the core infrastructure, so that they can just 
-concentrate on their own business logic
-- Performing chaos experiments at various layers such as application and storage
+  concentrate on their own business logic. Chaos experiments are performed at various layers such as application and storage
+- Build pipelines for CI/E2E pipelines for validating and certifying new Kubernetes versions before moving to production
+- Introduce chaos experiments in production to validate the resiliency of the systems. Through these experiments the failures are detected in a planned manner rather than finding them accidentally.
 
 Litmus provides a means by which these scenarios are executed as (e2e) tests with easy provision to integrate 
 them into the CI/CD pipeline. It achieves this in a Kubernetes-native way, using end-user tools such as kubectl 
 and employing chaos engineering practices, while maintaining simple interfaces for user inputs & results.
+
+
+
+<br>
+
+<hr>
+
+<br>
+
+
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 
