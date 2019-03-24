@@ -8,10 +8,14 @@
 
 /* CSS for sidebars dropdown in mobile view */
 
+ul#languages-dropdown-items {
+    background-color: #EFEFF2;
+}
+
 @media only screen and (max-width: 735px){
 ul#languages-dropdown-items {
     display: block;
-    background-color: #ffffff;
+    background-color: #EFEFF2;
 }
 .stateful-applications_row {
   justify-content: center;
@@ -31,7 +35,7 @@ body{
 
 /* Navigation header bg color */
 .fixedHeaderContainer {
-    background: #262B3E;
+    background: #23232A;
 }
 
 /* Content headers */
@@ -41,7 +45,7 @@ body{
     color: #262B3E;
 }
 .container .wrapper h2 {
-    color: #262B3E;
+    color: #0063ff;
 }
 .container .wrapper h3 {
     color: #262B3E;
@@ -54,7 +58,7 @@ body{
     padding: 0 0 30;
     font-family: helvetica;
   font-weight: 200;
-    color: #262B3E;
+    color: #23232A;
 }
 .mainContainer .wrapper .post h1, .mainContainer .wrapper .post h2 {
     font-weight: 300;
@@ -88,7 +92,7 @@ img {
 
 /* CSS for footer */
 footer.nav-footer {
-    background: #1b1b1b;
+    background: #23232A;
 }
 
 footer .sitemap .nav-home {
@@ -106,10 +110,13 @@ footer .sitemap .nav-home {
 .fixedHeaderContainer header img#logo {
     height: 100%;
     margin-right: 3px;
+    padding-bottom: 15px;
+    padding-right: 5px;
 }
 .fixedHeaderContainer header img {
     height: 50%;
     margin-right: 3px;
+    padding-top: 17px;
 }
 
 .fixedHeaderContainer header h2 {
@@ -132,10 +139,13 @@ footer .sitemap .nav-home {
 
 /* Side bar*/
 nav.toc .toggleNav {
-    background: #f5f7fa;
+    background: #EFEFF2;
     padding: 3%;
 }
-
+nav.toc .toggleNav ul li {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
 nav.toc .toggleNav ul li a {
     color: #262B3E;
     font-size: 14px;
@@ -149,19 +159,34 @@ nav.toc .toggleNav .navGroup h3 {
     font-size: 20px;
 }
 nav.toc .toggleNav ul li.navListItemActive {
-    background: #a9a9a9;
+    background: #1BE0E6;
     color: #f5f7fa;
 }
 nav.toc .toggleNav ul li a.navItemActive{
-    color: #f5f7fa;
+    color: #000000;
 }
 nav.toc .toggleNav .navGroup.navGroupActive h3 {
-    background:#f5f7fa;
-    color:#f1584d;
+    background:#EFEFF2;
+    color:#0063ff;
     font-size: 15px;
     text-transform: uppercase;
 }
-
+.button:hover{
+    background: #0063ff;
+}
+.button{
+    border: 1px solid #1BE0E6;
+}
+.navSearchWrapper::after {
+    background: #c8b7b7;
+}
+input::placeholder{
+    color: #c8b7b7;
+    opacity: 1;
+}
+.navSearchWrapper::before {
+    border: 3px solid #c8b7b7;
+}
 nav.toc .toggleNav .navGroup.navGroupActive {
     background: #f5f7fa;
     padding: '20px 0';
@@ -170,6 +195,9 @@ nav.toc .toggleNav .navGroup.navGroupActive {
 /* Right side menu */
 nav.onPageNav > ul.toc-headings > li > a {
     font-weight: bold;
+}
+.article p img{
+    max-width: 60%;
 }
 
 /*Doc body*/
@@ -206,16 +234,31 @@ pre code {
 
 @media (max-width: 375px) {
     .fixedHeaderContainer header img#logo {
-        width: 20px;
+        width: 78px;
+        padding-top: 18px;
     }
     .fixedHeaderContainer header img {
-        width: 108px;
+        width: 29px;
         height: auto;
+        padding-top: 12px;
     }
     .fixedHeaderContainer header h2{
         color: #fff;
     }
-
+    .reactNavSearchWrapper input#search_input_react{
+        background-color: #EFEFF2;
+        border-radius: 6px;
+    }
+    .reactNavSearchWrapper input#search_input_react:focus, .reactNavSearchWrapper input#search_input_react:active{
+        background-color: #EFEFF2;
+        color: black;
+    }
+    .ver-link {
+        padding: 0px 4px;
+    }
+    .algolia-autocomplete{
+        padding-top: 2px;
+    }
 }
 
 @media (max-width: 376px) and (min-width: 576px) {
@@ -266,20 +309,29 @@ table tr th {
 /* CSS for search bar */
 input#search_input_react
 {
-    background-color: #7B787D;
+    background-color: #EFEFF2;
     font-weight:400;
-    width:500px;
+    width:376px;
     line-height: 28px;
+    border-radius: 6px;
+    color: black;
 }
 input#search_input_react:focus, input#search_input_react:active {
-    width: 500px;
-    background-color: #7B787D;
+    width: 376px;
+    background-color: #EFEFF2;
+    color: black;
 }
 
+#docsNav {
+    background-color: #EFEFF2;
+}
 #panel, .flip {
     cursor: pointer;
 }
 
+.dropdown{
+    padding-top: 7px;
+}
 @media (max-width: 320px) {
     .ver-link-span {
       display: none;
