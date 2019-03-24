@@ -8,18 +8,18 @@ sidebar_label: CI Dashboard
 The benefits provided by the CI dashboard include: 
 
 - An integrated view of the “build” & “e2e” pipelines, across source branches & platforms 
-for a given commit 
+  for a given commit 
 
   ![ci-summary](/docs/assets/openebs.ci-screens/ci-summary.jpg)
 
 - Details of the baseline commit (with links to the relevant commit/pull request details on github) 
-against which the pipelines were triggered, along with relative versions of other OpenEBS components 
-used in the e2e tests
+  against which the pipelines were triggered, along with relative versions of other OpenEBS components 
+  used in the e2e tests
 
   ![commit-info](/docs/assets/openebs.ci-screens/commit-info.jpg)
 
 - Job summary in a given e2e pipeline with ability to navigate to desired stages (graph nodes) 
-across pipelines
+  across pipelines
 
   ![job-summary](/docs/assets/openebs.ci-screens/job-summary.jpg)
 
@@ -30,6 +30,16 @@ across pipelines
   Sample kibana dashboard with default filters: 
 
   ![kibana-ds](/docs/assets/openebs.ci-screens/kibana-dashboard.jpg)
+
+<br>
+
+<br>
+
+<hr>
+
+<br>
+
+<br>
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 

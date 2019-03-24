@@ -9,8 +9,25 @@ sidebar_label: Workflow of a Litmus Experiment
 
 This flowchart explains the general workflow of a Litmus chaos experiment.
 
-![Litmus Image](/docs/assets/workflow.svg)
-</br>
+<br><img src="/docs/assets/workflow.svg" alt="Litmus execution workflow overview" width="800"/>
+
+<br>
+
+
+
+
+
+<br>
+
+<br>
+
+<hr>
+
+<br>
+
+<br>
+
+
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 

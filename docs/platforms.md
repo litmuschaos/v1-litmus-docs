@@ -32,6 +32,20 @@ storage devices & attaches to the nodes with size and performance_tier as extra 
 It requires the Packet API key to be configured as ENV on the job executor.
 
 
+
+<br>
+
+<br>
+
+<hr>
+
+<br>
+
+<br>
+
+
+
+
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 
 <script>

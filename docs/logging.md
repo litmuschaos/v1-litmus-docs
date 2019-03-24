@@ -19,6 +19,20 @@ logs (for example, in the case of target clusters’,  kube-system logs are negl
 filters based on gitlab pipeline IDs & baseline commit IDs are provided to aid quick data search 
 and analysis on Kibana. 
 
+
+
+<br>
+
+<br>
+
+<hr>
+
+<br>
+
+<br>
+
+
+
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 
 <script>

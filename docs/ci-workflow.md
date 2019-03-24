@@ -46,6 +46,22 @@ include the current baseline commit & latest ones for other components) in the t
 preparation stage & this information is then used to precondition the OpenEBS Operator manifest 
 before its deployment on the clusters.
 
+
+
+<br>
+
+<br>
+
+<hr>
+
+<br>
+
+<br>
+
+
+
+
+
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 
 <script>

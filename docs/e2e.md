@@ -80,6 +80,20 @@ The cluster resources (nodes, disks, VPCs) are deleted. With this step, the e2e 
 ends. 
 
 
+
+<br>
+
+<br>
+
+<hr>
+
+<br>
+
+<br>
+
+
+
+
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 
 <script>

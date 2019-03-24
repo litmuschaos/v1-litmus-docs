@@ -33,12 +33,12 @@ on the cluster. These are highlighted in the screenshots below:
   ![app-storage-info](/docs/assets/openebs.ci-screens/app-storage-info.jpg)
 
 - Interface to perform simple I/O (writes, reads) on the application to verify stability/ 
-operational storage
+  operational storage
 
   ![app-storage-IO](/docs/assets/openebs.ci-screens/app-IO.jpg)
 
 - Interface to induce chaos on the application/storage components using Litmus APIs with 
-visibility into progress / logs of the chaos operation
+  visibility into progress / logs of the chaos operation
 
   ![app-chaos-1](/docs/assets/openebs.ci-screens/app-chaos-1.jpg)
 
@@ -46,6 +46,18 @@ visibility into progress / logs of the chaos operation
   test.
 
   ![app-chaos-2](/docs/assets/openebs.ci-screens/app-chaos-2.jpg)
+
+<br>
+
+<br>
+
+<hr>
+
+<br>
+
+<br>
+
+
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
 

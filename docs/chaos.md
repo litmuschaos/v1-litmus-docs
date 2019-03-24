@@ -21,7 +21,13 @@ makes use of multiple opensource chaos tools, combined with the power of kubectl
 
 This flowchart,  details the steps in the execution of a chaos test. 
 
-![Litmus Image](/docs/assets/chaos.svg)
+<br>
+
+<img src="/docs/assets/chaos.svg" alt="Litmus execution workflow overview" width="900"/>
+
+
+
+<br>
 
 Subsequent sections discuss the tools and approaches behind some of the most used Litmus 
 chaos experiments. 
@@ -134,6 +140,18 @@ Work is in progress to extend this to other platforms. The AWSCLI & Boto Python 
 force detach & reattach the EBS volumes used as the disk sources for the storage pools. As with 
 other chaos tests, Litmus monitors the end-application I/O and data integrity over the course 
 of the experiment.
+
+
+
+<br>
+
+<br>
+
+<hr>
+
+<br>
+
+<br>
 
 
 <!-- Hotjar Tracking Code for https://docs.openebs.io -->
