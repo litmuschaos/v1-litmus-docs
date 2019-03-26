@@ -10,7 +10,7 @@ This page briefly explains the Gitlab based infrastructure of the OpenEBS CI fra
 ## <font size="6">Gitlab CI Server</font>
 
 The Cloud-Native Gitlab (EE) Server (represented by the black box in the schematic diagram) 
-is hosted on a multi-node GKE (Google Kubernetes Engine) Cluster with all its components 
+is hosted on a multi-node baremetal OpenShift Cluster with all its components 
 (Unicorn, Shell, Workhorse, Registry, Sidekiq, Gitaly, PostgreSQL, Redis, Minio) running 
 as deployments.
 
@@ -36,8 +36,7 @@ executors which are lightweight VMs with Docker installed. In case of the latter
 steps are carried out inside the docker containers running on the executor (the docker image 
 contains the necessary build tools and packages). The “docker-machine” executors are inherently 
 auto-scaling, which is a necessary feature for e2e builds, as multiple parallel jobs are 
-spawned during the course of e2e pipeline stages. The executors are hosted on GCP 
-(Google Cloud Platform) and are managed by the Gitlab CI server. 
+spawned during the course of e2e pipeline stages. 
 
 
 
