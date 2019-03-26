@@ -86,7 +86,7 @@ h1, h2, h3, h4 {
 }
 /* Css for image size */
 img {
-  max-width: max-content;
+  max-width: 100%;
   height: auto;
 }
 
