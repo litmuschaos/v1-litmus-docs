@@ -5,14 +5,14 @@ sidebar_label: CI Workflow
 ---
 ------
 
-This page briefly explains the OpenEBS CI workflow  
-
-## <font size="6">Phases of OpenEBS CI</font>
-
 The standard CI workflow, triggered by commits to the monitored source repositories, 
 can be split into two logical phases, each running a distinct set of pipelines, namely 
 “build” & “e2e”. The build pipeline cascades into the e2e pipelines via appropriate 
 triggers in the .gitlab-ci.yml. 
+
+![ci-workflow](/docs/assets/ci-workflows/openebs_ci_workflow.svg)
+
+## <font size="6">Phases of OpenEBS CI</font>
 
 The build phase typically involves executing the `make` process - each of the OpenEBS 
 component source repos for which the build pipelines are setup includes a Makefile with 

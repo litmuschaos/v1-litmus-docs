@@ -18,6 +18,8 @@ cluster creation/destroy jobs).
 
 The various stages in the e2e pipeline are discussed in the sections below.
 
+![e2e-stages](/docs/assets/ci-workflows/e2e-stages.svg)
+
 ## <font size="6">Cluster Creation</font>
 
 Brings up the Kubernetes cluster by executing the platform-specific playbooks. 
