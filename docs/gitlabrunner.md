@@ -16,6 +16,8 @@ running & monitoring a litmus experiment (litmusbook).
 The standard template maintained in these (bash) runner scripts & tasks performed therein 
 is described below:
 
+![gitlab-job-runner](/docs/assets/ci-workflows/gitlab_e2e_job_runner.svg)
+
 ## <font size="6">Generate Unique Test Name</font>
 
 Each gitlab job is associated with a litmus experiment, which has a test/experiment name. 

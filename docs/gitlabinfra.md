@@ -7,6 +7,8 @@ sidebar_label: Gitlab Infrastructure
 
 This page briefly explains the Gitlab based infrastructure of the OpenEBS CI framework.
 
+![gitlabinfra](/docs/assets/ci-workflows/gitlab_infrastructure.svg)
+
 ## <font size="6">Gitlab CI Server</font>
 
 The Cloud-Native Gitlab (EE) Server (represented by the black box in the schematic diagram) 

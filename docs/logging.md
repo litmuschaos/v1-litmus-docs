@@ -11,6 +11,8 @@ with the fluentd-forwarder daemonset & fluentd-aggregator deployment, with the l
 the logs to the remote ElasticSearch instance running on the master (Gitlab-CI) cluster, which 
 are then rendered by the Kibana visualization platform (also running on the master cluster). 
 
+![efk-logging](/docs/assets/ci-workflows/e2e_logging_framework.svg)
+
 The master cluster is also configured with local instances of the fluentd forwarder & aggregators 
 in order to collect its own logs.
 
