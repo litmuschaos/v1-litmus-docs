@@ -33,7 +33,7 @@ Kubernetes developers writing stateful applications use Litmus books to easily p
 Litmus books are defined as Kubernetes jobs. All Litmus experiments are conducted using the standard kubectl command.
 
 ```
-kubectl apply -f <litmus-experiment.yaml>
+kubectl create -f <litmus-experiment.yaml>
 ```
 
 
