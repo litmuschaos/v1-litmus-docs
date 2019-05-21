@@ -19,7 +19,12 @@ Kubernetes deployment. The operator performs specific actions upon CRUD of the C
 primary resource. The operator also defines secondary resources (the engine runner pod and engine 
 monitor service), which are created & managed by it in order to implement the reconcile functions.
 
+- Engine Runner Pod: The runner pod executes/spawns the experiment executors along with a prometheus
+  exporter sidecar to collect the chaos metrics (Total number of experiments scheduled, experiments passed, 
+  failed as well as the individual experiment run status) 
 
+- Engine Monitor Service: The monitor service exposes the /metrics endpoint to allow scrape functions by
+  prometheus or other similar supported monitoring platforms.
 
 <br>
 
