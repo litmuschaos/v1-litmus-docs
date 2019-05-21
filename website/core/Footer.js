@@ -45,15 +45,15 @@ class Footer extends React.Component {
            <div>
              <a href="https://openebs.io" target="_blank">
              <img
-                src={`${this.props.config.baseUrl}docs/assets/openebs-logo.png`}
+                src={`${this.props.config.baseUrl}docs/assets/openebs-logo.svg`}
                 alt={this.props.config.title}
-                // width="130"
-                // height="110"
+                width="130"
+                height="110"
               />
             </a>
             </div>
 	  <div>
-		<a href="https://slack.openebs.io" style={{marginTop : '-6px'}}>Get in touch with OpenEBS community via Slack</a>
+		<a href="https://slack.openebs.io">Get in touch with OpenEBS community via Slack</a>
           </div>
           </div>
           <div>
@@ -69,7 +69,7 @@ class Footer extends React.Component {
             </a>
             </div>
 	  <div>
-		<a href="https://app.mayaonline.io">Get OpenEBS support through MayaOnline</a> 
+		<a href="https://app.mayaonline.io">Get OpenEBS support through MayaOnline</a>
           </div>
           </div>
         </section>
