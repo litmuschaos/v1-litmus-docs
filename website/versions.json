@@ -1,6 +1,6 @@
 {
   "versions": {
-      "0.8.0": ["latest", "https://litmusdocs.openebs.io"]
+      "0.5.0": ["latest", "https://docs.litmuschaos.io"]
 
   }
 }
