@@ -10,8 +10,7 @@ Currently, it defines the following:
 
 - Application Data (namespace, labels, kind)
 - List of Chaos Experiments to be executed
-- Attributes of the experiments, such as, rank/priority
-- Execution Schedule for the batch run of the experiments
+- Attributes of the experiments
 - The ChaosEngine is the referenced as the owner of the secondary (reconcile) resource with 
   Kubernetes deletePropagation ensuring these also are removed upon deletion of the ChaosEngine CR.
 
@@ -29,15 +28,10 @@ spec:
   experiments:
     - name: pod-delete 
       spec:
-        rank: 1
+        components:  
     - name: container-kill
       spec:
-        rank: 2 
-  schedule:
-    interval: "half-hourly"
-    excludedTimes: ""
-    excludedDays: ""
-    concurrencyPolicy: "" 
+        components: 
 ```
 
 
