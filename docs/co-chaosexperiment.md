@@ -37,7 +37,6 @@ metadata:
   name: pod-delete
 spec:
   definition:
-    image: openebs/ansible-runner:ci
     litmusbook: /experiments/chaos/kubernetes/pod_delete/run_litmus_test.yml
     labels:
       name: pod-delete
