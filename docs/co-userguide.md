@@ -5,31 +5,28 @@ sidebar_label: User Guide
 ---
 ------
 
-- Install Litmus infrastructure (RBAC, CRD) components
+- Install Litmus infrastructure (RBAC, CRD) & chaos-operator components
 
 ```
-helm repo add https://litmuschaos.github.io/chaos-charts
+helm repo add litmuschaos https://litmuschaos.github.io/chaos-charts
 helm repo update
-helm install litmuschaos/litmusInfra --namespace=litmus
+helm install litmuschaos/litmus --namespace=litmus
 ```
 
-- Deploy the Chaos Operator
+- Download the desired Chaos Experiment bundles, say, for base Kubernetes chaos (pod-delete, container-kills)
+into your application's namespace
 
 ```
-helm install litmuschaos/chaosOperator
-```
-
-- Download the desired Chaos Experiment bundles, say, general Kubernetes chaos
-
-```
-helm install litmuschaos/k8sChaos
+helm install litmuschaos/kubernetes
 ```
 
 - Annotate your application to enable chaos. For ex:
 
 ```
-kubectl annotate deploy nginx-deployment `litmuschaos.io/chaos:"true"`
+kubectl annotate deploy nginx-deployment litmuschaos.io/chaos="true"`
 ```
+
+- Create a chaos service account in the application's namespace. This is the service account that will be used by the chaos executor to perform chaos. Setup necessary permissions, while ensuring ability to list and update litmuschaos.io resources chaosengine, chaosexperiment & chaosresults 
 
 - Create a ChaosEngine CR with application information & chaos experiment list with 
 their respective attributes
@@ -39,13 +36,14 @@ their respective attributes
 kubectl apply -f engine-nginx.yaml
 ```
 
-- Refer the ChaosEngine Status (or alternately, the corresponding ChaosResult resource) 
-to know the status of each experiment. The spec.verdict is set to Running when the experiment 
+- Refer the chaosresult status to know the status of each experiment. The spec.verdict is set to Running when the experiment 
 is in progress, eventually changing to pass or fail.
 
 ```
-kubectl describe chaosresult pod-delete
+kubectl describe chaosresult <chaosengine-name>-<experiment-name>
 ```
+NOTE: For a more detailed guide, with examples/output snippets, please refer: https://github.com/litmuschaos/community/tree/master/feature-demos/chaos-operator-workflow
+
 
 <br>
 
