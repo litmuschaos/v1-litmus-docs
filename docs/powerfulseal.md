@@ -1,9 +1,11 @@
 ---
-id: architecture 
-title: Architecture of LitmusChaos
-sidebar_label: LitmusChaos Architecture 
+id: powerfulseal 
+title: Using PowerfulSeal as a plugin with LitmusChaos
+sidebar_label: PowerfulSeal 
 ---
-<hr>
+------
+
+
 
 <br>
 

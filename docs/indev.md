@@ -1,9 +1,13 @@
 ---
-id: architecture 
-title: Architecture of LitmusChaos
-sidebar_label: LitmusChaos Architecture 
+id: indev 
+title: Using LimusChaos in Development
+sidebar_label: Using in Development 
 ---
-<hr>
+------
+
+
+
+
 
 <br>
 

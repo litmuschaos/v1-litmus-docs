@@ -1,9 +1,13 @@
 ---
-id: architecture 
-title: Architecture of LitmusChaos
-sidebar_label: LitmusChaos Architecture 
+id: kubernetes 
+title: Chaos Experiments for Kubernetes services
+sidebar_label: Kubernetes 
 ---
-<hr>
+------
+
+
+
+
 
 <br>
 

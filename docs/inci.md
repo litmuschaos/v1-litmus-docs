@@ -1,9 +1,13 @@
 ---
-id: architecture 
-title: Architecture of LitmusChaos
-sidebar_label: LitmusChaos Architecture 
+id: inci 
+title: Using LitmusChaos in CI Pipelines
+sidebar_label: Using in CI Pipelines 
 ---
-<hr>
+------
+
+
+
+
 
 <br>
 

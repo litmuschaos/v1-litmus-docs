@@ -1,7 +1,7 @@
 ---
-id: architecture 
-title: Architecture of LitmusChaos
-sidebar_label: LitmusChaos Architecture 
+id: experiments 
+title: Chaos Experiments
+sidebar_label: Chaos Experiments 
 ---
 <hr>
 

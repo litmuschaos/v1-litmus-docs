@@ -1,5 +1,9 @@
 {
   "docs": {
-    "Documentation": ["getstarted", "example", "chaoshub", "plugins", "architecture", "resources", "community"]
+    "Getting Started": ["getstarted", "indev", "inci", "inprod" ],
+    "Resources": ["ce", "architecture", "experiments", "tutorials"],
+    "Chaos Hub": ["chaoshub", "kubernetes", "openebs"],
+    "Plugins": ["powerfulseal", "pumba"],
+    "Community": ["contribute", "gamedays", "metrics"]
   }
 }

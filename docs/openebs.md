@@ -1,9 +1,11 @@
 ---
-id: architecture 
-title: Architecture of LitmusChaos
-sidebar_label: LitmusChaos Architecture 
+id: openebs 
+title: Chaos experiments for OpenEBS services
+sidebar_label: OpenEBS 
 ---
-<hr>
+------
+
+
 
 <br>
 

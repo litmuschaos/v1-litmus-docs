@@ -1,9 +1,11 @@
 ---
-id: architecture 
-title: Architecture of LitmusChaos
-sidebar_label: LitmusChaos Architecture 
+id: inprod 
+title: Using LitmusChaos in Production (for SREs)
+sidebar_label: Using in Production 
 ---
-<hr>
+------
+
+
 
 <br>
 

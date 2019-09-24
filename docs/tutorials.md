@@ -1,9 +1,11 @@
 ---
-id: architecture 
-title: Architecture of LitmusChaos
-sidebar_label: LitmusChaos Architecture 
+id: tutorials 
+title: Tutorials related to LitmusChaos
+sidebar_label: Tutorials 
 ---
-<hr>
+------
+
+
 
 <br>
 

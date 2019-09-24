@@ -1,9 +1,11 @@
 ---
-id: architecture 
-title: Architecture of LitmusChaos
-sidebar_label: LitmusChaos Architecture 
+id: gamedays 
+title: Running Game Days with LitmusChaos
+sidebar_label: Game Days 
 ---
-<hr>
+------
+
+
 
 <br>
 

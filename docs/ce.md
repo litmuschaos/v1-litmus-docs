@@ -1,9 +1,13 @@
 ---
-id: architecture 
-title: Architecture of LitmusChaos
-sidebar_label: LitmusChaos Architecture 
+id: ce 
+title: Resource on Chaos Engineering
+sidebar_label: Chaos Engineering 
 ---
-<hr>
+------
+
+
+
+
 
 <br>
 
