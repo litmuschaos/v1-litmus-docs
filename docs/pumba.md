@@ -1,9 +1,11 @@
 ---
-id: architecture 
-title: Architecture of LitmusChaos
-sidebar_label: LitmusChaos Architecture 
+id: pumba 
+title: Using Pumba as a plugin with LitmusChaos
+sidebar_label: Pumba 
 ---
-<hr>
+------
+
+
 
 <br>
 

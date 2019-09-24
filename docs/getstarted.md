@@ -1,9 +1,11 @@
 ---
-id: architecture 
-title: Architecture of LitmusChaos
-sidebar_label: LitmusChaos Architecture 
+id: getstarted 
+title: Getting Started with LitmusChaos
+sidebar_label: Getting Started 
 ---
-<hr>
+------
+
+
 
 <br>
 

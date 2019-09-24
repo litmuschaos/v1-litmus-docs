@@ -1,9 +1,11 @@
 ---
-id: architecture 
-title: Architecture of LitmusChaos
-sidebar_label: LitmusChaos Architecture 
+id: contribute 
+title: Contributing to LimusChaos
+sidebar_label: Contributing 
 ---
-<hr>
+------
+
+
 
 <br>
 

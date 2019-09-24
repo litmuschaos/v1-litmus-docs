@@ -1,9 +1,13 @@
 ---
-id: architecture 
-title: Architecture of LitmusChaos
-sidebar_label: LitmusChaos Architecture 
+id: metrics 
+title: Metrics for LitmusChaos
+sidebar_label: Metrics 
 ---
-<hr>
+------
+
+
+
+
 
 <br>
 

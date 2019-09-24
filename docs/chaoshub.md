@@ -1,9 +1,13 @@
 ---
-id: architecture 
-title: Architecture of LitmusChaos
-sidebar_label: LitmusChaos Architecture 
+id: chaoshub 
+title: Using and contributing to ChaosHub
+sidebar_label: Introduction to ChaosHub 
 ---
-<hr>
+------
+
+
+
+
 
 <br>
 
