@@ -1,5 +1,5 @@
 # Installation
-Installation is made of two steps
+Installation is made of three steps
 * Install required RBAC (Role-based access control).
 * Install required CRDS (Custom Resource Definitions).
 * Install chaos operator for monitoring and execution.
