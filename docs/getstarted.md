@@ -1,12 +1,24 @@
-# Installation
-Installation is made of three steps
-* Install required RBAC (Role-based access control).
-* Install required CRDS (Custom Resource Definitions).
-* Install chaos operator for monitoring and execution.
+---
+id: getstarted 
+title: Getting Started with Litmus
+sidebar_label: Getting Started 
+---
 
-### Linux/ macOS / Windows
+------
 
-We supported in all the OS environments.
+## Pre-requisites:
+
+Kubernetes 1.11 or later.
+
+## Installation
+
+Litmus toolset installation consists of the following:
+
+- Install required RBAC (Role-based access control).
+- Install Litmus CRDs (Custom Resource Definitions).
+- Install Chaos Operator
+
+Run the following commands on your Kubernetes shell.
 
 ```console
 kubectl create -f https://raw.githubusercontent.com/litmuschaos/chaos-operator/master/deploy/rbac.yaml
@@ -17,18 +29,29 @@ kubectl create -f https://raw.githubusercontent.com/litmuschaos/chaos-operator/m
 
 ```
 
-You are now ready to create chaos experiment.
+You are now ready to create and execuste chaos experiments on your cluster.
 
-# Demo
-* Let's make an nginx deployment and try to inject chaos
+## Steps for running a chaos experiment
+
+- Select the application (note down `applabel` and `namespace`) and annotate it with `litmus chaos/chaos="true"`
+- Select one or more chaos experiments from <a href=" https://hub.litmuschaos.io" target="_blank">Chaos Hub</a>
+- Create a ChaosEngine CR with `applabel`, `namespace` and `ChasoExperiment`s. ChaosOperator picks the ChaosEngine CR and runs the experiments on the application
+- Observe the results on ChaosResult CR
+
+## Example of running a chaos experiment
+In this example we will create an nginx deployment and try to inject "pod-delete" chaos.
+
+
+
+- Run `nginx`
 
 ```console
 kubectl run myserver --image=nginx
 ```
 
-* Here, we have made one nginx deployment. So, Let's inject some chaos say **"pod-delete"**
+* Download `pod-delete` chaos experiment from  <a href=" https://hub.litmuschaos.io" target="_blank">Chaos Hub</a> 
 
-Go to [hub.litmuschaos.io](https://hub.litmuschaos.io) , search for the required experiment. For this demo we need **pod-delete**
+> Note: the below command downloads and installs more than one experiment. We will choose only `pod-delete` experiment in `ChaosEngine` CR.
 
 ```console
 kubectl create -f https://raw.githubusercontent.com/litmuschaos/community-charts/master/charts/kubernetes/state/experiments/k8s_state_all_exp_crd.yaml
@@ -38,9 +61,9 @@ kubectl create -f https://raw.githubusercontent.com/litmuschaos/community-charts
 kubectl annotate deploy/myserver litmuschaos.io/chaos="true"
 ```
 
-* For chaos to be injected, we have to mention the ```"app label"``` and ```"app namespace"```.
+* Create the ChaosEngine CR using the application and chaos experiment details.
 
-So, create a file **"chaosengine.yaml"** and paste the below yaml script.
+Create a file **"chaosengine.yaml"** and paste the below yaml script.
 
 ```yaml
 # chaosengine.yaml
@@ -68,11 +91,11 @@ and apply
 kubectl create -f chaosengine.yaml
 ```
 
-* Refer to the ChaosEngine Status (or alternately, the corresponding ChaosResult resource) to know the status of each experiment. The ```spec.verdict``` is set to Running when the experiment is in progress, eventually changing to pass or fail.
+* Observe the ChaosResult CR Status to know the status of each experiment. The ```spec.verdict``` is set to Running when the experiment is in progress, eventually changing to pass or fail.
 ```console
 kubectl describe chaosresult engine-nginx-pod-delete
 ```
-> Output
+*Observed Output:*
 
 ```yaml
 
@@ -95,15 +118,29 @@ Spec:
     Verdict:  pass
 Events:       <none>
 ```
+
+
 ## Clean up
-You can delete the chaos experiments and uninstall Litmuschaos:
+
+You can delete the chaos experiments and uninstall Litmus by deleting the namespace.
 
 ```console
 kubectl delete ns litmus
 ```
 
-## Example
-Click here to see more [experiments](https://github.com/litmuschaos/litmus/tree/master/experiments) example.
 
-Also, check out the [LitmusChaos](https://github.com/litmuschaos/litmus/) repository to learn the concept of chaos engineering. we encourage contributions from the community- your PR is welcome!:) 
+
+<br>
+
+<hr>
+
+<br>	
+
+## See Also:
+
+### [Tutorials]()
+
+### [Chaos Hub]()
+
+
 
