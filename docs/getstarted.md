@@ -10,60 +10,93 @@ sidebar_label: Getting Started
 
 Kubernetes 1.11 or later.
 
-## Installation
+## Getting Started:
 
-Litmus toolset installation consists of the following:
+Running chaos on your application involves the following steps:
 
-- Install required RBAC (Role-based access control).
-- Install Litmus CRDs (Custom Resource Definitions).
-- Install Chaos Operator
+[Install Litmus](#install-litmus)
 
-Run the following commands on your Kubernetes shell.
+[Install  Chaos Experiments](#install-chaos-experiments)
 
-```console
-kubectl create -f https://raw.githubusercontent.com/litmuschaos/chaos-operator/master/deploy/rbac.yaml
+[Prepare ChaosEngine](#prepare-chaosengine)
 
-kubectl create -f https://raw.githubusercontent.com/litmuschaos/chaos-operator/master/deploy/chaos_crds.yaml
+[Annotate your application](#annotate-your-application)
 
-kubectl create -f https://raw.githubusercontent.com/litmuschaos/chaos-operator/master/deploy/operator.yaml
+[Run Chaos](#run-chaos)
+
+[Observe chaos results](#observe-chaos-results)
+
+<hr>
+
+
+
+###  Install Litmus
 
 ```
-
-You are now ready to create and execuste chaos experiments on your cluster.
-
-## Steps for running a chaos experiment
-
-- Select the application (note down `applabel` and `namespace`) and annotate it with `litmus chaos/chaos="true"`
-- Select one or more chaos experiments from <a href=" https://hub.litmuschaos.io" target="_blank">Chaos Hub</a>
-- Create a ChaosEngine CR with `applabel`, `namespace` and `ChasoExperiment`s. ChaosOperator picks the ChaosEngine CR and runs the experiments on the application
-- Observe the results on ChaosResult CR
-
-## Example of running a chaos experiment
-In this example we will create an nginx deployment and try to inject "pod-delete" chaos.
-
-
-
-- Run `nginx`
-
-```console
-kubectl run myserver --image=nginx
+kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-latest.yaml
 ```
 
-* Download `pod-delete` chaos experiment from  <a href=" https://hub.litmuschaos.io" target="_blank">Chaos Hub</a> 
+The above command installs all the chaos operator, required service account configuration, and chaos CRDs. Before you start running a chaos experiment, verify if your Litmus is installed correctly.
 
-> Note: the below command downloads and installs more than one experiment. We will choose only `pod-delete` experiment in `ChaosEngine` CR.
+**Verify your installation**
 
-```console
-kubectl create -f https://raw.githubusercontent.com/litmuschaos/community-charts/master/charts/kubernetes/state/experiments/k8s_state_all_exp_crd.yaml
+- Verify if the chaos operator is running 
+
 ```
-* Annotate your application to enable chaos. For eg:
-```console
-kubectl annotate deploy/myserver litmuschaos.io/chaos="true"
+kubectl get pods -n litmus
 ```
 
-* Create the ChaosEngine CR using the application and chaos experiment details.
+> Expected output:
+>
+> *kubectl get pods -n litmus*
+>
+> NAME                                  READY   STATUS    RESTARTS   AGE
+>
+> litmus-operator-ce-554d6c8f9f-slc8k   1/1     Running   0          6m41s
 
-Create a file **"chaosengine.yaml"** and paste the below yaml script.
+
+
+- Verify if chaos CRDs are installed
+
+```
+kubectl get crds | grep chaos
+```
+
+> Expected output:
+>
+> *kubectl get crds | grep chaos*
+>
+> chaosengines.litmuschaos.io             2019-10-02T08:45:25Z
+>
+> chaosexperiments.litmuschaos.io         2019-10-02T08:45:26Z
+>
+> chaosresults.litmuschaos.io             2019-10-02T08:45:26Z
+
+
+
+### Install Chaos Experiments
+
+Chaos experiments contain the actual chaos details. These experiments are installed on to your cluster as Kubernetes CRs (or Custom Resources). The Chaos Experiments are grouped as Chaos Charts and are published on <a href=" https://hub.litmuschaos.io" target="_blank">Chaos Hub</a>. 
+
+The generic chaos experiments such as `pod-kill`, `container-kill`,` network-delay` are avaialbe under Generic Chaos Chart. This is the first chart you install. You can later install application specific chaos charts for running application specific chaos.
+
+```
+kubectl apply -f https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/experiments.yaml
+```
+
+
+
+Verify if the chaos experiments are installed.
+
+```
+kubectl get chaosexperiments
+```
+
+
+
+### Prepare ChaosEngine 
+
+ChaosEngine connects the application to the Chaos Experiment. Copy the following YAML snippet into a file called chaosengine.yaml and update `applabel` and `experiments` as per your choice.
 
 ```yaml
 # chaosengine.yaml
@@ -85,42 +118,39 @@ spec:
         rank: 1
 ```
 
-and apply
+
+
+### Annotate your application
+
+Your application has to be annotated with `litmuschaos.io/chaos="true"`. As a security measure, Chaos Operator checks for this annotation on the application before invoking chaos experiment(s) on the application.
+
+```console
+kubectl annotate deploy/myserver litmuschaos.io/chaos="true"
+```
+
+
+
+### Run Chaos
+
+
 
 ```console
 kubectl create -f chaosengine.yaml
 ```
 
-* Observe the ChaosResult CR Status to know the status of each experiment. The ```spec.verdict``` is set to Running when the experiment is in progress, eventually changing to pass or fail.
+
+
+### Observe Chaos results
+
+Observe the ChaosResult CR Status to know the status of each experiment. The ```spec.verdict``` is set to Running when the experiment is in progress, eventually changing to pass or fail.
+
 ```console
 kubectl describe chaosresult engine-nginx-pod-delete
 ```
-*Observed Output:*
-
-```yaml
-
-Name:         engine-nginx-pod-delete
-Namespace:    default
-Labels:       <none>
-Annotations:  kubectl.kubernetes.io/last-applied-configuration:
-              {"apiVersion":"litmuschaos.io/v1alpha1","kind":"ChaosResult","metadata":{"annotations":{},"name":"engine-nginx-pod-delete","namespace":"de...
-API Version:  litmuschaos.io/v1alpha1
-Kind:         ChaosResult
-Metadata:
-  Creation Timestamp:  2019-05-22T12:10:19Z
-  Generation:          9
-  Resource Version:    8898730
-  Self Link:           /apis/litmuschaos.io/v1alpha1/namespaces/default/chaosresults/engine-nginx-pod-delete
-  UID:                 911ada69-7c8a-11e9-b37f-42010a80019f
-Spec:
-  Experimentstatus:
-    Phase:    <nil>
-    Verdict:  pass
-Events:       <none>
-```
 
 
-## Clean up
+
+## Uninstallation
 
 You can delete the chaos experiments and uninstall Litmus by deleting the namespace.
 
@@ -130,17 +160,23 @@ kubectl delete ns litmus
 
 
 
+## Example:
+
+See [the tutorial](example.html) on running a `pod-delete` chaos experiment on `nginx` application.
+
+
+
+## Join our community:
+
+If you have not joined our community, do join us [here](community.html).
+
+
+
 <br>
 
 <hr>
 
 <br>	
-
-## See Also:
-
-### [Tutorials]()
-
-### [Chaos Hub]()
 
 
 
