@@ -10,7 +10,7 @@ const users = [
 const siteConfig = {
   title: '' /* title for your website */,
   tagline: 'A website for Litmus Documentation',
-  url: 'https://litmusdocs.openebsio' /* your website url */,
+  url: 'https://docs.litmuschaos.io' /* your website url */,
   baseUrl: '/' /* base url for your project */,
   projectName: 'Guide',
 
@@ -39,8 +39,8 @@ const siteConfig = {
   ],
   users,
   onPageNav: 'separate',
-  editUrl: 'https://github.com/openebs/litmus-docs/edit/staging/docs/',
-  createIssueUrl: 'https://github.com/openebs/openebs/issues/new/',
+  editUrl: 'https://github.com/litmuschaos/litmus-docs/edit/staging/docs/',
+  createIssueUrl: 'https://github.com/litmuschaos/litmus/issues/new/',
   /* path to images for header/footer */
   headerIcon: 'img/Litmus.svg',
   headerText: 'img/Docs.svg',
