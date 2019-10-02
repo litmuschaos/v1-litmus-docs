@@ -36,6 +36,7 @@ const siteConfig = {
   headerIcon: 'img/Litmus.svg',
   headerText: 'img/Docs.svg',
   favicon: 'img/favicon.ico',
+  copyright: '@ Copyright 2019 MayaData Inc.',
   /* colors for website */
   colors: {
     primaryColor: '#a9a9a9',

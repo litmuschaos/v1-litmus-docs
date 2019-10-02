@@ -43,35 +43,26 @@ class Footer extends React.Component {
           <div>
            <br />
            <div>
-             <a href="https://openebs.io" target="_blank">
+             <a href="https://litmuschaos.io" target="_blank">
              <img
-                src={`${this.props.config.baseUrl}docs/assets/openebs-logo.svg`}
-                alt={this.props.config.title}
-                width="130"
-                height="110"
+                src={`https://litmuschaos.io/assets/images/litmuslogo/litmusicon.svg`}
+                alt="Litmus Chaos Engineering"
+                width="32"
+                height="27"
               />
             </a>
             </div>
-	  <div>
-		<a href="https://slack.openebs.io">Get in touch with OpenEBS community via Slack</a>
           </div>
-          </div>
-          <div>
-           <br />
-           <div>
-             <a href="https://mayadata.io" target="_blank">
-             <img
-                src={`https://openebs.io/assets/images/mayadata.svg`}
-                alt="mayadata.io"
-                width="130"
-                height="110"
-              />
-            </a>
-            </div>
-	  <div>
-		<a href="https://app.mayaonline.io">Get OpenEBS support through MayaOnline</a>
-          </div>
-          </div>
+
+		<div>
+		  <a href="https://github.com/litmuschaos/litmus" target="_blank">GitHub</a>
+		</div>
+		<div>
+		  <a href="https://kubernetes.slack.com/messages/CNXNB0ZTN" target="_blank">Slack</a>
+		</div>
+		<div>
+		  <a href="https://twitter.com/litmuschaos" target="_blank">Twitter</a>
+		</div>
         </section>
 
         
