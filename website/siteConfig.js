@@ -10,7 +10,7 @@ const users = [
 const siteConfig = {
   title: '' /* title for your website */,
   tagline: 'A website for Litmus Documentation',
-  url: 'https://litmusdocs.openebsio' /* your website url */,
+  url: 'https://docs.litmuschaos.io' /* your website url */,
   baseUrl: '/' /* base url for your project */,
   projectName: 'Guide',
 
@@ -23,6 +23,15 @@ const siteConfig = {
 
     headerLinks: [
        
+	{
+	    href: "https://github.com/litmuschaos/litmus", label: "GitHub"
+	},
+	{
+	    href: "https://kubernetes.slack.com/messages/CNXNB0ZTN", label: "Slack"
+	},
+	{
+	    href: "https://hub.litmuschaos.io", label: "Chaos Hub"
+	},
         {
             search: true
         },
@@ -30,12 +39,13 @@ const siteConfig = {
   ],
   users,
   onPageNav: 'separate',
-  editUrl: 'https://github.com/openebs/litmus-docs/edit/staging/docs/',
-  createIssueUrl: 'https://github.com/openebs/openebs/issues/new/',
+  editUrl: 'https://github.com/litmuschaos/litmus-docs/edit/staging/docs/',
+  createIssueUrl: 'https://github.com/litmuschaos/litmus/issues/new/',
   /* path to images for header/footer */
-  headerIcon: 'img/Litmus.svg',
-  headerText: 'img/Docs.svg',
-  favicon: 'img/favicon.svg',
+  headerIcon: 'img/Docs.svg',
+  /* headerText: 'img/Docs.svg',*/
+  favicon: 'img/favicon.ico',
+  copyright: '@ Copyright 2019 MayaData Inc.',
   /* colors for website */
   colors: {
     primaryColor: '#a9a9a9',
