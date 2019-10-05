@@ -20,7 +20,7 @@ kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-latest.yaml
 Similarly, if you have not already installed generic chaos experiments, install the generic chaos chart by using the following command.
 
 ```
-kubectl create -f https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/experiment.yaml
+kubectl create -f https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/experiments.yaml
 ```
 
 
