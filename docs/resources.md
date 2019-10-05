@@ -5,11 +5,19 @@ sidebar_label: Resources
 ---
 ------
 
-## Chaos Demos:
+### General Chaos Engineering Resources:
 
-[![Getting Started Demo](/docs/assets/getstarted.svg)](https://asciinema.org/a/G9TcXpgikLuGTBY7btIUNSuWN)
 
-## Reference Implementations:
+
+### Chaos Demos:
+
+
+
+### Presentations:
+
+
+
+### Reference Implementations:
 
 | Reference          | Description                                                  |
 | ------------------ | ------------------------------------------------------------ |

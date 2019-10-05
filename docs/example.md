@@ -20,7 +20,7 @@ kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-latest.yaml
 Similarly, if you have not already installed generic chaos experiments, install the generic chaos chart by using the following command.
 
 ```
-kubectl create -f https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/experiments.yaml
+kubectl apply -f https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/experiments.yaml
 ```
 
 
@@ -54,6 +54,7 @@ spec:
     # FYI, To see app label, apply kubectl get pods --show-labels
     applabel: "run=myserver" # App Label
   chaosServiceAccount: litmus
+  
   experiments:
     - name: pod-delete
       spec:

@@ -81,7 +81,7 @@ Chaos experiments contain the actual chaos details. These experiments are instal
 The generic chaos experiments such as `pod-kill`, `container-kill`,` network-delay` are avaialbe under Generic Chaos Chart. This is the first chart you install. You can later install application specific chaos charts for running application specific chaos.
 
 ```
-kubectl create -f https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/experiment.yaml
+kubectl apply -f https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/experiments.yaml
 ```
 
 
@@ -111,6 +111,7 @@ spec:
     # FYI, To see app label, apply kubectl get pods --show-labels
     applabel: "run=myserver" # App Label
   chaosServiceAccount: litmus
+  
   experiments:
     - name: pod-delete
       spec:

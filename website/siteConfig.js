@@ -42,10 +42,9 @@ const siteConfig = {
   editUrl: 'https://github.com/litmuschaos/litmus-docs/edit/staging/docs/',
   createIssueUrl: 'https://github.com/litmuschaos/litmus/issues/new/',
   /* path to images for header/footer */
-  headerIcon: 'img/Docs.svg',
-  /* headerText: 'img/Docs.svg',*/
+  headerIcon: 'img/Litmus.svg',
+  headerText: 'img/Docs.svg',
   favicon: 'img/favicon.ico',
-  copyright: '@ Copyright 2019 MayaData Inc.',
   /* colors for website */
   colors: {
     primaryColor: '#a9a9a9',

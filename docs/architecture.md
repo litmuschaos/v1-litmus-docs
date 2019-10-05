@@ -31,7 +31,7 @@ Chaos Experiment is a CR and are available as YAML files on <a href=" https://hu
 
 **Chaos-Engine:**
 
-ChaosEngine CR links application to experiments. User has to create ChaosEngine YAML by specifying the application label and experiments and create the CR. The CR is watched by Chaos-Operator and chaos-experiments are executed on a given application. 
+ChaosEngine CR links application to experiments. User has to create ChaosEngine YAMLby specifying the application label and experiments and create the CR. The CR is watched by Chaos-Operator and chaos-experiments are executed on a given application. 
 
 
 
