@@ -1,13 +1,74 @@
 ---
 id: chaoshub 
 title: Using and contributing to ChaosHub
-sidebar_label: Introduction to ChaosHub 
+sidebar_label:ChaosHub 
 ---
 ------
 
 
 
+**Important links:**
 
+Chaos Hub is maintained at https://hub.litmuschaos.io
+
+To contribute new chaos charts visit: https://github.com/litmuschaos/chaos-charts
+
+**Introduction**
+
+Litmus chaos hub is a place where the chaos engineering community members publish their chaos experiments. A set of related chaos experiments into a `Chaos Chart`. Chaos Charts are classified into the following categories.
+
+- [Generic Chaos](#generic-chaos)
+- [Application Chaos](application-chaos)
+- [Platform Chaos](#platform-chaos)
+
+
+
+### Generic Chaos 
+
+Chaos actions that apply to generic Kubernetes resources are classified into this category. Following chaos experiments are supported under Generic Chaos Chart
+
+- Container Kill:
+- POD Kill:
+- Network Delay:
+- Network Loss:
+- CPU Hog:
+
+### Application Chaos
+
+While Chaos Experiments under Generic category offer the ability to induce chaos into Kubernetes resources, it is difficult to analyse and conclude if the chaos induced found a weakness in a given application. The application specific chaos experiments are built with some checks on *pre-conditions* and some expected outcomes after the chaos injection. The result of the chaos experiment is determined by matching the outcome with expected outcome. 
+
+> Note: If the result of the chaos experiment is `pass`, it means that the application is resilient to that chaos.
+
+**Benefits of contributing an application chaos experiment**
+
+Application developers write negative tests in their CI pipelines to test the resiliency of the applications. These negative can be converted into Litmus Chaos Experiments and contributed to ChaosHub, so that the users of the application can use them in staging/pre-production/production environments to check the resilience. Application environments vary considerably from where they are tested (CI pipelines) to where they are deployed (Production). Hence, running the same chaos tests in user's environment will help determine the weaknesses of the deployment and fixing such weaknesses leads to increased resilience. , 
+
+
+
+Following Application Chaos experiments are available on ChaosHub
+
+
+
+| Application | Description                               | Chaos Experiments                                         |
+| ----------- | ----------------------------------------- | --------------------------------------------------------- |
+| OpenEBS     | Container Attached Storage for Kubernetes | Replica Kill, Controller Kill, cStorPool instance failure |
+| Kubernetes  | Orchestration platform for Containers     |                                                           |
+|             |                                           |                                                           |
+
+### Platform Chaos
+
+Chaos experiments that inject chaos into the platform resources of Kubernetes are classified into this category. Management of platform resources vary significantly from each other, Chaos Charts may be maintained seperately for each platform (For example, AWS, GCP, Azure etc)
+
+Following Platform Chaos experiments are available on ChaosHub
+
+
+
+| Platform | Description                                 | Chaos Experiments |
+| -------- | ------------------------------------------- | ----------------- |
+| AWS      | Amazon Web Services platform. Includes EKS. | None              |
+| GCP      | Google Cloud Platform. Includes GKE.        | None              |
+| Azure    | Microsoft Azure platform. Includes AKS.     | None              |
+|          |                                             |                   |
 
 <br>
 
@@ -18,21 +79,6 @@ sidebar_label: Introduction to ChaosHub
 <br>
 
 <br>
-
-
-<!-- Hotjar Tracking Code for https://docs.openebs.io -->
-
-<script>
-    (function(h,o,t,j,a,r){
-        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        h._hjSettings={hjid:1239116,hjsv:6};
-        a=o.getElementsByTagName('head')[0];
-        r=o.createElement('script');r.async=1;
-        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-        a.appendChild(r);
-    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-</script>
-
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 

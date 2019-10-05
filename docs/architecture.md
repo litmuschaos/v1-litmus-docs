@@ -1,10 +1,46 @@
 ---
 id: architecture 
-title: Architecture of LitmusChaos
-sidebar_label: LitmusChaos Architecture 
+title: Litmus Architecture
+sidebar_label: Architecture 
 ---
 <hr>
 
+<img src="/docs/assets/architecture.png" width="800">
+
+**Chaos-Operator:**
+
+Chaos-Operator watches for the ChaosEngine CR and executes the Chaos-Experiments mentioned in the CR. Chaos-Operator is namespace scoped. By default it runs in `litmus` namespace. Once the experiment is completed, chaos-operator invokes chaos-exporter to export chaos metrics to a Prometheus database. 
+
+**Chaos-CRDs:**
+
+During installation, following three CRDs are installed on the Kubernetes cluster. 
+
+`chaosengines.litmuschaos.io`
+
+`chaosexperiments.litmuschaos.io`
+
+`chaosresults.litmuschaos.io`
+
+
+
+**Chaos-Experiments:**
+
+Chaos Experiment is a CR and are available as YAML files on <a href=" https://hub.litmuschaos.io" target="_blank">Chaos Hub</a>. For more details visit Chaos Hub [documentation](chaoshub.html).
+
+
+
+**Chaos-Engine:**
+
+ChaosEngine CR links application to experiments. User has to create ChaosEngine YAMLby specifying the application label and experiments and create the CR. The CR is watched by Chaos-Operator and chaos-experiments are executed on a given application. 
+
+
+
+**Chaos-Exporter:**
+
+Optionally metrics can be exported to a Prometheus database. Chaos-Exporter implements the  Prometheus metrics endpoint. 
+
+
+
 <br>
 
 <br>
@@ -14,21 +50,6 @@ sidebar_label: LitmusChaos Architecture
 <br>
 
 <br>
-
-
-<!-- Hotjar Tracking Code for https://docs.openebs.io -->
-
-<script>
-    (function(h,o,t,j,a,r){
-        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        h._hjSettings={hjid:1239116,hjsv:6};
-        a=o.getElementsByTagName('head')[0];
-        r=o.createElement('script');r.async=1;
-        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-        a.appendChild(r);
-    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-</script>
-
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 
