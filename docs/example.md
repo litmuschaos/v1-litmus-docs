@@ -54,7 +54,6 @@ spec:
     # FYI, To see app label, apply kubectl get pods --show-labels
     applabel: "run=myserver" # App Label
   chaosServiceAccount: litmus
-  
   experiments:
     - name: pod-delete
       spec:
