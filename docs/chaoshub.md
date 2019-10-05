@@ -18,7 +18,7 @@ To contribute new chaos charts visit: https://github.com/litmuschaos/chaos-chart
 Litmus chaos hub is a place where the chaos engineering community members publish their chaos experiments. A set of related chaos experiments into a `Chaos Chart`. Chaos Charts are classified into the following categories.
 
 - [Generic Chaos](#generic-chaos)
-- [Application Chaos](application-chaos)
+- [Application Chaos](#application-chaos)
 - [Platform Chaos](#platform-chaos)
 
 
