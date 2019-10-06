@@ -35,4 +35,6 @@ cd litmus-docs
 cd litmus-docs/website
 npm start
 ```
+### Browse local documentation
+http://localhost:3000/docs/next/getstarted.html
 
