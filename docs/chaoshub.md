@@ -7,12 +7,12 @@ sidebar_label:ChaosHub
 
 
 
-**Important links:**
+**Important links**
 
 Chaos Hub is maintained at https://hub.litmuschaos.io
 
 To contribute new chaos charts visit: https://github.com/litmuschaos/chaos-charts
- 
+
 **Introduction**
 
 Litmus chaos hub is a place where the chaos engineering community members publish their chaos experiments. A set of related chaos experiments are bundled into a `Chaos Chart`. Chaos Charts are classified into the following categories.

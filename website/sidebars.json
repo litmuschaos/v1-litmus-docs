@@ -1,5 +1,5 @@
 {
   "docs": {
-    "Documentation": ["getstarted", "example", "chaoshub", "plugins", "architecture", "resources", "community"]
+    "Documentation": ["getstarted", "example", "chaoshub", "plugins", "architecture", "resources", "community", "devguide"]
   }
 }

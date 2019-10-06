@@ -6,11 +6,11 @@ sidebar_label: Getting Started
 
 ------
 
-## Pre-requisites:
+## Pre-requisites
 
 Kubernetes 1.11 or later.
 
-## Getting Started:
+## Getting Started
 
 Running chaos on your application involves the following steps:
 
@@ -159,13 +159,13 @@ kubectl delete ns litmus
 
 
 
-## Example:
+## Example
 
 See [the tutorial](example.html) on running a `pod-delete` chaos experiment on `nginx` application.
 
 
 
-## Join our community:
+## Join our community
 
 If you have not joined our community, do join us [here](community.html).
 
