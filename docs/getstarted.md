@@ -89,7 +89,7 @@ kubectl create -f https://raw.githubusercontent.com/litmuschaos/chaos-charts/mas
 Verify if the chaos experiments are installed.
 
 ```
-kubectl get chaosexperiments
+kubectl get chaosexperiments -n litmus
 ```
 
 
