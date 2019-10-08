@@ -22,10 +22,10 @@ sudo apt-get install -y nodejs
 npm install -g yarn
 ```
 
-### Clone openebs-docs repository
+### Clone litmus-docs repository
 
 ```bash
-git clone https://github.com/openebs/litmus-docs.git
+git clone https://github.com/litmuschaos/litmus-docs.git
 cd litmus-docs
 ```
 
