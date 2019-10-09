@@ -16,7 +16,9 @@ Running chaos on your application involves the following steps:
 
 [Install Litmus](#install-litmus)
 
-[Install  Chaos Experiments](#install-chaos-experiments)
+[Install Chaos Experiments](#install-chaos-experiments)
+
+[Setup ServiceAccount](#setup-serviceaccount)
 
 [Prepare ChaosEngine](#prepare-chaosengine)
 
@@ -95,12 +97,43 @@ kubectl get chaosexperiments
 
 ### Setup ServiceAccount
 
-A ServiceAccount should be created to allow chaosengine to run experiments on your application namespace. Copy the following into `rbac.yaml` and run `kubectl apply -f rbac.yaml` to create one such account on your default namespace. You can change the service account name and namespace as needed.
+If the application is deployed under a different namespace than `litmus`, a ServiceAccount should be created to allow chaosengine to run experiments on your namespace. Copy the following into `rbac.yaml` and run `kubectl apply -f rbac.yaml`. You can change the service account name and namespace as needed.
 
+```yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: nginx
+rules:
+- apiGroups: ["", "extensions", "apps", "batch", "litmuschaos.io"]
+  resources: ["daemonsets", "deployments", "replicasets", "jobs", "pods", "pods/exec", "events", "chaosengines", "chaosexperiments", "chaosresults"]
+  verbs: ["*"] 
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: nginx
+subjects:
+- kind: ServiceAccount
+  name: nginx
+  namespace: default # App namespace
+roleRef:
+  kind: ClusterRole
+  name: nginx
+  apiGroup: rbac.authorization.k8s.io
+```
 
 ### Prepare ChaosEngine 
 
-ChaosEngine connects the application to the Chaos Experiment. Copy the following YAML snippet into a file called chaosengine.yaml and update `applabel` and `experiments` as per your choice.
+ChaosEngine connects the application to the Chaos Experiment. Copy the following YAML snippet into a file called chaosengine.yaml and update `applabel` and `experiments` as per your choice. Change the `chaosServiceAccount` to the name of ServiceAccount created in above step, if applicable.
 
 ```yaml
 # chaosengine.yaml
@@ -113,8 +146,8 @@ spec:
   appinfo: 
     appns: default 
     # FYI, To see app label, apply kubectl get pods --show-labels
-    applabel: "run=myserver" 
-  chaosServiceAccount: nginx 
+    applabel: "run=myserver" # App Label
+  chaosServiceAccount: nginx # Service account name
   experiments:
     - name: pod-delete
       spec:
@@ -149,6 +182,7 @@ Observe the ChaosResult CR Status to know the status of each experiment. The ```
 kubectl describe chaosresult engine-nginx-pod-delete
 ```
 
+> The above guide is assuming that the application is deployed under default namespace. If you are using a different namespace, make sure to follow all the steps under your namespace by adding `-n my-namespace` to the commands. Also, update the `rbac.yaml` and `chaosengine.yaml` to specify the namespace.
 
 
 ## Uninstallation
