@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 781.3 467.8" style="enable-background:new 0 0 781.3 467.8;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#B2AFAF;stroke-width:0.5;stroke-miterlimit:10;}
+	.st1{fill:#FFFFFF;stroke:#A2A4A7;stroke-width:0.5;stroke-miterlimit:10;}
+	.st2{fill:#717272;}
+	.st3{font-family:'Helvetica-Light';}
+	.st4{font-size:14px;}
+	.st5{fill:#006FFE;}
+	.st6{font-family:'Helvetica';}
+	.st7{fill:#FFFFFF;stroke:#006FFE;stroke-miterlimit:10;}
+	.st8{font-size:12px;}
+	.st9{fill:none;stroke:#606060;stroke-width:0.5;stroke-miterlimit:10;}
+	.st10{fill:#606060;}
+	.st11{fill:none;stroke:#606060;stroke-miterlimit:10;}
+	.st12{fill:#1AE0E6;}
+	.st13{fill:none;stroke:#006FFE;stroke-miterlimit:10;}
+	.st14{fill:none;stroke:#FFFFFF;stroke-width:8;stroke-miterlimit:10;}
+	.st15{fill:#FFFFFF;}
+	.st16{fill:none;stroke:#FFFFFF;stroke-miterlimit:10;}
+	.st17{fill:#808080;}
+	.st18{fill:none;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
+	.st19{font-size:233.7289px;}
+	.st20{fill:none;stroke:#808080;stroke-miterlimit:10;}
+</style>
+<title>litmus-01</title>
+<rect x="25.5" y="30.3" class="st0" width="728.3" height="414.4"/>
+<g>
+	<path class="st1" d="M518.8,47H243.3c-1.7,0-3.1-1.7-3.1-3.8v-23c0-2.1,1.4-3.8,3.1-3.8h275.5c1.7,0,3.1,1.7,3.1,3.8v23
+		C521.9,45.2,520.5,47,518.8,47z"/>
+	<text transform="matrix(1 0 0 1 274.58 35.82)" class="st2 st3 st4">Litmus architecture and components</text>
+</g>
+<text transform="matrix(1 0 0 1 459.459 300.3885)" class="st5 st6 st4">Test facilitator containers</text>
+<text transform="matrix(1 0 0 1 198.6805 105.8139)" class="st5 st6 st4">Ansible runner container</text>
+<path class="st7" d="M169.8,207.6H96.3c-4,0-7.2-3.2-7.2-7.2V120c0-4,3.2-7.2,7.2-7.2h73.6c4,0,7.2,3.2,7.2,7.2v80.4
+	C177,204.3,173.8,207.6,169.8,207.6z"/>
+<g id="BBLIfh.tif">
+	
+		<image style="overflow:visible;" width="232" height="216" id="Layer_0_1_" xlink:href="FB1F4D0778121F2D.png"  transform="matrix(0.1222 0 0 0.1222 143.7773 177.4344)">
+	</image>
+</g>
+<text transform="matrix(1 0 0 1 111.5154 149.5169)"><tspan x="0" y="0" class="st5 st6 st4">Litmus</tspan><tspan x="-14.8" y="16.8" class="st5 st6 st4">Experiment</tspan></text>
+<text transform="matrix(1 0 0 1 254.1344 386.515)"><tspan x="0" y="0" class="st5 st6 st8">Result</tspan><tspan x="-31" y="14.4" class="st5 st6 st8">Custom Resource</tspan></text>
+<g>
+	<line class="st9" x1="52.3" y1="71.7" x2="136.1" y2="71.7"/>
+	<g>
+		<g>
+			<line class="st9" x1="135.6" y1="109.3" x2="135.6" y2="71.4"/>
+			<g>
+				<path class="st10" d="M135.6,112.3c0.5-1.4,1.4-3.2,2.4-4.3l-2.4,0.9l-2.4-0.9C134.2,109.1,135.1,110.9,135.6,112.3z"/>
+			</g>
+		</g>
+	</g>
+</g>
+<text transform="matrix(1 0 0 1 45.0063 63.8954)" class="st5 st6 st4">kubectl apply -f</text>
+<g>
+	<g>
+		<line class="st11" x1="213.4" y1="161.2" x2="178.6" y2="161.2"/>
+		<g>
+			<path class="st10" d="M219.5,161.2c-2.8-1.1-6.4-2.9-8.5-4.8l1.7,4.8l-1.7,4.8C213.1,164,216.6,162.2,219.5,161.2z"/>
+		</g>
+	</g>
+</g>
+<rect x="221.6" y="116.1" class="st12" width="101.9" height="89.4"/>
+<path class="st13" d="M323.9,413.9H219.3c-2.4,0-4.3-1.9-4.3-4.3v-39.8c0-2.4,1.9-4.3,4.3-4.3h104.6c2.4,0,4.3,1.9,4.3,4.3v39.8
+	C328.2,411.9,326.3,413.9,323.9,413.9z"/>
+<path class="st13" d="M193.3,329.7H67c-2.4,0-4.3-1.9-4.3-4.3v-72.3c0-2.4,1.9-4.3,4.3-4.3h126.3c2.4,0,4.3,1.9,4.3,4.3v72.3
+	C197.6,327.7,195.6,329.7,193.3,329.7z"/>
+<text transform="matrix(1 0 0 1 416.0928 386.515)"><tspan x="0" y="0" class="st5 st6 st8">Stern Logger</tspan><tspan x="8.3" y="14.4" class="st5 st6 st8">(Optional)</tspan></text>
+<path class="st13" d="M503.6,413.9H399c-2.4,0-4.3-1.9-4.3-4.3v-39.8c0-2.4,1.9-4.3,4.3-4.3h104.6c2.4,0,4.3,1.9,4.3,4.3v39.8
+	C507.8,411.9,505.9,413.9,503.6,413.9z"/>
+<line class="st14" x1="243.1" y1="132.2" x2="243.1" y2="192.4"/>
+<line class="st14" x1="271.5" y1="132.2" x2="271.5" y2="192.4"/>
+<line class="st14" x1="299.5" y1="132.2" x2="299.5" y2="192.4"/>
+<g id="JdQIb1.tif">
+	
+		<image style="overflow:visible;" width="1998" height="2453" id="Layer_0_3_" xlink:href="FB1F4D0778121F20.png"  transform="matrix(1.702490e-02 0 0 1.702490e-02 255.9554 140.8271)">
+	</image>
+</g>
+<path class="st7" d="M693.9,215.4H395.6c-4,0-7.2-3.2-7.2-7.2V64.9c0-4,3.2-7.2,7.2-7.2h298.2c4,0,7.2,3.2,7.2,7.2v143.3
+	C701,212.2,697.8,215.4,693.9,215.4z"/>
+<path class="st5" d="M670.7,116H414.4c-1.6,0-2.9-1.7-2.9-3.8v-23c0-2.1,1.3-3.8,2.9-3.8h256.3c1.6,0,2.9,1.7,2.9,3.8v23
+	C673.6,114.3,672.3,116,670.7,116z"/>
+<text transform="matrix(1 0 0 1 512.4102 105.6353)" class="st15 st6 st8">Test Playbook</text>
+<line class="st16" x1="645.9" y1="93.6" x2="663.6" y2="93.6"/>
+<line class="st16" x1="645.9" y1="99.2" x2="663.6" y2="99.2"/>
+<line class="st16" x1="645.9" y1="104" x2="663.6" y2="104"/>
+<line class="st16" x1="645.9" y1="109.4" x2="663.6" y2="109.4"/>
+<path class="st12" d="M478.7,180.1h-62.5c-1.9,0-3.5-1.6-3.5-3.5v-27.4c0-1.9,1.6-3.5,3.5-3.5h62.5c1.9,0,3.5,1.6,3.5,3.5v27.4
+	C482.2,178.6,480.6,180.1,478.7,180.1z"/>
+<image style="overflow:visible;" width="512" height="512" id="Layer_0_4_" xlink:href="FB1F4D0778121F21.png"  transform="matrix(5.536417e-02 0 0 5.536417e-02 397.4359 165.823)">
+</image>
+<path class="st12" d="M579.2,180.1h-62.5c-1.9,0-3.5-1.6-3.5-3.5v-27.4c0-1.9,1.6-3.5,3.5-3.5h62.5c1.9,0,3.5,1.6,3.5,3.5v27.4
+	C582.7,178.6,581.1,180.1,579.2,180.1z"/>
+<image style="overflow:visible;" width="512" height="512" id="Layer_0_2_" xlink:href="FB1F4D0778121F22.png"  transform="matrix(5.536417e-02 0 0 5.536417e-02 497.9329 165.823)">
+</image>
+<text transform="matrix(1 0 0 1 526.2261 166.1459)" class="st3 st8">Func Lib</text>
+<text transform="matrix(1 0 0 1 422.1973 166.1459)" class="st3 st8">Chaos Lib</text>
+<path class="st12" d="M679.6,180.1h-62.5c-1.9,0-3.5-1.6-3.5-3.5v-27.4c0-1.9,1.6-3.5,3.5-3.5h62.5c1.9,0,3.5,1.6,3.5,3.5v27.4
+	C683.1,178.6,681.6,180.1,679.6,180.1z"/>
+<image style="overflow:visible;" width="512" height="512" id="Layer_0_5_" xlink:href="FB1F4D0778121F27.png"  transform="matrix(5.536417e-02 0 0 5.536417e-02 598.4099 165.823)">
+</image>
+<text transform="matrix(1 0 0 1 625.7128 166.1459)" class="st3 st8">Common</text>
+<rect x="427.4" y="230.8" class="st17" width="69.7" height="39.8"/>
+<line class="st18" x1="448.9" y1="239" x2="448.9" y2="260.9"/>
+<line class="st18" x1="464.3" y1="239" x2="464.3" y2="260.9"/>
+<line class="st18" x1="479.3" y1="239" x2="479.3" y2="260.9"/>
+<rect x="509" y="231.6" class="st17" width="69.7" height="39.8"/>
+<line class="st18" x1="530.4" y1="239.8" x2="530.4" y2="261.7"/>
+<line class="st18" x1="545.9" y1="239.8" x2="545.9" y2="261.7"/>
+<line class="st18" x1="560.9" y1="239.8" x2="560.9" y2="261.7"/>
+<rect x="592.4" y="231.6" class="st17" width="69.7" height="39.8"/>
+<line class="st18" x1="613.9" y1="239.8" x2="613.9" y2="261.7"/>
+<line class="st18" x1="629.3" y1="239.8" x2="629.3" y2="261.7"/>
+<line class="st18" x1="644.3" y1="239.8" x2="644.3" y2="261.7"/>
+<text transform="matrix(0.4086 0 0 1 349.1261 232.0244)" class="st5 st3 st19">{</text>
+<path class="st20" d="M694.5,280.8H392.9c-4,0-7.2-3.2-7.2-7.2v-44.8c0-4,3.2-7.2,7.2-7.2h301.5c4,0,7.2,3.2,7.2,7.2v44.8
+	C701.7,277.6,698.5,280.8,694.5,280.8z"/>
+<text transform="matrix(-0.4086 0 0 -1 737.1997 104.2259)" class="st5 st3 st19">{</text>
+<g>
+	<line class="st17" x1="272.4" y1="212.2" x2="272.4" y2="362.8"/>
+	<g>
+		<line class="st11" x1="272.4" y1="212.2" x2="272.4" y2="356.7"/>
+		<g>
+			<path class="st10" d="M272.4,362.8c-1.1-2.8-2.9-6.4-4.8-8.5l4.8,1.7l4.8-1.7C275.2,356.4,273.4,359.9,272.4,362.8z"/>
+		</g>
+	</g>
+</g>
+<g>
+	<line class="st17" x1="445.6" y1="327.3" x2="445.6" y2="362.8"/>
+	<g>
+		<line class="st11" x1="445.6" y1="327.3" x2="445.6" y2="356.7"/>
+		<g>
+			<path class="st10" d="M445.6,362.8c-1.1-2.8-2.9-6.4-4.8-8.5l4.8,1.7l4.8-1.7C448.5,356.4,446.7,359.9,445.6,362.8z"/>
+		</g>
+	</g>
+</g>
+<line class="st11" x1="272" y1="327.6" x2="446" y2="327.6"/>
+<image style="overflow:visible;" width="512" height="512" id="Layer_0_6_" xlink:href="FB1F4D0778121F25.png"  transform="matrix(5.536417e-02 0 0 5.536417e-02 66.9112 252.241)">
+</image>
+<text transform="matrix(1 0 0 1 95.1223 294.8319)"><tspan x="0" y="0" class="st3 st8">Application Info</tspan><tspan x="9.3" y="14.4" class="st3 st8">Storage Info</tspan><tspan x="13" y="28.8" class="st3 st8">Chaos Info</tspan></text>
+<text transform="matrix(1 0 0 1 105.0979 271.7636)" class="st5 st6 st4">ENV settings</text>
+<g>
+	<g>
+		<line class="st11" x1="130.1" y1="215.1" x2="130.1" y2="250"/>
+		<g>
+			<path class="st10" d="M130.1,209.1c-1.1,2.8-2.9,6.4-4.8,8.5l4.8-1.7l4.8,1.7C132.9,215.5,131.1,212,130.1,209.1z"/>
+		</g>
+	</g>
+</g>
+</svg>

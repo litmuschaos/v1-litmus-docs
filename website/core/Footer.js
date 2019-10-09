@@ -7,74 +7,89 @@
 
 const React = require('react');
 
-const GithubButton = props => (
-  <a
-    className="github-button" // part of the https://buttons.github.io/buttons.js script in siteConfig.js
-    href={`https://github.com/${props.config.organizationName}/${props.config.projectName}`}
-    data-icon="octicon-star"
-    data-count-href={`/${props.config.organizationName}/${props.config.projectName}/stargazers`}
-    data-count-api={`/repos/${props.config.organizationName}/${props.config.projectName}#stargazers_count`}
-    data-count-aria-label="# stargazers on GitHub"
-    aria-label="Star this project on GitHub"
-  >
-    Star
-  </a>
-);
-
-GithubButton.propTypes = {
-  config: React.PropTypes.object
-};
-
 class Footer extends React.Component {
-    docUrl(doc, language) {
-        const baseUrl = this.props.config.baseUrl;
-        return baseUrl + 'docs/' + (language ? language + '/' : '') + doc;
-    }
+  docUrl(doc, language) {
+    const baseUrl = this.props.config.baseUrl;
+    const docsUrl = this.props.config.docsUrl;
+    const docsPart = `${docsUrl ? `${docsUrl}/` : ''}`;
+    const langPart = `${language ? `${language}/` : ''}`;
+    return `${baseUrl}${docsPart}${langPart}${doc}`;
+  }
 
-    pageUrl(doc, language) {
-        const baseUrl = this.props.config.baseUrl;
-        return baseUrl + (language ? language + '/' : '') + doc;
-    }
+  pageUrl(doc, language) {
+    const baseUrl = this.props.config.baseUrl;
+    return baseUrl + (language ? `${language}/` : '') + doc;
+  }
 
-    render() {
-        return (
+  render() {
+    return (
       <footer className="nav-footer" id="footer">
         <section className="sitemap">
-          <div>
-           <br />
-           <div>
-             <a href="https://litmuschaos.io" target="_blank">
-             <img
-                src={`https://litmuschaos.io/assets/images/litmuslogo/litmusicon.svg`}
-                alt="Litmus Chaos Engineering"
-                width="32"
-                height="27"
+          <a href={this.props.config.baseUrl} className="nav-home">
+            {this.props.config.footerIcon && (
+              <img
+                src={this.props.config.baseUrl + this.props.config.footerIcon}
+                alt={this.props.config.title}
+                width="66"
+                height="58"
               />
-            </a>
-            </div>
+            )}
+          </a>
+          <div>
           </div>
-
-		<div>
-		  <a href="https://github.com/litmuschaos/litmus" target="_blank">GitHub</a>
-		</div>
-		<div>
-		  <a href="https://kubernetes.slack.com/messages/CNXNB0ZTN" target="_blank">Slack</a>
-		</div>
-		<div>
-		  <a href="https://twitter.com/litmuschaos" target="_blank">Twitter</a>
-		</div>
+          <div>
+            <h5>Community</h5>
+            <a href="https://kubernetes.slack.com/messages/CNXNB0ZTN">Slack</a>
+            <a
+              href="https://twitter.com/LitmusChaos"
+              target="_blank"
+              rel="noreferrer noopener">
+              Twitter
+            </a>
+          </div>
+          <div>
+            <h5>More</h5>
+            <a href="https://github.com/litmuschaos/litmus">GitHub</a>
+            <a
+              className="github-button"
+              href={this.props.config.repoUrl}
+              data-icon="octicon-star"
+              data-count-href="/litmuschaos/litmus/stargazers"
+              data-show-count="true"
+              data-count-aria-label="# stargazers on GitHub"
+              aria-label="Star this project on GitHub">
+              Star
+            </a>
+            {this.props.config.twitterUsername && (
+              <div className="social">
+                <a
+                  href={`https://twitter.com/${
+                    this.props.config.twitterUsername
+                  }`}
+                  className="twitter-follow-button">
+                  Follow @{this.props.config.twitterUsername}
+                </a>
+              </div>
+            )}
+            {this.props.config.facebookAppId && (
+              <div className="social">
+                <div
+                  className="fb-like"
+                  data-href={this.props.config.url}
+                  data-colorscheme="dark"
+                  data-layout="standard"
+                  data-share="true"
+                  data-width="225"
+                  data-show-faces="false"
+                />
+              </div>
+            )}
+          </div>
         </section>
-
-        
-        <section className="copyright">
-          {this.props.config.copyright && (
-            <span>{this.props.config.copyright}</span>
-          )}
-        </section>
+        <section className="copyright">{this.props.config.copyright}</section>
       </footer>
     );
-
-    }
+  }
 }
 
 module.exports = Footer;

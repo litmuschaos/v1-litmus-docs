@@ -1,5 +1,14 @@
 {
   "docs": {
-    "Documentation": ["getstarted", "example", "chaoshub", "plugins", "architecture", "resources", "community", "devguide"]
+    "Dcoumentation": [
+      "getstarted",
+      "example",
+      "chaoshub",
+      "plugins",
+      "architecture",
+      "resources",
+      "community",
+      "devguide"
+    ]
   }
 }
