@@ -45,6 +45,8 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
+    {href: "https://github.com/litmuschaos/litmus", label: "GitHub"},
+    {href: "https://kubernetes.slack.com/messages/CNXNB0ZTN", label: "Slack"},
     {href: 'https://hub.litmuschaos.io/', label: 'Chaos Hub'},
     {search: true}
   ],
