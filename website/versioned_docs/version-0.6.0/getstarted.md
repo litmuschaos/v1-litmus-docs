@@ -17,7 +17,9 @@ Running chaos on your application involves the following steps:
 
 [Install Litmus](#install-litmus)
 
-[Install  Chaos Experiments](#install-chaos-experiments)
+[Install Chaos Experiments](#install-chaos-experiments)
+
+[Setup ServiceAccount](#setup-serviceaccount)
 
 [Prepare ChaosEngine](#prepare-chaosengine)
 
@@ -53,7 +55,7 @@ kubectl get pods -n litmus
 >
 > NAME                                  READY   STATUS    RESTARTS   AGE
 >
-> litmus-operator-ce-554d6c8f9f-slc8k   1/1     Running   0          6m41s
+> chaos-operator-ce-554d6c8f9f-slc8k   1/1     Running   0          6m41s
 
 
 
@@ -74,6 +76,9 @@ kubectl get crds | grep chaos
 > chaosresults.litmuschaos.io             2019-10-02T08:45:26Z
 
 
+**NOTE**: The chaos resources are namespace scoped and must be installed in the namespace of the application which is subject to chaos.
+This helps to isolate chaos & support parallel execution. In this guide, we shall describe the steps to inject chaos on an application
+deployed in the default namespace.
 
 ### Install Chaos Experiments
 
@@ -82,22 +87,54 @@ Chaos experiments contain the actual chaos details. These experiments are instal
 The generic chaos experiments such as `pod-kill`, `container-kill`,` network-delay` are avaialbe under Generic Chaos Chart. This is the first chart you install. You can later install application specific chaos charts for running application specific chaos.
 
 ```
-kubectl create -f https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/experiment.yaml -n litmus
+kubectl create -f https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/experiment.yaml 
 ```
-
-
 
 Verify if the chaos experiments are installed.
 
 ```
-kubectl get chaosexperiments -n litmus
+kubectl get chaosexperiments 
 ```
 
+### Setup ServiceAccount
 
+A ServiceAccount should be created to allow chaosengine to run experiments on your application namespace. Copy the following into `rbac.yaml` and run `kubectl apply -f rbac.yaml` to create one such account on your default namespace. You can change the service account name and namespace as needed.
+
+```yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: nginx
+rules:
+- apiGroups: ["", "extensions", "apps", "batch", "litmuschaos.io"]
+  resources: ["daemonsets", "deployments", "replicasets", "jobs", "pods", "pods/exec", "events", "chaosengines", "chaosexperiments", "chaosresults"]
+  verbs: ["*"] 
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: nginx
+subjects:
+- kind: ServiceAccount
+  name: nginx
+  namespace: default # App namespace
+roleRef:
+  kind: ClusterRole
+  name: nginx
+  apiGroup: rbac.authorization.k8s.io
+```
 
 ### Prepare ChaosEngine 
 
-ChaosEngine connects the application to the Chaos Experiment. Copy the following YAML snippet into a file called chaosengine.yaml and update `applabel` and `experiments` as per your choice.
+ChaosEngine connects the application to the Chaos Experiment. Copy the following YAML snippet into a file called chaosengine.yaml and update `applabel` and `experiments` as per your choice. Change the `chaosServiceAccount` to the name of ServiceAccount created in above step, if applicable.
 
 ```yaml
 # chaosengine.yaml
@@ -105,24 +142,22 @@ apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
   name: engine-nginx
-  namespace: litmus
+  namespace: default
 spec:
   appinfo: 
-    appns: default # App namespace
+    appns: default 
     # FYI, To see app label, apply kubectl get pods --show-labels
-    applabel: "run=myserver" # App Label
-  chaosServiceAccount: litmus
+    applabel: "run=myserver" 
+  chaosServiceAccount: nginx 
   experiments:
     - name: pod-delete
       spec:
         rank: 1
 ```
 
-
-
 ### Annotate your application
 
-Your application has to be annotated with `litmuschaos.io/chaos="true"`. As a security measure, Chaos Operator checks for this annotation on the application before invoking chaos experiment(s) on the application.
+Your application has to be annotated with `litmuschaos.io/chaos="true"`. As a security measure, Chaos Operator checks for this annotation on the application before invoking chaos experiment(s) on the application. Replace `myserver` with an name of your deployment.
 
 ```console
 kubectl annotate deploy/myserver litmuschaos.io/chaos="true"
@@ -152,7 +187,7 @@ kubectl describe chaosresult engine-nginx-pod-delete
 
 ## Uninstallation
 
-You can delete the chaos experiments and uninstall Litmus by deleting the namespace.
+You can uninstall Litmus by deleting the namespace.
 
 ```console
 kubectl delete ns litmus
