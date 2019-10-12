@@ -10,7 +10,8 @@ services:
 script:
   - python tag.py
   - cd website
-  - npm run build
+  - yarn install
+  - yarn build
   - cd ..
   - 
 after_success:

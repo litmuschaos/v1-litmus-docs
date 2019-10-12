@@ -1,6 +1,4 @@
-{
-  "versions": {
-    "0.6.0": ["latest", "https://docs.litmuschaos.io"],
-    "0.5.0": ["latest", "https://docs.litmuschaos.io/v050/"]
-  }
-}
+[
+  "0.6.0",
+  "0.5.0"
+]
