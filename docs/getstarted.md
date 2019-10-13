@@ -5,6 +5,20 @@ sidebar_label: Getting Started
 ---
 
 ------
+<html>
+<head>
+<style>
+div {
+  margin-bottom: 15px;
+  padding: 4px 12px;
+}
+.danger {
+  background-color: #ffdddd;
+  border-left: 6px solid #f44336;
+}
+</style>
+</head>
+<body>
 
 ## Pre-requisites
 
@@ -48,13 +62,12 @@ The above command installs all the chaos operator, required service account conf
 kubectl get pods -n litmus
 ```
 
-> Expected output:
->
-> *kubectl get pods -n litmus*
->
-> NAME                                  READY   STATUS    RESTARTS   AGE
->
-> chaos-operator-ce-554d6c8f9f-slc8k   1/1     Running   0          6m41s
+ Expected output:
+
+
+
+
+>chaos-operator-ce-554d6c8f9f-slc8k             1/1         Running     0            6m41s
 
 
 
@@ -64,20 +77,19 @@ kubectl get pods -n litmus
 kubectl get crds | grep chaos
 ```
 
-> Expected output:
->
-> *kubectl get crds | grep chaos*
->
+Expected output:
+
 > chaosengines.litmuschaos.io             2019-10-02T08:45:25Z
 >
 > chaosexperiments.litmuschaos.io         2019-10-02T08:45:26Z
 >
 > chaosresults.litmuschaos.io             2019-10-02T08:45:26Z
 
-
-**NOTE**: The chaos resources are namespace scoped and must be installed in the namespace of the application which is subject to chaos.
+<div class="danger">
+<strong>NOTE</strong>: The chaos resources are namespace scoped and must be installed in the namespace of the application which is subject to chaos.
 This helps to isolate chaos & support parallel execution. In this guide, we shall describe the steps to inject chaos on an application
 deployed in the default namespace.
+</div>
 
 ### Install Chaos Experiments
 
@@ -211,6 +223,7 @@ If you have not joined our community, do join us [here](community.html).
 <hr>
 
 <br>	
-
+</body>
+</html>
 
 

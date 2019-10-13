@@ -5,6 +5,20 @@ sidebar_label: Chaos Example
 original_id: example
 ---
 ------
+<html>
+<head>
+<style>
+div {
+  margin-bottom: 15px;
+  padding: 4px 12px;
+}
+.danger {
+  background-color: #ffdddd;
+  border-left: 6px solid #f44336;
+}
+</style>
+</head>
+<body>
 
 ## Example of running a chaos experiment
 
@@ -73,7 +87,7 @@ It takes upto a couple of minutes for the experiments to be run and the result C
 kubectl describe chaosresult engine-nginx-pod-delete -n litmus
 ```
 
-> Observed Output:
+ Observed Output:
 
 ```yaml
 Name:         engine-nginx-pod-delete
@@ -95,9 +109,10 @@ Spec:
     Verdict:  pass
 Events:       <none>
 ```
+<div class="danger">
+<strong> Note:</strong> You may observe the pod status by the following command. And observe that nginx pod getting deleted couple of times and recreated.
+</div>
 
-> Note: You may observe the pod status by the following command. And observe that nginx pod getting deleted couple of times and recreated.
->
 > `watch -n 1 kubectl get pods -n litmus`
 
 <br>
@@ -109,7 +124,8 @@ Events:       <none>
 <br>
 
 <br>
-
+</body>
+</html>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-92076314-12"></script>
@@ -120,3 +136,4 @@ Events:       <none>
 
   gtag('config', 'UA-92076314-12');
 </script>
+
