@@ -4,7 +4,6 @@ env:
   global:
    - COMMIT=${TRAVIS_COMMIT::6}
 
-sudo: required
 services:
 - docker
 script:
@@ -22,5 +21,3 @@ after_success:
   - if [ "$TRAVIS_BRANCH" = "staging" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then export REPO=mayadataio/stage-litmus-docs;
        docker login -u "$DOCKER_USER" -p "$DOCKER_PASS" && docker build -t $REPO:$TRAVIS_BRANCH-$COMMIT . && docker push $REPO; 
     fi
-
-
