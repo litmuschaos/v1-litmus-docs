@@ -42,7 +42,7 @@ Litmus chaos hub is a place where the chaos engineering community members publis
 Chaos actions that apply to generic Kubernetes resources are classified into this category. Following chaos experiments are supported under Generic Chaos Chart
 
 - Container Kill
-- POD Kill
+- Pod Kill
 - Network Delay
 - Network Loss
 - CPU Hog
