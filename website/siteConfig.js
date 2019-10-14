@@ -21,7 +21,7 @@ const users = [
 ];
 
 const siteConfig = {
-  title: 'Litmus Docs', // Title for your website.
+  //title: 'Litmus Docs', // Title for your website.
   tagline: 'A website for testing',
   url: 'https://docs.litmuschaos.io', // Your website URL
   baseUrl: '/', // Base URL for your project */

@@ -1,0 +1,14 @@
+{
+    "version-0.7.0-docs": {
+      "Dcoumentation": [
+        "version-0.7.0-getstarted",
+        "version-0.7.0-example",
+        "version-0.7.0-chaoshub",
+        "version-0.7.0-plugins",
+        "version-0.7.0-architecture",
+        "version-0.7.0-resources",
+        "version-0.7.0-community",
+        "version-0.7.0-devguide"
+      ]
+    }
+ }
