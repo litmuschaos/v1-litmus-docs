@@ -1,7 +1,8 @@
 ---
-id: getstarted 
+id: version-0.7.0-getstarted
 title: Getting Started with Litmus
-sidebar_label: Getting Started 
+sidebar_label: Getting Started
+original_id: getstarted
 ---
 
 ------
@@ -49,7 +50,7 @@ Running chaos on your application involves the following steps:
 ###  Install Litmus
 
 ```
-kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-v0.7.0.yaml
+kubectl apply -f kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-v0.7.0.yaml
 ```
 
 The above command installs all the chaos operator, required service account configuration, and chaos CRDs. Before you start running a chaos experiment, verify if your Litmus is installed correctly.
