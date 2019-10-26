@@ -13,21 +13,6 @@ cd litmus-docs
 
 The website server can be setup manually or through docker and docker compose
 
-## Using Docker compose
-
-### Install docker compose
-
-```bash
-sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-```
-
-### Run the server
-
-```bash
-docker-compose up
-```
-
 ## Manual Setup
 
 ### Install Node.js
@@ -50,6 +35,23 @@ cd litmus-docs/website
 npm install
 npm start
 ```
+
+## Using Docker compose
+
+### Install docker compose
+
+```bash
+sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+```
+
+### Run the server
+
+```bash
+docker-compose up
+```
+
+
 ## Browse local documentation
 http://localhost:3000/docs/next/getstarted.html
 
