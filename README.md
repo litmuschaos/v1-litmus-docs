@@ -18,8 +18,8 @@ The website server can be setup manually or through docker and docker compose
 ### Install Node.js
 
 ```bash
-sudo apt-get install python-software-properties
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+sudo apt-get install software-properties-common
+curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
 ```
 
 ### Get the latest Node.js package
