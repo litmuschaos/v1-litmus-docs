@@ -1,5 +1,5 @@
 ---
-id: version-0.6.0-chaoshub
+id: version-0.7.0-chaoshub
 title: Using and contributing to ChaosHub
 sidebar_label: ChaosHub
 original_id: chaoshub
@@ -42,7 +42,7 @@ Litmus chaos hub is a place where the chaos engineering community members publis
 Chaos actions that apply to generic Kubernetes resources are classified into this category. Following chaos experiments are supported under Generic Chaos Chart
 
 - Container Kill
-- Pod Kill
+- POD Kill
 - Network Delay
 - Network Loss
 - CPU Hog

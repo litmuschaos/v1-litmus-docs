@@ -15,9 +15,9 @@ Below are some key points to remember before understanding how to write a new ch
 >
 > Website rendering code repository: https://github.com/litmuschaos/charthub.litmuschaos.io
 
-
-
-Chaos Libraries are written in Ansible programming language. To write new a Chaos Experiment, you need to know Ansible.
+The experiments & chaos libraries are typically written in Ansible, though not mandatory. Ensure that
+the experiments can be executed in a container & can read/update the litmuschaos custom resources. For example, 
+if you are writing an experiment in Go, use this [clientset](https://github.com/litmuschaos/chaos-operator/tree/master/pkg/client)  
 
 <hr>
 
@@ -25,69 +25,38 @@ Chaos Libraries are written in Ansible programming language. To write new a Chao
 
 ### Chaos Chart
 
-A group of Choas Experiments put together in a YAML file. This group or chart has metadata such as `ChartVersion`, `Provided By`. 
+A group of Choas Experiments put together in a YAML file. Each group or chart has a metadata manifest called `ChartServiceVersion` 
+that holds data such as `ChartVersion`, `Contributors`, `Description`, `links` etc.., This metadata is rendered on the ChartHub. 
+A chaos chart also consists of a `package` manifest that is an index of available experiments in the chart.
+
+Here is an example of the [ChartServiceVersion](https://github.com/litmuschaos/chaos-charts/blob/master/charts/generic/generic.chartserviceversion.yaml) & [package](https://github.com/litmuschaos/chaos-charts/blob/master/charts/generic/generic.package.yaml) manifests of the generic chaos chart.
+
 
 ### Chaos Experiment
 
-ChaosExperiment is a CRD that specifies the nature of a Chaos Experiment. The YAML file that constitutes a Chaos Experiment CR is stored under a Chaos Chart of ChaosHub. An important parameter of a ChaosExperiment CR is the `LitmusBook`.
+ChaosExperiment is a CRD that specifies the nature of a Chaos Experiment. The YAML file that constitutes a Chaos Experiment CR 
+is stored under a Chaos Chart of ChaosHub and typically consists of low-level chaos parameters specific to that experiment, set
+to their default values. 
+
+Here is an example chaos experiment CR for a [pod-delete](https://github.com/litmuschaos/chaos-charts/blob/master/charts/generic/pod-delete/experiment.yaml) experiment
 
 ### Litmus Book
 
-Litmus book is an `ansible` playbook that encompasses the logic of pre-checks, injecting actual chaos, post-checks and updating the result. 
+Litmus book is an `ansible` playbook that encompasses the logic of pre-checks, chaos-injection, post-checks, and result-updates. 
+Typically, these are accompanied by a Kubernetes job that can execute the respective playbook. 
+
+Here is an example of the litmus book for the [pod-delete](https://github.com/litmuschaos/litmus/tree/master/experiments/generic/pod_delete) experiment.
 
 ### Chaos functions
 
-The `ansible` programs inside Litmus books can make use of readily avaialble chaos functions. The chaos functions are available as `ansible` functions which are wrapped in one of the chaos libraries. See [plugins](/docs/next/plugins.html) for more details.
+The `ansible` business logic inside Litmus books can make use of readily available chaos functions. The chaos functions are available 
+as `task-files` which are wrapped in one of the chaos libraries. See [plugins](/docs/next/plugins.html) for more details.
 
 <hr>
 
 ## Developing a Chaos Experiment
 
-1. [Write a new Chaos Chart](#write-a-new-chaos-chart)
-2. [Write a new ChaosExperiment CR YAML](#write-a-new-chaosexperiment-cr-yaml)
-3. [Write a new Litmus Book](#write-a-new-litmus-book)
-4. Test the Chaos Experiment
-5. [Update the documentation](#update-the-documentation) 
-
-See an [example](#example) of developing chaos chart for `newApp` with a new chaos experiment called `replica-kill`
-
-### Write a new Chaos Chart
-
-1. Clone `chaos-charts` repository
-
-   ```
-   https://github.com/litmuschaos/chaos-charts.git
-   ```
-
-   
-
-2. Untar new-chart.tar.gz  available in the root folder of the repository.
-
-3. If you are naming your chart as `newApp`, replace all instances of `exampleChart` with `newApp`
-
-4. If you are naming your experiment as `replica-kill`, replace all instances of `exampleExp` with `replica-kill`
-
-Now, your `newApp` chaos chart is ready. Next step is to update and verify CR YAML for `replica-kill`.  
-
-### Write a new ChaosExperiment CR YAML
-
-If you have extracted or untarred `new-chart.tar.gz`, you will have the required templace YAMLs for Chaos Experiment as well. Follow the below steps to prepare your chaos experiment `newExp` 
-
-1. Update the reference to Limus
-
-### Write a new Litmus Book
-
-
-
-### Update the documentation
-
-Documentation for your new chart and experiment have to be updated at http://localhost:3000/docs/next/chaoshub.html
-
-## Example
-
-The below video shows the example creation of `newChart` and `newExp` for an application called `busybox`. 
-
-<ascii cinema video of the above example>
+A detailed how-to guide on developing chaos experiments is available [here](https://github.com/litmuschaos/litmus/tree/master/contribute/developer_guide)
 
 <br>
 
