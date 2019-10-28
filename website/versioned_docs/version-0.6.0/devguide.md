@@ -82,7 +82,7 @@ If you have extracted or untarred `new-chart.tar.gz`, you will have the required
 
 ### Update the documentation
 
-Documentation for your new chart and experiment have to be updated at http://localhost:3000/docs/next/chaoshub.html
+Documentation for your new chart and experiment have to be updated at <a href="/docs/next/chaoshub.html" target="_blank"> chaoshub</a>
 
 ## Example
 
