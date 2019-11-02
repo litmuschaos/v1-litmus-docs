@@ -24,7 +24,8 @@ npm install -g yarn
 ### Clone litmus-docs repository
 
 ```bash
-git clone https://github.com/litmuschaos/litmus-docs.git && cd litmus-docs
+git clone https://github.com/litmuschaos/litmus-docs.git 
+cd litmus-docs
 ```
 
 ### Start the server
