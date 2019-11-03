@@ -37,7 +37,7 @@ npm install -g yarn
 ### Start the server
 
 ```bash
-cd litmus-docs/website
+cd website
 npm start
 ```
 
