@@ -66,7 +66,6 @@ spec:
     appns: litmus # App namespace
     # FYI, To see app label, apply kubectl get pods --show-labels
     applabel: "run=myserver" # App Label
-    appkind: deployment
   chaosServiceAccount: litmus
   experiments:
     - name: pod-delete
