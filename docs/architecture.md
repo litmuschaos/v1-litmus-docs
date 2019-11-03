@@ -25,7 +25,7 @@ During installation, following three CRDs are installed on the Kubernetes cluste
 
 **Chaos-Experiments**
 
-Chaos Experiment is a CR and are available as YAML files on <a href=" https://hub.litmuschaos.io" target="_blank">Chaos Hub</a>. For more details visit Chaos Hub [documentation](chaoshub.html).
+Chaos Experiment is a CR and are available as YAML files on <a href=" https://hub.litmuschaos.io" target="_blank">Chaos Hub</a>. For more details visit Chaos Hub [documentation](../chaoshub.html).
 
 
 
