@@ -38,7 +38,8 @@ npm install -g yarn
 
 ```bash
 cd website
-npm start
+yarn install
+yarn start
 ```
 
 ## Using Docker compose
