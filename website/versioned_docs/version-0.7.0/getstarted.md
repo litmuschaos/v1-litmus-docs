@@ -9,10 +9,6 @@ original_id: getstarted
 <html>
 <head>
 <style>
-div {
-  margin-bottom: 15px;
-  padding: 4px 12px;
-}
 .danger {
   background-color: #ffdddd;
   border-left: 6px solid #f44336;
