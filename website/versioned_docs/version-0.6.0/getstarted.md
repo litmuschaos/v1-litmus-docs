@@ -99,7 +99,7 @@ Chaos experiments contain the actual chaos details. These experiments are instal
 The generic chaos experiments such as `pod-kill`, `container-kill`,` network-delay` are avaialbe under Generic Chaos Chart. This is the first chart you install. You can later install application specific chaos charts for running application specific chaos.
 
 ```
-kubectl create -f https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/experiment.yaml 
+kubectl create -f https://hub.litmuschaos.io/api/chaos?file=charts/generic/experiments.yaml
 ```
 
 Verify if the chaos experiments are installed.
@@ -146,7 +146,7 @@ roleRef:
 
 ### Prepare ChaosEngine 
 
-ChaosEngine connects the application to the Chaos Experiment. Copy the following YAML snippet into a file called chaosengine.yaml and update `applabel` and `experiments` as per your choice. Change the `chaosServiceAccount` to the name of ServiceAccount created in above step, if applicable.
+ChaosEngine connects the application to the Chaos Experiment. Copy the following YAML snippet into a file called `chaosengine.yaml` and update `applabel` and `experiments` as per your choice. Change the `chaosServiceAccount` to the name of ServiceAccount created in above step, if applicable.
 
 ```yaml
 # chaosengine.yaml
