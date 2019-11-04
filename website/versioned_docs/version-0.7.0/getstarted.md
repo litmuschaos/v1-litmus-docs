@@ -164,11 +164,11 @@ spec:
     applabel: "run=myserver" 
   chaosServiceAccount: nginx 
   experiments:
-    - name: container-kill
-      spec:
-        components:
-        - name: TARGET_CONTAINER
-          value: hello
+  - name: container-kill
+    spec:
+      components:
+      - name: TARGET_CONTAINER
+        value: hello
 ```
 
 ### Over-ride Default Chaos Experiments Variables
@@ -178,11 +178,11 @@ After LitmusChaos v0.7.0, to over-ride the default enviroment variables in the c
 ```console
 ...
 experiments:
-    - name: container-kill
-      spec:
-        components:
-        - name: TARGET_CONTAINER
-          value: hello
+- name: container-kill
+  spec:
+    components:
+    - name: TARGET_CONTAINER
+      value: hello
 ```
 
 
