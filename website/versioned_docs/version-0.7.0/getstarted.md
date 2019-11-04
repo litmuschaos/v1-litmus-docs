@@ -146,7 +146,8 @@ roleRef:
 
 ### Prepare ChaosEngine 
 
-ChaosEngine connects the application to the Chaos Experiment. Copy the following YAML snippet into a file called `chaosengine.yaml` and update `applabel` and `experiments` as per your choice. Change the `chaosServiceAccount` to the name of ServiceAccount created in above step, if applicable.
+ChaosEngine connects the application to the Chaos Experiment. Copy the following YAML snippet into a file called chaosengine.yaml and update `applabel` and `experiments` as per your choice. Toggle `monitoring` between `true`/`false`, to allow the chaos-exporter to fetch experiment related metrics. Change the `chaosServiceAccount` to the name of ServiceAccount created in above step, if applicable.
+
 
 ```yaml
 # chaosengine.yaml
@@ -156,16 +157,34 @@ metadata:
   name: engine-nginx
   namespace: default
 spec:
+  monitoring: true
   appinfo: 
     appns: default 
     # FYI, To see app label, apply kubectl get pods --show-labels
     applabel: "run=myserver" 
   chaosServiceAccount: nginx 
   experiments:
-    - name: pod-delete
-      spec:
-        rank: 1
+  - name: container-kill
+    spec:
+      components:
+      - name: TARGET_CONTAINER
+        value: hello
 ```
+
+### Over-ride Default Chaos Experiments Variables
+
+After LitmusChaos v0.7.0, to over-ride the default enviroment variables in the chaosExperiments, add the entry of those variable with the same name under `experiments._name_of_experiment_.spec.components` with the over-riding value.
+
+```console
+...
+experiments:
+- name: container-kill
+  spec:
+    components:
+    - name: TARGET_CONTAINER
+      value: hello
+```
+
 
 ### Annotate your application
 
