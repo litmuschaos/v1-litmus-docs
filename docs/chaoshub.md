@@ -41,7 +41,7 @@ Litmus chaos hub is a place where the chaos engineering community members publis
 Chaos actions that apply to generic Kubernetes resources are classified into this category. Following chaos experiments are supported under Generic Chaos Chart
 
 - Container Kill
-- POD Kill
+- POD Delete
 - Pod Network Latency
 - Pod Network Loss
 - CPU Hog
@@ -53,7 +53,7 @@ Chaos actions that apply to generic Kubernetes resources are classified into thi
 While Chaos Experiments under Generic category offer the ability to induce chaos into Kubernetes resources, it is difficult to analyse and conclude if the chaos induced found a weakness in a given application. The application specific chaos experiments are built with some checks on *pre-conditions* and some expected outcomes after the chaos injection. The result of the chaos experiment is determined by matching the outcome with expected outcome. 
 
 <div class="danger">
-<strong>Note:</strong> If the result of the chaos experiment is `pass`, it means that the application is resilient to that chaos.
+<strong>NOTE:</strong> If the result of the chaos experiment is `pass`, it means that the application is resilient to that chaos.
 </div>
 
 **Benefits of contributing an application chaos experiment**
