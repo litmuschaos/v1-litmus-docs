@@ -228,13 +228,13 @@ kubectl delete ns litmus
 
 ## Example
 
-See [the tutorial](../example.html) on running a `pod-delete` chaos experiment on `nginx` application.
+See [the tutorial](example.md) on running a `pod-delete` chaos experiment on `nginx` application.
 
 
 
 ## Join our community
 
-If you have not joined our community, do join us [here](../community.html).
+If you have not joined our community, do join us [here](community.md).
 
 
 
