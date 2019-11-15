@@ -194,13 +194,6 @@ experiments:
 ```
 
 
-### Annotate your application
-
-Your application has to be annotated with `litmuschaos.io/chaos="true"`. As a security measure, Chaos Operator checks for this annotation on the application before invoking chaos experiment(s) on the application. Replace `myserver` with the name of your deployment.
-
-```console
-kubectl annotate deploy/myserver litmuschaos.io/chaos="true"
-```
 
 ### Run Chaos
 
