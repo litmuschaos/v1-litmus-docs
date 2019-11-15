@@ -153,7 +153,7 @@ kubectl annotate deploy/myserver litmuschaos.io/chaos="true"
 
 ### Prepare ChaosEngine 
 
-ChaosEngine connects the application to the Chaos Experiment. Copy the following YAML snippet into a file called `chaosengine.yaml` and update `applabel` , `appns` and `experiments` as per your choice. Toggle `monitoring` between `true`/`false`, to allow the chaos-exporter to fetch experiment related metrics. Change the `chaosServiceAccount` to the name of ServiceAccount created in above step, if applicable.
+ChaosEngine connects the application to the Chaos Experiment. Copy the following YAML snippet into a file called `chaosengine.yaml` and update `applabel` , `appns`, `appkind` and `experiments` as per your choice. Toggle `monitoring` between `true`/`false`, to allow the chaos-exporter to fetch experiment related metrics. Change the `chaosServiceAccount` to the name of ServiceAccount created in above step, if applicable.
 
 ```yaml
 # chaosengine.yaml
