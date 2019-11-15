@@ -49,7 +49,7 @@ Here is an example of the litmus book for the [pod-delete](https://github.com/li
 
 ### Chaos functions
 
-The `ansible` business logic inside Litmus books can make use of readily available chaos functions. The chaos functions are available as `task-files` which are wrapped in one of the chaos libraries. See [plugins](/docs/next/plugins.html) for more details.
+The `ansible` business logic inside Litmus books can make use of readily available chaos functions. The chaos functions are available as `task-files` which are wrapped in one of the chaos libraries. See [plugins](plugins.md) for more details.
 
 <hr>
 
