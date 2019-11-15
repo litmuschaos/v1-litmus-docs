@@ -1,7 +1,8 @@
 ---
-id: architecture 
+id: version-0.8.0-architecture
 title: Litmus Architecture
-sidebar_label: Architecture 
+sidebar_label: Architecture
+original_id: architecture
 ---
 <hr>
 

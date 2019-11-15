@@ -1,7 +1,8 @@
 ---
-id: chaoshub 
+id: version-0.8.0-chaoshub
 title: Using and contributing to ChaosHub
-sidebar_label:ChaosHub 
+sidebar_label: ChaosHub
+original_id: chaoshub
 ---
 ------
 <html>

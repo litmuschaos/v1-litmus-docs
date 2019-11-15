@@ -1,7 +1,8 @@
 ---
-id: example 
+id: version-0.8.0-example
 title: Chaos Example
-sidebar_label: Chaos Example 
+sidebar_label: Chaos Example
+original_id: example
 ---
 ------
 <html>

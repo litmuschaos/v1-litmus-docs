@@ -1,7 +1,8 @@
 ---
-id: devguide 
+id: version-0.8.0-devguide
 title: Developer Guide for Chaos Charts
-sidebar_label: Developer Guide 
+sidebar_label: Developer Guide
+original_id: devguide
 ---
 ------
 

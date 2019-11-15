@@ -1,7 +1,8 @@
 ---
-id: resources 
+id: version-0.8.0-resources
 title: Resources related to Chaos Engineering on Kubernetes
-sidebar_label: Resources 
+sidebar_label: Resources
+original_id: resources
 ---
 ------
 
