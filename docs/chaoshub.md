@@ -60,7 +60,7 @@ Application developers write negative tests in their CI pipelines to test the re
 
 
 
-Following Application Chaos, experiments are available on ChaosHub
+Following Application Chaos experiments are available on ChaosHub
 
 
 
@@ -74,7 +74,7 @@ Following Application Chaos, experiments are available on ChaosHub
 
 Chaos experiments that inject chaos into the platform resources of Kubernetes are classified into this category. Management of platform resources vary significantly from each other, Chaos Charts may be maintained separately for each platform (For example, AWS, GCP, Azure, etc)
 
-Following Platform Chaos, experiments are available on ChaosHub
+Following Platform Chaos experiments are available on ChaosHub
 
 
 
