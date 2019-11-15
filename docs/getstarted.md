@@ -52,7 +52,7 @@ Running chaos on your application involves the following steps:
 kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-v0.7.0.yaml
 ```
 
-The above command installs all the chaos operator, required service account configuration, and chaos CRDs. Before you start running a chaos experiment, verify if your Litmus is installed correctly.
+The above command install all the CRDS, required service account configuration, and chaos-operator. Before you start running a chaos experiment, verify if your Litmus is installed correctly.
 
 **Verify your installation**
 
@@ -86,14 +86,14 @@ Expected output:
 > chaosresults.litmuschaos.io             2019-10-02T08:45:26Z
 
 <div class="danger">
-<strong>NOTE</strong>: The chaos resources are namespace scoped and must be installed in the namespace of the application which is subject to chaos.
-This helps to isolate chaos & support parallel execution. In this guide, we shall describe the steps to inject chaos on an application
+<strong>NOTE</strong>: 
+In this guide, we shall describe the steps to inject chaos on an application
 deployed in the default namespace.
 </div>
 
 ### Install Chaos Experiments
 
-Chaos experiments contain the actual chaos details. These experiments are installed on to your cluster as Kubernetes CRs (or Custom Resources). The Chaos Experiments are grouped as Chaos Charts and are published on <a href=" https://hub.litmuschaos.io" target="_blank">Chaos Hub</a>. 
+Chaos experiments contain the actual chaos details. These experiments are installed on your cluster as Kubernetes CRs (Custom Resources). The Chaos Experiments are grouped as Chaos Charts and are published on <a href=" https://hub.litmuschaos.io" target="_blank">Chaos Hub</a>. 
 
 The generic chaos experiments such as `pod-kill`, `container-kill`,` network-delay` are avaialbe under Generic Chaos Chart. This is the first chart you install. You can later install application specific chaos charts for running application specific chaos.
 
@@ -109,7 +109,7 @@ kubectl get chaosexperiments
 
 ### Setup ServiceAccount
 
-A ServiceAccount should be created to allow chaosengine to run experiments on your application namespace. Copy the following into `rbac.yaml` and run `kubectl apply -f rbac.yaml` to create one such account on your default namespace. You can change the service account name and namespace as needed.
+A ServiceAccount should be created to allow chaosengine to run experiments in your application namespace. Copy the following into `rbac.yaml` and run `kubectl apply -f rbac.yaml` to create one such account on your default namespace. You can change the service account name and namespace as needed.
 
 ```yaml
 ---
@@ -143,9 +143,17 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 ```
 
+### Annotate your application
+
+Your application has to be annotated with `litmuschaos.io/chaos="true"`. As a security measure, Chaos Operator checks for this annotation on the application before invoking chaos experiment(s) on the application. Replace `myserver` with an name of your deployment.
+
+```console
+kubectl annotate deploy/myserver litmuschaos.io/chaos="true"
+```
+
 ### Prepare ChaosEngine 
 
-ChaosEngine connects the application to the Chaos Experiment. Copy the following YAML snippet into a file called chaosengine.yaml and update `applabel` and `experiments` as per your choice. Toggle `monitoring` between `true`/`false`, to allow the chaos-exporter to fetch experiment related metrics. Change the `chaosServiceAccount` to the name of ServiceAccount created in above step, if applicable.
+ChaosEngine connects the application to the Chaos Experiment. Copy the following YAML snippet into a file called `chaosengine.yaml` and update `applabel` , `appns` and `experiments` as per your choice. Toggle `monitoring` between `true`/`false`, to allow the chaos-exporter to fetch experiment related metrics. Change the `chaosServiceAccount` to the name of ServiceAccount created in above step, if applicable.
 
 ```yaml
 # chaosengine.yaml
@@ -171,7 +179,7 @@ spec:
 
 ### Over-ride Default Chaos Experiments Variables
 
-After LitmusChaos v0.7.0, to over-ride the default enviroment variables in the chaosExperiments, add the entry of those variable with the same name under `experiments._name_of_experiment_.spec.components` with the over-riding value.
+After LitmusChaos v0.7.0, to over-ride the default enviroment variables in the chaosExperiments, add the entry of those variable with the same name under `experiments.<experiment_name>.spec.components` with the over-riding value.
 
 ```console
 ...
@@ -183,19 +191,7 @@ experiments:
           value: hello
 ```
 
-
-### Annotate your application
-
-Your application has to be annotated with `litmuschaos.io/chaos="true"`. As a security measure, Chaos Operator checks for this annotation on the application before invoking chaos experiment(s) on the application. Replace `myserver` with an name of your deployment.
-
-```console
-kubectl annotate deploy/myserver litmuschaos.io/chaos="true"
-```
-
-
-
 ### Run Chaos
-
 
 
 ```console
@@ -208,11 +204,11 @@ kubectl create -f chaosengine.yaml
 
 Observe the ChaosResult CR Status to know the status of each experiment. The ```spec.verdict``` is set to Running when the experiment is in progress, eventually changing to pass or fail.
 
+<strong> NOTE:</strong>  ChaosResult name will be `<chaos-engine-name>-<chaos-experiment-name>`
+
 ```console
 kubectl describe chaosresult engine-nginx-pod-delete
 ```
-
-
 
 ## Uninstallation
 
@@ -232,7 +228,7 @@ See [the tutorial](../example.html) on running a `pod-delete` chaos experiment o
 
 ## Join our community
 
-If you have not joined our community, do join us [here](../community.html).
+If you have not joined our community, do join us [here](https://app.slack.com/client/T09NY5SBT/CNXNB0ZTN).
 
 
 
@@ -243,5 +239,3 @@ If you have not joined our community, do join us [here](../community.html).
 <br>	
 </body>
 </html>
-
-

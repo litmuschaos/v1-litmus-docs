@@ -21,7 +21,7 @@ div {
 
 ## Example of running a chaos experiment
 
-In this example we will create an `nginx` deployment and try to inject `pod-delete` chaos. We will deploy nginx under `litmus` namespace itself to simplify the process of access control. Please refer to [Get Started page](https://docs.litmuschaos.io/docs/next/getstarted.html) if you want to run the experiment on a deployment under a different namespace.
+In this example we will create a `nginx` deployment and try to inject `pod-delete` chaos. We will deploy nginx under `litmus` namespace itself to simplify the process of access control. Please refer to [Get Started page](https://docs.litmuschaos.io/docs/next/getstarted.html) if you want to run the experiment on a deployment under a different namespace.
 
 
 If you have not already installed Litmus, install it by using the following command.
@@ -83,6 +83,8 @@ It takes upto a couple of minutes for the experiments to be run and the result C
 
 - Observe the ChaosResult CR Status to know the status of the experiment. If the experiment is still in progress, the ```spec.verdict``` is set to `running`. If the experiment is completed, the `spec.verdict` is set to either `pass` or `fail`
 
+<strong> NOTE:</strong>  ChaosResult name will be `<chaos-engine-name>-<chaos-experiment-name>`
+
 ```console
 kubectl describe chaosresult engine-nginx-pod-delete -n litmus
 ```
@@ -110,7 +112,7 @@ Spec:
 Events:       <none>
 ```
 <div class="danger">
-<strong> Note:</strong> You may observe the pod status by the following command. And observe that nginx pod getting deleted couple of times and recreated.
+<strong> NOTE:</strong> You may observe the pod status by the following command. And observe that nginx pod getting deleted couple of times and recreated.
 </div>
 
 > `watch -n 1 kubectl get pods -n litmus`
