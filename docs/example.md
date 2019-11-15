@@ -21,12 +21,12 @@ div {
 
 ## Example of running a chaos experiment
 
-In this example, we will create an `nginx` deployment and try to inject `pod-delete` chaos. We will deploy nginx under `litmus` namespace itself to simplify the process of access control. Please refer to [Get Started page](https://docs.litmuschaos.io/docs/next/getstarted.html) if you want to run the experiment on deployment under a different namespace.
+In this example, we will create an `nginx` deployment and try to inject `pod-delete` chaos. We will deploy nginx under `litmus` namespace itself to simplify the process of access control. Please refer to [Get Started page](getstarted.md) if you want to run the experiment on deployment under a different namespace.
 
 If you have not already installed Litmus, install it by using the following command.
 
 ```
-kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-latest.yaml
+kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-v0.8.0.yaml
 ```
 
 Similarly, if you have not already installed generic chaos experiments, install the generic chaos chart by using the following command.
@@ -60,22 +60,26 @@ metadata:
   name: engine-nginx
   namespace: litmus
 spec:
+  jobCleanUpPolicy: retain
+  monitoring: false
   appinfo: 
-    appns: litmus # App namespace
-    # FYI, To see app label, apply kubectl get pods --show-labels
-    applabel: "run=myserver" # App Label
-    appkind: deployment # supported types: deployment, statefulset
+    # app namespace
+    appns: litmus 
+    # to see app label, apply kubectl get pods --show-labels
+    applabel: "run=myserver" 
+    # supported kinds: deployment, statefulset
+    appkind: deployment 
   chaosServiceAccount: litmus
   experiments:
     - name: pod-delete
       spec:
-        rank: 1
+        components: 
 ```
 
 - Apply the chaosengine.yaml using `kubectl` command.
 
 ```console
-kubectl create -f chaosengine.yaml
+kubectl apply -f chaosengine.yaml
 ```
 
 It takes upto a couple of minutes for the experiments to be run and the result CR to be created. 

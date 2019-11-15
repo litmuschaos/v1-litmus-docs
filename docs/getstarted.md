@@ -49,7 +49,7 @@ Running chaos on your application involves the following steps:
 ###  Install Litmus
 
 ```
-kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-v0.7.0.yaml
+kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-v0.8.0.yaml
 ```
 
 The above command install all the CRDS, required service account configuration, and chaos-operator. Before you start running a chaos experiment, verify if your Litmus is installed correctly.
@@ -163,18 +163,20 @@ metadata:
   name: engine-nginx
   namespace: default
 spec:
-  monitoring: true
+  jobCleanUpPolicy: retain
+  monitoring: false
   appinfo: 
     appns: default 
     # FYI, To see app label, apply kubectl get pods --show-labels
     applabel: "run=myserver" 
+    appkind: deployment
   chaosServiceAccount: nginx 
   experiments:
     - name: container-kill
       spec:
         components:
         - name: TARGET_CONTAINER
-          value: hello
+          value: nginx
 ```
 
 ### Over-ride Default Chaos Experiments Variables
@@ -188,7 +190,7 @@ experiments:
       spec:
         components:
         - name: TARGET_CONTAINER
-          value: hello
+          value: nginx
 ```
 
 
