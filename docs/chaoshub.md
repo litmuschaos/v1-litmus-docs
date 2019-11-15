@@ -42,9 +42,11 @@ Chaos actions that apply to generic Kubernetes resources are classified into thi
 
 - Container Kill
 - POD Delete
-- Network Delay
-- Network Loss
+- Pod Network Latency
+- Pod Network Loss
 - CPU Hog
+- Disk Fill
+- Disk Loss
 
 ### Application Chaos
 

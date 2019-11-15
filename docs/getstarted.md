@@ -95,7 +95,7 @@ deployed in the default namespace.
 
 Chaos experiments contain the actual chaos details. These experiments are installed on your cluster as Kubernetes CRs (Custom Resources). The Chaos Experiments are grouped as Chaos Charts and are published on <a href=" https://hub.litmuschaos.io" target="_blank">Chaos Hub</a>. 
 
-The generic chaos experiments such as `pod-kill`, `container-kill`,` network-delay` are avaialbe under Generic Chaos Chart. This is the first chart you install. You can later install application specific chaos charts for running application specific chaos.
+The generic chaos experiments such as `pod-kill`, `container-kill`,` network-delay` are available under Generic Chaos Chart. This is the first chart you install. You can later install application specific chaos charts for running application specific chaos.
 
 ```
 kubectl create -f https://hub.litmuschaos.io/api/chaos?file=charts/generic/experiments.yaml
@@ -191,6 +191,15 @@ experiments:
           value: hello
 ```
 
+
+### Annotate your application
+
+Your application has to be annotated with `litmuschaos.io/chaos="true"`. As a security measure, Chaos Operator checks for this annotation on the application before invoking chaos experiment(s) on the application. Replace `myserver` with the name of your deployment.
+
+```console
+kubectl annotate deploy/myserver litmuschaos.io/chaos="true"
+```
+
 ### Run Chaos
 
 
@@ -198,7 +207,9 @@ experiments:
 kubectl create -f chaosengine.yaml
 ```
 
-
+<div class="danger">
+<strong>NOTE</strong>: It is recommended to create Application, ChaosEngine, ChaosExperiment and ServiceAccount in the same namespace for smooth execution of experiments.
+</div>
 
 ### Observe Chaos results
 
@@ -222,7 +233,7 @@ kubectl delete ns litmus
 
 ## Example
 
-See [the tutorial](../example.html) on running a `pod-delete` chaos experiment on `nginx` application.
+See [the tutorial](example.md) on running a `pod-delete` chaos experiment on `nginx` application.
 
 
 
