@@ -21,8 +21,7 @@ div {
 
 ## Example of running a chaos experiment
 
-In this example we will create an `nginx` deployment and try to inject `pod-delete` chaos. We will deploy nginx under `litmus` namespace itself to simplify the process of access control. Please refer to [Get Started page](https://docs.litmuschaos.io/docs/next/getstarted.html) if you want to run the experiment on a deployment under a different namespace.
-
+In this example, we will create an `nginx` deployment and try to inject `pod-delete` chaos. We will deploy nginx under `litmus` namespace itself to simplify the process of access control. Please refer to [Get Started page](https://docs.litmuschaos.io/docs/next/getstarted.html) if you want to run the experiment on deployment under a different namespace.
 
 If you have not already installed Litmus, install it by using the following command.
 
@@ -110,7 +109,7 @@ Spec:
 Events:       <none>
 ```
 <div class="danger">
-<strong> Note:</strong> You may observe the pod status by the following command. And observe that nginx pod getting deleted couple of times and recreated.
+<strong> Note:</strong> You may observe the pod status by the following command. And observe that nginx pod getting deleted a couple of times and recreated.
 </div>
 
 > `watch -n 1 kubectl get pods -n litmus`
