@@ -82,6 +82,8 @@ It takes upto a couple of minutes for the experiments to be run and the result C
 
 - Observe the ChaosResult CR Status to know the status of the experiment. If the experiment is still in progress, the ```spec.verdict``` is set to `running`. If the experiment is completed, the `spec.verdict` is set to either `pass` or `fail`
 
+<strong> NOTE:</strong>  ChaosResult name will be `<chaos-engine-name>-<chaos-experiment-name>`
+
 ```console
 kubectl describe chaosresult engine-nginx-pod-delete -n litmus
 ```
@@ -109,7 +111,7 @@ Spec:
 Events:       <none>
 ```
 <div class="danger">
-<strong> Note:</strong> You may observe the pod status by the following command. And observe that nginx pod getting deleted a couple of times and recreated.
+<strong> NOTE:</strong> You may observe the pod status by the following command. And observe that nginx pod getting deleted couple of times and recreated.
 </div>
 
 > `watch -n 1 kubectl get pods -n litmus`
