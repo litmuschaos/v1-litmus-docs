@@ -9,11 +9,11 @@ sidebar_label: Architecture
 
 **Chaos-Operator**
 
-Chaos-Operator watches for the ChaosEngine CR and executes the Chaos-Experiments mentioned in the CR. Chaos-Operator is namespace scoped. By default it runs in `litmus` namespace. Once the experiment is completed, chaos-operator invokes chaos-exporter to export chaos metrics to a Prometheus database. 
+Chaos-Operator watches for the ChaosEngine CR and executes the Chaos-Experiments mentioned in the CR. Chaos-Operator is namespace scoped. By default, it runs in `litmus` namespace. Once the experiment is completed, chaos-operator invokes chaos-exporter to export chaos metrics to a Prometheus database. 
 
 **Chaos-CRDs**
 
-During installation, following three CRDs are installed on the Kubernetes cluster. 
+During installation, the following three CRDs are installed on the Kubernetes cluster. 
 
 `chaosengines.litmuschaos.io`
 

@@ -50,7 +50,7 @@ Chaos actions that apply to generic Kubernetes resources are classified into thi
 
 ### Application Chaos
 
-While Chaos Experiments under Generic category offer the ability to induce chaos into Kubernetes resources, it is difficult to analyse and conclude if the chaos induced found a weakness in a given application. The application specific chaos experiments are built with some checks on *pre-conditions* and some expected outcomes after the chaos injection. The result of the chaos experiment is determined by matching the outcome with expected outcome. 
+While Chaos Experiments under the Generic category offer the ability to induce chaos into Kubernetes resources, it is difficult to analyze and conclude if the chaos induced found a weakness in a given application. The application specific chaos experiments are built with some checks on *pre-conditions* and some expected outcomes after the chaos injection. The result of the chaos experiment is determined by matching the outcome with the expected outcome. 
 
 <div class="danger">
 <strong>NOTE:</strong> If the result of the chaos experiment is `pass`, it means that the application is resilient to that chaos.
@@ -58,7 +58,7 @@ While Chaos Experiments under Generic category offer the ability to induce chaos
 
 **Benefits of contributing an application chaos experiment**
 
-Application developers write negative tests in their CI pipelines to test the resiliency of the applications. These negative can be converted into Litmus Chaos Experiments and contributed to ChaosHub, so that the users of the application can use them in staging/pre-production/production environments to check the resilience. Application environments vary considerably from where they are tested (CI pipelines) to where they are deployed (Production). Hence, running the same chaos tests in user's environment will help determine the weaknesses of the deployment and fixing such weaknesses leads to increased resilience. 
+Application developers write negative tests in their CI pipelines to test the resiliency of the applications. These negative can be converted into Litmus Chaos Experiments and contributed to ChaosHub, so that the users of the application can use them in staging/pre-production/production environments to check the resilience. Application environments vary considerably from where they are tested (CI pipelines) to where they are deployed (Production). Hence, running the same chaos tests in the user's environment will help determine the weaknesses of the deployment and fixing such weaknesses leads to increased resilience. 
 
 
 
@@ -74,7 +74,7 @@ Following Application Chaos experiments are available on ChaosHub
 
 ### Platform Chaos
 
-Chaos experiments that inject chaos into the platform resources of Kubernetes are classified into this category. Management of platform resources vary significantly from each other, Chaos Charts may be maintained seperately for each platform (For example, AWS, GCP, Azure etc)
+Chaos experiments that inject chaos into the platform resources of Kubernetes are classified into this category. Management of platform resources vary significantly from each other, Chaos Charts may be maintained separately for each platform (For example, AWS, GCP, Azure, etc)
 
 Following Platform Chaos experiments are available on ChaosHub
 
