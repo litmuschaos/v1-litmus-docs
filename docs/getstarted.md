@@ -52,7 +52,7 @@ Running chaos on your application involves the following steps:
 kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-v0.8.0.yaml
 ```
 
-The above command install all the CRDS, required service account configuration, and chaos-operator. Before you start running a chaos experiment, verify if your Litmus is installed correctly.
+The above command install all the CRDs, required service account configuration, and chaos-operator. Before you start running a chaos experiment, verify if your Litmus is installed correctly.
 
 **Verify your installation**
 
@@ -179,9 +179,9 @@ spec:
           value: nginx
 ```
 
-### Over-ride Default Chaos Experiments Variables
+### Override Default Chaos Experiments Variables
 
-After LitmusChaos v0.7.0, to over-ride the default enviroment variables in chaosExperiments, add the entry of those variable with the same name under `experiments.<experiment_name>.spec.components` with the over-riding value.
+After LitmusChaos v0.7.0, to override the default environment variables in chaosExperiments, add the entry of those variable with the same name under `experiments.<experiment_name>.spec.components` with the overriding value.
 
 ```console
 ...
