@@ -4,20 +4,7 @@ title: Chaos Example
 sidebar_label: Chaos Example 
 ---
 ------
-<html>
-<head>
-<style>
-div {
-  margin-bottom: 15px;
-  padding: 4px 12px;
-}
-.danger {
-  background-color: #ffdddd;
-  border-left: 6px solid #f44336;
-}
-</style>
-</head>
-<body>
+
 
 ## Example of running a chaos experiment
 
@@ -120,17 +107,7 @@ Events:       <none>
 
 > `watch -n 1 kubectl get pods -n litmus`
 
-<br>
 
-<br>
-
-<hr>
-
-<br>
-
-<br>
-</body>
-</html>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-92076314-12"></script>

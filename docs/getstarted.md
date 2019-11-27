@@ -3,22 +3,7 @@ id: getstarted
 title: Getting Started with Litmus
 sidebar_label: Getting Started 
 ---
-
 ------
-<html>
-<head>
-<style>
-div {
-  margin-bottom: 15px;
-  padding: 4px 12px;
-}
-.danger {
-  background-color: #ffdddd;
-  border-left: 6px solid #f44336;
-}
-</style>
-</head>
-<body>
 
 ## Pre-requisites
 
@@ -235,14 +220,3 @@ See [the tutorial](example.md) on running a `pod-delete` chaos experiment on `ng
 ## Join our community
 
 If you have not joined our community, do join us [here](https://app.slack.com/client/T09NY5SBT/CNXNB0ZTN).
-
-
-
-<br>
-
-<hr>
-
-<br>	
-</body>
-</html>
-
