@@ -1,7 +1,7 @@
 ---
 id: getstarted 
 title: Getting Started with Litmus
-sidebar_label: Getting Started 
+sidebar_label: Introduction
 ---
 ------
 
