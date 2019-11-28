@@ -1,6 +1,7 @@
+
 {
   "docs": {
-    "Documentation": [
+    "Getting Started": [
       "getstarted",
       "example",
       "chaoshub",
@@ -9,6 +10,22 @@
       "resources",
       "community",
       "devguide"
+    ],
+    "Experiments": [
+      {
+        "type": "subcategory",
+        "label": "Generic",
+        "ids": [
+          "pod-delete"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "OpenEBS",
+        "ids": [
+          "openebs-pool-pod-failure"
+        ]
+      }
     ]
   }
 }
