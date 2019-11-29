@@ -25,6 +25,13 @@
         "ids": [
           "openebs-pool-pod-failure"
         ]
+      },
+      {
+        "type": "subcategory",
+        "label": "Kafka",
+        "ids": [
+          "kafka-broker-pod-failure"
+        ]
       }
     ]
   }
