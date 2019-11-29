@@ -101,7 +101,7 @@ spec:
 
 - Check whether the application is resilient to the pod failure, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult sample-chaos-pod-delete -n <application-namespace>`
+  `kubectl describe chaosresult nginx-chaos-pod-delete -n <application-namespace>`
 
 ## Application Pod Failure Demo
 
