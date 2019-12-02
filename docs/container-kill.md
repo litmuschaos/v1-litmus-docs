@@ -28,8 +28,8 @@ sidebar_label: Container Kill
 ## Details
 
 - Kills one container in the specified application pod by sending SIGKILL termination signal to its docker socket (hence docker runtime is required)
-- Containers are killed using the `kill` command provided by [pumba](https://github.com/alexei-led/pumba) with the SIGKILL termination signal
-- Pumba is run as a daemonset on all nodes in dry-run mode to begin with; the kill command is issued via kubectl exec
+- Containers are killed using the `kill` command provided by [pumba](https://github.com/alexei-led/pumba)
+- Pumba is run as a daemonset on all nodes in dry-run mode to begin with; the `kill` command is issued during experiment execution via `kubectl exec`
 - Tests deployment sanity (replica availability & uninterrupted service) and recovery workflow of the application
 - Good for testing recovery of pods having side-car containers
 
