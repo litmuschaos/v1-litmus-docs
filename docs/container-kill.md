@@ -36,7 +36,7 @@ sidebar_label: Container Kill
 ## Integrations
 
 - Container kill is achieved using the `pumba` chaos library
-- The desired pumba image can be configured in the env variable `LIB_IMAGE`
+- The desired pumba image can be configured in the env variable `LIB_IMAGE`. Important note: pumba changed its execution logic in version 0.6, read more [here](https://github.com/alexei-led/pumba#running-inside-docker-container). Therefore images >=0.6 do not work with litmuschaos.
 <!--- For the furute, other chaoslibs might be added which do not depend on docker runtime. The LIB env varable must be added then.-->
 
 ## Steps to Execute the Chaos Experiment
