@@ -37,6 +37,7 @@ sidebar_label: Container Kill
 
 - Container kill is achieved using the `pumba` chaos library
 - The desired pumba image can be configured in the env variable `LIB_IMAGE`
+[]: # 'For the furute, other chaoslibs might be added which do not depend on docker runtime. The LIB env varable must be added then.'
 
 ## Steps to Execute the Chaos Experiment
 
