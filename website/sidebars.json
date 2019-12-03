@@ -1,14 +1,38 @@
+
 {
   "docs": {
-    "Documentation": [
+    "Getting Started": [
       "getstarted",
-      "example",
       "chaoshub",
       "plugins",
       "architecture",
       "resources",
       "community",
       "devguide"
+    ],
+    "Experiments": [
+      {
+        "type": "subcategory",
+        "label": "Generic",
+        "ids": [
+          "pod-delete"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "OpenEBS",
+        "ids": [
+          "openebs-pool-pod-failure"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "Kafka",
+        "ids": [
+          "kafka-broker-pod-failure",
+	  "kafka-broker-disk-failure"
+        ]
+      }
     ]
   }
 }
