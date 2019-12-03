@@ -13,6 +13,7 @@ sidebar_label: Kafka Broker Pod Failure
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running
+- Ensure that the `kafka-broker-pod-failure` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/kafka/experiments/kafka-broker-pod-failure) 
 - Ensure that Kafka & Zookeeper are deployed as Statefulsets
 - If Confluent/Kudo Operators have been used to deploy Kafka, note the instance name, which will be 
   used as the value of `KAFKA_INSTANCE_NAME` experiment environment variable 
