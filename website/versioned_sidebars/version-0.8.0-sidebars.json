@@ -1,0 +1,38 @@
+
+{
+  "version-0.8.0-docs": {
+    "Getting Started": [
+      "version-0.8.0-getstarted",
+      "version-0.8.0-chaoshub",
+      "version-0.8.0-plugins",
+      "version-0.8.0-architecture",
+      "version-0.8.0-resources",
+      "version-0.8.0-community",
+      "version-0.8.0-devguide"
+    ],
+    "Experiments": [
+      {
+        "type": "subcategory",
+        "label": "Generic",
+        "ids": [
+          "version-0.8.0-pod-delete"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "OpenEBS",
+        "ids": [
+          "version-0.8.0-openebs-pool-pod-failure"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "Kafka",
+        "ids": [
+          "version-0.8.0-kafka-broker-pod-failure",
+	  "version-0.8.0-kafka-broker-disk-failure"
+        ]
+      }
+    ]
+  }
+}
