@@ -30,7 +30,8 @@
         "type": "subcategory",
         "label": "Kafka",
         "ids": [
-          "kafka-broker-pod-failure"
+          "kafka-broker-pod-failure",
+	  "kafka-broker-disk-failure"
         ]
       }
     ]
