@@ -3,7 +3,6 @@
   "docs": {
     "Getting Started": [
       "getstarted",
-      "example",
       "chaoshub",
       "plugins",
       "architecture",
