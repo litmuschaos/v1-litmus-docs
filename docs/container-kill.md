@@ -90,17 +90,17 @@ spec:
 
 ### Watch Chaos progress
 
-- View pod terminations & recovery by setting up a watch on the pods in the application namespace
+- View pod restart count by setting up a watch on the pods in the application namespace
 
   `watch -n 1 kubectl get pods -n <application-namespace>`
 
 ### Check Chaos Experiment Result
 
-- Check whether the application is resilient to the pod failure, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
+- Check whether the application is resilient to the container kill, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
   `kubectl describe chaosresult nginx-chaos-container-kill -n <application-namespace>`
 
-## Application Pod Failure Demo
+## Application Container Kill Demo [TODO]
 
 - A sample recording of this experiment execution is provided here.
 
