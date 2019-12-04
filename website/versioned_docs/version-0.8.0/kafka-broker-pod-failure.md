@@ -1,7 +1,8 @@
 ---
-id: kafka-broker-pod-failure
+id: version-0.8.0-kafka-broker-pod-failure
 title: Kafka Broker Pod Failure Experiment Details
 sidebar_label: Kafka Broker Pod Failure
+original_id: kafka-broker-pod-failure
 ---
 
 ## Experiment Metadata
