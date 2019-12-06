@@ -22,7 +22,8 @@
         "type": "subcategory",
         "label": "OpenEBS",
         "ids": [
-          "openebs-pool-pod-failure"
+          "openebs-target-container-kill",
+          "openebs-target-network-delay"
         ]
       },
       {
