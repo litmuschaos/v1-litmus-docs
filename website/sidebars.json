@@ -16,7 +16,8 @@
         "label": "Generic",
         "ids": [
           "pod-delete",
-          "pod-network-latency"
+          "pod-network-latency",
+          "pod-network-loss"
         ]
       },
       {

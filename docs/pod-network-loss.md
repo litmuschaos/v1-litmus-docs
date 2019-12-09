@@ -1,7 +1,7 @@
 ---
-id: pod-network-latency
-title: Pod Network Latency Experiment Detail
-sidebar_label: Pod Network Latency
+id: pod-network-loss
+title: Pod Network Loss Experiment Detail
+sidebar_label: Pod Network Loss  
 ---
 ------
 
@@ -9,14 +9,14 @@ sidebar_label: Pod Network Latency
 
 | Type      | Description              | Tested K8s Platform                                               |
 | ----------| ------------------------ | ------------------------------------------------------------------|
-| Generic   | Inject Network Latency Into Application Pod | Any|
+| Generic   | Inject Packet Loss Into Application Pod | Any|
 
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running
 - Experimenting Cluster should be non-minikube cluster
 - Application subjected to chaos must have tc network traffic shaping tool installed
-- Ensure that the `pod-network-latency` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/pod-network-latency)
+- Ensure that the `pod-network-loss` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/pod-network-loss)
 
 ## Entry Criteria
 
@@ -28,10 +28,10 @@ sidebar_label: Pod Network Latency
 
 ## Details
 
-- Pod-network-latency contains chaos to disrupt network connectivity of kubernetes pods.
+- Pod-network-loss contains chaos to disrupt network connectivity of kubernetes pods.
 - The test involved setting up a ping to general/public IPs from inside the pod & also setting up a ping to the pod IP itself from a cluster node.
 - The application pod should be healthy once chaos is stopped. Service-requests should be served despite chaos.
-- Causes flaky access to application replica by injecting network delay using pumba.
+- Causes loss of access to application replica by injecting packet loss using pumba
 
 
 ## Steps to Execute the Chaos Experiment
@@ -50,8 +50,8 @@ sidebar_label: Pod Network Latency
 | Variables             | Description                                                  | Type      | Notes                                                      |
 | ----------------------| ------------------------------------------------------------ |-----------|------------------------------------------------------------|
 | TOTAL_CHAOS_DURATION  | The time duration for chaos insertion (seconds)              | Mandatory  | 60000                                            |
-| NETWORK_LATENCY        | The latency/delay in milliseconds                           | Mandatory  | 60000
-| LIB                   | The chaos lib used to inject the chaos eg. Pumba             | Optional  |  |
+| NETWORK_PACKET_LOSS_PERCENTAGE  | The packet loss in percentage	| Mandatory  | |
+ LIB                   | The chaos lib used to inject the chaos eg. Pumba             | Optional  |  |
 | NETWORK_INTERFACE     | Name of ethernet interface considered for shaping traffic                                | Mandatory  |   |
 | TARGET_CONTAINER     | Name of container which is subjected to network latency      | Mandatory  |   |
 | CHAOSENGINE     | ChaosEngine CR name associated with the experiment instance      | Optional  |   |
@@ -60,6 +60,7 @@ sidebar_label: Pod Network Latency
 #### Sample ChaosEngine Manifest
 
 ```yaml
+# chaosengine.yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
@@ -75,19 +76,19 @@ spec:
     appkind: deployment
   chaosServiceAccount: nginx 
   experiments:
-    - name: pod-network-latency
+    - name: pod-network-loss
       spec:
         components:
         - name: ANSIBLE_STDOUT_CALLBACK
           value: default
         - name: TARGET_CONTAINER
-          value: nginx-deploy-container
-        - name: NETWORK_INTERFACE
-          value: eth0
+          value: "nginx-deploy-container"
         - name: LIB_IMAGE
           value: gaiaadm/pumba:0.4.8
-        - name: NETWORK_LATENCY
-          value: "60000"
+        - name: NETWORK_INTERFACE
+          value: eth0
+        - name: NETWORK_PACKET_LOSS_PERCENTAGE
+          value: "100"
         - name: TOTAL_CHAOS_DURATION
           value: "60000"
         - name: LIB
@@ -101,17 +102,17 @@ spec:
 
 ### Check Chaos Experiment Result
 
-- Check whether the application is resilient to the Pod Network Latency, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
+- Check whether the application is resilient to the Pod Network Loss, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
   `kubectl describe chaosresult <ChaosEngine-Name>-<ChaosExperiment-Name> -n <application-namespace>`
 
 ### Test Chaos progress
 
-- During Chaos progress interval View Pod Network Latency inside targeted container , By setting Up Traffic control (tc) tool in targeted container .Check Ping Simulate Internet connections.
+- During Chaos progress interval View Pod Network Loss (tc pocket loss) inside targeted container , By setting Up Traffic control (tc) tool in targeted container .Check Ping Simulate Internet connections.
 
   `ping http_address`
 
 
-## Application Pod Network Latency Demo  [TODO]
+## Application Pod Network Loss Demo  [TODO]
 
 - A sample recording of this experiment execution is provided here.
