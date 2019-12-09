@@ -15,7 +15,8 @@
         "type": "subcategory",
         "label": "Generic",
         "ids": [
-          "pod-delete"
+          "pod-delete",
+          "pod-network-latency"
         ]
       },
       {
