@@ -9,14 +9,19 @@ sidebar_label: Pod Network Loss
 
 | Type      | Description              | Tested K8s Platform                                               |
 | ----------| ------------------------ | ------------------------------------------------------------------|
-| Generic   | Inject Packet Loss Into Application Pod | Any|
+| Generic   | Inject Packet Loss Into Application Pod | GKE, Konvoy(AWS), Packet(Kubeadm), Minikube, OpenShift(Baremetal) |
 
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running
-- Experimenting Cluster should be non-minikube cluster
 - Application subjected to chaos must have tc network traffic shaping tool installed
 - Ensure that the `pod-network-loss` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/pod-network-loss)
+- <div class="danger">
+    <strong>NOTE</strong>: 
+        Experimenting Cluster should be non-minikube cluster . Minikube is not seen to inject  
+                the desired chaos.
+        Experiment is supported only on Docker Runtime. We do not support containerd/CRIO runtimes yet for network tests.There is a way to directly invoke tc, but these utils aren't added yet.
+</div>
 
 ## Entry Criteria
 
@@ -28,9 +33,9 @@ sidebar_label: Pod Network Loss
 
 ## Details
 
-- Pod-network-loss contains chaos to disrupt network connectivity of kubernetes pods.
-- The test involved setting up a ping to general/public IPs from inside the pod & also setting up a ping to the pod IP itself from a cluster node.
-- The application pod should be healthy once chaos is stopped. Service-requests should be served despite chaos.
+- Pod-network-loss injects chaos to disrupt network connectivity to kubernetes pods.
+- The application pod should be healthy once chaos is stopped. Service-requests should be         served despite chaos.
+- Pumba is run as a daemonset on all nodes in dry-run mode to begin with; the network-loss        command is issued during experiment execution via kubectl exec
 - Causes loss of access to application replica by injecting packet loss using pumba
 
 
@@ -49,11 +54,11 @@ sidebar_label: Pod Network Loss
 
 | Variables             | Description                                                  | Type      | Notes                                                      |
 | ----------------------| ------------------------------------------------------------ |-----------|------------------------------------------------------------|
-| TOTAL_CHAOS_DURATION  | The time duration for chaos insertion (seconds)              | Mandatory  | 60000                                            |
+| TOTAL_CHAOS_DURATION  | The time duration for chaos insertion (seconds)              | Optional  | 60000                                            |
 | NETWORK_PACKET_LOSS_PERCENTAGE  | The packet loss in percentage	| Mandatory  | |
  LIB                   | The chaos lib used to inject the chaos eg. Pumba             | Optional  |  |
-| NETWORK_INTERFACE     | Name of ethernet interface considered for shaping traffic                                | Mandatory  |   |
-| TARGET_CONTAINER     | Name of container which is subjected to network latency      | Mandatory  |   |
+| NETWORK_INTERFACE     | Name of ethernet interface considered for shaping traffic                                | Instance-Specific (Optional)  |   |
+| TARGET_CONTAINER     | Name of container which is subjected to network latency      | Instance-Specific (Optional)  |   |
 | CHAOSENGINE     | ChaosEngine CR name associated with the experiment instance      | Optional  |   |
 | CHAOS_SERVICE_ACCOUNT     | Service account used by the pumba daemonset Optional      | Optional  |   |
 
@@ -64,7 +69,7 @@ sidebar_label: Pod Network Loss
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
-  name: engine-nginx
+  name: nginx-network-chaos
   namespace: default
 spec:
   jobCleanUpPolicy: retain
@@ -100,17 +105,17 @@ spec:
 
   `kubectl apply -f chaosengine.yml`
 
+### Watch Chaos progress
+
+- View network latency by setting up a ping on the affected pod from the cluster nodes 
+
+  `ping http_address`
+
 ### Check Chaos Experiment Result
 
 - Check whether the application is resilient to the Pod Network Loss, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
   `kubectl describe chaosresult <ChaosEngine-Name>-<ChaosExperiment-Name> -n <application-namespace>`
-
-### Test Chaos progress
-
-- During Chaos progress interval View Pod Network Loss (tc pocket loss) inside targeted container , By setting Up Traffic control (tc) tool in targeted container .Check Ping Simulate Internet connections.
-
-  `ping http_address`
 
 
 ## Application Pod Network Loss Demo  [TODO]

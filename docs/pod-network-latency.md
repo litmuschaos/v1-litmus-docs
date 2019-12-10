@@ -9,14 +9,20 @@ sidebar_label: Pod Network Latency
 
 | Type      | Description              | Tested K8s Platform                                               |
 | ----------| ------------------------ | ------------------------------------------------------------------|
-| Generic   | Inject Network Latency Into Application Pod | Any|
+| Generic   | Inject Network Latency Into Application Pod | GKE, Konvoy(AWS), Packet(Kubeadm), Minikube, OpenShift(Baremetal)|
 
 ## Prerequisites
-
 - Ensure that the Litmus Chaos Operator is running
-- Experimenting Cluster should be non-minikube cluster
 - Application subjected to chaos must have tc network traffic shaping tool installed
 - Ensure that the `pod-network-latency` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/pod-network-latency)
+
+
+<div class="danger">
+    <strong>NOTE</strong>: 
+        Experimenting Cluster should be non-minikube cluster . Minikube is not seen to inject  
+                the desired chaos.
+        Experiment is supported only on Docker Runtime. We do not support containerd/CRIO runtimes yet for network tests.There is a way to directly invoke tc, but these utils aren't added yet.
+</div>
 
 ## Entry Criteria
 
@@ -28,11 +34,12 @@ sidebar_label: Pod Network Latency
 
 ## Details
 
-- Pod-network-latency contains chaos to disrupt network connectivity of kubernetes pods.
-- The test involved setting up a ping to general/public IPs from inside the pod & also setting up a ping to the pod IP itself from a cluster node.
-- The application pod should be healthy once chaos is stopped. Service-requests should be served despite chaos.
+- The application pod should be healthy once chaos is stopped. Service-requests should be         served despite chaos.
 - Causes flaky access to application replica by injecting network delay using pumba.
-
+- Injects latency on the specified container by starting a traffic control (tc) process with      netem rules to add egress delays
+- Latency is injected via pumba library with command pumba netem delay by passing the relevant    network interface, latency, chaos duration and regex filter for container name
+- Pumba is run as a daemonset on all nodes in dry-run mode to begin with; the latency command     is issued during experiment execution via kubectl exec
+- Can test the application's resilience to lossy/flaky network
 
 ## Steps to Execute the Chaos Experiment
 
@@ -49,11 +56,11 @@ sidebar_label: Pod Network Latency
 
 | Variables             | Description                                                  | Type      | Notes                                                      |
 | ----------------------| ------------------------------------------------------------ |-----------|------------------------------------------------------------|
-| TOTAL_CHAOS_DURATION  | The time duration for chaos insertion (seconds)              | Mandatory  | 60000                                            |
-| NETWORK_LATENCY        | The latency/delay in milliseconds                           | Mandatory  | 60000
+| TOTAL_CHAOS_DURATION  | The time duration for chaos insertion (seconds)              | Optional  | 60000                                            |
+| NETWORK_LATENCY        | The latency/delay in milliseconds                           | Optional  | 60000
 | LIB                   | The chaos lib used to inject the chaos eg. Pumba             | Optional  |  |
-| NETWORK_INTERFACE     | Name of ethernet interface considered for shaping traffic                                | Mandatory  |   |
-| TARGET_CONTAINER     | Name of container which is subjected to network latency      | Mandatory  |   |
+| NETWORK_INTERFACE     | Name of ethernet interface considered for shaping traffic                                | Instance-Specific (Optional)  |   |
+| TARGET_CONTAINER     | Name of container which is subjected to network latency      | Instance-Specific (Optional)  |   |
 | CHAOSENGINE     | ChaosEngine CR name associated with the experiment instance      | Optional  |   |
 | CHAOS_SERVICE_ACCOUNT     | Service account used by the pumba daemonset Optional      | Optional  |   |
 
@@ -63,7 +70,7 @@ sidebar_label: Pod Network Latency
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
-  name: engine-nginx
+  name:  nginx-network-chaos
   namespace: default
 spec:
   jobCleanUpPolicy: retain
@@ -99,17 +106,17 @@ spec:
 
   `kubectl apply -f chaosengine.yml`
 
+### Watch Chaos progress
+
+- View network latency by setting up a ping on the affected pod from the cluster nodes 
+
+    `ping http_address`
+
 ### Check Chaos Experiment Result
 
 - Check whether the application is resilient to the Pod Network Latency, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
   `kubectl describe chaosresult <ChaosEngine-Name>-<ChaosExperiment-Name> -n <application-namespace>`
-
-### Test Chaos progress
-
-- During Chaos progress interval View Pod Network Latency inside targeted container , By setting Up Traffic control (tc) tool in targeted container .Check Ping Simulate Internet connections.
-
-  `ping http_address`
 
 
 ## Application Pod Network Latency Demo  [TODO]
