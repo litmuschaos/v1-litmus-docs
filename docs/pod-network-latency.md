@@ -70,7 +70,7 @@ sidebar_label: Pod Network Latency
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
-  name:  nginx-network-chaos
+  name:  redis-network-chaos
   namespace: default
 spec:
   jobCleanUpPolicy: retain
@@ -78,9 +78,9 @@ spec:
   appinfo: 
     appns: default
     # FYI, To see app label, apply kubectl get pods --show-labels
-    applabel: "app=nginx-app"
+    applabel: "app=redis-app"
     appkind: deployment
-  chaosServiceAccount: nginx 
+  chaosServiceAccount: redis
   experiments:
     - name: pod-network-latency
       spec:
@@ -88,13 +88,13 @@ spec:
         - name: ANSIBLE_STDOUT_CALLBACK
           value: default
         - name: TARGET_CONTAINER
-          value: nginx-deploy-container
+          value: redis-deploy-container
         - name: NETWORK_INTERFACE
           value: eth0
         - name: LIB_IMAGE
-          value: gaiaadm/pumba:0.4.8
+          value: gaiaadm/pumba:0.6.5
         - name: NETWORK_LATENCY
-          value: "60000"
+          value: "2000"
         - name: TOTAL_CHAOS_DURATION
           value: "60000"
         - name: LIB
