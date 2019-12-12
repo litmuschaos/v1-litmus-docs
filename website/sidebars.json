@@ -16,6 +16,7 @@
         "label": "Generic",
         "ids": [
           "pod-delete",
+          "container-kill",
           "pod-network-latency",
           "pod-network-loss"
         ]
