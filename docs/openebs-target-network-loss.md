@@ -14,7 +14,7 @@ sidebar_label: OpenEBS Target Network Loss
 ## Prerequisites
 
 - Ensure that the Kubernetes Cluster uses Docker runtime
-- Ensure that the Litmus Chaos Operator is running
+- Ensure that the Litmus Chaos Operator is running in the cluster. If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
 - Ensure that the `openebs-target-network-loss` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-target-network-loss)
 - If DATA_PERSISTENCE is 'enabled', provide the application info in a configmap volume so that the experiment can perform necessary checks. Currently, LitmusChaos supports data consistency checks only on MySQL databases. Create a configmap as shown below in the application namespace (replace with actual credentials):
 
@@ -78,9 +78,8 @@ If the experiment tunable DATA_PERSISTENCE is set to 'enabled':
 | ----------------------| ------------------------------------------------------------ |-----------|------------------------------------------------------------|
 | APP_PVC               | The PersistentVolumeClaim used by the stateful application   | Mandatory | PVC may use either OpenEBS Jiva/cStor storage class        |
 | DEPLOY_TYPE           | Type of Kubernetes resource used by the stateful application | Optional  | Defaults to `deployment`. Supported: `deployment`, `statefulset`|
-| CONTAINER_RUNTIME     | The container runtime used in the Kubernetes Cluster         | Optional  | Defaults to `docker`. Supported: `docker`                  |
-| LIB_IMAGE             | The chaos library image used to inject the network loss           | Optional  | Defaults to `gaiaadm/pumba:0.4.8`. Supported: `gaiaadm/pumba:0.4.8`|                
-| TARGET_CONTAINER      | The container into which delays are injected in the storage controller pod  | Optional  | Defaults to `cstor-istgt`                   |
+| LIB_IMAGE             | The chaos library image used to inject the network loss           | Optional  | Defaults to `gaiaadm/pumba:0.4.8`. Supported: `gaiaadm/pumba:0.4.8`|
+| NETWORK_PACKET_LOSS_PERCENTAGE  | Total percentage for which network loss is injected     | Optional  | Defaults to 100 (percent)                               |
 | TOTAL_CHAOS_DURATION  | Total duration for which network loss is injected                 | Optional  | Defaults to 240000 milliseconds (240s)	                |
 | DATA_PERSISTENCE      | Flag to perform data consistency checks on the application   | Optional  | Default value is disabled (empty/unset). Set to `enabled` to perform data checks. Ensure configmap with app details are created                                                                                                                   |             
 

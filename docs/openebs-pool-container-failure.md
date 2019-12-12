@@ -1,7 +1,7 @@
 ---
-id: openebs-pool-container-failure
-title: OpenEBS Pool Container Failure Experiment Details
-sidebar_label: OpenEBS Pool Container Failure
+id: openebs-pool-container-kill
+title: OpenEBS Pool Container Kill Experiment Details
+sidebar_label: OpenEBS Pool Container Kill
 ---
 ------
 
@@ -50,14 +50,14 @@ If the experiment tunable DATA_PERSISTENCE is set to 'enabled':
 
 ## Details
 
-- This scenario validates the behaviour of stateful applications and OpenEBS data plane upon forced termination of the target pod container
+- This scenario validates the behaviour of stateful applications and OpenEBS data plane upon forced termination of the targeted pool pod container
 - Containers are killed using the kill command provided by pumba
 - Pumba is run as a daemonset on all nodes in dry-run mode to begin with; the kill command is issued during experiment execution via kubectl exec
 - Can test the stateful application's resilience to momentary iSCSI connection loss
 
 ## Integrations
 
-- Container kill is achieved using the pumba chaos library in case of docker runtime, & litmuslib using crictl tool in case of containerd runtime.
+- Container kill is achieved using the pumba chaos library for docker runtime.
 - The desired lib image can be configured in the env variable LIB_IMAGE.
 
 ## Steps to Execute the Chaos Experiment
@@ -77,6 +77,7 @@ If the experiment tunable DATA_PERSISTENCE is set to 'enabled':
 | ----------------------| ------------------------------------------------------------ |-----------|------------------------------------------------------------|
 | APP_PVC               | The PersistentVolumeClaim used by the stateful application   | Mandatory | PVC must use OpenEBS cStor storage class        |
 | DEPLOY_TYPE           | Type of Kubernetes resource used by the stateful application | Optional  | Defaults to `deployment`. Supported: `deployment`, `statefulset`|                           |
+| LIB_IMAGE             | The chaos library image used to inject the latency           | Optional  | Defaults to `gaiaadm/pumba:0.4.8`. Supported: `gaiaadm/pumba:0.4.8`|                
 | TOTAL_CHAOS_DURATION  | Amount of soak time for I/O post pod kill              | Optional  | Defaults to 600 seconds					|
 | DATA_PERSISTENCE      | Flag to perform data consistency checks on the application   | Optional  | Default value is disabled (empty/unset). Set to `enabled` to perform data checks. Ensure configmap with app details are created                                                                                                                   |             
 
@@ -100,8 +101,6 @@ spec:
     - name: openebs-pool-container-failure
       spec:
         components:
-          - name: FORCE
-            value: 'true'
           - name: APP_PVC
             value: 'pvc-c466262a-a5f2-4f0f-b594-5daddfc2e29d'    
           - name: DEPLOY_TYPE
