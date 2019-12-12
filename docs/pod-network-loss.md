@@ -87,11 +87,11 @@ spec:
         - name: ANSIBLE_STDOUT_CALLBACK
           value: default
         - name: TARGET_CONTAINER
-          value: "redis-deploy-container"
+          value: "redis-deploy-container" #Container name where chaos has to be injected
         - name: LIB_IMAGE
           value: gaiaadm/pumba:0.6.5
         - name: NETWORK_INTERFACE
-          value: eth0
+          value: eth0                    #Network interface inside target container
         - name: NETWORK_PACKET_LOSS_PERCENTAGE
           value: "100"
         - name: TOTAL_CHAOS_DURATION
