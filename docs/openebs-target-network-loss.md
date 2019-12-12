@@ -1,7 +1,7 @@
 ---
-id: openebs-target-network-delay 
-title: OpenEBS Target Network Latency Experiment Details
-sidebar_label: OpenEBS Target Network Latency
+id: openebs-target-network-loss 
+title: OpenEBS Target Network Loss Experiment Details
+sidebar_label: OpenEBS Target Network Loss
 ---
 ------
 
@@ -9,22 +9,21 @@ sidebar_label: OpenEBS Target Network Latency
 
 | Type      | Description              | Tested K8s Platform                                               |
 | ----------| ------------------------ | ------------------------------------------------------------------|
-| OpenEBS   | Induce latency into the cStor target/Jiva controller container | GKE, Konvoy(AWS), Packet(Kubeadm), OpenShift(Baremetal)  |
+| OpenEBS   | Induce network loss into the cStor target/Jiva controller container | GKE, Konvoy(AWS), Packet(Kubeadm), OpenShift(Baremetal)  |
 
 ## Prerequisites
 
 - Ensure that the Kubernetes Cluster uses Docker runtime
 - Ensure that the Litmus Chaos Operator is running
-- Ensure that the `openebs-target-network-delay` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-target-network-delay)
-- If DATA_PERSISTENCE is 'enabled', provide the application info in a configmap volume so that the experiment can perform necessary checks. Currently, LitmusChaos supports
-  data consistency checks only on MySQL databases. Create a configmap as shown below in the application namespace (replace with actual credentials):
+- Ensure that the `openebs-target-network-loss` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-target-network-loss)
+- If DATA_PERSISTENCE is 'enabled', provide the application info in a configmap volume so that the experiment can perform necessary checks. Currently, LitmusChaos supports data consistency checks only on MySQL databases. Create a configmap as shown below in the application namespace (replace with actual credentials):
 
   ```
   ---
   apiVersion: v1
   kind: ConfigMap
   metadata:
-    name: openebs-target-network-delay
+    name: openebs-target-network-loss
   data:
     parameters.yml: | 
       dbuser: root
@@ -51,15 +50,15 @@ If the experiment tunable DATA_PERSISTENCE is set to 'enabled':
 
 ## Details
 
-- This scenario validates the behaviour of stateful applications and OpenEBS data plane upon high latencies/network delays in accessing the storage controller pod
-- Injects latency on the specified container in the controller pod by staring a traffic control `tc` process with `netem` rules to add egress delays
-- Latency is injected via pumba library with command `pumba netem delay` by passing the relevant network interface, latency, chaos duration and regex filter for container name
-- Pumba is run as a daemonset on all nodes in dry-run mode to begin with; the latency command is issued during experiment execution via `kubectl exec`
+- This scenario validates the behaviour of stateful applications and OpenEBS data plane upon high latencies/network loss in accessing the storage controller pod
+- Injects network loss on the specified container in the controller pod by starting a traffic control `tc` process with `netem` rules to add egress delays
+- Network loss is injected via pumba library with command `pumba netem delay` by passing the relevant network interface, network loss, chaos duration and regex filter for container name
+- Pumba is run as a daemonset on all nodes in dry-run mode to begin with; the network loss command is issued during experiment execution via `kubectl exec`
 - Can test the stateful application's resilience to loss/slow iSCSI connections
 
 ## Integrations
 
-- Network delay is achieved using the `pumba` chaos library in case of docker runtime. Support for other other runtimes via tc direct invocation of `tc` will be added soon. 
+- Network loss is achieved using the `pumba` chaos library in case of docker runtime. Support for other other runtimes via tc direct invocation of `tc` will be added soon. 
 - The desired lib image can be configured in the env variable `LIB_IMAGE`. 
 
 ## Steps to Execute the Chaos Experiment
@@ -80,10 +79,9 @@ If the experiment tunable DATA_PERSISTENCE is set to 'enabled':
 | APP_PVC               | The PersistentVolumeClaim used by the stateful application   | Mandatory | PVC may use either OpenEBS Jiva/cStor storage class        |
 | DEPLOY_TYPE           | Type of Kubernetes resource used by the stateful application | Optional  | Defaults to `deployment`. Supported: `deployment`, `statefulset`|
 | CONTAINER_RUNTIME     | The container runtime used in the Kubernetes Cluster         | Optional  | Defaults to `docker`. Supported: `docker`                  |
-| LIB_IMAGE             | The chaos library image used to inject the latency           | Optional  | Defaults to `gaiaadm/pumba:0.4.8`. Supported: `gaiaadm/pumba:0.4.8`|                
+| LIB_IMAGE             | The chaos library image used to inject the network loss           | Optional  | Defaults to `gaiaadm/pumba:0.4.8`. Supported: `gaiaadm/pumba:0.4.8`|                
 | TARGET_CONTAINER      | The container into which delays are injected in the storage controller pod  | Optional  | Defaults to `cstor-istgt`                   |
-| NETWORK_DELAY         | Egress delay injected into the target container              | Optional  | Defaults to 60000 milliseconds (60s)                       |
-| TOTAL_CHAOS_DURATION  | Total duration for which latency is injected                 | Optional  | Defaults to 60000 milliseconds (60s)	                |
+| TOTAL_CHAOS_DURATION  | Total duration for which network loss is injected                 | Optional  | Defaults to 240000 milliseconds (240s)	                |
 | DATA_PERSISTENCE      | Flag to perform data consistency checks on the application   | Optional  | Default value is disabled (empty/unset). Set to `enabled` to perform data checks. Ensure configmap with app details are created                                                                                                                   |             
 
 #### Sample ChaosEngine Manifest
@@ -103,7 +101,7 @@ spec:
   monitoring: false
   jobCleanUpPolicy: delete
   experiments:
-    - name: openebs-target-network-delay
+    - name: openebs-target-network-loss
       spec:
         components:
           - name: TARGET_CONTAINER
@@ -112,10 +110,8 @@ spec:
             value: 'pvc-c466262a-a5f2-4f0f-b594-5daddfc2e29d'    
           - name: DEPLOY_TYPE
             value: deployment       
-          - name: NETWORK_DELAY
-            value: '30000'
           - name: TOTAL_CHAOS_DURATION
-            value: '60000' 
+            value: '240000' 
 ```
 
 ### Create the ChaosEngine Resource
@@ -126,19 +122,18 @@ spec:
 
 ### Watch Chaos progress
 
-- View network delay in action by setting up a ping to the storage controller in the OpenEBS namespace
+- View network loss in action by setting up a ping to the storage controller in the OpenEBS namespace
 - Watch the behaviour of the application pod and the OpenEBS data replica/pool pods by setting up in a watch on the respective namespaces
 
   `watch -n 1 kubectl get pods -n <app/openebs-namespace>`
 
 ### Check Chaos Experiment Result
 
-- Check whether the application is resilient to the target network delays, once the experiment (job) is completed. The ChaosResult resource naming 
+- Check whether the application is resilient to the target network loss, once the experiment (job) is completed. The ChaosResult resource naming 
   convention is: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult target-chaos-openebs-target-network-delay -n <application-namespace>`
+  `kubectl describe chaosresult target-chaos-openebs-target-network-loss -n <application-namespace>`
 
-## OpenEBS Target Network Delay Demo [TODO]
+## OpenEBS Target Network Loss Demo [TODO]
 
 - A sample recording of this experiment execution is provided here.
-
