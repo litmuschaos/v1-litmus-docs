@@ -1,3 +1,9 @@
+---
+id: disk-loss
+title: Disk Loss Experiment Details
+sidebar_label: Disk Loss
+---
+------
 ## Experiment Metadata
 
 <table>
