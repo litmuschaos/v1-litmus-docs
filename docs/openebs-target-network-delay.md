@@ -54,7 +54,6 @@ If the experiment tunable DATA_PERSISTENCE is set to 'enabled':
 - This scenario validates the behaviour of stateful applications and OpenEBS data plane upon high latencies/network delays in accessing the storage controller pod
 - Injects latency on the specified container in the controller pod by staring a traffic control `tc` process with `netem` rules to add egress delays
 - Latency is injected via pumba library with command `pumba netem delay` by passing the relevant network interface, latency, chaos duration and regex filter for container name
-- Pumba is run as a daemonset on all nodes in dry-run mode to begin with; the latency command is issued during experiment execution via `kubectl exec`
 - Can test the stateful application's resilience to loss/slow iSCSI connections
 
 ## Integrations
