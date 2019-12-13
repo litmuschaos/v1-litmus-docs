@@ -20,10 +20,10 @@ sidebar_label: Disk Loss
 </table>
 
 ## Prerequisites
-- Ensure that the Litmus Chaos Operator is running
-- There should be administrative access to the platform on which the Kubernetes cluster is hosted, as the recovery of the affected could be manual. Example gcloud access to the project
-- Ensure that the `disk-loss` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/api/chaos?file=charts/generic/disk-loss/experiment.yaml)
-- Ensure to create a secret object having the gcloud/aws configuration in the namespace of 'CHAOS_NAMESPACE'.
+-   Ensure that the Litmus Chaos Operator is running
+-   There should be administrative access to the platform on which the Kubernetes cluster is hosted, as the recovery of the affected could be manual. Example gcloud access to the project
+-   Ensure that the `disk-loss` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/api/chaos?file=charts/generic/disk-loss/experiment.yaml)
+-   Ensure to create a secret object having the gcloud/aws configuration in the namespace of 'CHAOS_NAMESPACE'.
 ```yaml
 apiVersion: v1
 kind: Secret
@@ -47,25 +47,24 @@ stringData:
 
 ## Details
 
--   In this experiment, the external disk is detached from the node and wait for the chaos duration.
-- If there is any PV provisioner it will attach automatically, Else it will attach manually.
-- This chaos experiment is support for GCP and AWS.
+-   In this experiment, the external disk is detached from the node for a period equal to the TOTAL_CHAOS_DURATION.
+-   If the disk is created as part of dynamic persistent volume, it is expected to re-attach automatically. The experiment re-attaches the disk if it is not already attached.
+-   This chaos experiment is supported on GKE and AWS platforms.
+Note: This is the case especially with backing stores. However, the remount of disk is a manual step that the user has to perform.
 
 ## Integrations
 
-- Disk Loss can be effected using the chaos library: `litmus`
-- The desired chaos library can be selected by setting `litmus` as value for the env variable LIB
-- It uses imperative aws and gcloud command to attach and detach the disks
+-   Disk loss is effected using the litmus chaoslib that internally makes use of the aws/gcloud commands
 
 ## Steps to Execute the Chaos Experiment
 
-- This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to provide in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
-- Follow the steps in the sections below to prepare the ChaosEngine & execute the experiment.
+-   This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to provide in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
+-   Follow the steps in the sections below to prepare the ChaosEngine & execute the experiment.
 
 ### Prepare ChaosEngine
 
-- Provide the application info in `spec.appinfo`
-- Override the experiment tunables if desired
+-   Provide the application info in `spec.appinfo`
+-   Override the experiment tunables if desired
 
 ### Supported Experiment Tunables for application
 
@@ -200,16 +199,16 @@ spec:
             value: ''
 ```
 ## Create the ChaosEngine Resource
-- Create the ChaosEngine manifest prepared in the previous step to trigger the Chaos.
+-   Create the ChaosEngine manifest prepared in the previous step to trigger the Chaos.
 
 `kubectl apply -f chaosengine.yml`
 
 ## Watch Chaos progress
-- Setting up a watch of the app which is using the disk in the Kubernetes Cluster
+-   Setting up a watch of the app which is using the disk in the Kubernetes Cluster
 
 `watch kubectl get pods`
 
 ## Check Chaos Experiment Result
-- Check whether the application is resilient to the disk loss, once the experiment (job) is completed. The ChaosResult resource name is derived like this: <ChaosEngine-Name>-<ChaosExperiment-Name>.
+-   Check whether the application is resilient to the disk loss, once the experiment (job) is completed. The ChaosResult resource name is derived like this: <ChaosEngine-Name>-<ChaosExperiment-Name>.
 
 `kubectl describe chaosresult nginx-chaos-disk-loss -n <CHAOS_NAMESPACE>`
