@@ -50,6 +50,7 @@ stringData:
 -   In this experiment, the external disk is detached from the node for a period equal to the `TOTAL_CHAOS_DURATION`.
 -   This chaos experiment is supported on GKE and AWS platforms.
 -   If the disk is created as part of dynamic persistent volume, it is expected to re-attach automatically. The experiment re-attaches the disk if it is not already attached.
+
 <b>Note: This is the case especially with mounted disk. However, the remount of disk is a manual step that the user has to perform.<b>
 
 ## Integrations
