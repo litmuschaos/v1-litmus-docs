@@ -18,9 +18,8 @@ sidebar_label: Pod Network Latency
 
 <div class="danger">
     <strong>NOTE</strong>: 
-        Experimenting Cluster should be non-minikube cluster . Minikube is not seen to inject  
-                the desired chaos.
-        Experiment is supported only on Docker Runtime. We do not support containerd/CRIO runtimes yet for network tests.There is a way to directly invoke tc, but these utils aren't added yet.
+        Experimenting Cluster should be non-minikube cluster . 
+        Experiment is supported only on Docker Runtime. Support for containerd/CRIO runtimes will be added in subsequent releases.
 </div>
 
 ## Entry Criteria
@@ -37,7 +36,6 @@ sidebar_label: Pod Network Latency
 - Causes flaky access to application replica by injecting network delay using pumba.
 - Injects latency on the specified container by starting a traffic control (tc) process with      netem rules to add egress delays
 - Latency is injected via pumba library with command pumba netem delay by passing the relevant    network interface, latency, chaos duration and regex filter for container name
-- Pumba is run as a daemonset on all nodes in dry-run mode to begin with; the latency command     is issued during experiment execution via kubectl exec
 - Can test the application's resilience to lossy/flaky network
 
 ## Steps to Execute the Chaos Experiment
@@ -56,8 +54,8 @@ sidebar_label: Pod Network Latency
 | Variables             | Description                                                  | Type      | Notes                                                      |
 | ----------------------| ------------------------------------------------------------ |-----------|------------------------------------------------------------|
 | NETWORK_INTERFACE     | Name of ethernet interface considered for shaping traffic                                | Mandatory  |   |
-| TARGET_CONTAINER     | Name of container which is subjected to network latency      | Mandatory  |   |
-| TOTAL_CHAOS_DURATION  | The time duration for chaos insertion  | Optional| Default (60000ms)|
+| TARGET_CONTAINER     | Name of container which is subjected to network latency       | Mandatory  |   |
+| TOTAL_CHAOS_DURATION  | The time duration for chaos insertion in milliseconds  | Optional| Default (60000ms)|
 | NETWORK_LATENCY        | The latency/delay in milliseconds                           | Optional  | Default (60000ms)
 | LIB                   | The chaos lib used to inject the chaos eg. Pumba             | Optional  |  |
 | CHAOSENGINE     | ChaosEngine CR name associated with the experiment instance      | Optional  |   |
