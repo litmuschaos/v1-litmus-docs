@@ -24,6 +24,17 @@ sidebar_label: Disk Loss
 - There should be administrative access to the platform on which the Kubernetes cluster is hosted, as the recovery of the affected could be manual. Example gcloud access to the project
 - Ensure that the `disk-loss` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/api/chaos?file=charts/generic/disk-loss/experiment.yaml)
 - Ensure to create a secret object having the gcloud/aws configuration in the namespace of 'CHAOS_NAMESPACE'.
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cloud_secret
+type: Opaque
+stringData:
+  cloud_config.yml: |-
+  # Add the cloud configuration
+
+```
 
 ## Entry-Criteria
 
@@ -32,6 +43,7 @@ sidebar_label: Disk Loss
 ## Exit-Criteria
 
 -   The disk is healthy post chaos injection
+-   If `APP_CHECK` is true, then application will check at post chaos
 
 ## Details
 
@@ -78,16 +90,6 @@ sidebar_label: Disk Loss
 <td> Unique Labels in `key=value` format of application deployment </td>
 <td> Optional </td>
 </tr>
-</table>
-
-### Supported Experiment Tunables
-
-<table>
-<tr>
-<th> Parameter </th>
-<th> Description  </th>
-<th> Type </th>
-</tr>
 <tr>
 <td> TOTAL_CHAOS_DURATION </td>
 <td> The time duration for chaos insertion (sec) </td>
@@ -95,12 +97,12 @@ sidebar_label: Disk Loss
 </tr>
 <tr>
 <td> CHAOS_NAMESPACE </td>
-<td> Cloud Platform name </td>
+<td> This is a chaos namespace which will create all infra chaos resources in that namespace </td>
 <td> Mandatory </td>
 </tr>
 <tr>
-<td> CLOUD_NAMESPACE </td>
-<td> This is a chaos namespace which will create all infra chaos resources in that namespace </td>
+<td> CLOUD_PLATFORM </td>
+<td> Cloud Platform name </td>
 <td> Mandatory </td>
 </tr>
 <tr>
