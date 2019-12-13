@@ -30,41 +30,41 @@ Chaos actions that apply to generic Kubernetes resources are classified into thi
 <tr>
 <th>Experiment name</th>
 <th>Description</th>
-<th> User guide link </th>
+<th>User guide link </th>
 </tr>
 <tr>
 <td>Container Kill</td>
 <td>Kill one container in the application pod</td>
-<td></td>
+<td>[Container Kill](docs/container-kill.md)</td>
 </tr>
 <tr>
-<td>POD Delete</td>
+<td>Pod Delete</td>
 <td>Fail the application pod</td>
-<td><a href="https://docs.litmuschaos.io/docs/pod-delete">pod delete</a></td>
+<td>[Pod Delete](docs/pod-delete.md)</a></td>
 </tr>
 <tr>
 <td>Pod Network Latency</td>
 <td>Experiment to inject network latency to the POD</td>
-<td>-</td>
+<td>[Pod Network Latency](docs/pod-network-latency.md)</td>
 </tr>
 <tr>
 <td>Pod Network Loss</td>
 <td>Experiment to inject network loss to the POD</td>
-<td>-</td>
+<td>[Pod Network Loss](docs/pod-network-loss.md)</td>
 </tr>
 <tr>
 <td>CPU Hog</td>
 <td>Exhaust CPU resources on the Kubernetes Node</td>
-<td></td>
+<td>[CPU Hog](docs/cpu-hog.md)</td>
 </tr>
 <tr>
 <td>Disk Fill</td>
 <td>Fillup Ephemeral Storage of a Resource</td>
-<td></td>
+<td>[Disk Fill](docs/disk-fill.md)</td>
 </tr>
 <td>Disk Loss</td>
 <td>External disk loss from the node</td>
-<td></td>
+<td>[Disk Loss](docs/disk-loss.md)</td>
 </tr>
 </table>
 
