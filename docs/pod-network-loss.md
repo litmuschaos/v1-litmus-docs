@@ -53,11 +53,11 @@ sidebar_label: Pod Network Loss
 
 | Variables             | Description                                                  | Type      | Notes                                                      |
 | ----------------------| ------------------------------------------------------------ |-----------|------------------------------------------------------------|
-| TOTAL_CHAOS_DURATION  | The time duration for chaos insertion (seconds)              | Optional  | 60000                                            |
-| NETWORK_PACKET_LOSS_PERCENTAGE  | The packet loss in percentage	| Mandatory  | |
- LIB                   | The chaos lib used to inject the chaos eg. Pumba             | Optional  |  |
 | NETWORK_INTERFACE     | Name of ethernet interface considered for shaping traffic                                | Mandatory  |   |
 | TARGET_CONTAINER     | Name of container which is subjected to network latency      | Mandatory  |   |
+| NETWORK_PACKET_LOSS_PERCENTAGE  | The packet loss in percentage	| Mandatory  | |
+| TOTAL_CHAOS_DURATION  | The time duration for chaos insertion | Optional  | Default (60000ms)                                            |
+ LIB                   | The chaos lib used to inject the chaos eg. Pumba             | Optional  |  |
 | CHAOSENGINE     | ChaosEngine CR name associated with the experiment instance      | Optional  |   |
 | CHAOS_SERVICE_ACCOUNT     | Service account used by the pumba daemonset Optional      | Optional  |   |
 
