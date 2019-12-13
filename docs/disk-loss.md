@@ -9,21 +9,22 @@ sidebar_label: Disk Loss
 <table>
 <tr>
 <th> Type </th>
-<th>  Description  </th>
-<th> K8s Platform </th>
+<th> Description  </th>
+<th> Tested K8s Platform </th>
 </tr>
 <tr>
 <td> Chaos </td>
-<td> External Disk loss from the node </td>
-<td> GKE/AWS </td>
+<td> External disk loss from the node </td>
+<td> GKE, AWS </td>
 </tr>
 </table>
 
 ## Prerequisites
 -   Ensure that the Litmus Chaos Operator is running
--   There should be administrative access to the platform on which the Kubernetes cluster is hosted, as the recovery of the affected could be manual. Example gcloud access to the project
--   Ensure that the `disk-loss` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/api/chaos?file=charts/generic/disk-loss/experiment.yaml)
--   Ensure to create a secret object having the gcloud/aws configuration in the namespace of 'CHAOS_NAMESPACE'.
+-   There should be administrative access to the platform on which the cluster is hosted, as the recovery of the affected could be manual. Example gcloud access to the project
+-   Ensure that the `disk-loss` experiment resource is available in the cluster. If not, install from  <a href="https://hub.litmuschaos.io/api/chaos?file=charts/generic/disk-loss/experiment.yaml" target="_blank">here</a>
+-   Ensure to create a secret object having the gcloud/aws configuration in the namespace of `CHAOS_NAMESPACE`.
+
 ```yaml
 apiVersion: v1
 kind: Secret
@@ -32,8 +33,7 @@ metadata:
 type: Opaque
 stringData:
   cloud_config.yml: |-
-  # Add the cloud configuration
-
+  # Add the cloud AWS credentials or GCP service account respectively
 ```
 
 ## Entry-Criteria
@@ -47,10 +47,10 @@ stringData:
 
 ## Details
 
--   In this experiment, the external disk is detached from the node for a period equal to the TOTAL_CHAOS_DURATION.
--   If the disk is created as part of dynamic persistent volume, it is expected to re-attach automatically. The experiment re-attaches the disk if it is not already attached.
+-   In this experiment, the external disk is detached from the node for a period equal to the `TOTAL_CHAOS_DURATION`.
 -   This chaos experiment is supported on GKE and AWS platforms.
-Note: This is the case especially with backing stores. However, the remount of disk is a manual step that the user has to perform.
+-   If the disk is created as part of dynamic persistent volume, it is expected to re-attach automatically. The experiment re-attaches the disk if it is not already attached.
+<b>Note: This is the case especially with mounted disk. However, the remount of disk is a manual step that the user has to perform.<b>
 
 ## Integrations
 
