@@ -22,7 +22,7 @@ sidebar_label: Disk Loss
 ## Prerequisites
 -   Ensure that the Litmus Chaos Operator is running
 -   There should be administrative access to the platform on which the cluster is hosted, as the recovery of the affected could be manual. Example gcloud access to the project
--   Ensure that the `disk-loss` experiment resource is available in the cluster. If not, install from  <a href="https://hub.litmuschaos.io/api/chaos?file=charts/generic/disk-loss/experiment.yaml" target="_blank">here</a>
+-   Ensure that the `disk-loss` experiment resource is available in the cluster. If not, install from  <a href="https://hub.litmuschaos.io/api/chaos?file=charts/generic/disk-loss/experiment.yaml" target="_blank" >here</a>
 -   Ensure to create a secret object having the gcloud/aws configuration in the namespace of `CHAOS_NAMESPACE`.
 
 ```yaml
@@ -51,7 +51,7 @@ stringData:
 -   This chaos experiment is supported on GKE and AWS platforms.
 -   If the disk is created as part of dynamic persistent volume, it is expected to re-attach automatically. The experiment re-attaches the disk if it is not already attached.
 
-<b>Note: This is the case especially with mounted disk. However, the remount of disk is a manual step that the user has to perform.<b>
+<b>Note:</b> Especially with mounted disk. The remount of disk is a manual step that the user has to perform. 
 
 ## Integrations
 
