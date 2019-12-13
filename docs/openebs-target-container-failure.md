@@ -1,6 +1,6 @@
 ---
-id: openebs-target-container-kill 
-title: OpenEBS Target Kill Experiment Details
+id: openebs-target-container-kill
+title: OpenEBS Target Container Kill Experiment Details
 sidebar_label: OpenEBS Target Container Kill
 ---
 ------
@@ -13,7 +13,7 @@ sidebar_label: OpenEBS Target Container Kill
 
 ## Prerequisites
 
-- Ensure that the Litmus Chaos Operator is running
+- Ensure that the Litmus Chaos Operator is running in the cluster. If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
 - Ensure that the `openebs-target-container-failure` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-target-container-failure)
 - If DATA_PERSISTENCE is 'enabled', provide the application info in a configmap volume so that the experiment can perform necessary checks. Currently, LitmusChaos supports
   data consistency checks only on MySQL databases. Create a configmap as shown below in the application namespace (replace with actual credentials):
