@@ -107,7 +107,7 @@ stringData:
 </tr>
 <tr>
 <td> PROJECT_ID </td>
-<td> GCP project ID </td>
+<td> GCP project ID, leave blank if it's AWS </td>
 <td> Mandatory </td>
 </tr>
 <tr>
@@ -127,7 +127,7 @@ stringData:
 </tr>
 <tr>
 <td> ZONE_NAME </td>
-<td> Zone Name of the node </td>
+<td> Zone Name for GCP and region name for AWS </td>
 <td> Mandatory </td>
 </tr>
 <tr>
