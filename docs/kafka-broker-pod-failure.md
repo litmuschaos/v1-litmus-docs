@@ -1,7 +1,7 @@
 ---
 id: kafka-broker-pod-failure
 title: Kafka Broker Pod Failure Experiment Details
-sidebar_label: Kafka Broker Pod Failure
+sidebar_label: Broker Pod Failure
 ---
 
 ## Experiment Metadata

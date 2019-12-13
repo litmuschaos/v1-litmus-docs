@@ -1,7 +1,7 @@
 ---
 id: openebs-target-network-loss 
 title: OpenEBS Target Network Loss Experiment Details
-sidebar_label: OpenEBS Target Network Loss
+sidebar_label: Target Network Loss
 ---
 ------
 

@@ -1,7 +1,7 @@
 ---
 id: openebs-target-container-kill
 title: OpenEBS Target Container Kill Experiment Details
-sidebar_label: OpenEBS Target Container Kill
+sidebar_label: Target Container Kill
 ---
 ------
 
