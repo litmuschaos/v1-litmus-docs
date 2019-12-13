@@ -1,7 +1,7 @@
 ---
 id: openebs-target-network-delay 
 title: OpenEBS Target Network Latency Experiment Details
-sidebar_label: OpenEBS Target Network Latency
+sidebar_label: Target Network Latency
 ---
 ------
 

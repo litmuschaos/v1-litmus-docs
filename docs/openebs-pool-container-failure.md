@@ -1,7 +1,7 @@
 ---
 id: openebs-pool-container-kill
 title: OpenEBS Pool Container Kill Experiment Details
-sidebar_label: OpenEBS Pool Container Kill
+sidebar_label: Pool Container Kill
 ---
 ------
 

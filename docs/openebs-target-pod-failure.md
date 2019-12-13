@@ -1,7 +1,7 @@
 ---
 id: openebs-target-pod-failure
 title: OpenEBS Target Pod Failure Experiment Details
-sidebar_label: OpenEBS Target Pod Failure
+sidebar_label: Target Pod Failure
 ---
 ------
 
