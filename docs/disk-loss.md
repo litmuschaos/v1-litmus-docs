@@ -22,7 +22,7 @@ sidebar_label: Disk Loss
 ## Prerequisites
 -   Ensure that the Litmus Chaos Operator is running
 -   There should be administrative access to the platform on which the cluster is hosted, as the recovery of the affected could be manual. Example gcloud access to the project
--   Ensure that the `disk-loss` experiment resource is available in the cluster. If not, install from  <a href="https://hub.litmuschaos.io/charts/generic/experiments/disk-loss" target="_blank"s>here</a>
+-   Ensure that the `disk-loss` experiment resource is available in the cluster. If not, install from  <a href="https://hub.litmuschaos.io/charts/generic/experiments/disk-loss" target="_blank">here</a>
 -   Ensure to create a secret object having the gcloud/aws configuration in the namespace of `CHAOS_NAMESPACE`.
 
 ```yaml
