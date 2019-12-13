@@ -206,7 +206,7 @@ spec:
 ## Watch Chaos progress
 -   Setting up a watch of the app which is using the disk in the Kubernetes Cluster
 
-`watch kubectl get pods`
+`watch -n 1 kubectl get pods`
 
 ## Check Chaos Experiment Result
 -   Check whether the application is resilient to the disk loss, once the experiment (job) is completed. The ChaosResult resource name is derived like this: <ChaosEngine-Name>-<ChaosExperiment-Name>.
