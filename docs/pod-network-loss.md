@@ -9,7 +9,7 @@ sidebar_label: Pod Network Loss
 
 | Type      | Description              | Tested K8s Platform                                               |
 | ----------| ------------------------ | ------------------------------------------------------------------|
-| Generic   | Inject Packet Loss Into Application Pod | GKE, Konvoy(AWS), Packet(Kubeadm), Minikube, OpenShift(Baremetal) |
+| Generic   | Inject Packet Loss Into Application Pod | GKE, Konvoy(AWS), Packet(Kubeadm), OpenShift(Baremetal) |
 
 ## Prerequisites
 
@@ -76,7 +76,7 @@ spec:
   appinfo: 
     appns: default
     # FYI, To see app label, apply kubectl get pods --show-labels
-    applabel: "app=nginx-app"
+    applabel: "app=nginx"
     appkind: deployment
   chaosServiceAccount: nginx 
   experiments:
@@ -86,11 +86,13 @@ spec:
         - name: ANSIBLE_STDOUT_CALLBACK
           value: default
         - name: TARGET_CONTAINER
-          value: "nginx-deploy-container" #Container name where chaos has to be injected
+          #Container name where chaos has to be injected
+          value: "nginx" 
         - name: LIB_IMAGE
           value: gaiaadm/pumba:0.6.5
         - name: NETWORK_INTERFACE
-          value: eth0                    #Network interface inside target container
+          #Network interface inside target container
+          value: eth0                    
         - name: NETWORK_PACKET_LOSS_PERCENTAGE
           value: "100"
         - name: TOTAL_CHAOS_DURATION
