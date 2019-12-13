@@ -1,7 +1,7 @@
 ---
-id: openebs-target-network-delay 
-title: OpenEBS Target Network Latency Experiment Details
-sidebar_label: Target Network Latency
+id: openebs-target-container-kill
+title: OpenEBS Target Container Kill Experiment Details
+sidebar_label: Target Container Kill
 ---
 ------
 
@@ -9,13 +9,12 @@ sidebar_label: Target Network Latency
 
 | Type      | Description              | Tested K8s Platform                                               |
 | ----------| ------------------------ | ------------------------------------------------------------------|
-| OpenEBS   | Induce latency into the cStor target/Jiva controller container | GKE, Konvoy(AWS), Packet(Kubeadm), OpenShift(Baremetal)  |
+| OpenEBS   | Kill the cStor target/Jiva controller container | GKE, Konvoy(AWS), Packet(Kubeadm), Minikube, OpenShift(Baremetal)  |
 
 ## Prerequisites
 
-- Ensure that the Kubernetes Cluster uses Docker runtime
-- Ensure that the Litmus Chaos Operator is running
-- Ensure that the `openebs-target-network-delay` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-target-network-delay)
+- Ensure that the Litmus Chaos Operator is running in the cluster. If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
+- Ensure that the `openebs-target-container-failure` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-target-container-failure)
 - If DATA_PERSISTENCE is 'enabled', provide the application info in a configmap volume so that the experiment can perform necessary checks. Currently, LitmusChaos supports
   data consistency checks only on MySQL databases. Create a configmap as shown below in the application namespace (replace with actual credentials):
 
@@ -24,7 +23,7 @@ sidebar_label: Target Network Latency
   apiVersion: v1
   kind: ConfigMap
   metadata:
-    name: openebs-target-network-delay
+    name: openebs-target-container-failure
   data:
     parameters.yml: | 
       dbuser: root
@@ -51,19 +50,20 @@ If the experiment tunable DATA_PERSISTENCE is set to 'enabled':
 
 ## Details
 
-- This scenario validates the behaviour of stateful applications and OpenEBS data plane upon high latencies/network delays in accessing the storage controller pod
-- Injects latency on the specified container in the controller pod by staring a traffic control `tc` process with `netem` rules to add egress delays
-- Latency is injected via pumba library with command `pumba netem delay` by passing the relevant network interface, latency, chaos duration and regex filter for container name
-- Can test the stateful application's resilience to loss/slow iSCSI connections
+- This scenario validates the behaviour of stateful applications and OpenEBS data plane upon forced termination of the controller container
+- Kills the specified container in the controller pod by sending SIGKILL termination signal to its docker socket (hence docker runtime is required)
+- Containers are killed using the `kill` command provided by [pumba](https://github.com/alexei-led/pumba)
+- Pumba is run as a daemonset on all nodes in dry-run mode to begin with; the `kill` command is issued during experiment execution via `kubectl exec`
+- Can test the stateful application's resilience to momentary iSCSI connection loss
 
 ## Integrations
 
-- Network delay is achieved using the `pumba` chaos library in case of docker runtime. Support for other other runtimes via tc direct invocation of `tc` will be added soon. 
+- Container kill is achieved using the `pumba` chaos library in case of docker runtime, & `litmuslib` using `crictl` tool in case of containerd runtime. 
 - The desired lib image can be configured in the env variable `LIB_IMAGE`. 
 
 ## Steps to Execute the Chaos Experiment
 
-- This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to provide in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
+- This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to be provided in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
 
 - Follow the steps in the sections below to prepare the ChaosEngine & execute the experiment.
 
@@ -78,11 +78,10 @@ If the experiment tunable DATA_PERSISTENCE is set to 'enabled':
 | ----------------------| ------------------------------------------------------------ |-----------|------------------------------------------------------------|
 | APP_PVC               | The PersistentVolumeClaim used by the stateful application   | Mandatory | PVC may use either OpenEBS Jiva/cStor storage class        |
 | DEPLOY_TYPE           | Type of Kubernetes resource used by the stateful application | Optional  | Defaults to `deployment`. Supported: `deployment`, `statefulset`|
-| CONTAINER_RUNTIME     | The container runtime used in the Kubernetes Cluster         | Optional  | Defaults to `docker`. Supported: `docker`                  |
-| LIB_IMAGE             | The chaos library image used to inject the latency           | Optional  | Defaults to `gaiaadm/pumba:0.4.8`. Supported: `gaiaadm/pumba:0.4.8`|                
-| TARGET_CONTAINER      | The container into which delays are injected in the storage controller pod  | Optional  | Defaults to `cstor-istgt`                   |
-| NETWORK_DELAY         | Egress delay injected into the target container              | Optional  | Defaults to 60000 milliseconds (60s)                       |
-| TOTAL_CHAOS_DURATION  | Total duration for which latency is injected                 | Optional  | Defaults to 60000 milliseconds (60s)	                |
+| CONTAINER_RUNTIME     | The container runtime used in the Kubernetes Cluster         | Optional  | Defaults to `docker`. Supported: `docker`, `containerd`    | 
+| LIB_IMAGE             | The chaos library image used to run the kill command         | Optional  | Defaults to `gaiaadm/pumba:0.4.8`. Supported: `{docker : gaiaadm/pumba:0.4.8, containerd: gprasath/crictl:ci}`                                                                                                                                    |
+| TARGET_CONTAINER      | The container to be killed in the storage controller pod     | Optional  | Defaults to `cstor-volume-mgmt`                            |
+| TOTAL_CHAOS_DURATION  | Amount of soak time for I/O post container kill              | Optional  | Defaults to 60 seconds					|
 | DATA_PERSISTENCE      | Flag to perform data consistency checks on the application   | Optional  | Default value is disabled (empty/unset). Set to `enabled` to perform data checks. Ensure configmap with app details are created                                                                                                                   |             
 
 #### Sample ChaosEngine Manifest
@@ -102,7 +101,7 @@ spec:
   monitoring: false
   jobCleanUpPolicy: delete
   experiments:
-    - name: openebs-target-network-delay
+    - name: openebs-target-container-failure
       spec:
         components:
           - name: TARGET_CONTAINER
@@ -110,11 +109,7 @@ spec:
           - name: APP_PVC
             value: 'pvc-c466262a-a5f2-4f0f-b594-5daddfc2e29d'    
           - name: DEPLOY_TYPE
-            value: deployment       
-          - name: NETWORK_DELAY
-            value: '30000'
-          - name: TOTAL_CHAOS_DURATION
-            value: '60000' 
+            value: deployment        
 ```
 
 ### Create the ChaosEngine Resource
@@ -125,19 +120,18 @@ spec:
 
 ### Watch Chaos progress
 
-- View network delay in action by setting up a ping to the storage controller in the OpenEBS namespace
-- Watch the behaviour of the application pod and the OpenEBS data replica/pool pods by setting up in a watch on the respective namespaces
+- View pod restart count by setting up a watch on the pods in the OpenEBS namespace
 
-  `watch -n 1 kubectl get pods -n <app/openebs-namespace>`
+  `watch -n 1 kubectl get pods -n <openebs-namespace>`
 
 ### Check Chaos Experiment Result
 
-- Check whether the application is resilient to the target network delays, once the experiment (job) is completed. The ChaosResult resource naming 
-  convention is: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
+- Check whether the application is resilient to the target container kill, once the experiment (job) is completed. The ChaosResult resource naming convention 
+  is: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult target-chaos-openebs-target-network-delay -n <application-namespace>`
+  `kubectl describe chaosresult target-chaos-openebs-target-container-failure -n <application-namespace>`
 
-## OpenEBS Target Network Delay Demo [TODO]
+## OpenEBS Target Container Kill Demo [TODO]
 
 - A sample recording of this experiment execution is provided here.
 
