@@ -43,7 +43,7 @@ stringData:
 ## Exit-Criteria
 
 -   The disk is healthy post chaos injection
--   If `APP_CHECK` is true, then application will check at post chaos
+-   If `APP_CHECK` is true, the application pod health is checked post chaos injection
 
 ## Details
 
