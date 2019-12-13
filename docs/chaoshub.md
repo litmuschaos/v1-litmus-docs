@@ -26,13 +26,47 @@ Litmus chaos hub is a place where the chaos engineering community members publis
 
 Chaos actions that apply to generic Kubernetes resources are classified into this category. Following chaos experiments are supported under Generic Chaos Chart
 
-- Container Kill
-- POD Delete
-- Pod Network Latency
-- Pod Network Loss
-- CPU Hog
-- Disk Fill
-- Disk Loss
+<table>
+<tr>
+<th>Experiment name</th>
+<th>Description</th>
+<th> User guide link </th>
+</tr>
+<tr>
+<td>Container Kill</td>
+<td>Kill one container in the application pod</td>
+<td></td>
+</tr>
+<tr>
+<td>POD Delete</td>
+<td>Fail the application pod</td>
+<td><a href="https://docs.litmuschaos.io/docs/pod-delete">pod delete</a></td>
+</tr>
+<tr>
+<td>Pod Network Latency</td>
+<td>Experiment to inject network latency to the POD</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Pod Network Loss</td>
+<td>Experiment to inject network loss to the POD</td>
+<td>-</td>
+</tr>
+<tr>
+<td>CPU Hog</td>
+<td>Exhaust CPU resources on the Kubernetes Node</td>
+<td></td>
+</tr>
+<tr>
+<td>Disk Fill</td>
+<td></td>
+<td></td>
+</tr>
+<td>Disk Loss</td>
+<td>External disk loss from the node</td>
+<td></td>
+</tr>
+</table>
 
 ### Application Chaos
 
@@ -41,6 +75,7 @@ While Chaos Experiments under the Generic category offer the ability to induce c
 <div class="danger">
 <strong>NOTE:</strong> If the result of the chaos experiment is `pass`, it means that the application is resilient to that chaos.
 </div>
+
 
 **Benefits of contributing an application chaos experiment**
 
