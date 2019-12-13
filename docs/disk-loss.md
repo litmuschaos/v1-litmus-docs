@@ -17,6 +17,7 @@
 - Ensure that the Litmus Chaos Operator is running
 - There should be administrative access to the platform on which the Kubernetes cluster is hosted, as the recovery of the affected could be manual. Example gcloud access to the project
 - Ensure that the `disk-loss` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/api/chaos?file=charts/generic/disk-loss/experiment.yaml)
+- Ensure to create a secret object having the gcloud/aws configuration in the namespace of 'CHAOS_NAMESPACE'.
 
 ## Entry-Criteria
 
@@ -28,27 +29,26 @@
 
 ## Details
 
--   In this experiment, the external disk is detached from the node and wait for the chaos duration for automatically attached. If it failed to attach manually. It will be attached manually.
--   This chaos experiment is in beta state.
+-   In this experiment, the external disk is detached from the node and wait for the chaos duration.
+- If there is any PV provisioner it will attach automatically, Else it will attach manually.
+- This chaos experiment is support for GCP and AWS.
 
 ## Integrations
 
-- CPU Hog can be effected using the chaos library: `litmus`
+- Disk Loss can be effected using the chaos library: `litmus`
 - The desired chaos library can be selected by setting `litmus` as value for the env variable LIB
+- It uses imperative aws and gcloud command to attach and detach the disks
 
 ## Steps to Execute the Chaos Experiment
 
--   Identify the values for the mandatory ENV variables
--   Create the chaos job via `kubectl create -f disk_loss_k8s_job.yml`
--   Check the result of the experiment via `kubectl describe chaosresult disk_loss` (prefix chaosengine name to experiment name if applicable)
--   View experiment logs via `kubectl logs -f <chaos-pod-name>`
+- This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to provide in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
 
-## Associated Chaos Utils 
+- Follow the steps in the sections below to prepare the ChaosEngine & execute the experiment.
 
--   litmuslib
-    -   [litmus/disk_losss.yml](/chaoslib/litmus/platform/gke/disk_loss.yml)
+### Prepare ChaosEngine
 
-## Litmusbook Environment Variables
+- Provide the application info in `spec.appinfo`
+- Override the experiment tunables if desired
 
 ### Supported Experiment Tunables for application
 
