@@ -35,7 +35,7 @@ Chaos actions that apply to generic Kubernetes resources are classified into thi
 <tr>
 <td>Container Kill</td>
 <td>Kill one container in the application pod</td>
-<td>[Container Kill](docs/container-kill.md)</td>
+<td>[Container Kill](container-kill.md)</td>
 </tr>
 <tr>
 <td>Pod Delete</td>
