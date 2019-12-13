@@ -26,47 +26,15 @@ Litmus chaos hub is a place where the chaos engineering community members publis
 
 Chaos actions that apply to generic Kubernetes resources are classified into this category. Following chaos experiments are supported under Generic Chaos Chart
 
-<table>
-<tr>
-<th>Experiment name</th>
-<th>Description</th>
-<th>User guide link </th>
-</tr>
-<tr>
-<td>Container Kill</td>
-<td>Kill one container in the application pod</td>
-<td><a href="container-kill.md">Container Kill</a></td>
-</tr>
-<tr>
-<td>Pod Delete</td>
-<td>Fail the application pod</td>
-<td><a href="pod-delete.md">Pod Delete</a></td>
-</tr>
-<tr>
-<td>Pod Network Latency</td>
-<td>Experiment to inject network latency to the POD</td>
-<td><a href="pod-network-latency.md">Pod Network Latency</a></td>
-</tr>
-<tr>
-<td>Pod Network Loss</td>
-<td>Experiment to inject network loss to the POD</td>
-<td><a href="pod-network-loss.md">Pod Network Loss</a></td>
-</tr>
-<tr>
-<td>CPU Hog</td>
-<td>Exhaust CPU resources on the Kubernetes Node</td>
-<td><a href="cpu-hog.md">CPU Hog</a></td>
-</tr>
-<tr>
-<td>Disk Fill</td>
-<td>Fillup Ephemeral Storage of a Resource</td>
-<td><a href="disk-fill.md">Disk Fill</a></td>
-</tr>
-<td>Disk Loss</td>
-<td>External disk loss from the node</td>
-<td><a href="disk-loss.md">Disk Loss</a></td>
-</tr>
-</table>
+| Experiment name | Description                               | User guide link                                         |
+| ----------- | ----------------------------------------- | --------------------------------------------------------- |
+| Container Kill | Kill one container in the application pod | [container-kill](container-kill.md)|
+| Pod Delete | Fail the application pod | [pod-delete](pod-delete.md) |
+| Pod Network Latency | Experiment to inject network latency to the POD | [pod-network-latency](pod-network-latency.md) |
+| Pod Network Loss | Experiment to inject network loss to the POD | [pod-network-loss](pod-network-loss.md) |
+| CPU Hog | Exhaust CPU resources on the Kubernetes Node | [cpu-hog](cpu-hog.md) |
+| Disk Fill | Fillup Ephemeral Storage of a Resource | [disk-fill](disk-fill.md) |
+| Disk Loss | External disk loss from the node | [disk-loss](disk-loss.md)|
 
 ### Application Chaos
 
