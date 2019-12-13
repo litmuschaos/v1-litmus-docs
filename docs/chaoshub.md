@@ -26,13 +26,47 @@ Litmus chaos hub is a place where the chaos engineering community members publis
 
 Chaos actions that apply to generic Kubernetes resources are classified into this category. Following chaos experiments are supported under Generic Chaos Chart
 
-- Container Kill
-- POD Delete
-- Pod Network Latency
-- Pod Network Loss
-- CPU Hog
-- Disk Fill
-- Disk Loss
+<table>
+<tr>
+<th>Experiment name</th>
+<th>Description</th>
+<th>User guide link </th>
+</tr>
+<tr>
+<td>Container Kill</td>
+<td>Kill one container in the application pod</td>
+<td><a href="container-kill.md">Container Kill</a></td>
+</tr>
+<tr>
+<td>Pod Delete</td>
+<td>Fail the application pod</td>
+<td><a href="pod-delete.md">Pod Delete</a></td>
+</tr>
+<tr>
+<td>Pod Network Latency</td>
+<td>Experiment to inject network latency to the POD</td>
+<td><a href="pod-network-latency.md">Pod Network Latency</a></td>
+</tr>
+<tr>
+<td>Pod Network Loss</td>
+<td>Experiment to inject network loss to the POD</td>
+<td><a href="pod-network-loss.md">Pod Network Loss</a></td>
+</tr>
+<tr>
+<td>CPU Hog</td>
+<td>Exhaust CPU resources on the Kubernetes Node</td>
+<td><a href="cpu-hog.md">CPU Hog</a></td>
+</tr>
+<tr>
+<td>Disk Fill</td>
+<td>Fillup Ephemeral Storage of a Resource</td>
+<td><a href="disk-fill.md">Disk Fill</a></td>
+</tr>
+<td>Disk Loss</td>
+<td>External disk loss from the node</td>
+<td><a href="disk-loss.md">Disk Loss</a></td>
+</tr>
+</table>
 
 ### Application Chaos
 
@@ -42,7 +76,8 @@ While Chaos Experiments under the Generic category offer the ability to induce c
 <strong>NOTE:</strong> If the result of the chaos experiment is `pass`, it means that the application is resilient to that chaos.
 </div>
 
-**Benefits of contributing an application chaos experiment**
+
+#### Benefits of contributing an application chaos experiment
 
 Application developers write negative tests in their CI pipelines to test the resiliency of the applications. These negative can be converted into Litmus Chaos Experiments and contributed to ChaosHub, so that the users of the application can use them in staging/pre-production/production environments to check the resilience. Application environments vary considerably from where they are tested (CI pipelines) to where they are deployed (Production). Hence, running the same chaos tests in the user's environment will help determine the weaknesses of the deployment and fixing such weaknesses leads to increased resilience. 
 
@@ -54,9 +89,8 @@ Following Application Chaos experiments are available on ChaosHub
 
 | Application | Description                               | Chaos Experiments                                         |
 | ----------- | ----------------------------------------- | --------------------------------------------------------- |
-| OpenEBS     | Container Attached Storage for Kubernetes | Replica Kill, Controller Kill, cStorPool instance failure |
-| Kubernetes  | Orchestration platform for Containers     |                                                           |
-|             |                                           |                                                           |
+| OpenEBS     | Container Attached Storage for Kubernetes | [openebs-pool-pod-failure](openebs-pool-pod-failure.md)<br>[openebs-pool-container-failure](openebs-pool-container-failure.md)<br>[openebs-target-pod-failure](openebs-target-pod-failure.md)<br>[openebs-target-container-failure](openebs-target-container-failure.md)<br>[openebs-target-network-delay](openebs-target-network-delay.md)<br>[openebs-target-network-loss](openebs-target-network-loss.md) |
+| Kafka  | Open-source stream processing software     |  [kafka-broker-pod-failure](kafka-broker-pod-failure.md)<br>[kafka-broker-disk-failure](kafka-broker-disk-failure.md)<br>                                                        |
 
 ### Platform Chaos
 
@@ -71,7 +105,6 @@ Following Platform Chaos experiments are available on ChaosHub
 | AWS      | Amazon Web Services platform. Includes EKS. | None              |
 | GCP      | Google Cloud Platform. Includes GKE.        | None              |
 | Azure    | Microsoft Azure platform. Includes AKS.     | None              |
-|          |                                             |                   |
 
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
