@@ -59,7 +59,7 @@ Chaos actions that apply to generic Kubernetes resources are classified into thi
 </tr>
 <tr>
 <td>Disk Fill</td>
-<td></td>
+<td>Fillup Ephemeral Storage of a Resource</td>
 <td></td>
 </tr>
 <td>Disk Loss</td>
@@ -77,7 +77,7 @@ While Chaos Experiments under the Generic category offer the ability to induce c
 </div>
 
 
-**Benefits of contributing an application chaos experiment**
+#### Benefits of contributing an application chaos experiment
 
 Application developers write negative tests in their CI pipelines to test the resiliency of the applications. These negative can be converted into Litmus Chaos Experiments and contributed to ChaosHub, so that the users of the application can use them in staging/pre-production/production environments to check the resilience. Application environments vary considerably from where they are tested (CI pipelines) to where they are deployed (Production). Hence, running the same chaos tests in the user's environment will help determine the weaknesses of the deployment and fixing such weaknesses leads to increased resilience. 
 
