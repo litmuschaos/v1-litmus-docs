@@ -15,7 +15,7 @@ sidebar_label: Disk Fill
 </tr>
 <tr>
 <td> Chaos </td>
-<td> Fillup Ephemeral Storage of a Resource </td>
+<td> Fill up Ephemeral Storage of a Pod </td>
 <td> GKE </td>
 </tr>
 </table>
@@ -26,7 +26,34 @@ sidebar_label: Disk Fill
 - Ensure that the Litmus Chaos Operator is running
 - Ensure that the `disk-fill` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/disk-fill)
 - Cluster must run docker container runtime
-- Appropriate Ephemeral Storage Requests, and Limits should be set, before running the experiment
+- Appropriate Ephemeral Storage Requests and Limits should be set before running the experiment. 
+  An example specification is shown below:
+  
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: frontend
+spec:
+  containers:
+  - name: db
+    image: mysql
+    env:
+    - name: MYSQL_ROOT_PASSWORD
+      value: "password"
+    resources:
+      requests:
+        ephemeral-storage: "2Gi"
+      limits:
+        ephemeral-storage: "4Gi"
+  - name: wp
+    image: wordpress
+    resources:
+      requests:
+        ephemeral-storage: "2Gi"
+      limits:
+        ephemeral-storage: "4Gi"
+  ```
 
 ## Entry-Criteria
 
@@ -45,7 +72,8 @@ sidebar_label: Disk Fill
 
 ## Integrations
 
--   Disk Fill can be effected using the chaos library: `litmus`, which makes use of `dd` to create file of specified capacity on the node.
+-   Disk Fill can be effected using the chaos library: `litmus`, which makes use of `dd` to create a file of 
+    specified capacity on the node.
 -   The desired chaoslib can be selected by setting the above options as value for the env variable `LIB`
 
 ## Steps to Execute the Chaos Experiment
@@ -127,9 +155,13 @@ spec:
 
 ### Watch Chaos progress
 
-- View pod restart count by setting up a watch on the pods in the application namespace
+- View the status of the pods as they are subjected to disk stress. 
 
   `watch -n 1 kubectl get pods -n <application-namespace>`
+  
+- Monitor the capacity filled up on the host filesystem 
+
+  `watch -n 1 du -kh /var/lib/docker/containers/<container-id>`
 
 ### Check Chaos Experiment Result
 
