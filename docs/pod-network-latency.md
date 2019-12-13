@@ -1,6 +1,6 @@
 ---
 id: pod-network-latency
-title: Pod Network Latency Experiment Detail
+title: Pod Network Latency Experiment Details
 sidebar_label: Pod Network Latency
 ---
 ------
@@ -13,7 +13,6 @@ sidebar_label: Pod Network Latency
 
 ## Prerequisites
 - Ensure that the Litmus Chaos Operator is running
-- Application subjected to chaos must have tc network traffic shaping tool installed
 - Ensure that the `pod-network-latency` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/pod-network-latency)
 
 
@@ -59,8 +58,8 @@ sidebar_label: Pod Network Latency
 | TOTAL_CHAOS_DURATION  | The time duration for chaos insertion (seconds)              | Optional  | 60000                                            |
 | NETWORK_LATENCY        | The latency/delay in milliseconds                           | Optional  | 60000
 | LIB                   | The chaos lib used to inject the chaos eg. Pumba             | Optional  |  |
-| NETWORK_INTERFACE     | Name of ethernet interface considered for shaping traffic                                | Instance-Specific (Optional)  |   |
-| TARGET_CONTAINER     | Name of container which is subjected to network latency      | Instance-Specific (Optional)  |   |
+| NETWORK_INTERFACE     | Name of ethernet interface considered for shaping traffic                                | Mandatory  |   |
+| TARGET_CONTAINER     | Name of container which is subjected to network latency      | Mandatory  |   |
 | CHAOSENGINE     | ChaosEngine CR name associated with the experiment instance      | Optional  |   |
 | CHAOS_SERVICE_ACCOUNT     | Service account used by the pumba daemonset Optional      | Optional  |   |
 
@@ -70,7 +69,7 @@ sidebar_label: Pod Network Latency
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
-  name:  redis-network-chaos
+  name:  nginx-network-chaos
   namespace: default
 spec:
   jobCleanUpPolicy: retain
@@ -78,9 +77,9 @@ spec:
   appinfo: 
     appns: default
     # FYI, To see app label, apply kubectl get pods --show-labels
-    applabel: "app=redis-app"
+    applabel: "app=nginx-app"
     appkind: deployment
-  chaosServiceAccount: redis
+  chaosServiceAccount: nginx
   experiments:
     - name: pod-network-latency
       spec:
@@ -88,7 +87,7 @@ spec:
         - name: ANSIBLE_STDOUT_CALLBACK
           value: default
         - name: TARGET_CONTAINER
-          value: redis-deploy-container #Container name where chaos has to be injected
+          value: "nginx-deploy-container" #Container name where chaos has to be injected
         - name: NETWORK_INTERFACE
           value: eth0                   #Network interface inside target container
         - name: LIB_IMAGE
@@ -110,7 +109,7 @@ spec:
 
 - View network latency by setting up a ping on the affected pod from the cluster nodes 
 
-    `ping http_address`
+  `ping <pod_ip_address>`
 
 ### Check Chaos Experiment Result
 
