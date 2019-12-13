@@ -1,9 +1,24 @@
 ---
-id: chaoshub 
+id: version-0.8.0-chaoshub
 title: Using and contributing to ChaosHub
-sidebar_label:ChaosHub 
+sidebar_label: ChaosHub
+original_id: chaoshub
 ---
 ------
+<html>
+<head>
+<style>
+div {
+  margin-bottom: 15px;
+  padding: 4px 12px;
+}
+.danger {
+  background-color: #ffdddd;
+  border-left: 6px solid #f44336;
+}
+</style>
+</head>
+<body>
 
 
 **Important links**
@@ -73,7 +88,17 @@ Following Platform Chaos experiments are available on ChaosHub
 | Azure    | Microsoft Azure platform. Includes AKS.     | None              |
 |          |                                             |                   |
 
+<br>
 
+<br>
+
+<hr>
+
+<br>
+
+<br>
+</body>
+</html>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-92076314-12"></script>
