@@ -1,0 +1,48 @@
+{
+  "version-0.9.0-docs": {
+    "Getting Started": [
+      "version-0.9.0-getstarted",
+      "version-0.9.0-chaoshub",
+      "version-0.9.0-plugins",
+      "version-0.9.0-architecture",
+      "version-0.9.0-resources",
+      "version-0.9.0-community",
+      "version-0.9.0-devguide"
+    ],
+    "Experiments": [
+      {
+        "type": "subcategory",
+        "label": "Generic",
+        "ids": [
+          "version-0.9.0-pod-delete",
+          "version-0.9.0-container-kill",
+          "version-0.9.0-pod-network-latency",
+          "version-0.9.0-pod-network-loss",
+          "version-0.9.0-disk-fill",
+          "version-0.9.0-disk-loss",
+          "version-0.9.0-cpu-hog"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "OpenEBS",
+        "ids": [
+          "version-0.9.0-openebs-target-container-kill",
+          "version-0.9.0-openebs-target-network-delay",
+          "version-0.9.0-openebs-target-network-loss",
+          "version-0.9.0-openebs-target-pod-failure",
+          "version-0.9.0-openebs-pool-pod-failure",
+          "version-0.9.0-openebs-pool-container-kill"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "Kafka",
+        "ids": [
+          "version-0.9.0-kafka-broker-pod-failure",
+          "version-0.9.0-kafka-broker-disk-failure"
+        ]
+      }
+    ]
+  }
+}

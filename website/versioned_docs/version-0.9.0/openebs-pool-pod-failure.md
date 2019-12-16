@@ -1,7 +1,8 @@
 ---
-id: openebs-pool-pod-failure
+id: version-0.9.0-openebs-pool-pod-failure
 title: OpenEBS Pool Pod Failure Experiment Details
 sidebar_label: Pool Pod Failure
+original_id: openebs-pool-pod-failure
 ---
 ------
 

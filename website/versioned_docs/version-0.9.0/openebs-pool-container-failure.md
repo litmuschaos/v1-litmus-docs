@@ -1,7 +1,8 @@
 ---
-id: openebs-pool-pod-failure
-title: OpenEBS Pool Pod Failure Experiment Details
-sidebar_label: Pool Pod Failure
+id: version-0.9.0-openebs-pool-container-kill
+title: OpenEBS Pool Container Kill Experiment Details
+sidebar_label: Pool Container Kill
+original_id: openebs-pool-container-kill
 ---
 ------
 
@@ -9,12 +10,12 @@ sidebar_label: Pool Pod Failure
 
 | Type      | Description              | Tested K8s Platform                                               |
 | ----------| ------------------------ | ------------------------------------------------------------------|
-| OpenEBS   | Kill the cstor pool pod and check if gets created again | GKE, Konvoy(AWS), Packet(Kubeadm), Minikube, OpenShift(Baremetal)  |
+| OpenEBS   | Kill the cstor pool pod container and check if gets created again | GKE, Konvoy(AWS), Packet(Kubeadm), Minikube, OpenShift(Baremetal)  |
 
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running in the cluster. If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
-- Ensure that the `openebs-pool-pod-failure` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-pool-pod-failure)
+- Ensure that the `openebs-pool-container-failure` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-pool-container-failure)
 - If DATA_PERSISTENCE is 'enabled', provide the application info in a configmap volume so that the experiment can perform necessary checks. Currently, LitmusChaos supports
   data consistency checks only on MySQL databases. Create a configmap as shown below in the application namespace (replace with actual credentials):
 
@@ -23,7 +24,7 @@ sidebar_label: Pool Pod Failure
   apiVersion: v1
   kind: ConfigMap
   metadata:
-    name: openebs-pool-pod-failure
+    name: openebs-pool-container-failure
   data:
     parameters.yml: | 
       dbuser: root
@@ -50,13 +51,15 @@ If the experiment tunable DATA_PERSISTENCE is set to 'enabled':
 
 ## Details
 
-- This scenario validates the behaviour of stateful applications and OpenEBS data plane upon forced termination of the target pod
-- Target pool pod are killed using the litmus chaoslib [random pod delete](https://github.com/litmuschaos/litmus/blob/master/chaoslib/litmus/kill_random_pod.yml)
+- This scenario validates the behaviour of stateful applications and OpenEBS data plane upon forced termination of the targeted pool pod container
+- Containers are killed using the kill command provided by pumba
+- Pumba is run as a daemonset on all nodes in dry-run mode to begin with; the kill command is issued during experiment execution via kubectl exec
 - Can test the stateful application's resilience to momentary iSCSI connection loss
 
 ## Integrations
 
-- Pod delete is achieved using the `litmus` chaos library
+- Container kill is achieved using the pumba chaos library for docker runtime.
+- The desired lib image can be configured in the env variable LIB_IMAGE.
 
 ## Steps to Execute the Chaos Experiment
 
@@ -75,6 +78,7 @@ If the experiment tunable DATA_PERSISTENCE is set to 'enabled':
 | ----------------------| ------------------------------------------------------------ |-----------|------------------------------------------------------------|
 | APP_PVC               | The PersistentVolumeClaim used by the stateful application   | Mandatory | PVC must use OpenEBS cStor storage class        |
 | DEPLOY_TYPE           | Type of Kubernetes resource used by the stateful application | Optional  | Defaults to `deployment`. Supported: `deployment`, `statefulset`|                           |
+| LIB_IMAGE             | The chaos library image used to inject the latency           | Optional  | Defaults to `gaiaadm/pumba:0.4.8`. Supported: `gaiaadm/pumba:0.4.8`|                
 | TOTAL_CHAOS_DURATION  | Amount of soak time for I/O post pod kill              | Optional  | Defaults to 600 seconds					|
 | DATA_PERSISTENCE      | Flag to perform data consistency checks on the application   | Optional  | Default value is disabled (empty/unset). Set to `enabled` to perform data checks. Ensure configmap with app details are created                                                                                                                   |             
 
@@ -95,11 +99,9 @@ spec:
   monitoring: false
   jobCleanUpPolicy: delete
   experiments:
-    - name: openebs-pool-pod-failure
+    - name: openebs-pool-container-failure
       spec:
         components:
-          - name: FORCE
-            value: 'true'
           - name: APP_PVC
             value: 'pvc-c466262a-a5f2-4f0f-b594-5daddfc2e29d'    
           - name: DEPLOY_TYPE
@@ -120,11 +122,11 @@ spec:
 
 ### Check Chaos Experiment Result
 
-- Check whether the application is resilient to the pool pod failure, once the experiment (job) is completed. The ChaosResult resource naming convention 
+- Check whether the application is resilient to the pool pod container failure, once the experiment (job) is completed. The ChaosResult resource naming convention 
   is: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult target-chaos-openebs-pool-pod-failure -n <application-namespace>`
+  `kubectl describe chaosresult target-chaos-openebs-pool-container-failure -n <application-namespace>`
 
-## OpenEBS Pool Pod Failure Demo [TODO]
+## OpenEBS Pool Container Failure Demo [TODO]
 
 - A sample recording of this experiment execution is provided here.

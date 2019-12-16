@@ -33,7 +33,8 @@
           "openebs-target-network-loss",
           "openebs-target-pod-failure",
           "openebs-pool-pod-failure",
-          "openebs-pool-container-kill"
+          "openebs-pool-container-kill",
+          "openebs-target-network-delay"
         ]
       },
       {
