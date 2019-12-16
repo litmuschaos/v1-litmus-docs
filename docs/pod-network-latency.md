@@ -9,7 +9,7 @@ sidebar_label: Pod Network Latency
 
 | Type      | Description              | Tested K8s Platform                                               |
 | ----------| ------------------------ | ------------------------------------------------------------------|
-| Generic   | Inject Network Latency Into Application Pod | GKE, Konvoy(AWS), Packet(Kubeadm), OpenShift(Baremetal)|
+| Generic   | Inject Network Latency Into Application Pod | GKE, Konvoy(AWS), Packet(Kubeadm), OpenShift(Baremetal) , Minikube |
 
 ## Prerequisites
 - Ensure that the Litmus Chaos Operator is running
@@ -18,7 +18,6 @@ sidebar_label: Pod Network Latency
 
 <div class="danger">
     <strong>NOTE</strong>: 
-        Experimenting Cluster should be non-minikube cluster . 
         Experiment is supported only on Docker Runtime. Support for containerd/CRIO runtimes will be added in subsequent releases.
 </div>
 
