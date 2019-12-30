@@ -28,6 +28,7 @@ sidebar_label: Pod Delete
 
 - Causes (forced/graceful) pod failure of specific/random replicas of an application resources
 - Tests deployment sanity (replica availability & uninterrupted service) and recovery workflow of the application
+- The pod delete by `Powerfullseal` is only supporting single pod failure (kill_count = 1)
 
 ## Integrations
 
@@ -53,6 +54,8 @@ sidebar_label: Pod Delete
 | CHAOS_INTERVAL        | Time interval b/w two successive pod failures (sec)          | Optional  | Defaults to 5s                                             |
 | LIB                   | The chaos lib used to inject the chaos                       | Optional  | Defaults to `litmus`. Supported: `litmus`, `powerfulseal`  |
 | FORCE                 | Application Pod failures type                                | Optional  | Default to `true`, With `terminationGracePeriodSeconds=0`  |
+| KILL_COUNT            | No. of application pods to be deleted                        | Optional  | Default to `1`, kill_count > 1 is only supported by litmus lib , not by the powerfulseal |
+
 
 #### Sample ChaosEngine Manifest
 
@@ -67,9 +70,10 @@ spec:
     appns: default
     applabel: 'app=nginx'
     appkind: deployment
+  chaosType: 'app'    # It can be app/infra
   chaosServiceAccount: nginx-sa
   monitoring: false
-  jobCleanUpPolicy: delete
+  jobCleanUpPolicy: delete  # It can be delete/retain
   experiments:
     - name: pod-delete
       spec:
