@@ -85,10 +85,10 @@ spec:
             value: '60'
           # set chaos platform as desired
           - name: PLATFORM
-            value: 'ANY'
+            value: 'GKE'
           # chaos lib used to inject the chaos
           - name: LIB
-            value: ''
+            value: 'litmus'
 ```
 
 ### Create the ChaosEngine Resource
