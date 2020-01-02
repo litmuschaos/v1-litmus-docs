@@ -69,7 +69,7 @@ sidebar_label: Container Kill
 <td> LIB_IMAGE  </td>
 <td> The pumba image used to run the kill command </td>
 <td> Optional </td>
-<td> Default to gaiaadm/pumba:0.4.8; note: execution logic changed in version 0.6 (here). images >=0.6 do not work with litmuschaos. </td>
+<td> Default to gaiaadm/pumba:0.4.8; note: execution logic changed in version 0.6 (here). images >=0.6 do not work with this experiment. </td>
 </tr>
 <tr>
 <td> LIB  </td>
