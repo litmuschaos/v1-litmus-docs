@@ -20,9 +20,9 @@ sidebar_label: Disk Loss
 </table>
 
 ## Prerequisites
--   Ensure that the Litmus Chaos Operator is running
+-   Ensure that the Litmus Chaos Operator is running. If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
 -   There should be administrative access to the platform on which the cluster is hosted, as the recovery of the affected could be manual. Example gcloud access to the project
--   Ensure that the `disk-loss` experiment resource is available in the cluster. If not, install from  <a href="https://hub.litmuschaos.io/charts/generic/experiments/disk-loss" target="_blank">here</a>
+-   Ensure that the `disk-loss` experiment resource is available in the cluster by `kubectl get chaosexperiments` in the desired namespace. If not, install from  <a href="https://hub.litmuschaos.io/charts/generic/experiments/disk-loss" target="_blank">here</a>
 -   Ensure to create a secret object having the gcloud/aws configuration in the namespace of `CHAOS_NAMESPACE`.
 
 ```yaml
@@ -65,6 +65,7 @@ stringData:
 ### Prepare ChaosEngine
 
 -   Provide the application info in `spec.appinfo`
+-   Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
 -   Override the experiment tunables if desired
 
 ### Supported Experiment Tunables for application
@@ -74,26 +75,6 @@ stringData:
 <th> Parameter </th>
 <th> Description  </th>
 <th> Type </th>
-</tr>
-<tr>
-<td> APP_CHECK </td>
-<td> If it checks to true, the experiment will check the status of the application. </td>
-<td> Optional </td>
-</tr>
-<tr>
-<td> APP_NAMESPACE </td>
-<td> Namespace in which application pods are deployed </td>
-<td> Optional </td>
-</tr>
-<tr>
-<td> APP_LABEL </td>
-<td> Unique Labels in `key=value` format of application deployment </td>
-<td> Optional </td>
-</tr>
-<tr>
-<td> TOTAL_CHAOS_DURATION </td>
-<td> The time duration for chaos insertion (sec) </td>
-<td> Mandatory </td>
 </tr>
 <tr>
 <td> CHAOS_NAMESPACE </td>
@@ -140,6 +121,26 @@ stringData:
 <td> Service account used by the litmus </td>
 <td> Mandatory </td>
 </tr>
+<tr>
+<td> TOTAL_CHAOS_DURATION </td>
+<td> The time duration for chaos insertion (sec) </td>
+<td> Optional </td>
+</tr>
+<tr>
+<td> APP_CHECK </td>
+<td> If it checks to true, the experiment will check the status of the application. </td>
+<td> Optional </td>
+</tr>
+<tr>
+<td> APP_NAMESPACE </td>
+<td> Namespace in which application pods are deployed </td>
+<td> Optional </td>
+</tr>
+<tr>
+<td> APP_LABEL </td>
+<td> Unique Labels in `key=value` format of application deployment </td>
+<td> Optional </td>
+</tr>
 </table>
 
 ## Sample ChaosEngine Manifest
@@ -151,6 +152,8 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
+  chaosType: 'infra'  # It can be app/infra
+  auxiliaryAppInfo: "ns1:name=percona,ns2:run=nginx"
   appinfo:
     appns: default
     applabel: 'app=nginx'
