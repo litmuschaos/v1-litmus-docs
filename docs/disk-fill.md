@@ -24,7 +24,7 @@ sidebar_label: Disk Fill
 
 - Ensure that Kubernetes Version > 1.13
 - Ensure that the Litmus Chaos Operator is running
-- Ensure that the `disk-fill` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/disk-fill)
+- Ensure that the `disk-fill` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/disk-fill)
 - Cluster must run docker container runtime
 - Appropriate Ephemeral Storage Requests and Limits should be set before running the experiment. 
   An example specification is shown below:
@@ -111,7 +111,7 @@ spec:
 </tr>
 <tr> 
 <td> TARGET_CONTAINER </td>
-<td> Name of target container </td>
+<td> Name of container which is subjected to disk-fill </td>
 <td> Mandatory </td>
 <td>  </td>
 </tr>

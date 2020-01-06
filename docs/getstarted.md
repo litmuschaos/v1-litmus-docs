@@ -17,11 +17,11 @@ Running chaos on your application involves the following steps:
 
 [Install Chaos Experiments](#install-chaos-experiments)
 
-[Setup Service Account](#setup-serviceaccount)
-
-[Prepare ChaosEngine](#prepare-chaosengine)
+[Setup Service Account](#setup-service-account)
 
 [Annotate your application](#annotate-your-application)
+
+[Prepare ChaosEngine](#prepare-chaosengine)
 
 [Run Chaos](#run-chaos)
 
