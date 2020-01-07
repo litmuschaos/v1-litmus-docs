@@ -89,6 +89,49 @@ spec:
             value: "false"
 ```
 
+#### Sample Rbac Manifest
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nginx-sa
+  namespace: default
+  labels:
+    name: nginx-sa
+---
+# Source: openebs/templates/clusterrole.yaml
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
+metadata:
+  name: nginx-sa
+  labels:
+    name: nginx-sa
+rules:
+- apiGroups: ["","litmuschaos.io","batch","apps"]
+  resources: ["pods","deployments","jobs","configmaps","chaosengines","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","delete"]
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs : ["get","list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: nginx-sa
+  labels:
+    name: nginx-sa
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: nginx-sa
+subjects:
+- kind: ServiceAccount
+  name: nginx-sa
+  namespace: default
+
+```
+
 ### Create the ChaosEngine Resource
 
 - Create the ChaosEngine manifest prepared in the previous step to trigger the Chaos.
