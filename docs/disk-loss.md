@@ -29,7 +29,7 @@ sidebar_label: Disk Loss
 apiVersion: v1
 kind: Secret
 metadata:
-  name: cloud_secret
+  name: cloud-secret
 type: Opaque
 stringData:
   cloud_config.yml: |-
