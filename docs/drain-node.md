@@ -14,7 +14,7 @@ sidebar_label: Drain Node
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running. If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
-- Ensure that the `drain-node` experiment resource is available in the cluster by `kubectl get chaosexperiments` command. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/drain-node)
+- Ensure that the `drain-node` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/drain-node)
 
 ## Entry Criteria
 
