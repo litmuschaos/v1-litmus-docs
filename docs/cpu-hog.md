@@ -44,6 +44,48 @@ Tests application resiliency upon replica evictions caused due to lack of CPU re
 
 - Follow the steps in the sections below to prepare the ChaosEngine & execute the experiment.
 
+### Prepare chaosServiceAccount
+
+- Use this sample RBAC manifest to create a chaosServiceAccount in the desired (app) namespace. This example consists of the minimum necessary role permissions to execute the experiment.
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nginx-sa
+  namespace: default
+  labels:
+    name: nginx-sa
+---
+# Source: openebs/templates/clusterrole.yaml
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: nginx-sa
+  labels:
+    name: nginx-sa
+rules:
+- apiGroups: ["","litmuschaos.io","batch","apps"]
+  resources: ["pods","daemonsets","jobs","status","pods/exec","chaosengines","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: nginx-sa
+  labels:
+    name: nginx-sa
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: nginx-sa
+subjects:
+- kind: ServiceAccount
+  name: nginx-sa
+  namespace: default
+
+```
+
 ### Prepare ChaosEngine
 
 - Provide the application info in `spec.appinfo`
@@ -86,46 +128,6 @@ spec:
           # chaos lib used to inject the chaos
           - name: LIB
             value: ''
-```
-#### Sample Rbac Manifest
-
-```yaml
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: nginx-sa
-  namespace: default
-  labels:
-    name: nginx-sa
----
-# Source: openebs/templates/clusterrole.yaml
-apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: ClusterRole
-metadata:
-  name: nginx-sa
-  labels:
-    name: nginx-sa
-rules:
-- apiGroups: ["","litmuschaos.io","batch","apps"]
-  resources: ["pods","daemonsets","jobs","status","pods/exec","chaosengines","chaosexperiments","chaosresults"]
-  verbs: ["create","list","get","patch","delete"]
----
-apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: ClusterRoleBinding
-metadata:
-  name: nginx-sa
-  labels:
-    name: nginx-sa
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: nginx-sa
-subjects:
-- kind: ServiceAccount
-  name: nginx-sa
-  namespace: default
-
-
 ```
 
 ### Create the ChaosEngine Resource
