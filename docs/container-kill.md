@@ -54,6 +54,8 @@ sidebar_label: Container Kill
 
 - Use this sample RBAC manifest to create a chaosServiceAccount in the desired (app) namespace. This example consists of the minimum necessary role permissions to execute the experiment.
 
+#### Sample Rbac Manifest
+
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
