@@ -14,7 +14,7 @@ sidebar_label: CoreDNS Pod Delete
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running. If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
-- Ensure that the `coredns-pod-delete` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/api/chaos?file=charts/coredns/coredns-pod-delete/experiment.yaml)
+- Ensure that the `coredns-pod-delete` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos?file=charts/coredns/coredns-pod-delete/experiment.yaml)
 
 ## Entry Criteria
 
@@ -48,9 +48,9 @@ sidebar_label: CoreDNS Pod Delete
   - It will be default as
     ```
       appinfo:
-      appns: kube-system
-      applabel: 'k8s-app=kube-dns'
-      appkind: deployment
+        appns: kube-system
+        applabel: 'k8s-app=kube-dns'
+        appkind: deployment
 
     ```
 
@@ -118,7 +118,7 @@ spec:
 
 - View coredns pod terminations & recovery by setting up a watch on the coredns pods in the application namespace
 
-  `watch kubectl get pod coredns -n kube-system`
+  `watch kubectl get pod coredns-pod -n kube-system`
 
 ### Check Chaos Experiment Result
 
