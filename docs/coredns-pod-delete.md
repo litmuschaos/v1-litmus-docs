@@ -9,11 +9,11 @@ sidebar_label: CoreDNS Pod Delete
 
 | Type      | Description              | Tested K8s Platform                                               |
 | ----------| ------------------------ | ------------------------------------------------------------------|
-| CoreDNS   | CoreDNS pod delete experiment | KubeADM, Minikube  |
+| CoreDNS   | CoreDNS pod delete experiment | Kubeadm, Minikube  |
 
 ## Prerequisites
 
-- Ensure that the Litmus Chaos Operator is running
+- Ensure that the Litmus Chaos Operator is running. If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
 - Ensure that the `coredns-pod-delete` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/api/chaos?file=charts/coredns/coredns-pod-delete/experiment.yaml)
 
 ## Entry Criteria
@@ -23,14 +23,14 @@ sidebar_label: CoreDNS Pod Delete
 
 ## Exit Criteria
 
-- CoreDNS pods are healthy post chaos injection
+- CoreDNS pods are healthy before chaos injection
 - Service resolution checks by deploying a dummy nginx application
 
 ## Details
 
 - Causes graceful pod failure of an coreDNS application
 - Tests deployment sanity (replica availability & uninterrupted service) and recovery workflow of the service
-- Deletion of CoreDNS pod will failed the kubernetes service resolution.
+- Service resolution will failed if coredns replicas will not present.
 
 ## Integrations
 
@@ -45,6 +45,15 @@ sidebar_label: CoreDNS Pod Delete
 ### Prepare ChaosEngine
 
 - Provide the application info in `spec.appinfo`
+  - It will be default as
+    ```
+      appinfo:
+      appns: kube-system
+      applabel: 'k8s-app=kube-dns'
+      appkind: deployment
+
+    ```
+
 - Override the experiment tunables if desired
 
 #### Supported Experiment Tunables
@@ -61,7 +70,7 @@ sidebar_label: CoreDNS Pod Delete
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
-  name: engine-nginx
+  name: engine-coredns
   namespace: kube-system
 spec:
   appinfo:
@@ -109,10 +118,10 @@ spec:
 
 - View coredns pod terminations & recovery by setting up a watch on the coredns pods in the application namespace
 
-  `watch -n 1 kubectl get pods -n <chaos-namespace>`
+  `watch kubectl get pod coredns -n kube-system`
 
 ### Check Chaos Experiment Result
 
 - Check whether the application is resilient to the coredns pod failure, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult coredns-pod-delete -n <chaos-namespace>`
+  `kubectl describe chaosresult engine-coredns-coredns-pod-delete -n <chaos-namespace>`
