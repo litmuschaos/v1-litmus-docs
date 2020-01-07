@@ -50,39 +50,9 @@ sidebar_label: Container Kill
 - Provide the application info in `spec.appinfo`
 - Override the experiment tunables if desired
 
-#### Supported Experiment Tunables
+### Prepare chaosServiceAccount
 
-| Variables             | Description                                                  | Type      | Notes                                                      |
-| ----------------------| ------------------------------------------------------------ |-----------|------------------------------------------------------------|
-| TARGET_CONTAINER      | The container to be killed inside the pod                    | Mandatory |                                                            |
-| LIB_IMAGE             | The pumba image used to run the kill command with            | Optional  | Default to `gaiaadm/pumba:0.4.8`; **note**: execution logic changed in version 0.6 ([here](https://github.com/alexei-led/pumba#running-inside-docker-container)). images >=0.6 do not work with litmuschaos.                           |
-
-#### Sample ChaosEngine Manifest
-
-```yaml
-apiVersion: litmuschaos.io/v1alpha1
-kind: ChaosEngine
-metadata:
-  name: nginx-chaos
-  namespace: default
-spec:
-  appinfo:
-    appns: default
-    applabel: 'app=nginx'
-    appkind: deployment
-  chaosServiceAccount: nginx-sa
-  monitoring: false
-  jobCleanUpPolicy: delete
-  experiments:
-    - name: container-kill
-      spec:
-        components:
-           # specify the name of the container to be killed
-          - name: TARGET_CONTAINER
-            value: 'nginx'
-```
-
-#### Sample Rbac Manifest
+- Use this sample RBAC manifest to create a chaosServiceAccount in the desired (app) namespace. This example consists of the minimum necessary role permissions to execute the experiment.
 
 ```yaml
 apiVersion: v1
@@ -120,6 +90,38 @@ subjects:
   name: nginx-sa
   namespace: default
 
+```
+
+#### Supported Experiment Tunables
+
+| Variables             | Description                                                  | Type      | Notes                                                      |
+| ----------------------| ------------------------------------------------------------ |-----------|------------------------------------------------------------|
+| TARGET_CONTAINER      | The container to be killed inside the pod                    | Mandatory |                                                            |
+| LIB_IMAGE             | The pumba image used to run the kill command with            | Optional  | Default to `gaiaadm/pumba:0.4.8`; **note**: execution logic changed in version 0.6 ([here](https://github.com/alexei-led/pumba#running-inside-docker-container)). images >=0.6 do not work with litmuschaos.                           |
+
+#### Sample ChaosEngine Manifest
+
+```yaml
+apiVersion: litmuschaos.io/v1alpha1
+kind: ChaosEngine
+metadata:
+  name: nginx-chaos
+  namespace: default
+spec:
+  appinfo:
+    appns: default
+    applabel: 'app=nginx'
+    appkind: deployment
+  chaosServiceAccount: nginx-sa
+  monitoring: false
+  jobCleanUpPolicy: delete
+  experiments:
+    - name: container-kill
+      spec:
+        components:
+           # specify the name of the container to be killed
+          - name: TARGET_CONTAINER
+            value: 'nginx'
 ```
 
 ### Create the ChaosEngine Resource
