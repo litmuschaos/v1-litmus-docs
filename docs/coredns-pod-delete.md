@@ -19,12 +19,12 @@ sidebar_label: CoreDNS Pod Delete
 ## Entry Criteria
 
 - CoreDNS pods are healthy before chaos injection
-- Service resolution checks by deploying a dummy nginx application
+- Service resolution works successfully as determined by deploying a sample nginx application
 
 ## Exit Criteria
 
 - CoreDNS pods are healthy before chaos injection
-- Service resolution checks by deploying a dummy nginx application
+- Service resolution works successfully as determined by deploying a sample nginx application
 
 ## Details
 
