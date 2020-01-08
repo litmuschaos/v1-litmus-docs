@@ -68,7 +68,7 @@ metadata:
     name: nginx-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps"]
-  resources: ["pods","daemonsets","jobs","status","pods/exec","chaosengines","chaosexperiments","chaosresults"]
+  resources: ["pods","daemonsets","jobs","pods/exec","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","delete"]
 - apiGroups: [""]
   resources: ["nodes"]
