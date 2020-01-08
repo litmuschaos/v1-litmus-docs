@@ -120,7 +120,7 @@ spec:
     # FYI, To see app label, apply kubectl get pods --show-labels
     applabel: "app=nginx"
     appkind: deployment
-  chaosServiceAccount: nginx
+  chaosServiceAccount: nginx-sa
   experiments:
     - name: pod-network-latency
       spec:
