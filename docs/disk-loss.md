@@ -62,6 +62,10 @@ stringData:
 -   This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to provide in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
 -   Follow the steps in the sections below to prepare the ChaosEngine & execute the experiment.
 
+### Prepare chaosServiceAccount
+
+- Use this sample RBAC manifest to create a chaosServiceAccount in the desired (app) namespace. This example consists of the minimum necessary role permissions to execute the experiment.
+
 #### Sample Rbac Manifest
 
 ```yaml
