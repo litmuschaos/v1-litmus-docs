@@ -82,12 +82,6 @@ spec:
 
 - Follow the steps in the sections below to prepare the ChaosEngine & execute the experiment.
 
-### Prepare ChaosEngine
-
-- Provide the application info in `spec.appinfo`
-- Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
-- Override the experiment tunables if desired
-
 ### Prepare chaosServiceAccount
 
 - Use this sample RBAC manifest to create a chaosServiceAccount in the desired (app) namespace. This example consists of the minimum necessary role permissions to execute the experiment.
@@ -131,6 +125,12 @@ subjects:
   namespace: default
 
 ```
+
+### Prepare ChaosEngine
+
+- Provide the application info in `spec.appinfo`
+- Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
+- Override the experiment tunables if desired
 
 #### Supported Experiment Tunables
 
