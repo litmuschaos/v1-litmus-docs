@@ -7,9 +7,9 @@ sidebar_label: CoreDNS Pod Delete
 
 ## Experiment Metadata
 
-| Type      | Description              | Tested K8s Platform                                               |
-| ----------| ------------------------ | ------------------------------------------------------------------|
-| CoreDNS   | CoreDNS pod delete experiment | Kubeadm, Minikube  |
+| Type      | Description                   | Tested K8s Platform    |
+| ----------| ------------------------------| ---------------------- |
+| CoreDNS   | CoreDNS pod delete experiment | Kubeadm, Minikube      |
 
 ## Prerequisites
 - Ensure that Litmus is install. If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/)
@@ -64,7 +64,7 @@ metadata:
 rules:
 - apiGroups: ["","litmuschaos.io","batch"]
   resources: ["service", "pods","jobs","secrets","chaosengines","chaosexperiments","chaosresults"]
-  verbs: ["create","list","get","patch","delete", "expose"]
+  verbs: ["create","list","get","patch","delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
@@ -97,11 +97,10 @@ subjects:
 
 #### Supported Experiment Tunables
 
-| Variables             | Description                                                  | Type      | Notes                                                      |
-| ----------------------| ------------------------------------------------------------ |-----------|------------------------------------------------------------|
-| TOTAL_CHAOS_DURATION  | The time duration for chaos insertion (seconds)              | Mandatory  | Defaults to 15s                                            |
-| CHAOS_INTERVAL        | Time interval b/w two successive pod failures (sec)          | Mandatory  | Defaults to 5s                                             |
-| LIB                   | The chaos lib used to inject the chaos                       | Optional   | Defaults to `litmus`. Supported: `litmus`                  |
+| Variables             | Description                                         | Type      | Notes           |
+| ----------------------|-----------------------------------------------------|-----------|-----------------|
+| TOTAL_CHAOS_DURATION  | The time duration for chaos insertion (seconds)     | Mandatory | Defaults to 15s |
+| CHAOS_INTERVAL        | Time interval b/w two successive pod failures (sec) | Mandatory | Defaults to 5s | LIB                   | The chaos lib used to inject the chaos                | Optional  | Defaults to `litmus`, Supported: `litmus`  |
 
 #### Sample ChaosEngine Manifest
 
