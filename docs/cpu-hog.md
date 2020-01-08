@@ -70,6 +70,9 @@ rules:
 - apiGroups: ["","litmuschaos.io","batch","apps"]
   resources: ["pods","daemonsets","jobs","status","pods/exec","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","delete"]
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs : ["get","list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
