@@ -45,12 +45,12 @@ sidebar_label: CoreDNS Pod Delete
 - Use this sample RBAC manifest to create a chaosServiceAccount in the desired (app) namespace. This example consists of the minimum necessary role permissions to execute the experiment.
 
 ### Sample Rbac Manifest
-```
+```yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: coredns-sa
-  namespace: default
+  namespace: kube-system
   labels:
     name: coredns-sa
 ---
@@ -63,7 +63,7 @@ metadata:
     name: coredns-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch"]
-  resources: ["service", "pods","jobs","secrets","chaosengines","chaosexperiments","chaosresults"]
+  resources: ["services", "pods","jobs","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
@@ -79,7 +79,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: coredns-sa
-  namespace: default
+  namespace: kube-system
 ```
 
 ### Prepare ChaosEngine
@@ -103,42 +103,49 @@ subjects:
 | CHAOS_INTERVAL        | Time interval b/w two successive pod failures (sec) | Mandatory | Defaults to 5s | LIB                   | The chaos lib used to inject the chaos                | Optional  | Defaults to `litmus`, Supported: `litmus`  |
 
 #### Sample ChaosEngine Manifest
-
 ```yaml
-apiVersion: v1
-kind: ServiceAccount
+apiVersion: litmuschaos.io/v1alpha1
+kind: ChaosEngine
 metadata:
-  name: coredns-sa
+  name: engine-coredns
   namespace: kube-system
-  labels:
-    name: coredns-sa
----
-# Source: openebs/templates/clusterrole.yaml
-apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: ClusterRole
-metadata:
-  name: coredns-sa
-  labels:
-    name: coredns-sa
-rules:
-- apiGroups: ["","litmuschaos.io","batch"]
-  resources: ["services", "pods","jobs","chaosengines","chaosexperiments","chaosresults"]
-  verbs: ["create","list","get","patch","delete", "expose"]
----
-apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: ClusterRoleBinding
-metadata:
-  name: coredns-sa
-  labels:
-    name: coredns-sa
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: coredns-sa
-subjects:
-- kind: ServiceAccount
-  name: coredns-sa
-  namespace: kube-system
+spec:
+  appinfo:
+    appns: kube-system
+    applabel: 'k8s-app=kube-dns'
+    appkind: deployment
+  chaosType: 'infra'    # It can be infra only
+  components:
+    runner:
+       image: litmuschaos/ansible-runner:ci
+  chaosServiceAccount: coredns-sa
+  monitoring: false
+  jobCleanUpPolicy: delete  # It can be delete/retain
+  experiments:
+    - name: coredns-pod-delete
+      spec:
+        components:
+           # set chaos duration (in sec) as desired
+          - name: TOTAL_CHAOS_DURATION
+            value: '30'
+            
+          # set chaos interval (in sec) as desired
+          - name: CHAOS_INTERVAL
+            value: '10'
+            
+          - name: APP_NAMESPACE
+            value: 'kube-system'
+
+          # provide application labels
+          - name: APP_LABEL
+            value: 'k8s-app=kube-dns'
+
+           # provide application kind
+          - name: APP_KIND
+            value: 'deployment'
+            
+          - name: CHAOS_NAMESPACE
+            value: 'kube-system'
 ```
 
 ### Create the ChaosEngine Resource
