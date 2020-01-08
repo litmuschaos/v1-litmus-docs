@@ -52,10 +52,33 @@ sidebar_label: Container Kill
 
 #### Supported Experiment Tunables
 
-| Variables             | Description                                                  | Type      | Notes                                                      |
-| ----------------------| ------------------------------------------------------------ |-----------|------------------------------------------------------------|
-| TARGET_CONTAINER      | The container to be killed inside the pod                    | Mandatory |                                                            |
-| LIB_IMAGE             | The pumba image used to run the kill command with            | Optional  | Default to `gaiaadm/pumba:0.4.8`; **note**: execution logic changed in version 0.6 ([here](https://github.com/alexei-led/pumba#running-inside-docker-container)). images >=0.6 do not work with litmuschaos.                           |
+<table>
+<tr>
+<th> Variables </th>
+<th> Description  </th>
+<th> Type </th>
+<th> Notes </th>
+</tr>
+<tr>
+<td> TARGET_CONTAINER  </td>
+<td> The container to be killed inside the pod </td>
+<td> Mandatory </td>
+<td> If the TARGET_CONTAINER is not provided it will delete the first container </td>
+</tr>
+<tr>
+<td> LIB_IMAGE  </td>
+<td> The pumba image used to run the kill command </td>
+<td> Optional </td>
+<td> Default to gaiaadm/pumba:0.4.8; note: execution logic changed in version 0.6 (here). images >=0.6 do not work with this experiment. </td>
+</tr>
+<tr>
+<td> LIB  </td>
+<td> The category of lib use to inject chaos </td>
+<td> Mandatory  </td>
+<td> Only docker supported </td>
+</tr>
+</table>
+
 
 #### Sample ChaosEngine Manifest
 
@@ -66,13 +89,14 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
+  chaosType: "app" # It can be app/infra
   appinfo:
     appns: default
     applabel: 'app=nginx'
     appkind: deployment
   chaosServiceAccount: nginx-sa
   monitoring: false
-  jobCleanUpPolicy: delete
+  jobCleanUpPolicy: delete # It can be delete/retain
   experiments:
     - name: container-kill
       spec:

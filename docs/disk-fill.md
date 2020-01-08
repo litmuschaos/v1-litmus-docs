@@ -24,7 +24,7 @@ sidebar_label: Disk Fill
 
 - Ensure that Kubernetes Version > 1.13
 - Ensure that the Litmus Chaos Operator is running
-- Ensure that the `disk-fill` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/disk-fill)
+- Ensure that the `disk-fill` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/disk-fill)
 - Cluster must run docker container runtime
 - Appropriate Ephemeral Storage Requests and Limits should be set before running the experiment. 
   An example specification is shown below:
@@ -85,6 +85,7 @@ spec:
 ### Prepare ChaosEngine
 
 - Provide the application info in `spec.appinfo`
+- Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
 - Override the experiment tunables if desired
 
 #### Supported Experiment Tunables
@@ -103,6 +104,18 @@ spec:
 <td>  </td>
 </tr>
 <tr> 
+<td> FILL_PERCENTAGE </td>
+<td> Percentage to fill the Ephemeral storage limit </td>
+<td> Mandatory </td>
+<td> Can be set to more that 100 also, to force evict the pod </td>
+</tr>
+<tr> 
+<td> TARGET_CONTAINER </td>
+<td> Name of container which is subjected to disk-fill </td>
+<td> Mandatory </td>
+<td>  </td>
+</tr>
+<tr> 
 <td> CHAOSENGINE </td>
 <td> ChaosEngine CR name associated with the experiment instance </td>
 <td> Optional </td>
@@ -113,12 +126,6 @@ spec:
 <td> Service account used by the deployment </td>
 <td> Optional </td>
 <td>  </td>
-</tr>
-<tr> 
-<td> FILL_PERCENTAGE </td>
-<td> Percentage to fill the Ephemeral storage limit </td>
-<td> Mandatory </td>
-<td> Can be set to more that 100 also, to force evict the pod </td>
 </tr>
 </table>
 
@@ -131,6 +138,8 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
+  chaosType: 'infra'  # It can be app/infra
+  auxiliaryAppInfo: "ns1:name=percona,ns2:run=nginx"
   appinfo:
     appns: default
     applabel: 'app=nginx'
@@ -145,6 +154,8 @@ spec:
            # specify the fill percentage according to the disk pressure required
           - name: FILL_PERCENTAGE
             value: "80"
+          - name: TARGET_CONTAINER
+            value: "nginx"
 ```
 
 ### Create the ChaosEngine Resource

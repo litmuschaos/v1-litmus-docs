@@ -47,6 +47,7 @@ Tests application resiliency upon replica evictions caused due to lack of CPU re
 ### Prepare ChaosEngine
 
 - Provide the application info in `spec.appinfo`
+- Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
 - Override the experiment tunables if desired 
 
 #### Supported Experiment Tunables
@@ -54,7 +55,7 @@ Tests application resiliency upon replica evictions caused due to lack of CPU re
 | Variables             | Description                                                  | Type      | Notes                                                                             |
 | ----------------------| ------------------------------------------------------------ |-----------|------------------------------------------------------------|
 | TOTAL_CHAOS_DURATION  | The time duration for chaos insertion (seconds)              | Optional  | Defaults to 60s                                                                   |
-| PLATFORM              | The platform on which the chaos experiment will run          | Optional  | Defaults to GKE                                                                   |
+| PLATFORM              | The platform on which the chaos experiment will run          | Mandatory | Defaults to GKE                                                                   |
 | LIB                   | The chaos lib used to inject the chaos                       | Optional  | Defaults to `litmus`. Supported: `litmus`                       |
 
 #### Sample ChaosEngine Manifest
@@ -66,6 +67,8 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
+  chaosType: 'infra'  # It can be app/infra
+  auxiliaryAppInfo: "ns1:name=percona,ns2:run=nginx"
   appinfo:
     appns: default
     applabel: 'app=nginx'
@@ -82,10 +85,10 @@ spec:
             value: '60'
           # set chaos platform as desired
           - name: PLATFORM
-            value: 'ANY'
+            value: 'GKE'
           # chaos lib used to inject the chaos
           - name: LIB
-            value: ''
+            value: 'litmus'
 ```
 
 ### Create the ChaosEngine Resource
