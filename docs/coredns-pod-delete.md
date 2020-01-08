@@ -123,7 +123,7 @@ metadata:
     name: coredns-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch"]
-  resources: ["services", "pods","jobs","secrets","chaosengines","chaosexperiments","chaosresults"]
+  resources: ["services", "pods","jobs","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","delete", "expose"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
