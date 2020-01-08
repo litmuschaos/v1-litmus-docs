@@ -16,6 +16,10 @@ sidebar_label: CPU Hog
 - Ensure that the Litmus Chaos Operator is running
 - There should be administrative access to the platform on which the Kubernetes cluster is hosted, as the recovery of the affected could be manual. Example gcloud access to the project
 - Ensure that the `cpu-hog` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/cpu-hog)
+- As the `k8s` and `k8s_facts` ansible modules are used in the experiment which uses OpenShift Python client to perform CRUD operations(Create, read, update and delete) the following module requirements is to be satisfied.
+   - python >= 2.7
+   - openshift >= 0.6
+- Install python openshift using `pip install openshift` and check the installation in `pip freeze`
 
 ## Entry Criteria
 
