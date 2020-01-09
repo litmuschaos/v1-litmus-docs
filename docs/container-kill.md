@@ -13,7 +13,7 @@ sidebar_label: Container Kill
 
 ## Prerequisites
 
-- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
+- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
 - Ensure that the `container-kill` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/container-kill)
 - Cluster must run docker container runtime
 
@@ -134,7 +134,9 @@ metadata:
   namespace: default
 spec:
   # It can be app/infra
-  chaosType: "app" 
+  chaosType: 'app'
+  #ex. values: ns1:name=percona,ns2:run=nginx 
+  auxiliaryAppInfo: 
   appinfo:
     appns: default
     applabel: 'app=nginx'
