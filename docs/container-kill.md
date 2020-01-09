@@ -43,7 +43,51 @@ sidebar_label: Container Kill
 
 - This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to provide in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
 
-- Follow the steps in the sections below to prepare the ChaosEngine & execute the experiment.
+- Follow the steps in the sections below to create the chaosServiceAccount, prepare the ChaosEngine & execute the experiment.
+
+### Prepare chaosServiceAccount
+
+- Use this sample RBAC manifest to create a chaosServiceAccount in the desired (app) namespace. This example consists of the minimum necessary role permissions to execute the experiment.
+
+#### Sample Rbac Manifest
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nginx-sa
+  namespace: default
+  labels:
+    name: nginx-sa
+---
+# Source: openebs/templates/clusterrole.yaml
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
+metadata:
+  name: nginx-sa
+  labels:
+    name: nginx-sa
+rules:
+- apiGroups: ["","litmuschaos.io","batch","apps"]
+  resources: ["pods","jobs","daemonsets","pods/exec","chaosengines","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: nginx-sa
+  labels:
+    name: nginx-sa
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: nginx-sa
+subjects:
+- kind: ServiceAccount
+  name: nginx-sa
+  namespace: default
+
+```
 
 ### Prepare ChaosEngine
 
@@ -52,10 +96,33 @@ sidebar_label: Container Kill
 
 #### Supported Experiment Tunables
 
-| Variables             | Description                                                  | Type      | Notes                                                      |
-| ----------------------| ------------------------------------------------------------ |-----------|------------------------------------------------------------|
-| TARGET_CONTAINER      | The container to be killed inside the pod                    | Mandatory |                                                            |
-| LIB_IMAGE             | The pumba image used to run the kill command with            | Optional  | Default to `gaiaadm/pumba:0.4.8`; **note**: execution logic changed in version 0.6 ([here](https://github.com/alexei-led/pumba#running-inside-docker-container)). images >=0.6 do not work with litmuschaos.                           |
+<table>
+<tr>
+<th> Variables </th>
+<th> Description  </th>
+<th> Type </th>
+<th> Notes </th>
+</tr>
+<tr>
+<td> TARGET_CONTAINER  </td>
+<td> The container to be killed inside the pod </td>
+<td> Mandatory </td>
+<td> If the TARGET_CONTAINER is not provided it will delete the first container </td>
+</tr>
+<tr>
+<td> LIB_IMAGE  </td>
+<td> The pumba image used to run the kill command </td>
+<td> Optional </td>
+<td> Default to gaiaadm/pumba:0.4.8; note: execution logic changed in version 0.6 (here). images >=0.6 do not work with this experiment. </td>
+</tr>
+<tr>
+<td> LIB  </td>
+<td> The category of lib use to inject chaos </td>
+<td> Mandatory  </td>
+<td> Only docker supported </td>
+</tr>
+</table>
+
 
 #### Sample ChaosEngine Manifest
 
@@ -66,13 +133,14 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
+  chaosType: "app" # It can be app/infra
   appinfo:
     appns: default
     applabel: 'app=nginx'
     appkind: deployment
   chaosServiceAccount: nginx-sa
   monitoring: false
-  jobCleanUpPolicy: delete
+  jobCleanUpPolicy: delete # It can be delete/retain
   experiments:
     - name: container-kill
       spec:

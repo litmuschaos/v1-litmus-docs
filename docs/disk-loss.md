@@ -20,16 +20,16 @@ sidebar_label: Disk Loss
 </table>
 
 ## Prerequisites
--   Ensure that the Litmus Chaos Operator is running
+-   Ensure that the Litmus Chaos Operator is running. If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
 -   There should be administrative access to the platform on which the cluster is hosted, as the recovery of the affected could be manual. Example gcloud access to the project
--   Ensure that the `disk-loss` experiment resource is available in the cluster. If not, install from  <a href="https://hub.litmuschaos.io/charts/generic/experiments/disk-loss" target="_blank">here</a>
+-   Ensure that the `disk-loss` experiment resource is available in the cluster by `kubectl get chaosexperiments` in the desired namespace. If not, install from  <a href="https://hub.litmuschaos.io/charts/generic/experiments/disk-loss" target="_blank">here</a>
 -   Ensure to create a secret object having the gcloud/aws configuration in the namespace of `CHAOS_NAMESPACE`.
 
 ```yaml
 apiVersion: v1
 kind: Secret
 metadata:
-  name: cloud_secret
+  name: cloud-secret
 type: Opaque
 stringData:
   cloud_config.yml: |-
@@ -60,11 +60,57 @@ stringData:
 ## Steps to Execute the Chaos Experiment
 
 -   This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to provide in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
--   Follow the steps in the sections below to prepare the ChaosEngine & execute the experiment.
+
+-   Follow the steps in the sections below to create the chaosServiceAccount, prepare the ChaosEngine & execute the experiment.
+
+### Prepare chaosServiceAccount
+
+- Use this sample RBAC manifest to create a chaosServiceAccount in the desired (app) namespace. This example consists of the minimum necessary role permissions to execute the experiment.
+
+#### Sample Rbac Manifest
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nginx-sa
+  namespace: default
+  labels:
+    name: nginx-sa
+---
+# Source: openebs/templates/clusterrole.yaml
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: nginx-sa
+  labels:
+    name: nginx-sa
+rules:
+- apiGroups: ["","litmuschaos.io","batch"]
+  resources: ["pods","jobs","secrets","chaosengines","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: nginx-sa
+  labels:
+    name: nginx-sa
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: nginx-sa
+subjects:
+- kind: ServiceAccount
+  name: nginx-sa
+  namespace: default
+
+```
 
 ### Prepare ChaosEngine
 
 -   Provide the application info in `spec.appinfo`
+-   Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
 -   Override the experiment tunables if desired
 
 ### Supported Experiment Tunables for application
@@ -74,26 +120,6 @@ stringData:
 <th> Parameter </th>
 <th> Description  </th>
 <th> Type </th>
-</tr>
-<tr>
-<td> APP_CHECK </td>
-<td> If it checks to true, the experiment will check the status of the application. </td>
-<td> Optional </td>
-</tr>
-<tr>
-<td> APP_NAMESPACE </td>
-<td> Namespace in which application pods are deployed </td>
-<td> Optional </td>
-</tr>
-<tr>
-<td> APP_LABEL </td>
-<td> Unique Labels in `key=value` format of application deployment </td>
-<td> Optional </td>
-</tr>
-<tr>
-<td> TOTAL_CHAOS_DURATION </td>
-<td> The time duration for chaos insertion (sec) </td>
-<td> Mandatory </td>
 </tr>
 <tr>
 <td> CHAOS_NAMESPACE </td>
@@ -140,6 +166,26 @@ stringData:
 <td> Service account used by the litmus </td>
 <td> Mandatory </td>
 </tr>
+<tr>
+<td> TOTAL_CHAOS_DURATION </td>
+<td> The time duration for chaos insertion (sec) </td>
+<td> Optional </td>
+</tr>
+<tr>
+<td> APP_CHECK </td>
+<td> If it checks to true, the experiment will check the status of the application. </td>
+<td> Optional </td>
+</tr>
+<tr>
+<td> APP_NAMESPACE </td>
+<td> Namespace in which application pods are deployed </td>
+<td> Optional </td>
+</tr>
+<tr>
+<td> APP_LABEL </td>
+<td> Unique Labels in `key=value` format of application deployment </td>
+<td> Optional </td>
+</tr>
 </table>
 
 ## Sample ChaosEngine Manifest
@@ -151,6 +197,8 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
+  chaosType: 'infra'  # It can be app/infra
+  auxiliaryAppInfo: "ns1:name=percona,ns2:run=nginx"
   appinfo:
     appns: default
     applabel: 'app=nginx'

@@ -28,6 +28,7 @@ sidebar_label: Pod Delete
 
 - Causes (forced/graceful) pod failure of specific/random replicas of an application resources
 - Tests deployment sanity (replica availability & uninterrupted service) and recovery workflow of the application
+- The pod delete by `Powerfullseal` is only supporting single pod failure (kill_count = 1)
 
 ## Integrations
 
@@ -38,7 +39,54 @@ sidebar_label: Pod Delete
 
 - This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to provide in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
 
-- Follow the steps in the sections below to prepare the ChaosEngine & execute the experiment.
+- Follow the steps in the sections below to create the chaosServiceAccount, prepare the ChaosEngine & execute the experiment.
+
+### Prepare chaosServiceAccount
+
+- Use this sample RBAC manifest to create a chaosServiceAccount in the desired (app) namespace. This example consists of the minimum necessary role permissions to execute the experiment.
+
+#### Sample Rbac Manifest
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nginx-sa
+  namespace: default
+  labels:
+    name: nginx-sa
+---
+# Source: openebs/templates/clusterrole.yaml
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
+metadata:
+  name: nginx-sa
+  labels:
+    name: nginx-sa
+rules:
+- apiGroups: ["","litmuschaos.io","batch","apps"]
+  resources: ["pods","deployments","jobs","configmaps","chaosengines","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","delete"]
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs : ["get","list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: nginx-sa
+  labels:
+    name: nginx-sa
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: nginx-sa
+subjects:
+- kind: ServiceAccount
+  name: nginx-sa
+  namespace: default
+
+```
 
 ### Prepare ChaosEngine
 
@@ -53,6 +101,8 @@ sidebar_label: Pod Delete
 | CHAOS_INTERVAL        | Time interval b/w two successive pod failures (sec)          | Optional  | Defaults to 5s                                             |
 | LIB                   | The chaos lib used to inject the chaos                       | Optional  | Defaults to `litmus`. Supported: `litmus`, `powerfulseal`  |
 | FORCE                 | Application Pod failures type                                | Optional  | Default to `true`, With `terminationGracePeriodSeconds=0`  |
+| KILL_COUNT            | No. of application pods to be deleted                        | Optional  | Default to `1`, kill_count > 1 is only supported by litmus lib , not by the powerfulseal |
+
 
 #### Sample ChaosEngine Manifest
 
@@ -67,9 +117,10 @@ spec:
     appns: default
     applabel: 'app=nginx'
     appkind: deployment
+  chaosType: 'app'    # It can be app/infra
   chaosServiceAccount: nginx-sa
   monitoring: false
-  jobCleanUpPolicy: delete
+  jobCleanUpPolicy: delete  # It can be delete/retain
   experiments:
     - name: pod-delete
       spec:

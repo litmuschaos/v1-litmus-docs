@@ -1,7 +1,7 @@
 ---
-id: pod-network-latency
-title: Pod Network Latency Experiment Details
-sidebar_label: Pod Network Latency
+id: pod-network-corruption
+title: Pod Network Corruption Experiment Details
+sidebar_label: Pod Network Corruption
 ---
 ------
 
@@ -9,12 +9,11 @@ sidebar_label: Pod Network Latency
 
 | Type      | Description              | Tested K8s Platform                                               |
 | ----------| ------------------------ | ------------------------------------------------------------------|
-| Generic   | Inject Network Latency Into Application Pod | GKE, Konvoy(AWS), Packet(Kubeadm) , Minikube > v1.6.0 |
+| Generic   | Inject Network Packet Corruption Into Application Pod | GKE, Konvoy(AWS), Packet(Kubeadm), Minikube > v1.6.0 |
 
 ## Prerequisites
-- Ensure that the Litmus Chaos Operator is running
-- Ensure that the `pod-network-latency` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/pod-network-latency)
-
+- Ensure that the Litmus Chaos Operator is running. If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
+- Ensure that the `pod-network-corruption` experiment resource is available in the cluster by `kubectl get chaosexperiments` command. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/pod-network-corruption)
 
 <div class="danger">
     <strong>NOTE</strong>: 
@@ -32,9 +31,8 @@ sidebar_label: Pod Network Latency
 ## Details
 
 - The application pod should be healthy once chaos is stopped. Service-requests should be         served despite chaos.
-- Causes flaky access to application replica by injecting network delay using pumba.
-- Injects latency on the specified container by starting a traffic control (tc) process with      netem rules to add egress delays
-- Latency is injected via pumba library with command pumba netem delay by passing the relevant    network interface, latency, chaos duration and regex filter for container name
+- Injects packet corruption on the specified container by starting a traffic control (tc) process with netem rules to add egress packet corruption
+- Corruption is injected via pumba library with command pumba netem corruption by passing the relevant network interface, packet-corruption-percentage, chaos duration and regex filter for container name
 - Can test the application's resilience to lossy/flaky network
 
 ## Steps to Execute the Chaos Experiment
@@ -54,11 +52,12 @@ sidebar_label: Pod Network Latency
 | ----------------------| ------------------------------------------------------------ |-----------|------------------------------------------------------------|
 | NETWORK_INTERFACE     | Name of ethernet interface considered for shaping traffic                                | Mandatory  |   |
 | TARGET_CONTAINER     | Name of container which is subjected to network latency       | Mandatory  |   |
-| TOTAL_CHAOS_DURATION  | The time duration for chaos insertion in milliseconds  | Optional| Default (60000ms)|
-| NETWORK_LATENCY        | The latency/delay in milliseconds                           | Optional  | Default (60000ms)
+| NETWORK_PACKET_CORRUPTION_PERCENTAGE       | Packet corruption in percentage                           | Mandatory | Default (100)
 | LIB                   | The chaos lib used to inject the chaos eg. Pumba             | Optional  |  |
 | CHAOSENGINE     | ChaosEngine CR name associated with the experiment instance      | Optional  |   |
 | CHAOS_SERVICE_ACCOUNT     | Service account used by the pumba daemonset Optional      | Optional  |   |
+| TOTAL_CHAOS_DURATION  | The time duration for chaos insertion in milliseconds  | Optional| Default (60000ms)|
+| LIB_IMAGE     | The pumba image used to run the kill command                                | Optional  | Default to gaiaadm/pumba:0.6.5 |
 
 #### Sample ChaosEngine Manifest
 
@@ -78,7 +77,7 @@ spec:
     appkind: deployment
   chaosServiceAccount: nginx
   experiments:
-    - name: pod-network-latency
+    - name: pod-network-corruption
       spec:
         components:
         - name: ANSIBLE_STDOUT_CALLBACK
@@ -91,8 +90,8 @@ spec:
           value: eth0                   
         - name: LIB_IMAGE
           value: gaiaadm/pumba:0.6.5
-        - name: NETWORK_LATENCY
-          value: "2000"
+        - name: NETWORK_PACKET_CORRUPTION_PERCENTAGE
+          value: "100"
         - name: TOTAL_CHAOS_DURATION
           value: "60000"
         - name: LIB
@@ -106,17 +105,17 @@ spec:
 
 ### Watch Chaos progress
 
-- View network latency by setting up a ping on the affected pod from the cluster nodes 
+- View impact of network packet corruption on the affected pod from the cluster nodes (alternate is to setup ping to a remote IP from inside the target pod) 
 
   `ping <pod_ip_address>`
 
 ### Check Chaos Experiment Result
 
-- Check whether the application is resilient to the Pod Network Latency, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
+- Check whether the application is resilient to the Pod Network Packet Corruption, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
   `kubectl describe chaosresult <ChaosEngine-Name>-<ChaosExperiment-Name> -n <application-namespace>`
 
 
-## Application Pod Network Latency Demo  [TODO]
+## Application Pod Network Packet Corruption Demo  [TODO]
 
 - A sample recording of this experiment execution is provided here.
