@@ -117,6 +117,8 @@ spec:
   jobCleanUpPolicy: retain
   # It can be app/infra
   chaosType: 'app'
+  #ex. values: ns1:name=percona,ns2:run=nginx 
+  auxiliaryAppInfo:
   monitoring: false
   components:
     runner:
