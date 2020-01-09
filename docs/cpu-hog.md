@@ -116,7 +116,10 @@ spec:
     appns: default
     applabel: 'app=nginx'
     appkind: deployment
+  # It can be app/infra
   chaosType: 'infra'
+  #ex. values: ns1:name=percona,ns2:run=nginx 
+  auxiliaryAppInfo:
   chaosServiceAccount: nginx-sa
   monitoring: false
   components:
