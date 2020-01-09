@@ -13,7 +13,7 @@ sidebar_label: Pod Network Loss
 
 ## Prerequisites
 
-- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
+- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
 - Ensure that the `pod-network-loss` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/pod-network-loss)
 - <div class="danger">
     <strong>NOTE</strong>: 
@@ -113,7 +113,10 @@ metadata:
   name: nginx-network-chaos
   namespace: default
 spec:
+  # It can be delete/retain
   jobCleanUpPolicy: retain
+  # It can be app/infra
+  chaosType: 'infra'
   monitoring: false
   components:
     runner:
