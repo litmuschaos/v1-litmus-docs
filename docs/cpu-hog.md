@@ -118,14 +118,15 @@ spec:
     appkind: deployment
   chaosServiceAccount: nginx-sa
   monitoring: false
+  components:
+    runner:
+      image: "litmuschaos/chaos-executor:1.0.0"
+      type: "go"
   jobCleanUpPolicy: delete
   experiments:
     - name: cpu-hog
       spec:
         components:
-          runner:
-            image: "litmuschaos/chaos-executor:1.0.0"
-            type: "go"
            # set chaos duration (in sec) as desired
           - name: TOTAL_CHAOS_DURATION
             value: '60'
