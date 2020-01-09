@@ -12,7 +12,7 @@ sidebar_label: Pod Network Latency
 | Generic   | Inject Network Latency Into Application Pod | GKE, Konvoy(AWS), Packet(Kubeadm) , Minikube > v1.6.0 |
 
 ## Prerequisites
-- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
+- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
 - Ensure that the `pod-network-latency` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/pod-network-latency)
 
 
