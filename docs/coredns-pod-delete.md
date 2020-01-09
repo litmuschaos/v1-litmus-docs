@@ -39,7 +39,7 @@ sidebar_label: CoreDNS Pod Delete
 
 - This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to provide in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
 
-- Follow the steps in the sections below to prepare the ChaosEngine & execute the experiment.
+- Follow the steps in the sections below to create the chaosServiceAccount, prepare the ChaosEngine & execute the experiment.
 
 ## Prepare chaosServiceAccount
 - Use this sample RBAC manifest to create a chaosServiceAccount in the desired (app) namespace. This example consists of the minimum necessary role permissions to execute the experiment.
@@ -100,7 +100,12 @@ subjects:
 | Variables             | Description                                         | Type      | Notes           |
 | ----------------------|-----------------------------------------------------|-----------|-----------------|
 | TOTAL_CHAOS_DURATION  | The time duration for chaos insertion (seconds)     | Mandatory | Defaults to 15s |
-| CHAOS_INTERVAL        | Time interval b/w two successive pod failures (sec) | Mandatory | Defaults to 5s | | | LIB                   | The chaos lib used to inject the chaos                | Optional  | Defaults to `litmus`, Supported: `litmus`  |
+| CHAOS_INTERVAL        | Time interval b/w two successive pod failures (sec) | Mandatory | Defaults to 5s  | 
+| APP_NAMESPACE         | Namespace in which application pods are deployed	  | Mandatory | Defaults to kube-system |
+| APP_LABEL             | Unique Labels in `key=value` format of application deployment	 | Mandatory | Defaults to k8s-app=kube-dns |
+| APP_KIND              | This is describe the application Kind | Mandatory | Mandatory | Defaults to Deployment | 
+| CHAOS_NAMESPACE       | This is a chaos namespace which will create all infra chaos resources in that namespace	| Mandatory | Default to kube-system |
+| LIB                   | The chaos lib used to inject the chaos              | Optional  | Defaults to `litmus`, Supported: litmus`  |
 
 #### Sample ChaosEngine Manifest
 ```yaml
@@ -131,7 +136,7 @@ spec:
            # set chaos duration (in sec) as desired
           - name: TOTAL_CHAOS_DURATION
             value: '30'
-            
+      
           # set chaos interval (in sec) as desired
           - name: CHAOS_INTERVAL
             value: '10'
