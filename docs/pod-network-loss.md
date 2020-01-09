@@ -116,7 +116,7 @@ spec:
   # It can be delete/retain
   jobCleanUpPolicy: retain
   # It can be app/infra
-  chaosType: 'infra'
+  chaosType: 'app'
   monitoring: false
   components:
     runner:
