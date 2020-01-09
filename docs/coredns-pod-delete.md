@@ -105,7 +105,7 @@ subjects:
 | APP_LABEL             | Unique Labels in `key=value` format of application deployment	 | Mandatory | Defaults to k8s-app=kube-dns |
 | APP_KIND              | This is describe the application Kind | Mandatory | Mandatory | Defaults to Deployment | 
 | CHAOS_NAMESPACE       | This is a chaos namespace which will create all infra chaos resources in that namespace	| Mandatory | Default to kube-system |
-| LIB                   | The chaos lib used to inject the chaos              | Optional  | Defaults to `litmus`, Supported: litmus`  |
+| LIB                   | The chaos lib used to inject the chaos              | Optional  | Defaults to `litmus`, Supported: `litmus`  |
 
 #### Sample ChaosEngine Manifest
 ```yaml
