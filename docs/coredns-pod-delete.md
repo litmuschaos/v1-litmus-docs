@@ -12,7 +12,7 @@ sidebar_label: CoreDNS Pod Delete
 | CoreDNS   | CoreDNS pod delete experiment | Kubeadm, Minikube      |
 
 ## Prerequisites
-- Ensure that Litmus is install. If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/)
+- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
 - Ensure that the `coredns-pod-delete` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos?file=charts/coredns/coredns-pod-delete/experiment.yaml)
 
 ## Entry Criteria
@@ -29,7 +29,7 @@ sidebar_label: CoreDNS Pod Delete
 
 - Causes graceful pod failure of an coreDNS replicas
 - Tests deployment sanity (replica availability & uninterrupted service) and recovery workflow of the service
-- Service resolution will failed if coredns replicas will not present.
+- Service resolution will failed if coredns replicas are not present.
 
 ## Integrations
 
@@ -100,7 +100,7 @@ subjects:
 | Variables             | Description                                         | Type      | Notes           |
 | ----------------------|-----------------------------------------------------|-----------|-----------------|
 | TOTAL_CHAOS_DURATION  | The time duration for chaos insertion (seconds)     | Mandatory | Defaults to 15s |
-| CHAOS_INTERVAL        | Time interval b/w two successive pod failures (sec) | Mandatory | Defaults to 5s | LIB                   | The chaos lib used to inject the chaos                | Optional  | Defaults to `litmus`, Supported: `litmus`  |
+| CHAOS_INTERVAL        | Time interval b/w two successive pod failures (sec) | Mandatory | Defaults to 5s | | | LIB                   | The chaos lib used to inject the chaos                | Optional  | Defaults to `litmus`, Supported: `litmus`  |
 
 #### Sample ChaosEngine Manifest
 ```yaml
@@ -114,13 +114,16 @@ spec:
     appns: kube-system
     applabel: 'k8s-app=kube-dns'
     appkind: deployment
-  chaosType: 'infra'    # It can be infra only
+  # It can be infra only
+  chaosType: 'infra'
   components:
     runner:
-       image: litmuschaos/ansible-runner:ci
+       image: "litmuschaos/chaos-executor:1.0.0"
+       type: "go"
   chaosServiceAccount: coredns-sa
   monitoring: false
-  jobCleanUpPolicy: delete  # It can be delete/retain
+  # It can be delete/retain
+  jobCleanUpPolicy: delete
   experiments:
     - name: coredns-pod-delete
       spec:
