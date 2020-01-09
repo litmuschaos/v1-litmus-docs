@@ -13,7 +13,7 @@ sidebar_label: Pod CPU Hog
 
 ## Prerequisites
 
-- Ensure that the Litmus Chaos Operator is running. If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
+- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
 - Ensure that the `pod-cpu-hog` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/pod-cpu-hog)
 
 ## Entry Criteria
@@ -144,6 +144,10 @@ spec:
     appkind: deployment
   chaosServiceAccount: nginx-sa
   monitoring: false
+  components:
+    runner:
+      image: "litmuschaos/chaos-executor:1.0.0"
+      type: "go"
   jobCleanUpPolicy: delete
   experiments:
     - name: pod-cpu-hog

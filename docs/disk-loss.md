@@ -20,10 +20,10 @@ sidebar_label: Disk Loss
 </table>
 
 ## Prerequisites
--   Ensure that the Litmus Chaos Operator is running. If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
--   There should be administrative access to the platform on which the cluster is hosted, as the recovery of the affected could be manual. Example gcloud access to the project
+-   Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
 -   Ensure that the `disk-loss` experiment resource is available in the cluster by `kubectl get chaosexperiments` in the desired namespace. If not, install from  <a href="https://hub.litmuschaos.io/charts/generic/experiments/disk-loss" target="_blank">here</a>
 -   Ensure to create a secret object having the gcloud/aws configuration in the namespace of `CHAOS_NAMESPACE`.
+-   There should be administrative access to the platform on which the cluster is hosted, as the recovery of the affected could be manual. Example gcloud access to the project
 
 ```yaml
 apiVersion: v1
@@ -197,7 +197,8 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
-  chaosType: 'infra'  # It can be app/infra
+  # It can be app/infra
+  chaosType: 'infra' 
   auxiliaryAppInfo: "ns1:name=percona,ns2:run=nginx"
   appinfo:
     appns: default
@@ -205,6 +206,10 @@ spec:
     appkind: deployment
   chaosServiceAccount: nginx-sa
   monitoring: false
+  components:
+    runner:
+      image: "litmuschaos/chaos-executor:1.0.0"
+      type: "go"
   jobCleanUpPolicy: delete
   experiments:
     - name: disk-loss

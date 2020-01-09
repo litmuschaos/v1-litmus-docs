@@ -13,7 +13,7 @@ sidebar_label: Drain Node
 
 ## Prerequisites
 
-- Ensure that the Litmus Chaos Operator is running. If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
+- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
 - Ensure that the `drain-node` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/drain-node)
 
 ## Entry Criteria
@@ -39,6 +39,52 @@ sidebar_label: Drain Node
 - This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to provide in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
 
 - Follow the steps in the sections below to prepare the ChaosEngine & execute the experiment.
+
+### Prepare chaosServiceAccount
+
+Use this sample RBAC manifest to create a chaosServiceAccount in the desired (app) namespace. This example consists of the minimum necessary role permissions to execute the experiment.
+
+#### Sample Rbac Manifest
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nginx-sa
+  namespace: default
+  labels:
+    name: nginx-sa
+---
+# Source: openebs/templates/clusterrole.yaml
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
+metadata:
+  name: nginx-sa
+  labels:
+    name: nginx-sa
+rules:
+- apiGroups: ["","litmuschaos.io","batch","extensions"]
+  resources: ["pods","jobs","chaosengines","daemonsets","pods/eviction","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","delete"]
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["patch","get","list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: nginx-sa
+  labels:
+    name: nginx-sa
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: nginx-sa
+subjects:
+- kind: ServiceAccount
+  name: nginx-sa
+  namespace: default
+```
 
 ### Prepare ChaosEngine
 
@@ -78,7 +124,8 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
-  chaosType: 'infra'  # It can be app/infra
+  # It can be app/infra
+  chaosType: 'infra' 
   auxiliaryAppInfo: "ns1:name=percona,ns2:run=nginx"
   appinfo:
     appns: default
@@ -86,6 +133,10 @@ spec:
     appkind: deployment
   chaosServiceAccount: nginx-sa
   monitoring: false
+  components:
+    runner:
+      image: "litmuschaos/chaos-executor:1.0.0"
+      type: "go"
   jobCleanUpPolicy: delete
   experiments:
     - name: drain-node

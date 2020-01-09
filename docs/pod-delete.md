@@ -13,8 +13,8 @@ sidebar_label: Pod Delete
 
 ## Prerequisites
 
-- Ensure that the Litmus Chaos Operator is running
-- Ensure that the `pod-delete` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/pod-delete)
+- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`).If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
+- Ensure that the `pod-delete` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/pod-delete)
 
 ## Entry Criteria
 
@@ -117,10 +117,16 @@ spec:
     appns: default
     applabel: 'app=nginx'
     appkind: deployment
-  chaosType: 'app'    # It can be app/infra
+  # It can be app/infra
+  chaosType: 'app'    
   chaosServiceAccount: nginx-sa
   monitoring: false
-  jobCleanUpPolicy: delete  # It can be delete/retain
+  components:
+    runner:
+      image: "litmuschaos/chaos-executor:1.0.0"
+      type: "go"
+  # It can be delete/retain
+  jobCleanUpPolicy: delete  
   experiments:
     - name: pod-delete
       spec:

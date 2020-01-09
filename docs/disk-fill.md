@@ -23,7 +23,7 @@ sidebar_label: Disk Fill
 ## Prerequisites
 
 - Ensure that Kubernetes Version > 1.13
-- Ensure that the Litmus Chaos Operator is running
+- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
 - Ensure that the `disk-fill` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/disk-fill)
 - Cluster must run docker container runtime
 - Appropriate Ephemeral Storage Requests and Limits should be set before running the experiment. 
@@ -182,7 +182,8 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
-  chaosType: 'infra'  # It can be app/infra
+  # It can be app/infra
+  chaosType: 'infra' 
   auxiliaryAppInfo: "ns1:name=percona,ns2:run=nginx"
   appinfo:
     appns: default
@@ -190,6 +191,11 @@ spec:
     appkind: deployment
   chaosServiceAccount: nginx-sa
   monitoring: false
+  components:
+    runner:
+      image: "litmuschaos/chaos-executor:1.0.0"
+      type: "go"
+  # It can be delete/retain
   jobCleanUpPolicy: delete
   experiments:
     - name: disk-fill

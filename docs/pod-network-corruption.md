@@ -12,7 +12,7 @@ sidebar_label: Pod Network Corruption
 | Generic   | Inject Network Packet Corruption Into Application Pod | GKE, Konvoy(AWS), Packet(Kubeadm), Minikube > v1.6.0 |
 
 ## Prerequisites
-- Ensure that the Litmus Chaos Operator is running. If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
+- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
 - Ensure that the `pod-network-corruption` experiment resource is available in the cluster by `kubectl get chaosexperiments` command. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/pod-network-corruption)
 
 <div class="danger">
@@ -70,6 +70,10 @@ metadata:
 spec:
   jobCleanUpPolicy: retain
   monitoring: false
+  components:
+    runner:
+      image: "litmuschaos/chaos-executor:1.0.0"
+      type: "go"
   appinfo: 
     appns: default
     # FYI, To see app label, apply kubectl get pods --show-labels
