@@ -13,9 +13,9 @@ sidebar_label: CPU Hog
 
 ## Prerequisites
 
-- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
+- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
 - Ensure that the `cpu-hog` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/cpu-hog)
-- There should be administrative access to the platform on which the Kubernetes cluster is hosted, as the recovery of the affected could be manual. Example gcloud access to the project
+- There should be administrative access to the platform on which the Kubernetes cluster is hosted, as the recovery of the affected node could be manual. Example gcloud access to the project
 ## Entry Criteria
 
 - Application pods are healthy on the respective Nodes before chaos injection
@@ -116,12 +116,14 @@ spec:
     appns: default
     applabel: 'app=nginx'
     appkind: deployment
+  chaosType: 'infra'
   chaosServiceAccount: nginx-sa
   monitoring: false
   components:
     runner:
       image: "litmuschaos/chaos-executor:1.0.0"
       type: "go"
+  # It can be delete/retain
   jobCleanUpPolicy: delete
   experiments:
     - name: cpu-hog
