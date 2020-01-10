@@ -35,6 +35,9 @@ Chaos actions that apply to generic Kubernetes resources are classified into thi
 | CPU Hog | Exhaust CPU resources on the Kubernetes Node | [cpu-hog](cpu-hog.md) |
 | Disk Fill | Fillup Ephemeral Storage of a Resource | [disk-fill](disk-fill.md) |
 | Disk Loss | External disk loss from the node | [disk-loss](disk-loss.md)|
+| Drain Node| Drain the node where application pod is scheduled | [drain-node](drain-node.md) |
+| Pod CPU Hog | Consume CPU resources on the application container | [pod-cpu-hog](pod-cpu-hog.md) |
+| Pod Network Corruption | Inject Network Packet Corruption Into Application Pod |[pod-network-corruption](pod-network-corruption.md) |
 
 ### Application Chaos
 
