@@ -31,12 +31,12 @@
         "type": "subcategory",
         "label": "OpenEBS",
         "ids": [
-          "openebs-target-container-kill",
+          "openebs-target-container-failure",
           "openebs-target-network-delay",
           "openebs-target-network-loss",
           "openebs-target-pod-failure",
           "openebs-pool-pod-failure",
-          "openebs-pool-container-kill",
+          "openebs-pool-container-failure",
           "openebs-target-network-delay"
         ]
       },

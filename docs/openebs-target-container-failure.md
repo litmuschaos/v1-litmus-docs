@@ -1,7 +1,7 @@
 ---
-id: openebs-target-container-kill
-title: OpenEBS Target Container Kill Experiment Details
-sidebar_label: Target Container Kill
+id: openebs-target-container-failure
+title: OpenEBS Target Failure Experiment Details
+sidebar_label: Target Container Failure
 ---
 ------
 
@@ -131,7 +131,7 @@ spec:
 
   `kubectl describe chaosresult target-chaos-openebs-target-container-failure -n <application-namespace>`
 
-## OpenEBS Target Container Kill Demo [TODO]
+## OpenEBS Target Container Failure Demo [TODO]
 
 - A sample recording of this experiment execution is provided here.
 
