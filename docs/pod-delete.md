@@ -9,7 +9,7 @@ sidebar_label: Pod Delete
 
 | Type      | Description              | Tested K8s Platform                                               |
 | ----------| ------------------------ | ------------------------------------------------------------------|
-| Generic   | Fail the application pod | GKE, Konvoy(AWS), Packet(Kubeadm), Minikube, OpenShift(Baremetal)  |
+| Generic   | Fail the application pod | GKE, Konvoy(AWS), Packet(Kubeadm), Minikube                       |
 
 ## Prerequisites
 
@@ -28,7 +28,7 @@ sidebar_label: Pod Delete
 
 - Causes (forced/graceful) pod failure of specific/random replicas of an application resources
 - Tests deployment sanity (replica availability & uninterrupted service) and recovery workflow of the application
-- The pod delete by `Powerfullseal` is only supporting single pod failure (kill_count = 1)
+- The pod delete by `Powerfulseal` is only supporting single pod failure (kill_count = 1)
 
 ## Integrations
 
