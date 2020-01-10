@@ -98,7 +98,8 @@ subjects:
 | TARGET_CONTAINER     | Name of container which is subjected to network latency      | Mandatory  |   |
 | NETWORK_PACKET_LOSS_PERCENTAGE  | The packet loss in percentage	| Mandatory  | |
 | TOTAL_CHAOS_DURATION  | The time duration for chaos insertion in milliseconds | Optional  | Default (60000ms)                                            |
- LIB                   | The chaos lib used to inject the chaos eg. Pumba             | Optional  |  |
+| LIB                   | The chaos lib used to inject the chaos eg. Pumba             | Optional  |  |
+| LIB_IMAGE             | The image used by the chaoslib to inject the chaos           | Optional  | Default: `gaiaadm/pumba:0.6.5`  | 
 | CHAOSENGINE     | ChaosEngine CR name associated with the experiment instance      | Optional  |   |
 | CHAOS_SERVICE_ACCOUNT     | Service account used by the pumba daemonset Optional      | Optional  |   |
 
