@@ -113,13 +113,13 @@ subjects:
 <td> LIB_IMAGE  </td>
 <td> The pumba image used to run the kill command </td>
 <td> Optional </td>
-<td> Default to gaiaadm/pumba:0.4.8; note: execution logic changed in version 0.6 (here). images >=0.6 do not work with this experiment. </td>
+<td> Defaults to `gaiaadm/pumba:0.4.8`. Note: pumba images >=0.6 do not work with this experiment. </td>
 </tr>
 <tr>
 <td> LIB  </td>
 <td> The category of lib use to inject chaos </td>
-<td> Mandatory  </td>
-<td> Only docker supported </td>
+<td> Optional  </td>
+<td> Only `pumba` supported currently </td>
 </tr>
 </table>
 
