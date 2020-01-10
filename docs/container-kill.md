@@ -9,7 +9,7 @@ sidebar_label: Container Kill
 
 | Type      | Description              | Tested K8s Platform                                               |
 | ----------| ------------------------ | ------------------------------------------------------------------|
-| Generic   | Kill one container in the application pod | GKE, Konvoy(AWS), Packet(Kubeadm), Minikube, OpenShift(Baremetal)  |
+| Generic   | Kill one container in the application pod | GKE, Packet(Kubeadm), Minikube|
 
 ## Prerequisites
 
