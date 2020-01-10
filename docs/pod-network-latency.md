@@ -114,7 +114,7 @@ metadata:
   namespace: default
 spec: 
   # It can be delete/retain
-  jobCleanUpPolicy: retain
+  jobCleanUpPolicy: delete
   # It can be app/infra
   chaosType: 'app'
   #ex. values: ns1:name=percona,ns2:run=nginx 
@@ -122,7 +122,7 @@ spec:
   monitoring: false
   components:
     runner:
-      image: "litmuschaos/chaos-executor:ci"
+      image: "litmuschaos/chaos-executor:1.0.0"
       type: "go"
   appinfo: 
     appns: default
