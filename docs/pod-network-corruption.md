@@ -9,11 +9,12 @@ sidebar_label: Pod Network Corruption
 
 | Type      | Description              | Tested K8s Platform                                               |
 | ----------| ------------------------ | ------------------------------------------------------------------|
-| Generic   | Inject Network Packet Corruption Into Application Pod | GKE, Konvoy(AWS), Packet(Kubeadm), Minikube > v1.6.0 |
+| Generic   | Inject Network Packet Corruption Into Application Pod | GKE, Packet(Kubeadm), Minikube > v1.6.0 |
 
 ## Prerequisites
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
 - Ensure that the `pod-network-corruption` experiment resource is available in the cluster by `kubectl get chaosexperiments` command. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/pod-network-corruption)
+-  Cluster must run docker container runtime
 
 <div class="danger">
     <strong>NOTE</strong>: 
@@ -53,11 +54,11 @@ sidebar_label: Pod Network Corruption
 | NETWORK_INTERFACE     | Name of ethernet interface considered for shaping traffic                                | Mandatory  |   |
 | TARGET_CONTAINER     | Name of container which is subjected to network latency       | Mandatory  |   |
 | NETWORK_PACKET_CORRUPTION_PERCENTAGE       | Packet corruption in percentage                           | Mandatory | Default (100)
-| LIB                   | The chaos lib used to inject the chaos eg. Pumba             | Optional  |  |
+| LIB                   | The chaos lib used to inject the chaos eg. Pumba             | Optional  | only `pumba` supported currently |
 | CHAOSENGINE     | ChaosEngine CR name associated with the experiment instance      | Optional  |   |
 | CHAOS_SERVICE_ACCOUNT     | Service account used by the pumba daemonset Optional      | Optional  |   |
 | TOTAL_CHAOS_DURATION  | The time duration for chaos insertion in milliseconds  | Optional| Default (60000ms)|
-| LIB_IMAGE     | The pumba image used to run the kill command                                | Optional  | Default to gaiaadm/pumba:0.6.5 |
+| LIB_IMAGE     | The pumba image used to run the kill command                                | Optional  | Defaults to `gaiaadm/pumba:0.6.5` |
 
 #### Sample ChaosEngine Manifest
 
@@ -69,7 +70,7 @@ metadata:
   namespace: default
 spec:
   # It can be delete/retain
-  jobCleanUpPolicy: retain
+  jobCleanUpPolicy: delete
   # It can be app/infra
   chaosType: 'app' 
   #ex. values: ns1:name=percona,ns2:run=nginx 
