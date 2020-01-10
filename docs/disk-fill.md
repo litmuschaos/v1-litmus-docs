@@ -26,7 +26,7 @@ sidebar_label: Disk Fill
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
 - Ensure that the `disk-fill` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/disk-fill)
 - Cluster must run docker container runtime
-- Appropriate Ephemeral Storage Requests and Limits should be set before running the experiment. 
+- Appropriate Ephemeral Storage Requests and Limits should be set for the application before running the experiment. 
   An example specification is shown below:
   
 ```
@@ -65,7 +65,7 @@ spec:
 
 ## Details
 
--   Causes Disk Stress by filling up the ephemeral storage of the pod (in the /var/lib/docker/container/{{container_id}}) via a daemonset pod on the same node.
+-   Causes Disk Stress by filling up the ephemeral storage of the pod (in the /var/lib/docker/container/{{container_id}}) on any given node.
 -   Causes the application pod to get evicted if the capacity filled exceeds the pod's ephemeral storage limit.
 -   Tests the Ephemeral Storage Limits, to ensure those parameters are sufficient.
 -   Tests the application's resiliency to disk stress/replica evictions.
@@ -142,22 +142,22 @@ subjects:
 <th> Notes </th>
 </tr>
 <tr> 
-<td> TOTAL_CHAOS_DURATION </td>
-<td> The time duration for chaos insertion (sec) </td>
-<td> Mandatory </td>
-<td>  </td>
-</tr>
-<tr> 
 <td> FILL_PERCENTAGE </td>
 <td> Percentage to fill the Ephemeral storage limit </td>
 <td> Mandatory </td>
-<td> Can be set to more that 100 also, to force evict the pod </td>
+<td> Can be set to more than 100 also, to force evict the pod </td>
 </tr>
 <tr> 
 <td> TARGET_CONTAINER </td>
 <td> Name of container which is subjected to disk-fill </td>
 <td> Mandatory </td>
 <td>  </td>
+</tr>
+<tr> 
+<td> TOTAL_CHAOS_DURATION </td>
+<td> The time duration for chaos insertion (sec) </td>
+<td> Optional </td>
+<td> Defaults to 60s </td>
 </tr>
 <tr> 
 <td> CHAOSENGINE </td>
