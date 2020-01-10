@@ -9,12 +9,12 @@ sidebar_label: Container Kill
 
 | Type      | Description              | Tested K8s Platform                                               |
 | ----------| ------------------------ | ------------------------------------------------------------------|
-| Generic   | Kill one container in the application pod | GKE, Konvoy(AWS), Packet(Kubeadm), Minikube, OpenShift(Baremetal)  |
+| Generic   | Kill one container in the application pod | GKE, Packet(Kubeadm), Minikube|
 
 ## Prerequisites
 
-- Ensure that the Litmus Chaos Operator is running
-- Ensure that the `container-kill` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/container-kill)
+- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
+- Ensure that the `container-kill` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/container-kill)
 - Cluster must run docker container runtime
 
 ## Entry Criteria
@@ -113,13 +113,13 @@ subjects:
 <td> LIB_IMAGE  </td>
 <td> The pumba image used to run the kill command </td>
 <td> Optional </td>
-<td> Default to gaiaadm/pumba:0.4.8; note: execution logic changed in version 0.6 (here). images >=0.6 do not work with this experiment. </td>
+<td> Defaults to `gaiaadm/pumba:0.4.8`. Note: pumba images >=0.6 do not work with this experiment. </td>
 </tr>
 <tr>
 <td> LIB  </td>
 <td> The category of lib use to inject chaos </td>
-<td> Mandatory  </td>
-<td> Only docker supported </td>
+<td> Optional  </td>
+<td> Only `pumba` supported currently </td>
 </tr>
 </table>
 
@@ -133,14 +133,22 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
-  chaosType: "app" # It can be app/infra
+  # It can be app/infra
+  chaosType: 'app'
+  #ex. values: ns1:name=percona,ns2:run=nginx 
+  auxiliaryAppInfo: 
   appinfo:
     appns: default
     applabel: 'app=nginx'
     appkind: deployment
   chaosServiceAccount: nginx-sa
   monitoring: false
-  jobCleanUpPolicy: delete # It can be delete/retain
+  components:
+    runner:
+      image: "litmuschaos/chaos-executor:1.0.0"
+      type: "go"
+  # It can be delete/retain
+  jobCleanUpPolicy: delete 
   experiments:
     - name: container-kill
       spec:

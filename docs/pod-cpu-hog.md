@@ -9,12 +9,13 @@ sidebar_label: Pod CPU Hog
 
 | Type      | Description                                  | Tested K8s Platform                                               |
 | ----------| -------------------------------------------- | ------------------------------------------------------------------|
-| Generic   | Consume CPU resources on the application container|  GKE, Konvoy(AWS), Packet(Kubeadm), Minikube                 |
+| Generic   | Consume CPU resources on the application container|  GKE, Packet(Kubeadm), Minikube                 |
 
 ## Prerequisites
 
-- Ensure that the Litmus Chaos Operator is running. If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
+- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
 - Ensure that the `pod-cpu-hog` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/pod-cpu-hog)
+- Cluster must run docker container runtime
 
 ## Entry Criteria
 
@@ -108,7 +109,7 @@ subjects:
 <tr>
 <td> CPU_CORES </td>
 <td> Name of the container subjected to CPU stress  </td>
-<td> Mandatory  </td>
+<td> Optional  </td>
 <td> Defaults to 1 </td>
 <td> </td>
 </tr>
@@ -135,6 +136,7 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
+  # It can be app/infra
   chaosType: 'app'
   #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: 
@@ -144,6 +146,11 @@ spec:
     appkind: deployment
   chaosServiceAccount: nginx-sa
   monitoring: false
+  components:
+    runner:
+      image: "litmuschaos/chaos-executor:1.0.0"
+      type: "go"
+  # It can be delete/retain
   jobCleanUpPolicy: delete
   experiments:
     - name: pod-cpu-hog
