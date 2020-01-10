@@ -15,7 +15,7 @@ sidebar_label: CPU Hog
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
 - Ensure that the `cpu-hog` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/cpu-hog)
-- There should be administrative access to the platform on which the Kubernetes cluster is hosted, as the recovery of the affected node could be manual. Example gcloud access to the project
+- There should be administrative access to the platform on which the Kubernetes cluster is hosted, as the recovery of the affected node could be manual. For example, gcloud access to the GKE project
 ## Entry Criteria
 
 - Application pods are healthy on the respective Nodes before chaos injection
@@ -137,7 +137,7 @@ spec:
             value: '60'
           # set chaos platform as desired
           - name: PLATFORM
-            value: 'ANY'
+            value: 'GKE'
           # chaos lib used to inject the chaos
           - name: LIB
             value: ''
