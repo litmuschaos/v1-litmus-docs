@@ -9,12 +9,12 @@ sidebar_label: Pod Delete
 
 | Type      | Description              | Tested K8s Platform                                               |
 | ----------| ------------------------ | ------------------------------------------------------------------|
-| Generic   | Fail the application pod | GKE, Konvoy(AWS), Packet(Kubeadm), Minikube, OpenShift(Baremetal)  |
+| Generic   | Fail the application pod | GKE, Konvoy(AWS), Packet(Kubeadm), Minikube                       |
 
 ## Prerequisites
 
-- Ensure that the Litmus Chaos Operator is running
-- Ensure that the `pod-delete` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/pod-delete)
+- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`).If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
+- Ensure that the `pod-delete` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/pod-delete)
 
 ## Entry Criteria
 
@@ -28,7 +28,7 @@ sidebar_label: Pod Delete
 
 - Causes (forced/graceful) pod failure of specific/random replicas of an application resources
 - Tests deployment sanity (replica availability & uninterrupted service) and recovery workflow of the application
-- The pod delete by `Powerfullseal` is only supporting single pod failure (kill_count = 1)
+- The pod delete by `Powerfulseal` is only supporting single pod failure (kill_count = 1)
 
 ## Integrations
 
@@ -117,10 +117,18 @@ spec:
     appns: default
     applabel: 'app=nginx'
     appkind: deployment
-  chaosType: 'app'    # It can be app/infra
+  # It can be app/infra
+  chaosType: 'app'   
+  #ex. values: ns1:name=percona,ns2:run=nginx 
+  auxiliaryAppInfo:  
   chaosServiceAccount: nginx-sa
   monitoring: false
-  jobCleanUpPolicy: delete  # It can be delete/retain
+  components:
+    runner:
+      image: "litmuschaos/chaos-executor:1.0.0"
+      type: "go"
+  # It can be delete/retain
+  jobCleanUpPolicy: delete  
   experiments:
     - name: pod-delete
       spec:
