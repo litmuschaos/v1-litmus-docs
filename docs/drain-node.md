@@ -57,7 +57,7 @@ metadata:
 ---
 # Source: openebs/templates/clusterrole.yaml
 apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: Role
+kind: ClusterRole
 metadata:
   name: nginx-sa
   labels:
@@ -71,14 +71,14 @@ rules:
   verbs: ["patch","get","list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: RoleBinding
+kind: ClusterRoleBinding
 metadata:
   name: nginx-sa
   labels:
     name: nginx-sa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
+  kind: ClusterRole
   name: nginx-sa
 subjects:
 - kind: ServiceAccount
