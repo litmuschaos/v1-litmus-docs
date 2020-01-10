@@ -98,14 +98,6 @@ spec:
         - name: NETWORK_INTERFACE
           #Network interface inside target container
           value: eth0                   
-        - name: LIB_IMAGE
-          value: gaiaadm/pumba:0.6.5
-        - name: NETWORK_PACKET_CORRUPTION_PERCENTAGE
-          value: "100"
-        - name: TOTAL_CHAOS_DURATION
-          value: "60000"
-        - name: LIB
-          value: pumba
 ```
 ### Create the ChaosEngine Resource
 
