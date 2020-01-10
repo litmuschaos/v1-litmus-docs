@@ -9,7 +9,7 @@ sidebar_label: Drain Node
 
 | Type      | Description                                  | Tested K8s Platform                                               |
 | ----------| -------------------------------------------- | ------------------------------------------------------------------|
-| Generic   | Drain the node where application pod is scheduled. |  GKE, Konvoy(AWS), Packet(Kubeadm), Minikube |
+| Generic   | Drain the node where application pod is scheduled. |  GKE, AWS, Packet(Kubeadm), Konvoy(AWS)|
 
 ## Prerequisites
 

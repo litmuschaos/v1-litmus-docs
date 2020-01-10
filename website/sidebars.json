@@ -47,6 +47,13 @@
           "kafka-broker-pod-failure",
 	        "kafka-broker-disk-failure"
         ]
+      },
+      {
+        "type": "subcategory",
+        "label": "CoreDns",
+        "ids": [
+           "coredns-pod-delete"
+        ]
       }
     ]
   }

@@ -9,7 +9,7 @@ sidebar_label: Pod Network Latency
 
 | Type      | Description              | Tested K8s Platform                                               |
 | ----------| ------------------------ | ------------------------------------------------------------------|
-| Generic   | Inject Network Latency Into Application Pod | GKE, Packet(Kubeadm), Minikube > v1.6.0        |
+| Generic   | Inject Network Latency Into Application Pod | GKE, Packet(Kubeadm), Minikube > v1.6.0 |
 
 ## Prerequisites
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
