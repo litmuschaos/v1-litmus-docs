@@ -9,7 +9,7 @@ sidebar_label: Pod Network Loss
 
 | Type      | Description              | Tested K8s Platform                                               |
 | ----------| ------------------------ | ------------------------------------------------------------------|
-| Generic   | Inject Packet Loss Into Application Pod | GKE, Konvoy(AWS), Packet(Kubeadm), OpenShift(Baremetal) , Minikube > v1.6.0 |
+| Generic   | Inject Packet Loss Into Application Pod | GKE, Packet(Kubeadm), Minikube > v1.6.0 |
 
 ## Prerequisites
 
@@ -113,7 +113,7 @@ metadata:
   namespace: default
 spec:
   # It can be delete/retain
-  jobCleanUpPolicy: retain
+  jobCleanUpPolicy: delete
   # It can be app/infra
   chaosType: 'app'
   #ex. values: ns1:name=percona,ns2:run=nginx 
