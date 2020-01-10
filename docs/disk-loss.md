@@ -180,7 +180,7 @@ subjects:
 <td> TOTAL_CHAOS_DURATION </td>
 <td> The time duration for chaos insertion (sec) </td>
 <td> Optional </td>
-<td>  </td>
+<td> Defaults to 15s </td>
 </tr>
 <tr>
 <td> APP_CHECK </td>
