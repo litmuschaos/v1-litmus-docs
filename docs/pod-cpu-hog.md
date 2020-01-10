@@ -1,7 +1,7 @@
 ---
-id: drain-node
-title: Drain Node Experiment Details
-sidebar_label: Drain Node
+id: pod-cpu-hog
+title: Pod CPU Hog Details
+sidebar_label: Pod CPU Hog
 ---
 ------
 
@@ -9,36 +9,38 @@ sidebar_label: Drain Node
 
 | Type      | Description                                  | Tested K8s Platform                                               |
 | ----------| -------------------------------------------- | ------------------------------------------------------------------|
-| Generic   | Drain the node where application pod is scheduled. |  GKE, Konvoy(AWS), Packet(Kubeadm), Minikube |
+| Generic   | Consume CPU resources on the application container|  GKE, Packet(Kubeadm), Minikube                 |
 
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
-- Ensure that the `drain-node` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/drain-node)
+- Ensure that the `pod-cpu-hog` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/pod-cpu-hog)
+- Cluster must run docker container runtime
 
 ## Entry Criteria
 
-- Application pods are healthy on the respective Nodes before chaos injection
+- Application pods are healthy on the respective nodes before chaos injection
 
 ## Exit Criteria
 
-- Target nodes are in Ready state post chaos injection
+- Application pods are healthy on the respective nodes post chaos injection
 
 ## Details
 
-- This experiment drains the node where application pod is running and verifies if it is scheduled on another available node.
-- In the end of experiment it uncordons the specified node so that it can be utilised in future.
+- This experiment consumes the CPU resources on the application container (upward of 80%) on specified number of cores 
+- It simulates conditions where app pods experience CPU spikes either due to expected/undesired processes thereby testing how the
+  overall application stack behaves when this occurs. 
 
 
 ## Integrations
 
-- Drain node can be effected using the chaos library: `litmus`
+- Pod CPU can be effected using the chaos library: `litmus`
 
 ## Steps to Execute the Chaos Experiment
 
 - This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to provide in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
 
-- Follow the steps in the sections below to prepare the ChaosEngine & execute the experiment.
+- Follow the steps in the sections below to create the chaosServiceAccount, prepare the ChaosEngine & execute the experiment.
 
 ### Prepare chaosServiceAccount
 
@@ -57,28 +59,25 @@ metadata:
 ---
 # Source: openebs/templates/clusterrole.yaml
 apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: ClusterRole
+kind: Role
 metadata:
   name: nginx-sa
   labels:
     name: nginx-sa
 rules:
-- apiGroups: ["","litmuschaos.io","batch","extensions"]
-  resources: ["pods","jobs","chaosengines","daemonsets","pods/eviction","chaosexperiments","chaosresults"]
+- apiGroups: ["","litmuschaos.io","batch"]
+  resources: ["pods","jobs","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","delete"]
-- apiGroups: [""]
-  resources: ["nodes"]
-  verbs: ["patch","get","list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: nginx-sa
   labels:
     name: nginx-sa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
+  kind: Role
   name: nginx-sa
 subjects:
 - kind: ServiceAccount
@@ -102,9 +101,16 @@ subjects:
 <th> Notes </th>
 </tr>
 <tr>
-<td> APP_NODE </td>
-<td> Name of the node to drain  </td>
+<td> TARGET_CONTAINER </td>
+<td> Name of the container subjected to CPU stress  </td>
 <td> Mandatory  </td>
+<td> </td>
+</tr>
+<tr>
+<td> CPU_CORES </td>
+<td> Name of the container subjected to CPU stress  </td>
+<td> Optional  </td>
+<td> Defaults to 1 </td>
 <td> </td>
 </tr>
 <tr>
@@ -112,6 +118,12 @@ subjects:
 <td> The time duration for chaos insertion (seconds)  </td>
 <td> Optional </td>
 <td> Defaults to 60s </td>
+</tr>
+<tr>
+<td> LIB_IMAGE </td>
+<td> The image used by the litmus (only supported) lib </td>
+<td> Optional </td>
+<td> Defaults to `litmuschaos/app-cpu-stress:latest`  </td>
 </tr>
 </table>
                       
@@ -125,7 +137,7 @@ metadata:
   namespace: default
 spec:
   # It can be app/infra
-  chaosType: 'infra' 
+  chaosType: 'app'
   #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: 
   appinfo:
@@ -138,15 +150,21 @@ spec:
     runner:
       image: "litmuschaos/chaos-executor:1.0.0"
       type: "go"
-  # It can be delete/infra
+  # It can be delete/retain
   jobCleanUpPolicy: delete
   experiments:
-    - name: drain-node
+    - name: pod-cpu-hog
       spec:
         components:
-           # set node name
-          - name: APP_NODE
-            value: 'node-1'
+          - name: TARGET_CONTAINER
+            value: 'nginx'
+          - name: CPU_CORES
+            #number of cpu cores to be consumed
+            #verify the resources the app has been launched with
+            value: "1" 
+          - name: TOTAL_CHAOS_DURATION
+            value: "90" 
+          
 ```
 
 ### Create the ChaosEngine Resource
@@ -157,16 +175,16 @@ spec:
 
 ### Watch Chaos progress
 
-- Set up a watch on the applications originally scheduled on the affected node and verify whether they are rescheduled on the other nodes in the Kubernetes Cluster.
+- Set up a watch on the applications interacting/dependent on the affected pods and verify whether they are running
 
-  `watch kubectl get pods,nodes --all-namespaces `
+  `watch kubectl get pods -n <application-namespace>`
 
 ### Check Chaos Experiment Result
 
-- Check whether the application is resilient to the node drain, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
+- Check whether the application stack is resilient to CPU spikes on the app replica, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult nginx-chaos-drain-node -n <application-namespace>`
+  `kubectl describe chaosresult nginx-chaos-pod-cpu-hog -n <application-namespace>`
 
-## Drain Node Experiment Demo [TODO]
+## Pod CPU Hog Experiment Demo [TODO]
 
 - A sample recording of this experiment execution is provided here.   
