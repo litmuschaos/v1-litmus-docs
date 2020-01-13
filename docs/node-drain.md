@@ -15,7 +15,10 @@ sidebar_label: Node Drain
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
 - Ensure that the `drain-node` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/drain-node)
-- Ensure that the `APP_NODE`, the node which is going to drain should be in cordened state before applying the chaosengine manifest by executing `kubectl get nodes` command. If not cordoned then use `kubectl cordon <APP_NODE>` command to cordon the node. This is to prevent litmus job pods from getting scheduled on it.  
+- Ensure that the node specified in the experiment ENV variable `APP_NODE` (the node which will be drained)  should be cordoned before execution of the chaos experiment (before applying the chaosengine manifest) to ensure that the litmus experiment runner pods are not scheduled on it / subjected to eviction. This can be achieved with the following steps: 
+
+  - Get node names against the applications pods: `kubectl get pods -o wide`
+  - Cordon the node `kubectl cordon <nodename> 
 
 ## Entry Criteria
 
