@@ -1,7 +1,7 @@
 ---
-id: drain-node
-title: Drain Node Experiment Details
-sidebar_label: Drain Node
+id: node-drain
+title: Node Drain Experiment Details
+sidebar_label: Node Drain
 ---
 ------
 
@@ -14,7 +14,11 @@ sidebar_label: Drain Node
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
-- Ensure that the `drain-node` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/drain-node)
+- Ensure that the `node-drain` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/drain-node)
+- Ensure that the node specified in the experiment ENV variable `APP_NODE` (the node which will be drained)  should be cordoned before execution of the chaos experiment (before applying the chaosengine manifest) to ensure that the litmus experiment runner pods are not scheduled on it / subjected to eviction. This can be achieved with the following steps: 
+
+  - Get node names against the applications pods: `kubectl get pods -o wide`
+  - Cordon the node `kubectl cordon <nodename>` 
 
 ## Entry Criteria
 
@@ -141,7 +145,7 @@ spec:
   # It can be delete/infra
   jobCleanUpPolicy: delete
   experiments:
-    - name: drain-node
+    - name: node-drain
       spec:
         components:
            # set node name
@@ -165,8 +169,8 @@ spec:
 
 - Check whether the application is resilient to the node drain, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult nginx-chaos-drain-node -n <application-namespace>`
+  `kubectl describe chaosresult nginx-chaos-node-drain -n <application-namespace>`
 
-## Drain Node Experiment Demo [TODO]
+## Node Drain Experiment Demo [TODO]
 
 - A sample recording of this experiment execution is provided here.   
