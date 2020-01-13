@@ -103,8 +103,7 @@ subjects:
 ### Prepare ChaosEngine
 
 - Provide the application info in `spec.appinfo`
-- Provide the experiment tunables. While many tunables have default values specified in the ChaosExperiment CR, some need to be 
-  explicitly supplied.
+- Provide the experiment tunables. While many tunables have default values specified in the ChaosExperiment CR, some need to be explicitly supplied.
 
 #### Supported Experiment Tunables
 
