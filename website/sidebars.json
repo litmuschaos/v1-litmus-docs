@@ -24,7 +24,7 @@
           "disk-fill",
           "disk-loss",
           "cpu-hog",
-	  "drain-node"
+	  "node-drain"
         ]
       },
       {

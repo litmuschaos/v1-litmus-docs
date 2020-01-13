@@ -1,7 +1,7 @@
 ---
-id: drain-node
-title: Drain Node Experiment Details
-sidebar_label: Drain Node
+id: node-drain
+title: Node Drain Experiment Details
+sidebar_label: Node Drain
 ---
 ------
 
@@ -15,6 +15,7 @@ sidebar_label: Drain Node
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
 - Ensure that the `drain-node` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/drain-node)
+- Ensure that the `APP_NODE`, the node which is going to drain should be in cordened state before applying the chaosengine manifest by executing `kubectl get nodes` command. If not cordoned then use `kubectl cordon <APP_NODE>` command to cordon the node. This is to prevent litmus job pods from getting scheduled on it.  
 
 ## Entry Criteria
 
@@ -141,7 +142,7 @@ spec:
   # It can be delete/infra
   jobCleanUpPolicy: delete
   experiments:
-    - name: drain-node
+    - name: node-drain
       spec:
         components:
            # set node name
@@ -167,6 +168,6 @@ spec:
 
   `kubectl describe chaosresult nginx-chaos-drain-node -n <application-namespace>`
 
-## Drain Node Experiment Demo [TODO]
+## Node Drain Experiment Demo [TODO]
 
 - A sample recording of this experiment execution is provided here.   
