@@ -18,7 +18,7 @@ sidebar_label: Node Drain
 - Ensure that the node specified in the experiment ENV variable `APP_NODE` (the node which will be drained)  should be cordoned before execution of the chaos experiment (before applying the chaosengine manifest) to ensure that the litmus experiment runner pods are not scheduled on it / subjected to eviction. This can be achieved with the following steps: 
 
   - Get node names against the applications pods: `kubectl get pods -o wide`
-  - Cordon the node `kubectl cordon <nodename> 
+  - Cordon the node `kubectl cordon <nodename>` 
 
 ## Entry Criteria
 
