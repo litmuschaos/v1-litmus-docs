@@ -34,7 +34,7 @@ Running chaos on your application involves the following steps:
 ###  Install Litmus
 
 ```
-kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-v0.9.0.yaml
+kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-v1.0.0.yaml
 ```
 
 The above command install all the CRDs, required service account configuration, and chaos-operator. Before you start running a chaos experiment, verify if your Litmus is installed correctly.
@@ -101,14 +101,14 @@ A Service Account should be created to allow chaosengine to run experiments in y
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: nginx
+  name: nginx-sa
   labels:
-    app: nginx
+    app: nginx-sa
 ---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: nginx
+  name: nginx-sa
 rules:
 - apiGroups: ["", "extensions", "apps", "batch", "litmuschaos.io"]
   resources: ["daemonsets", "deployments", "replicasets", "jobs", "pods", "pods/exec","nodes","events", "chaosengines", "chaosexperiments", "chaosresults"]
@@ -117,14 +117,14 @@ rules:
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: nginx
+  name: nginx-sa
 subjects:
 - kind: ServiceAccount
-  name: nginx
+  name: nginx-sa
   namespace: default # App namespace
 roleRef:
   kind: ClusterRole
-  name: nginx
+  name: nginx-sa
   apiGroup: rbac.authorization.k8s.io
 ```
 
@@ -148,12 +148,21 @@ metadata:
   name: engine-nginx
   namespace: default
 spec:
-  jobCleanUpPolicy: retain
+  # It can be app/infra
+  chaosType: 'app'
+  #ex. values: ns1:name=percona,ns2:run=nginx  
+  auxiliaryAppInfo: 
+  components:
+    runner:
+      image: "litmuschaos/chaos-executor:1.0.0"
+      type: "go"
+  # It can be delete/retain
+  jobCleanUpPolicy: delete
   monitoring: false
   appinfo: 
     appns: default 
     # FYI, To see app label, apply kubectl get pods --show-labels
-    applabel: "run=myserver" 
+    applabel: "app=nginx" 
     appkind: deployment
   chaosServiceAccount: nginx 
   experiments:
@@ -206,7 +215,7 @@ kubectl describe chaosresult engine-nginx-pod-delete
 You can uninstall Litmus by deleting the namespace.
 
 ```console
-kubectl delete -f https://litmuschaos.github.io/pages/litmus-operator-v0.9.0.yaml
+kubectl delete -f https://litmuschaos.github.io/pages/litmus-operator-v1.0.0.yaml
 ```
 
 ## More Chaos Experiments
