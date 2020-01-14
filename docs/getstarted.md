@@ -149,7 +149,7 @@ metadata:
   namespace: default
 spec:
   # It can be app/infra
-  chaosType: 'infra'
+  chaosType: 'app'
   #ex. values: ns1:name=percona,ns2:run=nginx  
   auxiliaryAppInfo: 
   components:
