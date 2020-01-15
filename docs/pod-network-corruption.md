@@ -111,7 +111,7 @@ metadata:
 rules:
 - apiGroups: ["","litmuschaos.io","batch"]
   resources: ["pods","jobs","chaosengines","chaosexperiments","chaosresults"]
-  verbs: ["create","list","get","patch","delete"]
+  verbs: ["create","list","get","patch","update","delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
