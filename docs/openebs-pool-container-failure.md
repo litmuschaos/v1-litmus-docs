@@ -1,7 +1,7 @@
 ---
-id: openebs-pool-container-kill
-title: OpenEBS Pool Container Kill Experiment Details
-sidebar_label: Pool Container Kill
+id: openebs-pool-container-failure
+title: OpenEBS Pool Container Failure Experiment Details
+sidebar_label: Pool Container Failure
 ---
 ------
 

@@ -1,7 +1,7 @@
 ---
-id: drain-node
-title: Drain Node Experiment Details
-sidebar_label: Drain Node
+id: node-drain
+title: Node Drain Experiment Details
+sidebar_label: Node Drain
 ---
 ------
 
@@ -9,12 +9,16 @@ sidebar_label: Drain Node
 
 | Type      | Description                                  | Tested K8s Platform                                               |
 | ----------| -------------------------------------------- | ------------------------------------------------------------------|
-| Generic   | Drain the node where application pod is scheduled. |  GKE, Konvoy(AWS), Packet(Kubeadm), Minikube, OpenShift |
+| Generic   | Drain the node where application pod is scheduled. |  GKE, AWS, Packet(Kubeadm), Konvoy(AWS)|
 
 ## Prerequisites
 
-- Ensure that the Litmus Chaos Operator is running. If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
-- Ensure that the `drain-node` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/drain-node)
+- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
+- Ensure that the `node-drain` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/drain-node)
+- Ensure that the node specified in the experiment ENV variable `APP_NODE` (the node which will be drained)  should be cordoned before execution of the chaos experiment (before applying the chaosengine manifest) to ensure that the litmus experiment runner pods are not scheduled on it / subjected to eviction. This can be achieved with the following steps: 
+
+  - Get node names against the applications pods: `kubectl get pods -o wide`
+  - Cordon the node `kubectl cordon <nodename>` 
 
 ## Entry Criteria
 
@@ -39,6 +43,52 @@ sidebar_label: Drain Node
 - This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to provide in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
 
 - Follow the steps in the sections below to prepare the ChaosEngine & execute the experiment.
+
+### Prepare chaosServiceAccount
+
+Use this sample RBAC manifest to create a chaosServiceAccount in the desired (app) namespace. This example consists of the minimum necessary role permissions to execute the experiment.
+
+#### Sample Rbac Manifest
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nginx-sa
+  namespace: default
+  labels:
+    name: nginx-sa
+---
+# Source: openebs/templates/clusterrole.yaml
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: nginx-sa
+  labels:
+    name: nginx-sa
+rules:
+- apiGroups: ["","litmuschaos.io","batch","extensions"]
+  resources: ["pods","jobs","chaosengines","daemonsets","pods/eviction","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","update","delete"]
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["patch","get","list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: nginx-sa
+  labels:
+    name: nginx-sa
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: nginx-sa
+subjects:
+- kind: ServiceAccount
+  name: nginx-sa
+  namespace: default
+```
 
 ### Prepare ChaosEngine
 
@@ -78,17 +128,24 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
-  chaosType: 'infra'  # It can be app/infra
-  auxiliaryAppInfo: "ns1:name=percona,ns2:run=nginx"
+  # It can be app/infra
+  chaosType: 'infra' 
+  #ex. values: ns1:name=percona,ns2:run=nginx 
+  auxiliaryAppInfo: ""
   appinfo:
     appns: default
     applabel: 'app=nginx'
     appkind: deployment
   chaosServiceAccount: nginx-sa
   monitoring: false
+  components:
+    runner:
+      image: "litmuschaos/chaos-executor:1.0.0"
+      type: "go"
+  # It can be delete/infra
   jobCleanUpPolicy: delete
   experiments:
-    - name: drain-node
+    - name: node-drain
       spec:
         components:
            # set node name
@@ -112,8 +169,8 @@ spec:
 
 - Check whether the application is resilient to the node drain, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult nginx-chaos-drain-node -n <application-namespace>`
+  `kubectl describe chaosresult nginx-chaos-node-drain -n <application-namespace>`
 
-## Drain Node Experiment Demo [TODO]
+## Node Drain Experiment Demo [TODO]
 
 - A sample recording of this experiment execution is provided here.   

@@ -9,11 +9,12 @@ sidebar_label: Pod Network Corruption
 
 | Type      | Description              | Tested K8s Platform                                               |
 | ----------| ------------------------ | ------------------------------------------------------------------|
-| Generic   | Inject Network Packet Corruption Into Application Pod | GKE, Konvoy(AWS), Packet(Kubeadm), Minikube > v1.6.0 |
+| Generic   | Inject Network Packet Corruption Into Application Pod | GKE, Packet(Kubeadm), Minikube > v1.6.0 |
 
 ## Prerequisites
-- Ensure that the Litmus Chaos Operator is running. If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
+- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
 - Ensure that the `pod-network-corruption` experiment resource is available in the cluster by `kubectl get chaosexperiments` command. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/pod-network-corruption)
+-  Cluster must run docker container runtime
 
 <div class="danger">
     <strong>NOTE</strong>: 
@@ -39,7 +40,95 @@ sidebar_label: Pod Network Corruption
 
 - This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to provide in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
 
-- Follow the steps in the sections below to prepare the ChaosEngine & execute the experiment.
+- Follow the steps in the sections below to create the chaosServiceAccount, prepare the ChaosEngine & execute the experiment.
+
+### Prepare chaosServiceAccount
+
+- Use this sample RBAC manifest to create a chaosServiceAccount in the desired (app) namespace. This example consists of the minimum necessary role permissions to execute the experiment.
+
+#### Sample Rbac Manifest
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nginx-sa
+  namespace: default
+  labels:
+    name: nginx-sa
+---
+# Source: openebs/templates/clusterrole.yaml
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
+metadata:
+  name: nginx-sa
+  labels:
+    name: nginx-sa
+rules:
+- apiGroups: ["","litmuschaos.io","batch"]
+  resources: ["pods","jobs","chaosengines","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: nginx-sa
+  labels:
+    name: nginx-sa
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: nginx-sa
+subjects:
+- kind: ServiceAccount
+  name: nginx-sa
+  namespace: default
+
+```
+
+### Prepare chaosServiceAccount
+
+- Use this sample RBAC manifest to create a chaosServiceAccount in the desired (app) namespace. This example consists of the minimum necessary role permissions to execute the experiment.
+
+#### Sample Rbac Manifest
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nginx-sa
+  namespace: default
+  labels:
+    name: nginx-sa
+---
+# Source: openebs/templates/clusterrole.yaml
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
+metadata:
+  name: nginx-sa
+  labels:
+    name: nginx-sa
+rules:
+- apiGroups: ["","litmuschaos.io","batch"]
+  resources: ["pods","jobs","chaosengines","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","update","delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: nginx-sa
+  labels:
+    name: nginx-sa
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: nginx-sa
+subjects:
+- kind: ServiceAccount
+  name: nginx-sa
+  namespace: default
+
+```
 
 ### Prepare ChaosEngine
 
@@ -53,11 +142,11 @@ sidebar_label: Pod Network Corruption
 | NETWORK_INTERFACE     | Name of ethernet interface considered for shaping traffic                                | Mandatory  |   |
 | TARGET_CONTAINER     | Name of container which is subjected to network latency       | Mandatory  |   |
 | NETWORK_PACKET_CORRUPTION_PERCENTAGE       | Packet corruption in percentage                           | Mandatory | Default (100)
-| LIB                   | The chaos lib used to inject the chaos eg. Pumba             | Optional  |  |
+| LIB                   | The chaos lib used to inject the chaos eg. Pumba             | Optional  | only `pumba` supported currently |
 | CHAOSENGINE     | ChaosEngine CR name associated with the experiment instance      | Optional  |   |
 | CHAOS_SERVICE_ACCOUNT     | Service account used by the pumba daemonset Optional      | Optional  |   |
 | TOTAL_CHAOS_DURATION  | The time duration for chaos insertion in milliseconds  | Optional| Default (60000ms)|
-| LIB_IMAGE     | The pumba image used to run the kill command                                | Optional  | Default to gaiaadm/pumba:0.6.5 |
+| LIB_IMAGE     | The pumba image used to run the kill command                                | Optional  | Defaults to `gaiaadm/pumba:0.6.5` |
 
 #### Sample ChaosEngine Manifest
 
@@ -68,14 +157,23 @@ metadata:
   name:  nginx-network-chaos
   namespace: default
 spec:
-  jobCleanUpPolicy: retain
+  # It can be delete/retain
+  jobCleanUpPolicy: delete
+  # It can be app/infra
+  chaosType: 'app' 
+  #ex. values: ns1:name=percona,ns2:run=nginx 
+  auxiliaryAppInfo: ""
   monitoring: false
+  components:
+    runner:
+      image: "litmuschaos/chaos-executor:1.0.0"
+      type: "go"
   appinfo: 
     appns: default
     # FYI, To see app label, apply kubectl get pods --show-labels
     applabel: "app=nginx"
     appkind: deployment
-  chaosServiceAccount: nginx
+  chaosServiceAccount: nginx-sa
   experiments:
     - name: pod-network-corruption
       spec:
@@ -88,14 +186,6 @@ spec:
         - name: NETWORK_INTERFACE
           #Network interface inside target container
           value: eth0                   
-        - name: LIB_IMAGE
-          value: gaiaadm/pumba:0.6.5
-        - name: NETWORK_PACKET_CORRUPTION_PERCENTAGE
-          value: "100"
-        - name: TOTAL_CHAOS_DURATION
-          value: "60000"
-        - name: LIB
-          value: pumba
 ```
 ### Create the ChaosEngine Resource
 

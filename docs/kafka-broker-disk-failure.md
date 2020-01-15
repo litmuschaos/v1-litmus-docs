@@ -12,7 +12,7 @@ sidebar_label: Broker Disk Failure
 
 ## Prerequisites
 
-- Ensure that the Litmus Chaos Operator is running
+- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
 - Ensure that Kafka & Zookeeper are deployed as Statefulsets
 - If Confluent/Kudo Operators have been used to deploy Kafka, note the instance name, which will be 
   used as the value of `KAFKA_INSTANCE_NAME` experiment environment variable 
@@ -22,13 +22,11 @@ sidebar_label: Broker Disk Failure
  
   Zookeeper uses this to construct a path in which kafka cluster data is stored. 
 
-- Ensure that the kafka-broker-disk failure experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/kafka/experiments/kafka-broker-disk-failure)
+- Ensure that the kafka-broker-disk failure experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/kafka/experiments/kafka-broker-disk-failure)
 
-- Create a secret with the gcloud serviceaccount key (placed in a file `cloud_config.yml`) named `disk-loss` in the namespace
-  where the experiment CRs are created. This is necessary to perform the disk-detach steps from the litmus experiment container.
+- Create a secret with the gcloud serviceaccount key (placed in a file `cloud_config.yml`) named `kafka-broker-disk-failure` in the namespace where the experiment CRs are created. This is necessary to perform the disk-detach steps from the litmus experiment container.
 
-  `kubectl create secret generic disk-loss --from-file=cloud_config.yml -n <kafka-namespace>` 
-
+  `kubectl create secret generic kafka-broker-disk-failure --from-file=cloud_config.yml -n <kafka-namespace>` 
 
 ## Entry Criteria
 
@@ -54,13 +52,56 @@ sidebar_label: Broker Disk Failure
 - This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster.
   To understand the values to provide in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine) 
 
-- Follow the steps in the sections below to prepare the ChaosEngine & execute the experiment.
+- Follow the steps in the sections below to create the chaosServiceAccount, prepare the ChaosEngine & execute the experiment.
+
+### Prepare chaosServiceAccount
+
+- Use this sample RBAC manifest to create a chaosServiceAccount in the desired (app) namespace. This example consists of the minimum necessary role permissions to execute the experiment.
+
+#### Sample Rbac Manifest
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kafka-sa
+  namespace: default
+  labels:
+    name: kafka-sa
+---
+# Source: openebs/templates/clusterrole.yaml
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: kafka-sa
+  labels:
+    name: kafka-sa
+rules:
+- apiGroups: ["","litmuschaos.io","batch","apps"]
+  resources: ["pods","jobs","pod/exec","statefulsets","secrets","chaosengines","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: kafka-sa
+  labels:
+    name: kafka-sa
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kafka-role
+subjects:
+- kind: ServiceAccount
+  name: kafka-sa
+  namespace: default
+
+```
 
 ### Prepare ChaosEngine
 
 - Provide the application info in `spec.appinfo`
-- Provide the experiment tunables. While many tunables have default values specified in the ChaosExperiment CR, some need to be 
-  explicitly supplied.
+- Provide the experiment tunables. While many tunables have default values specified in the ChaosExperiment CR, some need to be explicitly supplied.
 
 #### Supported Experiment Tunables
 
@@ -96,13 +137,22 @@ metadata:
   name: kafka-chaos
   namespace: default
 spec:
+  # It can be app/infra
+  chaosType: 'app'
+  #ex. values: ns1:name=percona,ns2:run=nginx 
+  auxiliaryAppInfo: ""
   appinfo: 
     appns: default
     applabel: 'app=cp-kafka'
     appkind: statefulset
   chaosServiceAccount: kafka-sa
   monitoring: false
-  jobCleanUpPolicy: delete
+  components:
+    runner:
+      image: "litmuschaos/chaos-executor:1.0.0"
+      type: "go"
+  # It can be delete/retain
+  jobCleanUpPolicy: delete 
   experiments:
     - name: kafka-broker-disk-failure
       spec:
@@ -199,7 +249,7 @@ spec:
   - Remounting the disk into the desired mount point
   - Deleting the affected broker pod to force reschedule 
 
-## Kafka Broker Disk Loss Demo 
+## Kafka Broker Disk Failure Demo 
 
 - TODO: A sample recording of this experiment execution is provided here.
 
