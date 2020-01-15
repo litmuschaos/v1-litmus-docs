@@ -1,7 +1,8 @@
 ---
-id: pod-delete
+id: version-1.0.0-pod-delete
 title: Pod Delete Experiment Details
 sidebar_label: Pod Delete
+original_id: pod-delete
 ---
 ------
 

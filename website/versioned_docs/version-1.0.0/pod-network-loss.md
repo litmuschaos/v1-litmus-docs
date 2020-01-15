@@ -1,7 +1,8 @@
 ---
-id: pod-network-loss
+id: version-1.0.0-pod-network-loss
 title: Pod Network Loss Experiment Details
-sidebar_label: Pod Network Loss  
+sidebar_label: Pod Network Loss
+original_id: pod-network-loss
 ---
 ------
 
