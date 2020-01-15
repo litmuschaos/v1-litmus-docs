@@ -151,7 +151,7 @@ spec:
   # It can be app/infra
   chaosType: 'app'
   #ex. values: ns1:name=percona,ns2:run=nginx  
-  auxiliaryAppInfo: 
+  auxiliaryAppInfo: ""
   components:
     runner:
       image: "litmuschaos/chaos-executor:1.0.0"
