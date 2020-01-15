@@ -176,7 +176,7 @@ spec:
 
   `kubectl describe chaosresult nginx-chaos-container-kill -n <application-namespace>`
 
-## Application Container Kill Demo [TODO]
+## Application Container Kill Demo 
 
-- A sample recording of this experiment execution is provided here.
+- A sample recording of this experiment execution is provided [here](https://youtu.be/XKyMNdVsKMo).
 

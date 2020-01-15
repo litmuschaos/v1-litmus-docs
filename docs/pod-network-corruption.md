@@ -206,6 +206,6 @@ spec:
   `kubectl describe chaosresult <ChaosEngine-Name>-<ChaosExperiment-Name> -n <application-namespace>`
 
 
-## Application Pod Network Packet Corruption Demo  [TODO]
+## Application Pod Network Packet Corruption Demo 
 
-- A sample recording of this experiment execution is provided here.
+- A sample recording of this experiment execution is provided [here](https://youtu.be/kSiLrIaILvs).

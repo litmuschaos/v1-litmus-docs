@@ -164,4 +164,4 @@ spec:
 
 ## Application Pod Failure Demo
 
-- A sample recording of this experiment execution is provided here.
+- A sample recording of this experiment execution is provided [here](https://youtu.be/X3JvY_58V9A) 
