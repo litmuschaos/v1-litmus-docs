@@ -120,7 +120,7 @@ spec:
   # It can be app/infra
   chaosType: 'app'   
   #ex. values: ns1:name=percona,ns2:run=nginx 
-  auxiliaryAppInfo:  
+  auxiliaryAppInfo: ""
   chaosServiceAccount: nginx-sa
   monitoring: false
   components:

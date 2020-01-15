@@ -121,6 +121,8 @@ spec:
     appkind: deployment
   # It can be infra only
   chaosType: 'infra'
+  #ex. values: ns1:name=percona,ns2:run=nginx 
+  auxiliaryAppInfo: ""
   components:
     runner:
        image: "litmuschaos/chaos-executor:1.0.0"
