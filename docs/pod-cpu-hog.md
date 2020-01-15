@@ -158,12 +158,13 @@ spec:
         components:
           - name: TARGET_CONTAINER
             value: 'nginx'
-          - name: CPU_CORES
             #number of cpu cores to be consumed
             #verify the resources the app has been launched with
-            value: "1" 
+          - name: CPU_CORES
+            value: "1"
+            # in ms 
           - name: TOTAL_CHAOS_DURATION
-            value: "90" 
+            value: "60000" 
           
 ```
 
@@ -185,6 +186,6 @@ spec:
 
   `kubectl describe chaosresult nginx-chaos-pod-cpu-hog -n <application-namespace>`
 
-## Pod CPU Hog Experiment Demo [TODO]
+## Pod CPU Hog Experiment Demo 
 
-- A sample recording of this experiment execution is provided here.   
+- A sample recording of this experiment execution is provided [here](https://youtu.be/MBGSPmZKb2I).   

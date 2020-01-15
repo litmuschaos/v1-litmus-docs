@@ -170,6 +170,6 @@ spec:
   `kubectl describe chaosresult <ChaosEngine-Name>-<ChaosExperiment-Name> -n <application-namespace>`
 
 
-## Application Pod Network Loss Demo  [TODO]
+## Application Pod Network Loss Demo 
 
-- A sample recording of this experiment execution is provided here.
+- A sample recording of this experiment execution is provided [here](https://youtu.be/jqvYy-nWc_I).
