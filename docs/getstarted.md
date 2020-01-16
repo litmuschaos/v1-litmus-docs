@@ -102,6 +102,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: nginx-sa
+  namespace: default # App namespace
   labels:
     app: nginx-sa
 ---
