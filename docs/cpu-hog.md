@@ -100,8 +100,8 @@ subjects:
 
 | Variables             | Description                                                  | Type      | Notes                                                                             |
 | ----------------------| ------------------------------------------------------------ |-----------|------------------------------------------------------------|
-| TOTAL_CHAOS_DURATION  | The time duration for chaos insertion (seconds)              | Optional  | Defaults to 60s                                                                   |
 | PLATFORM              | The platform on which the chaos experiment will run          | Mandatory | Defaults to GKE                                                                   |
+| TOTAL_CHAOS_DURATION  | The time duration for chaos insertion (seconds)              | Optional  | Defaults to 60s                                                                   |
 | LIB                   | The chaos lib used to inject the chaos                       | Optional  | Defaults to `litmus`. Supported: `litmus`                       |
 
 #### Sample ChaosEngine Manifest
