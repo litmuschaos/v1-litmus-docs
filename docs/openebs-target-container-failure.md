@@ -1,6 +1,6 @@
 ---
 id: openebs-target-container-failure
-title: OpenEBS Target Failure Experiment Details
+title: OpenEBS Target Container Failure Experiment Details
 sidebar_label: Target Container Failure
 ---
 ------
