@@ -102,6 +102,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: nginx-sa
+  namespace: default # App namespace
   labels:
     app: nginx-sa
 ---
@@ -110,9 +111,9 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: nginx-sa
 rules:
-- apiGroups: ["", "extensions", "apps", "batch", "litmuschaos.io"]
-  resources: ["daemonsets", "deployments", "replicasets", "jobs", "pods", "pods/exec","nodes","events", "chaosengines", "chaosexperiments", "chaosresults"]
-  verbs: ["*"] 
+- apiGroups: ["", "apps", "batch", "litmuschaos.io"]
+  resources: ["daemonsets", "jobs", "pods", "pods/exec", "chaosengines", "chaosexperiments", "chaosresults"]
+  verbs: ["create", "list", "get", "update", "patch", "delete"] 
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -164,7 +165,7 @@ spec:
     # FYI, To see app label, apply kubectl get pods --show-labels
     applabel: "app=nginx" 
     appkind: deployment
-  chaosServiceAccount: nginx 
+  chaosServiceAccount: nginx-sa
   experiments:
     - name: container-kill
       spec:
