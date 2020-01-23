@@ -103,7 +103,7 @@ subjects:
 | CHAOS_INTERVAL        | Time interval b/w two successive pod failures (sec) | Mandatory | Defaults to 5s  | 
 | APP_NAMESPACE         | Namespace in which application pods are deployed	  | Mandatory | Defaults to `kube-system` |
 | APP_LABEL             | Unique Labels in `key=value` format of application deployment	 | Mandatory | Defaults to `k8s-app=kube-dns` |
-| APP_KIND              | This describe the application Kind | Mandatory | Mandatory | Defaults to `Deployment` | 
+| APP_KIND              | This describe the application Kind | Mandatory | Defaults to `Deployment` | 
 | CHAOS_NAMESPACE       | This ischaos namespace which will create all infra chaos resources in that namespace	| Mandatory | Default to `kube-system` |
 | LIB                   | The chaos lib used to inject the chaos              | Optional  | Defaults to `litmus`, Supported: `litmus`  |
 
