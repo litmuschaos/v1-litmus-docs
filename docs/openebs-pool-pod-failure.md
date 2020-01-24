@@ -142,7 +142,7 @@ spec:
   auxiliaryAppInfo: ""
   appinfo:
     appns: default
-    applabel: 'app=percona'
+    applabel: 'app=nginx'
     appkind: deployment
   chaosServiceAccount: nginx-sa
   monitoring: false
