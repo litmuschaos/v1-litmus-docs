@@ -113,9 +113,9 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
-# It can be app/infra
+  # It can be app/infra
   chaosType: 'infra'  
-#ex. values: ns1:name=percona,ns2:run=nginx 
+  #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ""
   appinfo:
     appns: default
@@ -165,3 +165,4 @@ spec:
 ## Application Pod Failure Demo
 
 - A sample recording of this experiment execution is provided here.   
+
