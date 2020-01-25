@@ -113,16 +113,14 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
-  chaosType: 'infra'  # It can be app/infra
-  auxiliaryAppInfo: "ns1:name=percona,ns2:run=nginx"
+  # It can be app/infra
+  chaosType: 'infra'  
+  #ex. values: ns1:name=percona,ns2:run=nginx 
+  auxiliaryAppInfo: ""
   appinfo:
     appns: default
     applabel: 'app=nginx'
     appkind: deployment
-  # It can be app/infra
-  chaosType: 'infra'
-  #ex. values: ns1:name=percona,ns2:run=nginx 
-  auxiliaryAppInfo: ""
   chaosServiceAccount: nginx-sa
   monitoring: false
   components:
@@ -167,3 +165,4 @@ spec:
 ## Application Pod Failure Demo
 
 - A sample recording of this experiment execution is provided here.   
+
