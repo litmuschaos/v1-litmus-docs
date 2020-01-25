@@ -14,7 +14,7 @@
 
 ### Q. I don't know how to get started with Litmus.
 
-<b>Ans:</b> It is versy easy to get started with Litmus you only need to follow the steps mention in the <a href="https://docs.Litmuschaos.io/docs/getstarted/">Getstarted Docs</a> and if you still face problem you can visit our video demo of experiments from <a href="https://www.youtube.com/channel/UCa57PMqmz_j0wnteRa9nCaw">YouTube</a> 
+<b>Ans:</b> It is very easy to get started with Litmus you only need to follow the steps mention in the <a href="https://docs.Litmuschaos.io/docs/getstarted/">Getstarted Docs</a> and if you still face problem you can visit our video demo of experiments from <a href="https://www.youtube.com/channel/UCa57PMqmz_j0wnteRa9nCaw">YouTube</a> Channel.
 
 ### Q. How to contribute in Litmus or I found some bug on how to report it?
 
@@ -22,9 +22,9 @@
 
 ### Q. How to get the logs of the runner and chaos experiment?
 
-<b>Ans:</b> Forgetting the logs of runner or chaos experiment use the following command.
-`kubectl logs -f <name of pod> -n <namespace>`
-By running this command you will be able to get the logs of the engine or experiment.
+<b>Ans:</b> For getting the logs of runner or chaos experiment use the following command.
+`kubectl logs -f <name-of-pod> -n <namespace>`
+by running this command you will be able to get the logs of the engine or experiment.
 
 ### Q. What is Chaos Engine in Litmus and how to install it manually?
 
@@ -51,14 +51,19 @@ Following are the steps to install the Chaos Experiment:
  If you want to delete all chaos experiments then use 
  `kubectl delete chaosexperiment <experiment-name> --all`
 
-#### Q. How will I know that the chaos has injected successfully?
+### Q. How to monitor the CPU or Memory uses in Infra Chaso Experiments? 
+
+<b>Ans:</b> For monitoring the CPU or memory uses, you can use the `top` command.
+    `kubectl top pods` or `kubectl top nodes`.
+
+### Q. How will I know that the chaos has injected successfully?
 
 <b>Ans:</b> To check whether the chaos has injected successfully or nor check verdict in the chaosresult of the experiment. Use the following command to get the chaosresult.
 `kubectl describe chaosresult <chaos-engine-name>-<chaos-experiment-name>`. Check the `spec.verdict` in the chaos result. The spec.verdict is set to `Running` when the experiment is in progress, eventually changing to either `pass` or `fail`.
 
 ### Q. I'm still not able to run the Chaos Experiment what should I do?
 
-<b>Ans:</b> Don't worry we have recently added the video demo of the generic experiments you can take a reference from there if you are still facing the problem. Visit our YouTube channel <a href="https://www.youtube.com/channel/UCa57PMqmz_j0wnteRa9nCaw">Litmus Chaos</a>now.
+<b>Ans:</b> Don't worry we have recently added the video demo of the generic experiments you can take a reference from there if you are still facing the problem. Visit our YouTube channel <a href="https://www.youtube.com/channel/UCa57PMqmz_j0wnteRa9nCaw">Litmus Chaos</a> now.
 
 ### Q. Is there any public channel where I can join?
 
