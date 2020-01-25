@@ -13,7 +13,7 @@ sidebar_label: Disk Loss
 <th> Tested K8s Platform </th>
 </tr>
 <tr>
-<td> Chaos </td>
+<td> Generic </td>
 <td> External disk loss from the node </td>
 <td> GKE, AWS(KOPS) </td>
 </tr>
@@ -78,7 +78,6 @@ metadata:
   labels:
     name: nginx-sa
 ---
-# Source: openebs/templates/clusterrole.yaml
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
@@ -199,6 +198,12 @@ subjects:
 <td> Unique Labels in `key=value` format of application deployment </td>
 <td> Optional </td>
 <td>  </td>
+</tr>
+<tr>
+<td> RAMP_TIME </td>
+<td> Period to wait before injection of chaos in sec </td>
+<td> Optional  </td>
+<td> </td>
 </tr>
 </table>
 

@@ -1,6 +1,6 @@
 ---
 id: openebs-target-container-failure
-title: OpenEBS Target Failure Experiment Details
+title: OpenEBS Target Container Failure Experiment Details
 sidebar_label: Target Container Failure
 ---
 ------
@@ -10,6 +10,8 @@ sidebar_label: Target Container Failure
 | Type      | Description              | Tested K8s Platform                                               |
 | ----------| ------------------------ | ------------------------------------------------------------------|
 | OpenEBS   | Kill the cStor target/Jiva controller container | GKE, Konvoy(AWS), Packet(Kubeadm), Minikube, OpenShift(Baremetal)  |
+
+<b>Note:</b> In this example, we are using nginx as stateful application that stores static pages on a Kubernetes volume.  
 
 ## Prerequisites
 
@@ -65,12 +67,57 @@ If the experiment tunable DATA_PERSISTENCE is set to 'enabled':
 
 - This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to be provided in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
 
-- Follow the steps in the sections below to prepare the ChaosEngine & execute the experiment.
+- Follow the steps in the sections below to create the chaosServiceAccount, prepare the ChaosEngine & execute the experiment.
+
+### Prepare chaosServiceAccount
+
+- Use this sample RBAC manifest to create a chaosServiceAccount in the desired (app) namespace. This example consists of the minimum necessary role permissions to execute the experiment.
+
+#### Sample Rbac Manifest
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nginx-sa
+  namespace: default
+  labels:
+    name: nginx-sa
+---
+# Source: openebs/templates/clusterrole.yaml
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: nginx-sa
+  labels:
+    name: nginx-sa
+rules:
+- apiGroups: ["","litmuschaos.io","batch","apps","storage.k8s.io"]
+  resources: ["pods","jobs","pods/exec","configmaps","secrets","persistentvolumeclaims","storageclasses","persistentvolumes","chaosengines","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","update","delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: nginx-sa
+  labels:
+    name: nginx-sa
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: nginx-sa
+subjects:
+- kind: ServiceAccount
+  name: nginx-sa
+  namespace: default
+
+```
 
 ### Prepare ChaosEngine
 
 - Provide the application info in `spec.appinfo`
 - Override the experiment tunables if desired
+- Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
 
 #### Supported Experiment Tunables
 
@@ -93,12 +140,21 @@ metadata:
   name: target-chaos
   namespace: default
 spec:
+  # It can be app/infra
+  chaosType: 'infra' 
+  #ex. values: ns1:name=percona,ns2:run=nginx 
+  auxiliaryAppInfo: ""
   appinfo:
     appns: default
     applabel: 'app=percona'
     appkind: deployment
-  chaosServiceAccount: percona-sa
+  chaosServiceAccount: nginx-sa
   monitoring: false
+  components:
+    runner:
+      image: "litmuschaos/chaos-executor:1.0.0"
+      type: "go"
+  # It can be delete/infra
   jobCleanUpPolicy: delete
   experiments:
     - name: openebs-target-container-failure
@@ -134,4 +190,3 @@ spec:
 ## OpenEBS Target Container Failure Demo [TODO]
 
 - A sample recording of this experiment execution is provided here.
-

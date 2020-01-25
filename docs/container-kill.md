@@ -7,9 +7,18 @@ sidebar_label: Container Kill
 
 ## Experiment Metadata
 
-| Type      | Description              | Tested K8s Platform                                               |
-| ----------| ------------------------ | ------------------------------------------------------------------|
-| Generic   | Kill one container in the application pod | GKE, Packet(Kubeadm), Minikube|
+<table>
+<tr>
+<th> Type </th>
+<th> Description </th>
+<th> Tested K8s Platform </th>
+</tr>
+<tr>
+<td> Generic </td>
+<td> Kill one container in the application pod </td>
+<td> GKE, Packet(Kubeadm), Minikube </td>
+</tr>
+</table>
 
 ## Prerequisites
 
@@ -60,7 +69,6 @@ metadata:
   labels:
     name: nginx-sa
 ---
-# Source: openebs/templates/clusterrole.yaml
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: Role
 metadata:
@@ -120,6 +128,12 @@ subjects:
 <td> The category of lib use to inject chaos </td>
 <td> Optional  </td>
 <td> Only `pumba` supported currently </td>
+</tr>
+<tr>
+<td> RAMP_TIME </td>
+<td> Period to wait before injection of chaos in sec </td>
+<td> Optional  </td>
+<td> </td>
 </tr>
 </table>
 

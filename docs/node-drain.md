@@ -7,9 +7,18 @@ sidebar_label: Node Drain
 
 ## Experiment Metadata
 
-| Type      | Description                                  | Tested K8s Platform                                               |
-| ----------| -------------------------------------------- | ------------------------------------------------------------------|
-| Generic   | Drain the node where application pod is scheduled. |  GKE, AWS, Packet(Kubeadm), Konvoy(AWS)|
+<table>
+<tr>
+<th> Type </th>
+<th> Description  </th>
+<th> Tested K8s Platform </th>
+</tr>
+<tr>
+<td> Generic </td>
+<td> Drain the node where application pod is scheduled. </td>
+<td> GKE, AWS, Packet(Kubeadm), Konvoy(AWS) </td>
+</tr>
+</table>
 
 ## Prerequisites
 
@@ -59,7 +68,6 @@ metadata:
   labels:
     name: nginx-sa
 ---
-# Source: openebs/templates/clusterrole.yaml
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
@@ -116,6 +124,12 @@ subjects:
 <td> The time duration for chaos insertion (seconds)  </td>
 <td> Optional </td>
 <td> Defaults to 60s </td>
+</tr>
+<tr>
+<td> RAMP_TIME </td>
+<td> Period to wait before injection of chaos in sec </td>
+<td> Optional  </td>
+<td> </td>
 </tr>
 </table>
                       

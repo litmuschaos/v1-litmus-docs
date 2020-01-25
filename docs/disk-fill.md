@@ -97,7 +97,6 @@ metadata:
   labels:
     name: nginx-sa
 ---
-# Source: openebs/templates/clusterrole.yaml
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
@@ -170,6 +169,12 @@ subjects:
 <td> Service account used by the deployment </td>
 <td> Optional </td>
 <td>  </td>
+</tr>
+<tr>
+<td> RAMP_TIME </td>
+<td> Period to wait before injection of chaos in sec </td>
+<td> Optional  </td>
+<td> </td>
 </tr>
 </table>
 
