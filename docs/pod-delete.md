@@ -177,15 +177,16 @@ spec:
     - name: pod-delete
       spec:
         components:
-           # set chaos duration (in sec) as desired
-          - name: TOTAL_CHAOS_DURATION
-            value: '30'
-          # set chaos interval (in sec) as desired
-          - name: CHAOS_INTERVAL
-            value: '10'
-          # pod failures without '--force' & default terminationGracePeriodSeconds
-          - name: FORCE
-            value: "false"
+          env:
+            # set chaos duration (in sec) as desired
+            - name: TOTAL_CHAOS_DURATION
+              value: '30'
+            # set chaos interval (in sec) as desired
+            - name: CHAOS_INTERVAL
+              value: '10'
+            # pod failures without '--force' & default terminationGracePeriodSeconds
+            - name: FORCE
+              value: "false"
 ```
 
 ### Create the ChaosEngine Resource

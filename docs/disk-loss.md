@@ -236,40 +236,41 @@ spec:
     - name: disk-loss
       spec:
         components:
-           # set chaos duration (in sec) as desired
-          - name: TOTAL_CHAOS_DURATION
-            value: '60'
-          # set cloud platform name
-          - name: CLOUD_PLATFORM
-            value: 'GCP'
-          # set app_check to check application state
-          - name: APP_CHECK
-            value: 'true'
-          # This is a chaos namespace into which all infra chaos resources are created
-          - name: CHAOS_NAMESPACE
-            value: 'default''
-          # GCP project ID
-          - name: PROJECT_ID
-            value: 'litmus-demo-123'
-          # Node name of the cluster
-          - name: NODE_NAME
-            value: 'demo-node-123'
-          # Disk Name of the node, it must be an external disk.	
-          - name: DISK_NAME
-            value: 'demo-disk-123'
-          # Enter the device name which you wanted to mount only for AWS.	
-          - name: DEVICE_NAME
-            value: '/dev/sdb'
-          # Name of Zone in which node is present (GCP)
-          # Use Region Name when running with AWS (ex: us-central1)
-          - name: ZONE_NAME
-            value: 'us-central1-a'
-          # ChaosEngine CR name associated with the experiment instance	
-          - name: CHAOSENGINE
-            value: ''
-          # Service account used by the litmus	
-          - name: CHAOS_SERVICE_ACCOUNT
-            value: ''
+          env:
+            # set chaos duration (in sec) as desired
+            - name: TOTAL_CHAOS_DURATION
+              value: '60'
+            # set cloud platform name
+            - name: CLOUD_PLATFORM
+              value: 'GCP'
+            # set app_check to check application state
+            - name: APP_CHECK
+              value: 'true'
+            # This is a chaos namespace into which all infra chaos resources are created
+            - name: CHAOS_NAMESPACE
+              value: 'default'
+            # GCP project ID
+            - name: PROJECT_ID
+              value: 'litmus-demo-123'
+            # Node name of the cluster
+            - name: NODE_NAME
+              value: 'demo-node-123'
+            # Disk Name of the node, it must be an external disk.	
+            - name: DISK_NAME
+              value: 'demo-disk-123'
+            # Enter the device name which you wanted to mount only for AWS.	
+            - name: DEVICE_NAME
+              value: '/dev/sdb'
+            # Name of Zone in which node is present (GCP)
+            # Use Region Name when running with AWS (ex: us-central1)
+            - name: ZONE_NAME
+              value: 'us-central1-a'
+            # ChaosEngine CR name associated with the experiment instance	
+            - name: CHAOSENGINE
+              value: ''
+            # Service account used by the litmus	
+            - name: CHAOS_SERVICE_ACCOUNT
+              value: ''
 ```
 ## Create the ChaosEngine Resource
 -   Create the ChaosEngine manifest prepared in the previous step to trigger the Chaos.

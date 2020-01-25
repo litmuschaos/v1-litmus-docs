@@ -168,15 +168,16 @@ spec:
     - name: cpu-hog
       spec:
         components:
-           # set chaos duration (in sec) as desired
-          - name: TOTAL_CHAOS_DURATION
-            value: '60'
-          # set chaos platform as desired
-          - name: PLATFORM
-            value: 'GKE'
-          # chaos lib used to inject the chaos
-          - name: LIB
-            value: 'litmus'
+          env:
+             # set chaos duration (in sec) as desired
+            - name: TOTAL_CHAOS_DURATION
+              value: '60'
+            # set chaos platform as desired
+            - name: PLATFORM
+              value: 'GKE'
+            # chaos lib used to inject the chaos
+            - name: LIB
+              value: 'litmus'
 ```
 
 ### Create the ChaosEngine Resource
