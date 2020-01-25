@@ -28,7 +28,7 @@ by running this command you will be able to get the logs of the engine or experi
 
 ### Q.7 What is Chaos Engine in Litmus and how to install it manually?
 
-<b>Ans:</b> Chaos Engine connects application to the Chaos Experiment. To install it manually Copy the YAML snippet from the experiments in <a href="https://docs.Litmuschaos.io/docs/chaoshub/">ChaosHub </a> into a file (say) chaosengine.yaml and update the values of applabel , appns, appkind and experiments as per your choice. Toggle monitoring between true/false, to allow the chaos-exporter to fetch experiment related metrics. Change the chaosServiceAccount to the name of Service Account created in the above step, if applicable.
+<b>Ans:</b> Chaos Engine connects application to the Chaos Experiment. To install it manually Copy the YAML snippet from the experiments in <a href="https://docs.Litmuschaos.io/docs/chaoshub/">ChaosHub </a> into a file (say) chaosengine.yaml and update the values of applabel , appns, appkind and experiments as per your choice. Toggle monitoring between true/false, to allow the chaos-exporter to fetch experiment related metrics. Change the chaosServiceAccount to the name of Service Account.
 
 ### Q.8 Even after creating the chaos experiment the experiment pod is not getting created.
 
@@ -40,7 +40,7 @@ by running this command you will be able to get the logs of the engine or experi
 <b>NOTE:</b> The annotation has to be done in the same namespace where the application is running.
 
 
-### Q.8 How to install Chaos Experiments manually?
+### Q.9 How to install Chaos Experiments manually?
 
 <b>Ans:</b> Chaos experiments contain the actual chaos details. These experiments are installed on your cluster as Kubernetes CRs (Custom Resources). The Chaos Experiments are grouped as Chaos Charts and are published on <a href="https://hub.Litmuschaos.io/">Chaos Hub</a>.
 Following are the steps to install the Chaos Experiment:
@@ -48,7 +48,7 @@ Following are the steps to install the Chaos Experiment:
 - Click on the Install Experiment button from the chart.
 - Copy the command and run it the experiment will be installed successfully.
 
-### Q.9 How to delete Chaos Engine and Chaos Experiment manually?
+### Q.10 How to delete Chaos Engine and Chaos Experiment manually?
 
 <b>Ans:</b> Follow these commands to delete the Chaos Engine and Chaos Experiment manually:
 - To delete the Chaos Engine manually run the following command.
@@ -61,25 +61,25 @@ Following are the steps to install the Chaos Experiment:
  If you want to delete all chaos experiments then use 
  `kubectl delete chaosexperiment <experiment-name> --all`
 
-### Q.10 How to monitor the CPU or Memory uses for Infra Chaso Experiments? 
+### Q.11 How to monitor the CPU or Memory uses for Infra Chaso Experiments? 
 
 <b>Ans:</b> For monitoring the CPU or memory uses, you can use the `top` command.
     `kubectl top pods` or `kubectl top nodes`.
 
-### Q.11 How will I know that the chaos has been injected successfully?
+### Q.12 How will I know that the chaos has been injected successfully?
 
 <b>Ans:</b> To check whether the chaos has been injected successfully or not check verdict in the chaosresult of the experiment. Use the following command to get the chaosresult.
 `kubectl describe chaosresult <chaos-engine-name>-<chaos-experiment-name>`. Check the `spec.verdict` in the chaos result. The spec.verdict is set to `Running` when the experiment is in progress, eventually changing to either `pass` or `fail`.
 
-### Q.12 I'm still not able to run the Chaos Experiment. What should I do?
+### Q.13 I'm still not able to run the Chaos Experiment. What should I do?
 
 <b>Ans:</b> Don't worry we have recently added the video demo of the generic experiments you can take a reference from there if you are still facing the problem. Visit our YouTube channel <a href="https://www.youtube.com/channel/UCa57PMqmz_j0wnteRa9nCaw">Litmus Chaos</a> now.
 
-### Q.13 Is there any public channel where I can join?
+### Q.14 Is there any public channel where I can join?
 
 <b>Ans:</b> You Can join us at <a href="https://app.slack.com/client/T09NY5SBT/CNXNB0ZTN">Litmus Slack Channel</a>.
 
-### Q.14 Does Litmus organize any Community Sync Up?
+### Q.15 Does Litmus organize any Community Sync Up?
 
 <b>Ans:</b> The Litmus Community has now decided to sync up once every month, on the third Wednesday at 8.30 AM PST/10.00 PM IST to review the release gone by, discuss roadmap items, present/demonstrate features the contributors have been working on… and just to meet and greet! The notes from previous meetings are now maintained <a href="https://hackmd.io/a4Zu_sH4TZGeih-xCimi3Q">here</a>. Feel free to add your topic of interest in the agenda to have it discussed.
 
