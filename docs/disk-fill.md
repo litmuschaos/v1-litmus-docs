@@ -97,7 +97,6 @@ metadata:
   labels:
     name: nginx-sa
 ---
-# Source: openebs/templates/clusterrole.yaml
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
