@@ -7,9 +7,18 @@ sidebar_label: CPU Hog
 
 ## Experiment Metadata
 
-| Type      | Description                                  | Tested K8s Platform                                               |
-| ----------| -------------------------------------------- | ------------------------------------------------------------------|
-| Generic   | Exhaust CPU resources on the Kubernetes Node | GKE                              |
+<table>
+<tr>
+<th> Type </th>
+<th> Description </th>
+<th> Tested K8s Platform </th>
+</tr>
+<tr>
+<td> Generic </td>
+<td> Exhaust CPU resources on the Kubernetes Node </td>
+<td> GKE </td>
+</tr>
+</table>
 
 ## Prerequisites
 
@@ -97,11 +106,38 @@ subjects:
 
 #### Supported Experiment Tunables
 
-| Variables             | Description                                                  | Type      | Notes                                                                             |
-| ----------------------| ------------------------------------------------------------ |-----------|------------------------------------------------------------|
-| PLATFORM              | The platform on which the chaos experiment will run          | Mandatory | Defaults to GKE                                                                   |
-| TOTAL_CHAOS_DURATION  | The time duration for chaos insertion (seconds)              | Optional  | Defaults to 60s                                                                   |
-| LIB                   | The chaos lib used to inject the chaos                       | Optional  | Defaults to `litmus`. Supported: `litmus`                       |
+<table>
+<tr>
+<th> Variables </th>
+<th> Description  </th>
+<th> Type </th>
+<th> Notes </th>
+</tr>
+<tr>
+<td> PLATFORM </td>
+<td> The platform on which the chaos experiment will run </td>
+<td> Mandatory </td>
+<td> Defaults to GKE </td>
+</tr>
+<tr>
+<td> TOTAL_CHAOS_DURATION </td>
+<td> The time duration for chaos insertion (seconds) </td>
+<td> Optional </td>
+<td> Defaults to 60 </td>
+</tr>
+<tr>
+<td> LIB  </td>
+<td> The chaos lib used to inject the chaos </td>
+<td> Optional  </td>
+<td> Defaults to `litmus` </td>
+</tr>
+<tr>
+<td> RAMP_TIME </td>
+<td> Period to wait before injection of chaos in sec </td>
+<td> Optional  </td>
+<td> </td>
+</tr>
+</table>
 
 #### Sample ChaosEngine Manifest
 

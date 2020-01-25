@@ -7,9 +7,18 @@ sidebar_label: Pod CPU Hog
 
 ## Experiment Metadata
 
-| Type      | Description                                  | Tested K8s Platform                                               |
-| ----------| -------------------------------------------- | ------------------------------------------------------------------|
-| Generic   | Consume CPU resources on the application container|  GKE, Packet(Kubeadm), Minikube                 |
+<table>
+<tr>
+<th> Type </th>
+<th> Description </th>
+<th> Tested K8s Platform </th>
+</tr>
+<tr>
+<td> Generic </td>
+<td> Consume CPU resources on the application container</td>
+<td> GKE, Packet(Kubeadm), Minikube  </td>
+</tr>
+</table>
 
 ## Prerequisites
 
@@ -123,6 +132,12 @@ subjects:
 <td> The image used by the litmus (only supported) lib </td>
 <td> Optional </td>
 <td> Defaults to `litmuschaos/app-cpu-stress:latest`  </td>
+</tr>
+<tr>
+<td> RAMP_TIME </td>
+<td> Period to wait before injection of chaos in sec </td>
+<td> Optional  </td>
+<td> </td>
 </tr>
 </table>
                       

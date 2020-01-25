@@ -7,9 +7,18 @@ sidebar_label: Pod Network Latency
 
 ## Experiment Metadata
 
-| Type      | Description              | Tested K8s Platform                                               |
-| ----------| ------------------------ | ------------------------------------------------------------------|
-| Generic   | Inject Network Latency Into Application Pod | GKE, Packet(Kubeadm), Minikube > v1.6.0 |
+<table>
+<tr>
+<th> Type </th>
+<th> Description </th>
+<th> Tested K8s Platform </th>
+</tr>
+<tr>
+<td> Generic </td>
+<td> Inject Network Latency Into Application Pod </td>
+<td> GKE, Packet(Kubeadm), Minikube > v1.6.0 </td>
+</tr>
+</table>
 
 ## Prerequisites
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
@@ -93,15 +102,56 @@ subjects:
 
 #### Supported Experiment Tunables
 
-| Variables             | Description                                                  | Type      | Notes                                                      |
-| ----------------------| ------------------------------------------------------------ |-----------|------------------------------------------------------------|
-| NETWORK_INTERFACE     | Name of ethernet interface considered for shaping traffic                                | Mandatory  |   |
-| TARGET_CONTAINER     | Name of container which is subjected to network latency       | Mandatory  |   |
-| TOTAL_CHAOS_DURATION  | The time duration for chaos insertion in milliseconds  | Optional| Default (60000ms)|
-| NETWORK_LATENCY        | The latency/delay in milliseconds                           | Optional  | Default (60000ms)
-| LIB                   | The chaos lib used to inject the chaos eg. Pumba             | Optional  |  |
-| CHAOSENGINE     | ChaosEngine CR name associated with the experiment instance      | Optional  |   |
-| CHAOS_SERVICE_ACCOUNT     | Service account used by the pumba daemonset Optional      | Optional  |   |
+<table>
+<tr>
+<th> Variables </th>
+<th> Description  </th>
+<th> Type </th>
+<th> Notes </th>
+</tr>
+<tr>
+<td> NETWORK_INTERFACE </td>
+<td> Name of ethernet interface considered for shaping traffic  </td>
+<td> Mandatory </td>
+<td> </td>
+</tr>
+<tr>
+<td> TARGET_CONTAINER  </td>
+<td> Name of container which is subjected to network latency </td>
+<td> Mandatory </td>
+<td> </td>
+</tr>
+<tr>
+<td> NETWORK_LATENCY </td>
+<td> The latency/delay in milliseconds </td>
+<td> Optional </td>
+<td> Default (60000ms) </td>
+</tr>
+<tr>
+<td> TOTAL_CHAOS_DURATION </td>
+<td> The time duration for chaos insertion (seconds) </td>
+<td> Optional </td>
+<td> Default (60000ms) </td>
+</tr>
+<tr>
+<td> LIB </td>
+<td> The chaos lib used to inject the chaos </td>
+<td> Optional  </td>
+<td> only `pumba` supported currently </td>
+</tr>
+<tr>
+<td> LIB_IMAGE  </td>
+<td> The pumba image used to run the kill command </td>
+<td> Optional  </td>
+<td> Defaults to `gaiaadm/pumba:0.6.5` </td>
+</tr>
+<tr>
+<td> RAMP_TIME </td>
+<td> Period to wait before injection of chaos in sec </td>
+<td> Optional  </td>
+<td> </td>
+</tr>
+</table>
 
 #### Sample ChaosEngine Manifest
 
