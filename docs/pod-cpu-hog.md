@@ -150,10 +150,10 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
-  # It can be app/infra
-  chaosType: 'app'
+  # It can be true/false
+  annotationCheck: 'true'
   #ex. values: ns1:name=percona,ns2:run=nginx 
-  auxiliaryAppInfo: ""
+  auxiliaryAppInfo: ''
   appinfo:
     appns: default
     applabel: 'app=nginx'
@@ -162,8 +162,8 @@ spec:
   monitoring: false
   components:
     runner:
-      image: "litmuschaos/chaos-executor:1.0.0"
-      type: "go"
+      image: 'litmuschaos/chaos-executor:1.0.0'
+      type: 'go'
   # It can be delete/retain
   jobCleanUpPolicy: delete
   experiments:
@@ -175,10 +175,10 @@ spec:
             #number of cpu cores to be consumed
             #verify the resources the app has been launched with
           - name: CPU_CORES
-            value: "1"
+            value: '1'
             # in ms 
           - name: TOTAL_CHAOS_DURATION
-            value: "60000" 
+            value: '60000'
           
 ```
 

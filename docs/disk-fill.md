@@ -187,10 +187,10 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
-  # It can be app/infra
-  chaosType: 'infra'
+  # It can be true/false
+  annotationCheck: 'false'
   #ex. values: ns1:name=percona,ns2:run=nginx  
-  auxiliaryAppInfo: ""
+  auxiliaryAppInfo: ''
   appinfo:
     appns: default
     applabel: 'app=nginx'
@@ -199,8 +199,8 @@ spec:
   monitoring: false
   components:
     runner:
-      image: "litmuschaos/chaos-executor:1.0.0"
-      type: "go"
+      image: 'litmuschaos/chaos-executor:1.0.0'
+      type: 'go'
   # It can be delete/retain
   jobCleanUpPolicy: delete
   experiments:
@@ -209,9 +209,9 @@ spec:
         components:
            # specify the fill percentage according to the disk pressure required
           - name: FILL_PERCENTAGE
-            value: "80"
+            value: '80'
           - name: TARGET_CONTAINER
-            value: "nginx"
+            value: 'nginx'
 ```
 
 ### Create the ChaosEngine Resource
