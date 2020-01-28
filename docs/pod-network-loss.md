@@ -163,19 +163,19 @@ metadata:
 spec:
   # It can be delete/retain
   jobCleanUpPolicy: delete
-  # It can be app/infra
-  chaosType: 'app'
+  # It can be true/false
+  annotationCheck: 'true'
   #ex. values: ns1:name=percona,ns2:run=nginx 
-  auxiliaryAppInfo: ""
+  auxiliaryAppInfo: ''
   monitoring: false
   components:
     runner:
-      image: "litmuschaos/chaos-executor:1.0.0"
-      type: "go"
+      image: 'litmuschaos/chaos-executor:1.0.0'
+      type: 'go'
   appinfo: 
     appns: default
     # FYI, To see app label, apply kubectl get pods --show-labels
-    applabel: "app=nginx"
+    applabel: 'app=nginx'
     appkind: deployment
   chaosServiceAccount: nginx-sa 
   experiments:
@@ -186,16 +186,16 @@ spec:
           value: default
         - name: TARGET_CONTAINER
           #Container name where chaos has to be injected
-          value: "nginx" 
+          value: 'nginx'
         - name: LIB_IMAGE
           value: gaiaadm/pumba:0.6.5
         - name: NETWORK_INTERFACE
           #Network interface inside target container
           value: eth0                    
         - name: NETWORK_PACKET_LOSS_PERCENTAGE
-          value: "100"
+          value: '100'
         - name: TOTAL_CHAOS_DURATION
-          value: "60000"
+          value: '60000'
         - name: LIB
           value: pumba
 ```
