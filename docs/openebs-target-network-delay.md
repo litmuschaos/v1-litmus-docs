@@ -229,16 +229,17 @@ spec:
     - name: openebs-target-network-delay
       spec:
         components:
-          - name: TARGET_CONTAINER
-            value: 'cstor-istgt'
-          - name: APP_PVC
-            value: 'pvc-c466262a-a5f2-4f0f-b594-5daddfc2e29d'    
-          - name: DEPLOY_TYPE
-            value: deployment       
-          - name: NETWORK_DELAY
-            value: '30000'
-          - name: TOTAL_CHAOS_DURATION
-            value: '60000' 
+          env:
+            - name: TARGET_CONTAINER
+              value: 'cstor-istgt'
+            - name: APP_PVC
+              value: 'pvc-c466262a-a5f2-4f0f-b594-5daddfc2e29d'    
+            - name: DEPLOY_TYPE
+              value: deployment       
+            - name: NETWORK_DELAY
+              value: '30000'
+            - name: TOTAL_CHAOS_DURATION
+              value: '60000' 
 ```
 
 ### Create the ChaosEngine Resource

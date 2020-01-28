@@ -134,27 +134,28 @@ spec:
     - name: coredns-pod-delete
       spec:
         components:
-           # set chaos duration (in sec) as desired
-          - name: TOTAL_CHAOS_DURATION
-            value: '30'
+          env:
+             # set chaos duration (in sec) as desired
+            - name: TOTAL_CHAOS_DURATION
+              value: '30'
       
-          # set chaos interval (in sec) as desired
-          - name: CHAOS_INTERVAL
-            value: '10'
+            # set chaos interval (in sec) as desired
+            - name: CHAOS_INTERVAL
+              value: '10'
             
-          - name: APP_NAMESPACE
-            value: 'kube-system'
+            - name: APP_NAMESPACE
+              value: 'kube-system'
 
-          # provide application labels
-          - name: APP_LABEL
-            value: 'k8s-app=kube-dns'
+            # provide application labels
+            - name: APP_LABEL
+              value: 'k8s-app=kube-dns'
 
-           # provide application kind
-          - name: APP_KIND
-            value: 'deployment'
+            # provide application kind
+            - name: APP_KIND
+              value: 'deployment'
             
-          - name: CHAOS_NAMESPACE
-            value: 'kube-system'
+            - name: CHAOS_NAMESPACE
+              value: 'kube-system'
 ```
 
 ### Create the ChaosEngine Resource

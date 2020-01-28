@@ -172,9 +172,10 @@ spec:
     - name: container-kill
       spec:
         components:
-           # specify the name of the container to be killed
-          - name: TARGET_CONTAINER
-            value: 'nginx'
+          env:
+             # specify the name of the container to be killed
+            - name: TARGET_CONTAINER
+              value: 'nginx'
 ```
 
 ### Create the ChaosEngine Resource

@@ -210,10 +210,11 @@ spec:
     - name: openebs-pool-container-failure
       spec:
         components:
-          - name: APP_PVC
-            value: 'pvc-c466262a-a5f2-4f0f-b594-5daddfc2e29d'    
-          - name: DEPLOY_TYPE
-            value: deployment        
+          env:
+            - name: APP_PVC
+              value: 'pvc-c466262a-a5f2-4f0f-b594-5daddfc2e29d'    
+            - name: DEPLOY_TYPE
+              value: deployment        
 ```
 
 ### Create the ChaosEngine Resource

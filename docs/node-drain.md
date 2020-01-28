@@ -162,9 +162,10 @@ spec:
     - name: node-drain
       spec:
         components:
-           # set node name
-          - name: APP_NODE
-            value: 'node-1'
+          env:
+            # set node name
+            - name: APP_NODE
+              value: 'node-1'
 ```
 
 ### Create the ChaosEngine Resource

@@ -170,8 +170,9 @@ spec:
     - name: container-kill
       spec:
         components:
-        - name: TARGET_CONTAINER
-          value: nginx
+          env:
+            - name: TARGET_CONTAINER
+              value: nginx
 ```
 
 ### Override Default Chaos Experiments Variables
