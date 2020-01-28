@@ -236,6 +236,6 @@ spec:
 
   `kubectl describe chaosresult nginx-chaos-disk-fill -n <application-namespace>`
 
-## Application Container Kill Demo [TODO]
+## Disk Fill Experiment Demo [TODO]
 
 - A sample recording of this experiment execution is provided here.

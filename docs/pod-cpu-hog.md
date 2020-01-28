@@ -202,4 +202,4 @@ spec:
 
 ## Pod CPU Hog Experiment Demo 
 
-- A sample recording of this experiment execution is provided [here](https://youtu.be/MBGSPmZKb2I).   
+- A sample recording of this experiment execution is provided [here](https://youtu.be/MBGSPmZKb2I).

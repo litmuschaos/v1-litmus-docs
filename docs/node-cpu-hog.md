@@ -1,7 +1,7 @@
 ---
-id: cpu-hog
-title: CPU Hog Experiment Details
-sidebar_label: CPU Hog
+id: node-cpu-hog
+title: Node CPU Hog Experiment Details
+sidebar_label: Node CPU Hog
 ---
 ------
 
@@ -23,7 +23,7 @@ sidebar_label: CPU Hog
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
-- Ensure that the `cpu-hog` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/cpu-hog)
+- Ensure that the `node-cpu-hog` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/node-cpu-hog)
 - There should be administrative access to the platform on which the Kubernetes cluster is hosted, as the recovery of the affected node could be manual. For example, gcloud access to the GKE project
 ## Entry Criteria
 
@@ -165,7 +165,7 @@ spec:
   # It can be delete/retain
   jobCleanUpPolicy: delete
   experiments:
-    - name: cpu-hog
+    - name: node-cpu-hog
       spec:
         components:
            # set chaos duration (in sec) as desired
@@ -195,9 +195,8 @@ spec:
 
 - Check whether the application is resilient to the CPU hog, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult nginx-chaos-cpu-hog -n <application-namespace>`
+  `kubectl describe chaosresult nginx-chaos-node-cpu-hog -n <application-namespace>`
 
-## Application Pod Failure Demo
+## Node Cpu Hog Demo [TODO]
 
-- A sample recording of this experiment execution is provided here.   
-
+- A sample recording of this experiment execution is provided here.
