@@ -163,19 +163,19 @@ metadata:
 spec:
   # It can be delete/retain
   jobCleanUpPolicy: delete
-  # It can be app/infra
-  chaosType: 'app'
+  # It can be true/false
+  annotationCheck: 'true'
   #ex. values: ns1:name=percona,ns2:run=nginx 
-  auxiliaryAppInfo: ""
+  auxiliaryAppInfo: ''
   monitoring: false
   components:
     runner:
-      image: "litmuschaos/chaos-executor:1.0.0"
-      type: "go"
+      image: 'litmuschaos/chaos-executor:1.0.0'
+      type: 'go'
   appinfo: 
     appns: default
     # FYI, To see app label, apply kubectl get pods --show-labels
-    applabel: "app=nginx"
+    applabel: 'app=nginx'
     appkind: deployment
   chaosServiceAccount: nginx-sa 
   experiments:

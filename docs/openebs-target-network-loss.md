@@ -7,9 +7,18 @@ sidebar_label: Target Network Loss
 
 ## Experiment Metadata
 
-| Type      | Description              | Tested K8s Platform                                               |
-| ----------| ------------------------ | ------------------------------------------------------------------|
-| OpenEBS   | Induce network loss into the cStor target/Jiva controller container | GKE, Konvoy(AWS), Packet(Kubeadm), OpenShift(Baremetal)  |
+<table>
+  <tr>
+    <th> Type </th>
+    <th> Description </th>
+    <th> Tested K8s Platform </th>
+  </tr>
+  <tr>
+    <td> OpenEBS </td>
+    <td> Induce network loss into the cStor target/Jiva controller container </td>
+    <td> GKE, Konvoy(AWS), Packet(Kubeadm), Minikube, OpenShift(Baremetal) </td>
+  </tr>
+</table>
 
 <b>Note:</b> In this example, we are using nginx as stateful application that stores static pages on a Kubernetes volume. 
 
@@ -18,20 +27,35 @@ sidebar_label: Target Network Loss
 - Ensure that the Kubernetes Cluster uses Docker runtime
 - Ensure that the Litmus Chaos Operator is running in the cluster. If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
 - Ensure that the `openebs-target-network-loss` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-target-network-loss)
-- If DATA_PERSISTENCE is 'enabled', provide the application info in a configmap volume so that the experiment can perform necessary checks. Currently, LitmusChaos supports data consistency checks only on MySQL databases. Create a configmap as shown below in the application namespace (replace with actual credentials):
+- The DATA_PERSISTENCE can be enabled by provide the application's info in a configmap volume so that the experiment can perform necessary checks. Currently, LitmusChaos supports data consistency checks only for MySQL and Busybox. 
+    - For MYSQL data persistence check create a configmap as shown below in the application namespace (replace with actual credentials):
 
-  ```
-  ---
-  apiVersion: v1
-  kind: ConfigMap
-  metadata:
-    name: openebs-target-network-loss
-  data:
-    parameters.yml: | 
-      dbuser: root
-      dbpassword: k8sDem0
-      dbname: test
-  ```
+    ```
+    ---
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: openebs-target-network-loss
+    data:
+      parameters.yml: | 
+        dbuser: root
+        dbpassword: k8sDem0
+        dbname: test
+    ```
+    - For Busybox data persistence check create a configmap as shown below in the application namespace (replace with actual credentials):
+
+    ```
+    ---
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: openebs-target-network-loss
+    data:
+      parameters.yml: | 
+        blocksize: 4k
+        blockcount: 1024
+        testfile: exampleFile
+    ```
 - Ensure that the chaosServiceAccount used for the experiment has cluster-scope permissions as the experiment may involve carrying out the chaos in the `openebs` namespace
   while performing application health checks in its respective namespace. 
 
@@ -119,14 +143,50 @@ subjects:
 
 #### Supported Experiment Tunables
 
-| Variables             | Description                                                  | Type      | Notes                                                      |
-| ----------------------| ------------------------------------------------------------ |-----------|------------------------------------------------------------|
-| APP_PVC               | The PersistentVolumeClaim used by the stateful application   | Mandatory | PVC may use either OpenEBS Jiva/cStor storage class        |
-| DEPLOY_TYPE           | Type of Kubernetes resource used by the stateful application | Optional  | Defaults to `deployment`. Supported: `deployment`, `statefulset`|
-| LIB_IMAGE             | The chaos library image used to inject the network loss           | Optional  | Defaults to `gaiaadm/pumba:0.4.8`. Supported: `gaiaadm/pumba:0.4.8`|
-| NETWORK_PACKET_LOSS_PERCENTAGE  | Total percentage for which network loss is injected     | Optional  | Defaults to 100 (percent)                               |
-| TOTAL_CHAOS_DURATION  | Total duration for which network loss is injected                 | Optional  | Defaults to 240000 milliseconds (240s)	                |
-| DATA_PERSISTENCE      | Flag to perform data consistency checks on the application   | Optional  | Default value is disabled (empty/unset). Set to `enabled` to perform data checks. Ensure configmap with app details are created                                                                                                                   |             
+<table>
+  <tr>
+    <th> Variables </th>
+    <th> Description  </th>
+    <th> Type </th>
+    <th> Notes </th>
+  </tr>
+  <tr>
+    <td> APP_PVC </td>
+    <td> The PersistentVolumeClaim used by the stateful application </td>
+    <td> Mandatory </td>
+    <td> PVC may use either OpenEBS Jiva/cStor storage class </td>
+  </tr>
+  <tr>
+    <td> LIB_IMAGE </td>
+    <td> chaos library image used to inject the network loss </td>
+    <td> Optional  </td>
+    <td> Defaults to `gaiaadm/pumba:0.6.5`. Supported: `docker : gaiaadm/pumba:0.6.5` </td>
+  </tr>
+  <tr>
+    <td> TOTAL_CHAOS_DURATION </td>
+    <td> Total duration for which network loss is injected </td>
+    <td> Optional </td>
+    <td> Defaults to 120 seconds </td>
+  </tr>
+  <tr>
+    <td> DEPLOY_TYPE </td>
+    <td> Type of Kubernetes resource used by the stateful application </td>
+    <td> Optional  </td>
+    <td> Defaults to `deployment`. Supported: `deployment`, `statefulset` </td>
+  </tr>
+  <tr>
+    <td> NETWORK_PACKET_LOSS_PERCENTAGE </td>
+    <td> Total percentage for which network loss is injected </td>
+    <td> Optional  </td>
+    <td>  Defaults to 100 (percent) </td>
+  </tr>
+  <tr>
+    <td> DATA_PERSISTENCE </td>
+    <td> Flag to perform data consistency checks on the application </td>
+    <td> Optional  </td>
+    <td> Default value is disabled (empty/unset). It supports only `mysql` and `busybox`. Ensure configmap with app details are created </td>
+  </tr>
+</table>
 
 #### Sample ChaosEngine Manifest
 
