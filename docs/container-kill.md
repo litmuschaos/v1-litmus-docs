@@ -43,7 +43,7 @@ sidebar_label: Container Kill
 - Containerd chaoslib details
     - Kills one container in the specified application pod by `crictl-chaos` Lib.
     - Containers are killed using the `crictl stop` command.
-    - containerd-chaos is run as a daemonset on all nodes in dry-run mode to begin with the `kill` command is issued during experiment execution via `crictl stop` 
+    - containerd-chaos is run as a daemonset on all nodes in dry-run mode to begin with the `stop` command is issued during experiment execution via `kubectl exec` 
 - Tests deployment sanity (replica availability & uninterrupted service) and recovery workflow of the application
 - Good for testing recovery of pods having side-car containers
 
