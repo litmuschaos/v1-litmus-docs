@@ -183,7 +183,6 @@ spec:
     - name: pod-network-latency
       spec:
         components:
-<<<<<<< HEAD
           env:
             - name: ANSIBLE_STDOUT_CALLBACK
               value: default
@@ -201,24 +200,6 @@ spec:
               value: "60000"
             - name: LIB
               value: pumba
-=======
-        - name: ANSIBLE_STDOUT_CALLBACK
-          value: default
-        - name: TARGET_CONTAINER
-          #Container name where chaos has to be injected
-          value: 'nginx' 
-        - name: NETWORK_INTERFACE
-          #Network interface inside target container
-          value: eth0                   
-        - name: LIB_IMAGE
-          value: gaiaadm/pumba:0.6.5
-        - name: NETWORK_LATENCY
-          value: '2000'
-        - name: TOTAL_CHAOS_DURATION
-          value: '60000'
-        - name: LIB
-          value: pumba
->>>>>>> staging
 ```
 ### Create the ChaosEngine Resource
 
