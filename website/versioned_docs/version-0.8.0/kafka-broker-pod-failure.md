@@ -93,12 +93,17 @@ metadata:
   name: kafka-chaos
   namespace: default
 spec:
+  # It can be true/false
+  annotationCheck: 'true'
+  #ex. values: ns1:name=percona,ns2:run=nginx 
+  auxiliaryAppInfo: ''
   appinfo: 
     appns: default
     applabel: 'app=cp-kafka'
     appkind: statefulset
   chaosServiceAccount: kafka-sa
   monitoring: false
+  # It can be delete/retain
   jobCleanUpPolicy: delete
   experiments:
     - name: kafka-broker-pod-failure
@@ -156,7 +161,7 @@ spec:
 
           # pod failures without '--force' & default terminationGracePeriodSeconds
           - name: FORCE
-            value: "false"
+            value: 'false'
 ```
 
 ### Create the ChaosEngine Resource 
