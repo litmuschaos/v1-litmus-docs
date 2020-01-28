@@ -8,16 +8,16 @@ sidebar_label: Pod Delete
 ## Experiment Metadata
 
 <table>
-<tr>
-<th> Type </th>
-<th> Description </th>
-<th> Tested K8s Platform </th>
-</tr>
-<tr>
-<td> Generic </td>
-<td> Fail the application pod </td>
-<td> GKE, Konvoy(AWS), Packet(Kubeadm), Minikube </td>
-</tr>
+  <tr>
+    <th> Type </th>
+    <th> Description </th>
+    <th> Tested K8s Platform </th>
+  </tr>
+  <tr>
+    <td> Generic </td>
+    <td> Fail the application pod </td>
+    <td> GKE, Konvoy(AWS), Packet(Kubeadm), Minikube </td>
+  </tr>
 </table>
 
 ## Prerequisites
@@ -104,48 +104,48 @@ subjects:
 #### Supported Experiment Tunables
 
 <table>
-<tr>
-<th> Variables </th>
-<th> Description  </th>
-<th> Type </th>
-<th> Notes </th>
-</tr>
-<tr>
-<td> TOTAL_CHAOS_DURATION </td>
-<td> The time duration for chaos insertion (seconds) </td>
-<td> Optional </td>
-<td> Defaults to 15s </td>
-</tr>
-<tr>
-<td> CHAOS_INTERVAL </td>
-<td> Time interval b/w two successive pod failures (sec) </td>
-<td> Optional </td>
-<td> Defaults to 5s </td>
-</tr>
-<tr>
-<td> LIB </td>
-<td> The chaos lib used to inject the chaos </td>
-<td> Optional  </td>
-<td> Defaults to `litmus`. Supported: `litmus`, `powerfulseal` </td>
-</tr>
-<tr>
-<td> FORCE  </td>
-<td> Application Pod failures type </td>
-<td> Optional  </td>
-<td> Default to `true`, With `terminationGracePeriodSeconds=0`  </td>
-</tr>
-<tr>
-<td> KILL_COUNT </td>
-<td> No. of application pods to be deleted </td>
-<td> Optional  </td>
-<td> Default to `1`, kill_count > 1 is only supported by litmus lib , not by the powerfulseal </td>
-</tr>
-<tr>
-<td> RAMP_TIME </td>
-<td> Period to wait before injection of chaos in sec </td>
-<td> Optional  </td>
-<td> </td>
-</tr>
+  <tr>
+    <th> Variables </th>
+    <th> Description  </th>
+    <th> Type </th>
+    <th> Notes </th>
+  </tr>
+  <tr>
+    <td> TOTAL_CHAOS_DURATION </td>
+    <td> The time duration for chaos insertion (seconds) </td>
+    <td> Optional </td>
+    <td> Defaults to 15s </td>
+  </tr>
+  <tr>
+    <td> CHAOS_INTERVAL </td>
+    <td> Time interval b/w two successive pod failures (sec) </td>
+    <td> Optional </td>
+    <td> Defaults to 5s </td>
+  </tr>
+  <tr>
+    <td> LIB </td>
+    <td> The chaos lib used to inject the chaos </td>
+    <td> Optional  </td>
+    <td> Defaults to `litmus`. Supported: `litmus`, `powerfulseal` </td>
+  </tr>
+  <tr>
+    <td> FORCE  </td>
+    <td> Application Pod failures type </td>
+    <td> Optional  </td>
+    <td> Default to `true`, With `terminationGracePeriodSeconds=0`  </td>
+  </tr>
+  <tr>
+    <td> KILL_COUNT </td>
+    <td> No. of application pods to be deleted </td>
+    <td> Optional  </td>
+    <td> Default to `1`, kill_count > 1 is only supported by litmus lib , not by the powerfulseal </td>
+  </tr>
+  <tr>
+    <td> RAMP_TIME </td>
+    <td> Period to wait before injection of chaos in sec </td>
+    <td> Optional  </td>
+    <td> </td>
+  </tr>
 </table>
 
 #### Sample ChaosEngine Manifest
@@ -158,9 +158,9 @@ metadata:
   namespace: default
 spec:
   appinfo:
-    appns: default
+    appns: 'default'
     applabel: 'app=nginx'
-    appkind: deployment
+    appkind: 'deployment'
   # It can be true/false
   annotationCheck: 'true'  
   #ex. values: ns1:name=percona,ns2:run=nginx 
@@ -172,7 +172,7 @@ spec:
       image: 'litmuschaos/chaos-executor:1.0.0'
       type: 'go'
   # It can be delete/retain
-  jobCleanUpPolicy: delete  
+  jobCleanUpPolicy: 'delete' 
   experiments:
     - name: pod-delete
       spec:
@@ -186,7 +186,7 @@ spec:
               value: '10'
             # pod failures without '--force' & default terminationGracePeriodSeconds
             - name: FORCE
-              value: "false"
+              value: 'false'
 ```
 
 ### Create the ChaosEngine Resource

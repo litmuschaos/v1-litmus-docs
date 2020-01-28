@@ -8,16 +8,16 @@ sidebar_label: Container Kill
 ## Experiment Metadata
 
 <table>
-<tr>
-<th> Type </th>
-<th> Description </th>
-<th> Tested K8s Platform </th>
-</tr>
-<tr>
-<td> Generic </td>
-<td> Kill one container in the application pod </td>
-<td> GKE, Packet(Kubeadm), Minikube </td>
-</tr>
+  <tr>
+    <th> Type </th>
+    <th> Description </th>
+    <th> Tested K8s Platform </th>
+  </tr>
+  <tr>
+    <td> Generic </td>
+    <td> Kill one container in the application pod </td>
+    <td> GKE, Packet(Kubeadm), Minikube </td>
+  </tr>
 </table>
 
 ## Prerequisites
@@ -51,7 +51,6 @@ sidebar_label: Container Kill
 
 - Container kill is achieved using the `pumba` or `containerd_chaos` chaos library
 - The desired pumba and containerd image can be configured in the env variable `LIB_IMAGE`. 
-<!--- For the furute, other chaoslibs might be added which do not depend on docker runtime. The LIB env varable must be added then.-->
 
 ## Steps to Execute the Chaos Experiment
 
@@ -99,7 +98,6 @@ subjects:
 - kind: ServiceAccount
   name: nginx-sa
   namespace: default
-
 ```
 
 ### Prepare ChaosEngine
@@ -110,38 +108,37 @@ subjects:
 #### Supported Experiment Tunables
 
 <table>
-<tr>
-<th> Variables </th>
-<th> Description  </th>
-<th> Type </th>
-<th> Notes </th>
-</tr>
-<tr>
-<td> TARGET_CONTAINER  </td>
-<td> The container to be killed inside the pod </td>
-<td> Mandatory </td>
-<td> If the TARGET_CONTAINER is not provided it will delete the first container </td>
-</tr>
-<tr>
-<td> LIB_IMAGE  </td>
-<td> The pumba/containerd image used to run the kill command </td>
-<td> Optional </td>
-<td> Defaults to `gaiaadm/pumba:0.4.8`,For containerd runtime use `gprasath/crictl:ci`. Note: pumba images >=0.6 do not work with this experiment. </td>
-</tr>
-<tr>
-<td> LIB  </td>
-<td> The category of lib use to inject chaos </td>
-<td> Optional  </td>
-<td> It can be pumba or containerd </td>
-</tr>
-<tr>
-<td> RAMP_TIME </td>
-<td> Period to wait before injection of chaos in sec </td>
-<td> Optional  </td>
-<td> </td>
-</tr>
+  <tr>
+    <th> Variables </th>
+    <th> Description  </th>
+    <th> Type </th>
+    <th> Notes </th>
+  </tr>
+  <tr>
+    <td> TARGET_CONTAINER  </td>
+    <td> The container to be killed inside the pod </td>
+    <td> Mandatory </td>
+    <td> If the TARGET_CONTAINER is not provided it will delete the first container </td>
+  </tr>
+  <tr>
+    <td> LIB_IMAGE  </td>
+    <td> The pumba/containerd image used to run the kill command </td>
+    <td> Optional </td>
+    <td> Defaults to `gaiaadm/pumba:0.4.8`,For containerd runtime use `gprasath/crictl:ci`. Note: pumba images >=0.6 do not work with this experiment. </td>
+  </tr>
+  <tr>
+    <td> LIB  </td>
+    <td> The category of lib use to inject chaos </td>
+    <td> Optional  </td>
+    <td> It can be pumba or containerd </td>
+  </tr>
+  <tr>
+    <td> RAMP_TIME </td>
+    <td> Period to wait before injection of chaos in sec </td>
+    <td> Optional  </td>
+    <td> </td>
+  </tr>
 </table>
-
 
 #### Sample ChaosEngine Manifest
 
@@ -157,9 +154,9 @@ spec:
   #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ''
   appinfo:
-    appns: default
+    appns: 'default'
     applabel: 'app=nginx'
-    appkind: deployment
+    appkind: 'deployment'
   chaosServiceAccount: nginx-sa
   monitoring: false
   components:
@@ -167,7 +164,7 @@ spec:
       image: 'litmuschaos/chaos-executor:1.0.0'
       type: 'go'
   # It can be delete/retain
-  jobCleanUpPolicy: delete 
+  jobCleanUpPolicy: 'delete' 
   experiments:
     - name: container-kill
       spec:

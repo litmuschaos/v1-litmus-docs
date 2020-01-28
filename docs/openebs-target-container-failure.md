@@ -207,19 +207,19 @@ spec:
   # It can be app/infra
   chaosType: 'infra' 
   #ex. values: ns1:name=percona,ns2:run=nginx 
-  auxiliaryAppInfo: ""
+  auxiliaryAppInfo: ''
   appinfo:
-    appns: default
+    appns: 'default'
     applabel: 'app=percona'
-    appkind: deployment
+    appkind: 'deployment'
   chaosServiceAccount: nginx-sa
   monitoring: false
   components:
     runner:
-      image: "litmuschaos/chaos-executor:1.0.0"
-      type: "go"
+      image: 'litmuschaos/chaos-executor:1.0.0'
+      type: 'go'
   # It can be delete/infra
-  jobCleanUpPolicy: delete
+  jobCleanUpPolicy: 'delete'
   experiments:
     - name: openebs-target-container-failure
       spec:
