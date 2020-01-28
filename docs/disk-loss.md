@@ -285,3 +285,7 @@ spec:
 -   Check whether the application is resilient to the disk loss, once the experiment (job) is completed. The ChaosResult resource name is derived like this: <ChaosEngine-Name>-<ChaosExperiment-Name>.
 
 `kubectl describe chaosresult nginx-chaos-disk-loss -n <CHAOS_NAMESPACE>`
+
+## Disk Loss Experiment Demo [TODO]
+
+- A sample recording of this experiment execution is provided here.
