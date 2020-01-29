@@ -185,10 +185,10 @@ metadata:
   name: target-chaos
   namespace: default
 spec:
-  # It can be app/infra
-  chaosType: 'infra' 
+  # It can be true/false
+  annotationCheck: 'false'
   #ex. values: ns1:name=percona,ns2:run=nginx 
-  auxiliaryAppInfo: ""
+  auxiliaryAppInfo: ''
   appinfo:
     appns: default
     applabel: 'app=percona'
@@ -197,8 +197,8 @@ spec:
   monitoring: false
   components:
     runner:
-      image: "litmuschaos/chaos-executor:1.0.0"
-      type: "go"
+      image: 'litmuschaos/chaos-executor:1.0.0'
+      type: 'go'
   # It can be delete/infra
   jobCleanUpPolicy: delete
   experiments:

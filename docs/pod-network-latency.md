@@ -188,16 +188,16 @@ spec:
               value: default
             #Container name where chaos has to be injected
             - name: TARGET_CONTAINER
-              value: "nginx" 
+              value: 'nginx'
             #Network interface inside target container
             - name: NETWORK_INTERFACE
               value: eth0                   
             - name: LIB_IMAGE
               value: gaiaadm/pumba:0.6.5
             - name: NETWORK_LATENCY
-              value: "2000"
+              value: '2000'
             - name: TOTAL_CHAOS_DURATION
-              value: "60000"
+              value: '60000'
             - name: LIB
               value: pumba
 ```

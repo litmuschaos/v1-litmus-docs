@@ -210,9 +210,9 @@ spec:
           env:
             # specify the fill percentage according to the disk pressure required
             - name: FILL_PERCENTAGE
-              value: "80"
+              value: '80'
             - name: TARGET_CONTAINER
-              value: "nginx"
+              value: 'nginx'
 ```
 
 ### Create the ChaosEngine Resource

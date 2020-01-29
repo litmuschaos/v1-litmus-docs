@@ -136,10 +136,10 @@ metadata:
   name: kafka-chaos
   namespace: default
 spec:
-  # It can be app/infra
-  chaosType: 'app'
+  # It can be true/false
+  annotationCheck: 'true'
   #ex. values: ns1:name=percona,ns2:run=nginx 
-  auxiliaryAppInfo: ""
+  auxiliaryAppInfo: ''
   appinfo: 
     appns: default
     applabel: 'app=cp-kafka'
@@ -148,8 +148,8 @@ spec:
   monitoring: false
   components:
     runner:
-      image: "litmuschaos/chaos-executor:1.0.0"
-      type: "go"
+      image: 'litmuschaos/chaos-executor:1.0.0'
+      type: 'go'
   # It can be delete/retain
   jobCleanUpPolicy: delete 
   experiments:
