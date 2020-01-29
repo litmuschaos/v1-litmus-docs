@@ -194,9 +194,9 @@ spec:
             - name: NETWORK_INTERFACE
               value: eth0                    
             - name: NETWORK_PACKET_LOSS_PERCENTAGE
-              value: "100"
+              value: '100'
             - name: TOTAL_CHAOS_DURATION
-              value: "60000"
+              value: '60000'
             - name: LIB
               value: pumba
 ```

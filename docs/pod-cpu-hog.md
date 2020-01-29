@@ -176,10 +176,10 @@ spec:
               #number of cpu cores to be consumed
               #verify the resources the app has been launched with
             - name: CPU_CORES
-              value: "1"
+              value: '1'
               # in ms 
             - name: TOTAL_CHAOS_DURATION
-              value: "60000" 
+              value: '60000' 
           
 ```
 
