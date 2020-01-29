@@ -155,67 +155,68 @@ spec:
   experiments:
     - name: kafka-broker-disk-failure
       spec:
-        components:  
-          # choose based on available kafka broker replicas           
-          - name: KAFKA_REPLICATION_FACTOR
-            value: '3'
+        components:
+          env:  
+            # choose based on available kafka broker replicas           
+            - name: KAFKA_REPLICATION_FACTOR
+              value: '3'
 
-          # get via "kubectl get pods --show-labels -n <kafka-namespace>"
-          - name: KAFKA_LABEL
-            value: 'app=cp-kafka'
+            # get via "kubectl get pods --show-labels -n <kafka-namespace>"
+            - name: KAFKA_LABEL
+              value: 'app=cp-kafka'
 
-          - name: KAFKA_NAMESPACE
-            value: 'default'
+            - name: KAFKA_NAMESPACE
+              value: 'default'
      
-          # get via "kubectl get svc -n <kafka-namespace>" 
-          - name: KAFKA_SERVICE
-            value: 'kafka-cp-kafka-headless'
+            # get via "kubectl get svc -n <kafka-namespace>" 
+            - name: KAFKA_SERVICE
+              value: 'kafka-cp-kafka-headless'
 
-          # get via "kubectl get svc -n <kafka-namespace>  
-          - name: KAFKA_PORT
-            value: '9092'
+            # get via "kubectl get svc -n <kafka-namespace>  
+            - name: KAFKA_PORT
+              value: '9092'
 
-          # in milliseconds  
-          - name: KAFKA_CONSUMER_TIMEOUT
-            value: '70000'
+            # in milliseconds  
+            - name: KAFKA_CONSUMER_TIMEOUT
+              value: '70000'
 
-          # ensure to set the instance name if using KUDO operator
-          - name: KAFKA_INSTANCE_NAME
-            value: ''
+            # ensure to set the instance name if using KUDO operator
+            - name: KAFKA_INSTANCE_NAME
+              value: ''
 
-          - name: ZOOKEEPER_NAMESPACE
-            value: 'default'
+            - name: ZOOKEEPER_NAMESPACE
+              value: 'default'
 
-          # get via "kubectl get pods --show-labels -n <zk-namespace>"
-          - name: ZOOKEEPER_LABEL
-            value: 'app=cp-zookeeper'
+            # get via "kubectl get pods --show-labels -n <zk-namespace>"
+            - name: ZOOKEEPER_LABEL
+              value: 'app=cp-zookeeper'
 
-          # get via "kubectl get svc -n <zk-namespace>  
-          - name: ZOOKEEPER_SERVICE
-            value: 'kafka-cp-zookeeper-headless'
+            # get via "kubectl get svc -n <zk-namespace>  
+            - name: ZOOKEEPER_SERVICE
+              value: 'kafka-cp-zookeeper-headless'
 
-          # get via "kubectl get svc -n <zk-namespace>  
-          - name: ZOOKEEPER_PORT
-            value: '2181'
+            # get via "kubectl get svc -n <zk-namespace>  
+            - name: ZOOKEEPER_PORT
+              value: '2181'
 
-          # get from google cloud console or "gcloud projects list"
-          - name: PROJECT_ID
-            value: 'argon-tractor-237811'
+            # get from google cloud console or "gcloud projects list"
+            - name: PROJECT_ID
+              value: 'argon-tractor-237811'
 
-          # attached to (in use by) node where 'kafka-0' is scheduled
-          - name: DISK_NAME
-            value: 'disk-1'
+            # attached to (in use by) node where 'kafka-0' is scheduled
+            - name: DISK_NAME
+              value: 'disk-1'
 
-          - name: ZONE_NAME
-            value: 'us-central1-a'
+            - name: ZONE_NAME
+              value: 'us-central1-a'
 
-          # Uses "disk-1" attached to the node on which it is scheduled
-          - name: KAFKA_BROKER
-            value: 'kafka-0'
+            # Uses "disk-1" attached to the node on which it is scheduled
+            - name: KAFKA_BROKER
+              value: 'kafka-0'
 
-          # set chaos duration (in sec) as desired
-          - name: TOTAL_CHAOS_DURATION
-            value: '60'
+            # set chaos duration (in sec) as desired
+            - name: TOTAL_CHAOS_DURATION
+              value: '60'
             
 ```
 ### Create the ChaosEngine Resource 

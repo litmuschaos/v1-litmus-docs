@@ -207,11 +207,12 @@ spec:
     - name: disk-fill
       spec:
         components:
-           # specify the fill percentage according to the disk pressure required
-          - name: FILL_PERCENTAGE
-            value: '80'
-          - name: TARGET_CONTAINER
-            value: 'nginx'
+          env:
+            # specify the fill percentage according to the disk pressure required
+            - name: FILL_PERCENTAGE
+              value: "80"
+            - name: TARGET_CONTAINER
+              value: "nginx"
 ```
 
 ### Create the ChaosEngine Resource
@@ -236,6 +237,6 @@ spec:
 
   `kubectl describe chaosresult nginx-chaos-disk-fill -n <application-namespace>`
 
-## Application Container Kill Demo [TODO]
+## Disk Fill Experiment Demo [TODO]
 
 - A sample recording of this experiment execution is provided here.

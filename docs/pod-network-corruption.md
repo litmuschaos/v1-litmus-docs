@@ -182,14 +182,15 @@ spec:
     - name: pod-network-corruption
       spec:
         components:
-        - name: ANSIBLE_STDOUT_CALLBACK
-          value: default
-        - name: TARGET_CONTAINER
-          #Container name where chaos has to be injected
-          value: 'nginx'
-        - name: NETWORK_INTERFACE
-          #Network interface inside target container
-          value: eth0                   
+          env:
+            - name: ANSIBLE_STDOUT_CALLBACK
+              value: default
+            #Container name where chaos has to be injected
+            - name: TARGET_CONTAINER
+              value: "nginx" 
+              #Network interface inside target container
+            - name: NETWORK_INTERFACE
+              value: eth0                   
 ```
 ### Create the ChaosEngine Resource
 

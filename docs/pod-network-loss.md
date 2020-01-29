@@ -182,22 +182,23 @@ spec:
     - name: pod-network-loss
       spec:
         components:
-        - name: ANSIBLE_STDOUT_CALLBACK
-          value: default
-        - name: TARGET_CONTAINER
-          #Container name where chaos has to be injected
-          value: 'nginx'
-        - name: LIB_IMAGE
-          value: gaiaadm/pumba:0.6.5
-        - name: NETWORK_INTERFACE
-          #Network interface inside target container
-          value: eth0                    
-        - name: NETWORK_PACKET_LOSS_PERCENTAGE
-          value: '100'
-        - name: TOTAL_CHAOS_DURATION
-          value: '60000'
-        - name: LIB
-          value: pumba
+          env:
+            - name: ANSIBLE_STDOUT_CALLBACK
+              value: default
+            #Container name where chaos has to be injected
+            - name: TARGET_CONTAINER
+              value: "nginx" 
+            - name: LIB_IMAGE
+              value: gaiaadm/pumba:0.6.5
+            #Network interface inside target container
+            - name: NETWORK_INTERFACE
+              value: eth0                    
+            - name: NETWORK_PACKET_LOSS_PERCENTAGE
+              value: "100"
+            - name: TOTAL_CHAOS_DURATION
+              value: "60000"
+            - name: LIB
+              value: pumba
 ```
 ### Create the ChaosEngine Resource
 
