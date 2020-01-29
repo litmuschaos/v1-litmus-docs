@@ -186,7 +186,7 @@ spec:
               value: '10'
             # pod failures without '--force' & default terminationGracePeriodSeconds
             - name: FORCE
-              value: "false"
+              value: 'false'
 ```
 
 ### Create the ChaosEngine Resource

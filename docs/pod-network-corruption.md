@@ -187,7 +187,7 @@ spec:
               value: default
             #Container name where chaos has to be injected
             - name: TARGET_CONTAINER
-              value: "nginx" 
+              value: 'nginx'
               #Network interface inside target container
             - name: NETWORK_INTERFACE
               value: eth0                   
