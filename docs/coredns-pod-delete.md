@@ -118,14 +118,14 @@ spec:
     appns: kube-system
     applabel: 'k8s-app=kube-dns'
     appkind: deployment
-  # It can be infra only
-  chaosType: 'infra'
+  # It can be true/false
+  annotationCheck: 'false'
   #ex. values: ns1:name=percona,ns2:run=nginx 
-  auxiliaryAppInfo: ""
+  auxiliaryAppInfo: ''
   components:
     runner:
-       image: "litmuschaos/chaos-executor:1.0.0"
-       type: "go"
+       image: 'litmuschaos/chaos-executor:1.0.0'
+       type: 'go'
   chaosServiceAccount: coredns-sa
   monitoring: false
   # It can be delete/retain
