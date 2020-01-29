@@ -149,8 +149,8 @@ metadata:
   name: engine-nginx
   namespace: default
 spec:
-  # It can be app/infra
-  chaosType: 'app'
+  # It can be true/false
+  annotationCheck: 'true'
   #ex. values: ns1:name=percona,ns2:run=nginx  
   auxiliaryAppInfo: ''
   components:
