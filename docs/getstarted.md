@@ -158,7 +158,7 @@ spec:
       image: 'litmuschaos/chaos-executor:1.0.0'
       type: 'go'
   # It can be delete/retain
-  jobCleanUpPolicy: delete
+  jobCleanUpPolicy: 'delete'
   monitoring: false
   appinfo: 
     appns: 'default' 

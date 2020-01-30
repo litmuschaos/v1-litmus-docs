@@ -150,8 +150,8 @@ spec:
     appns: 'kube-system'
     applabel: 'k8s-app=kube-dns'
     appkind: 'deployment'
-  # It can be infra only
-  chaosType: 'infra'
+  # It can be true/false
+  annotationCheck: 'false'
   #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ''
   components:
