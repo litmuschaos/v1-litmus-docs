@@ -158,13 +158,13 @@ spec:
       image: 'litmuschaos/chaos-executor:1.0.0'
       type: 'go'
   # It can be delete/retain
-  jobCleanUpPolicy: delete
+  jobCleanUpPolicy: 'delete'
   monitoring: false
   appinfo: 
-    appns: default 
+    appns: 'default' 
     # FYI, To see app label, apply kubectl get pods --show-labels
     applabel: 'app=nginx'
-    appkind: deployment
+    appkind: 'deployment'
   chaosServiceAccount: nginx-sa
   experiments:
     - name: container-kill
