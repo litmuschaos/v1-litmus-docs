@@ -1,30 +1,22 @@
 ---
-id: container-kill
+id: version-1.0.0-container-kill
 title: Container Kill Experiment Details
 sidebar_label: Container Kill
+original_id: container-kill
 ---
 ------
 
 ## Experiment Metadata
 
-<table>
-  <tr>
-    <th> Type </th>
-    <th> Description </th>
-    <th> Tested K8s Platform </th>
-  </tr>
-  <tr>
-    <td> Generic </td>
-    <td> Kill one container in the application pod </td>
-    <td> GKE, Packet(Kubeadm), Minikube </td>
-  </tr>
-</table>
+| Type      | Description              | Tested K8s Platform                                               |
+| ----------| ------------------------ | ------------------------------------------------------------------|
+| Generic   | Kill one container in the application pod | GKE, Packet(Kubeadm), Minikube|
 
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
 - Ensure that the `container-kill` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/container-kill)
-- Cluster should have docker runtime, if the chaos_lib is `pumba`. It should have containerd runtime in cluster, if the chaos_lib is `containerd`.
+- Cluster must run docker container runtime
 
 ## Entry Criteria
 
@@ -36,21 +28,17 @@ sidebar_label: Container Kill
 
 ## Details
 
-- Pumba chaoslib details
-    - Kills one container in the specified application pod by sending SIGKILL termination signal to its docker socket (hence docker runtime is required)
-    - Containers are killed using the `kill` command provided by [pumba](https://github.com/alexei-led/pumba)
-    - Pumba is run as a daemonset on all nodes in dry-run mode to begin with the `kill` command is issued during experiment execution via `kubectl exec`
-- Containerd chaoslib details
-    - Kills one container in the specified application pod by `crictl-chaos` Lib.
-    - Containers are killed using the `crictl stop` command.
-    - containerd-chaos is run as a daemonset on all nodes in dry-run mode to begin with the `stop` command is issued during experiment execution via `kubectl exec` 
+- Kills one container in the specified application pod by sending SIGKILL termination signal to its docker socket (hence docker runtime is required)
+- Containers are killed using the `kill` command provided by [pumba](https://github.com/alexei-led/pumba)
+- Pumba is run as a daemonset on all nodes in dry-run mode to begin with; the `kill` command is issued during experiment execution via `kubectl exec`
 - Tests deployment sanity (replica availability & uninterrupted service) and recovery workflow of the application
 - Good for testing recovery of pods having side-car containers
 
 ## Integrations
 
-- Container kill is achieved using the `pumba` or `containerd_chaos` chaos library
-- The desired pumba and containerd image can be configured in the env variable `LIB_IMAGE`. 
+- Container kill is achieved using the `pumba` chaos library
+- The desired pumba image can be configured in the env variable `LIB_IMAGE`. 
+<!--- For the furute, other chaoslibs might be added which do not depend on docker runtime. The LIB env varable must be added then.-->
 
 ## Steps to Execute the Chaos Experiment
 
@@ -73,6 +61,7 @@ metadata:
   labels:
     name: nginx-sa
 ---
+# Source: openebs/templates/clusterrole.yaml
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: Role
 metadata:
@@ -98,6 +87,7 @@ subjects:
 - kind: ServiceAccount
   name: nginx-sa
   namespace: default
+
 ```
 
 ### Prepare ChaosEngine
@@ -108,37 +98,32 @@ subjects:
 #### Supported Experiment Tunables
 
 <table>
-  <tr>
-    <th> Variables </th>
-    <th> Description  </th>
-    <th> Type </th>
-    <th> Notes </th>
-  </tr>
-  <tr>
-    <td> TARGET_CONTAINER  </td>
-    <td> The container to be killed inside the pod </td>
-    <td> Mandatory </td>
-    <td> If the TARGET_CONTAINER is not provided it will delete the first container </td>
-  </tr>
-  <tr>
-    <td> LIB_IMAGE  </td>
-    <td> The pumba/containerd image used to run the kill command </td>
-    <td> Optional </td>
-    <td> Defaults to `gaiaadm/pumba:0.4.8`,For containerd runtime use `gprasath/crictl:ci`. Note: pumba images >=0.6 do not work with this experiment. </td>
-  </tr>
-  <tr>
-    <td> LIB  </td>
-    <td> The category of lib use to inject chaos </td>
-    <td> Optional  </td>
-    <td> It can be pumba or containerd </td>
-  </tr>
-  <tr>
-    <td> RAMP_TIME </td>
-    <td> Period to wait before injection of chaos in sec </td>
-    <td> Optional  </td>
-    <td> </td>
-  </tr>
+<tr>
+<th> Variables </th>
+<th> Description  </th>
+<th> Type </th>
+<th> Notes </th>
+</tr>
+<tr>
+<td> TARGET_CONTAINER  </td>
+<td> The container to be killed inside the pod </td>
+<td> Mandatory </td>
+<td> If the TARGET_CONTAINER is not provided it will delete the first container </td>
+</tr>
+<tr>
+<td> LIB_IMAGE  </td>
+<td> The pumba image used to run the kill command </td>
+<td> Optional </td>
+<td> Defaults to `gaiaadm/pumba:0.4.8`. Note: pumba images >=0.6 do not work with this experiment. </td>
+</tr>
+<tr>
+<td> LIB  </td>
+<td> The category of lib use to inject chaos </td>
+<td> Optional  </td>
+<td> Only `pumba` supported currently </td>
+</tr>
 </table>
+
 
 #### Sample ChaosEngine Manifest
 
@@ -149,30 +134,29 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
-  # It can be true/false
-  annotationCheck: 'true'
+  # It can be app/infra
+  chaosType: 'app'
   #ex. values: ns1:name=percona,ns2:run=nginx 
-  auxiliaryAppInfo: ''
+  auxiliaryAppInfo: ""
   appinfo:
-    appns: 'default'
+    appns: default
     applabel: 'app=nginx'
-    appkind: 'deployment'
+    appkind: deployment
   chaosServiceAccount: nginx-sa
   monitoring: false
   components:
     runner:
-      image: 'litmuschaos/chaos-executor:1.0.0'
-      type: 'go'
+      image: "litmuschaos/chaos-executor:1.0.0"
+      type: "go"
   # It can be delete/retain
-  jobCleanUpPolicy: 'delete' 
+  jobCleanUpPolicy: delete 
   experiments:
     - name: container-kill
       spec:
         components:
-          env:
-             # specify the name of the container to be killed
-            - name: TARGET_CONTAINER
-              value: 'nginx'
+           # specify the name of the container to be killed
+          - name: TARGET_CONTAINER
+            value: 'nginx'
 ```
 
 ### Create the ChaosEngine Resource
@@ -196,3 +180,4 @@ spec:
 ## Application Container Kill Demo 
 
 - A sample recording of this experiment execution is provided [here](https://youtu.be/XKyMNdVsKMo).
+

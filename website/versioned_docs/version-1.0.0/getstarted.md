@@ -1,7 +1,8 @@
 ---
-id: getstarted 
+id: version-1.0.0-getstarted
 title: Getting Started with Litmus
 sidebar_label: Introduction
+original_id: getstarted
 ---
 ------
 
@@ -102,7 +103,6 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: nginx-sa
-  namespace: default # App namespace
   labels:
     app: nginx-sa
 ---
@@ -111,9 +111,9 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: nginx-sa
 rules:
-- apiGroups: ["", "apps", "batch", "litmuschaos.io"]
-  resources: ["daemonsets", "jobs", "pods", "pods/exec", "chaosengines", "chaosexperiments", "chaosresults"]
-  verbs: ["create", "list", "get", "update", "patch", "delete"] 
+- apiGroups: ["", "extensions", "apps", "batch", "litmuschaos.io"]
+  resources: ["daemonsets", "deployments", "replicasets", "jobs", "pods", "pods/exec","nodes","events", "chaosengines", "chaosexperiments", "chaosresults"]
+  verbs: ["*"] 
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -149,30 +149,29 @@ metadata:
   name: engine-nginx
   namespace: default
 spec:
-  # It can be true/false
-  annotationCheck: 'true'
+  # It can be app/infra
+  chaosType: 'app'
   #ex. values: ns1:name=percona,ns2:run=nginx  
-  auxiliaryAppInfo: ''
+  auxiliaryAppInfo: ""
   components:
     runner:
-      image: 'litmuschaos/chaos-executor:1.0.0'
-      type: 'go'
+      image: "litmuschaos/chaos-executor:1.0.0"
+      type: "go"
   # It can be delete/retain
-  jobCleanUpPolicy: 'delete'
+  jobCleanUpPolicy: delete
   monitoring: false
   appinfo: 
-    appns: 'default' 
+    appns: default 
     # FYI, To see app label, apply kubectl get pods --show-labels
-    applabel: 'app=nginx'
-    appkind: 'deployment'
-  chaosServiceAccount: nginx-sa
+    applabel: "app=nginx" 
+    appkind: deployment
+  chaosServiceAccount: nginx 
   experiments:
     - name: container-kill
       spec:
         components:
-          env:
-            - name: TARGET_CONTAINER
-              value: nginx
+        - name: TARGET_CONTAINER
+          value: nginx
 ```
 
 ### Override Default Chaos Experiments Variables

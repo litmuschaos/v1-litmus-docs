@@ -1,7 +1,8 @@
 ---
-id: cpu-hog
+id: version-1.0.0-cpu-hog
 title: CPU Hog Experiment Details
 sidebar_label: CPU Hog
+original_id: cpu-hog
 ---
 ------
 
