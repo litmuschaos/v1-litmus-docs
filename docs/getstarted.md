@@ -70,6 +70,24 @@ Expected output:
 >
 > chaosresults.litmuschaos.io             2019-10-02T08:45:26Z
 
+- Verify if the chaos api resources are successfully created in the desired (application) namespace.
+ 
+  *Note*: Sometimes, it can take a few seconds for the resources to be available post the CRD installation
+
+```
+kubectl api-resources | grep chaos
+```
+
+Expected output: 
+
+> chaosengines							    litmuschaos.io 			     true	  ChaosEngine
+>
+> chaosexperiments                                                  litmuschaos.io                           true         ChaosExperiment
+>
+> chaosresults                                                      litmuschaos.io                           true         ChaosResult
+
+ 
+
 <div class="danger">
 <strong>NOTE</strong>: 
 In this guide, we shall describe the steps to inject chaos on an application
@@ -83,7 +101,7 @@ Chaos experiments contain the actual chaos details. These experiments are instal
 The generic chaos experiments such as `pod-kill`,  `container-kill`,` network-delay` are available under Generic Chaos Chart. This is the first chart you install. You can later install application specific chaos charts for running application oriented chaos.
 
 ```
-kubectl create -f https://hub.litmuschaos.io/api/chaos?file=charts/generic/experiments.yaml
+kubectl apply -f https://hub.litmuschaos.io/api/chaos?file=charts/generic/experiments.yaml
 ```
 
 Verify if the chaos experiments are installed.
@@ -195,7 +213,7 @@ experiments:
 
 
 ```console
-kubectl create -f chaosengine.yaml
+kubectl apply -f chaosengine.yaml
 ```
 
 <div class="danger">
