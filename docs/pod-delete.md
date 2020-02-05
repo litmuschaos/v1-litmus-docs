@@ -69,6 +69,7 @@ apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: Role
 metadata:
   name: nginx-sa
+  namespace: default
   labels:
     name: nginx-sa
 rules:
@@ -83,6 +84,7 @@ apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
 metadata:
   name: nginx-sa
+  namespace: default
   labels:
     name: nginx-sa
 roleRef:
