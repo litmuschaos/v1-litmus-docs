@@ -6,9 +6,20 @@ sidebar_label: Broker Disk Failure
 
 ## Experiment Metadata
 
-| Type  | Description                    | Kafka Distribution   | Tested K8s Platform
-| ----- | -------------------------------|----------------------|---------------------
-| Kafka | Fail kafka broker disk/storage | Confluent, Kudo-Kafka| GKE
+<table>
+  <tr>
+    <th> Type </th>
+    <th> Description  </th>
+    <th> Kafka Distribution </th>
+    <th> Tested K8s Platform </th>
+  </tr>
+  <tr>
+    <td> Kafka </td>
+    <td> Fail kafka broker disk/storage </td>
+    <td> Confluent, Kudo-Kafka </td>
+    <td> GKE </td>
+  </tr>
+</table>
 
 ## Prerequisites
 
@@ -104,28 +115,134 @@ subjects:
 
 #### Supported Experiment Tunables
 
-| Variables             | Description                                                  |Type       | Notes                                                   |
-| ----------------------| ------------------------------------------------------------ |-----------|---------------------------------------------------------|
-| KAFKA_NAMESPACE       | Namespace of Kafka Brokers                                   | Mandatory | May be same as value for `spec.appinfo.appns`           |
-| KAFKA_LABEL           | Unique label of Kafka Brokers                                | Mandatory | May be same as value for `spec.appinfo.applabel`        |
-| KAFKA_SERVICE         | Headless service of the Kafka Statefulset                    | Mandatory |                                                         |
-| KAFKA_PORT            | Port of the Kafka ClusterIP service                          | Mandatory |                                                         |
-| ZOOKEEPER_NAMESPACE   | Namespace of Zookeeper Cluster                               | Mandatory | May be same as value for KAFKA_NAMESPACE or other       |
-| ZOOKEEPER_LABEL       | Unique label of Zokeeper statefulset                         | Mandatory |                                                         |
-| ZOOKEEPER_SERVICE     | Headless service of the Zookeeper Statefulset                | Mandatory |                                                         |
-| ZOOKEEPER_PORT        | Port of the Zookeeper ClusterIP service                      | Mandatory |                                                         |
-| CLOUD_PLATFORM        | Cloud platform type on which to inject disk loss             | Mandatory | Supported platforms: GCP                                |
-| PROJECT_ID            | GCP Project ID in which the Cluster is created               | Mandatory |                                                         |
-| DISK_NAME             | GCloud Disk attached to the Cluster Node where specified broker is scheduled | Mandatory |                                         |
-| ZONE_NAME             | Zone in which the Disks/Cluster are created                  | Mandatory |                                                         |
-| KAFKA_BROKER          | Kafka broker pod which is using the specified disk           | Mandatory | Experiment verifies this by mapping node details        |
-| KAFKA_KIND            | Kafka deployment type                                        | Optional  | Same as `spec.appinfo.appkind`. Supported: `statefulset`| 
-| KAFKA_LIVENESS_STREAM | Kafka liveness message stream                                | Optional  | Supported: `enabled`, `disabled`                        |
-| KAFKA_LIVENESS_IMAGE	| Image used for liveness message stream                       | Optional  | Image as `<registry_url>/<repository>/<image>:<tag>`    |
-| KAFKA_REPLICATION_FACTOR| Number of partition replicas for liveness topic partition  | Optional  | Necessary if KAFKA_LIVENESS_STREAM is `enabled`         |
-| KAFKA_INSTANCE_NAME   | Name of the Kafka chroot path on zookeeper                   | Optional  | Necessary if installation involves use of such path     |
-| KAFKA_CONSUMER_TIMEOUT| Kafka consumer message timeout, post which it terminates     | Optional  | Defaults to 30000ms                                     |
-| TOTAL_CHAOS_DURATION  | The time duration for chaos insertion (seconds)              | Optional  | Defaults to 15s                                         |
+<table>
+  <tr>
+    <th> Parameter </th>
+    <th> Description  </th>
+    <th> Type </th>
+    <th> Notes </th>
+  </tr>
+  <tr>
+    <td> KAFKA_NAMESPACE </td>
+    <td> Namespace of Kafka Brokers </td>
+    <td> Mandatory </td>
+    <td> May be same as value for `spec.appinfo.appns` </td>
+  </tr>
+  <tr>
+    <td> KAFKA_LABEL </td>
+    <td> Unique label of Kafka Brokers </td>
+    <td> Mandatory </td>
+    <td> May be same as value for `spec.appinfo.applabel` </td>
+  </tr>
+  <tr>
+    <td> KAFKA_SERVICE </td>
+    <td> Headless service of the Kafka Statefulset </td>
+    <td> Mandatory </td>
+    <td>  </td>
+  </tr>
+  <tr>
+    <td> KAFKA_PORT </td>
+    <td> Port of the Kafka ClusterIP service </td>
+    <td> Mandatory </td>
+    <td>  </td>
+  </tr>
+  <tr>
+    <td> ZOOKEEPER_NAMESPACE </td>
+    <td> Namespace of Zookeeper Cluster </td>
+    <td> Mandatory </td>
+    <td> May be same as value for KAFKA_NAMESPACE or other </td>
+  </tr>
+  <tr>
+    <td> ZOOKEEPER_LABEL </td>
+    <td> Unique label of Zokeeper statefulset </td>
+    <td> Mandatory </td>
+    <td>  </td>
+  </tr>
+  <tr>
+    <td> ZOOKEEPER_SERVICE </td>
+    <td> Headless service of the Zookeeper Statefulset </td>
+    <td> Mandatory </td>
+    <td>  </td>
+  </tr>
+  <tr>
+    <td> ZOOKEEPER_PORT </td>
+    <td> Port of the Zookeeper ClusterIP service </td>
+    <td> Mandatory </td>
+    <td>  </td>
+  </tr>
+  <tr>
+    <td> CLOUD_PLATFORM </td>
+    <td> Cloud platform type on which to inject disk loss </td>
+    <td> Mandatory </td>
+    <td> Supported platforms: GCP </td>
+  </tr>
+  <tr>
+    <td> PROJECT_ID </td>
+    <td> GCP Project ID in which the Cluster is created </td>
+    <td> Mandatory </td>
+    <td>  </td>
+  </tr>
+  <tr>
+    <td> DISK_NAME </td>
+    <td> GCloud Disk attached to the Cluster Node where specified broker is scheduled </td>
+    <td> Mandatory </td>
+    <td>  </td>
+  </tr>
+  <tr>
+    <td> ZONE_NAME </td>
+    <td> Zone in which the Disks/Cluster are created </td>
+    <td> Mandatory </td>
+    <td>  </td>
+  </tr>
+  <tr>
+    <td> KAFKA_BROKER </td>
+    <td> Kafka broker pod which is using the specified disk </td>
+    <td> Mandatory </td>
+    <td> Experiment verifies this by mapping node details </td>
+  </tr>
+  <tr>
+    <td> KAFKA_KIND </td>
+    <td> Kafka deployment type </td>
+    <td> Optional </td>
+    <td> Same as `spec.appinfo.appkind`. Supported: `statefulset` </td>
+  </tr>
+  <tr>
+    <td> KAFKA_LIVENESS_STREAM </td>
+    <td> Kafka liveness message stream </td>
+    <td> Optional </td>
+    <td> Supported: `enabled`, `disabled` </td>
+  </tr>
+  <tr>
+    <td> KAFKA_LIVENESS_IMAGE </td>
+    <td> Image used for liveness message stream </td>
+    <td> Optional </td>
+    <td> Image as `<registry_url>/<repository>/<image>:<tag>` </td>
+  </tr>
+  <tr>
+    <td> KAFKA_REPLICATION_FACTOR </td>
+    <td> Number of partition replicas for liveness topic partition </td>
+    <td> Optional </td>
+    <td> Necessary if KAFKA_LIVENESS_STREAM is `enabled` </td>
+  </tr>
+  <tr>
+    <td> KAFKA_INSTANCE_NAME </td>
+    <td> Name of the Kafka chroot path on zookeeper </td>
+    <td> Optional </td>
+    <td> Necessary if installation involves use of such path </td>
+  </tr>
+  <tr>
+    <td> KAFKA_CONSUMER_TIMEOUT </td>
+    <td> Kafka consumer message timeout, post which it terminates </td>
+    <td> Optional </td>
+    <td> Defaults to 30000ms </td>
+  </tr>
+  <tr>
+    <td> TOTAL_CHAOS_DURATION </td>
+    <td> The time duration for chaos insertion (seconds) </td>
+    <td> Optional </td>
+    <td> Defaults to 15s </td>
+  </tr>
+</table>
 
 #### Sample ChaosEngine Manifest
 
@@ -141,9 +258,9 @@ spec:
   #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ''
   appinfo: 
-    appns: default
+    appns: 'default'
     applabel: 'app=cp-kafka'
-    appkind: statefulset
+    appkind: 'statefulset'
   chaosServiceAccount: kafka-sa
   monitoring: false
   components:
@@ -151,7 +268,7 @@ spec:
       image: 'litmuschaos/chaos-executor:1.0.0'
       type: 'go'
   # It can be delete/retain
-  jobCleanUpPolicy: delete 
+  jobCleanUpPolicy: 'delete'
   experiments:
     - name: kafka-broker-disk-failure
       spec:
@@ -216,8 +333,7 @@ spec:
 
             # set chaos duration (in sec) as desired
             - name: TOTAL_CHAOS_DURATION
-              value: '60'
-            
+              value: '60'           
 ```
 ### Create the ChaosEngine Resource 
 

@@ -7,9 +7,18 @@ sidebar_label: CoreDNS Pod Delete
 
 ## Experiment Metadata
 
-| Type      | Description                   | Tested K8s Platform    |
-| ----------| ------------------------------| ---------------------- |
-| CoreDNS   | CoreDNS pod delete experiment | Kubeadm, Minikube      |
+<table>
+  <tr>
+    <th> Type </th>
+    <th> Description </th>
+    <th> Tested K8s Platform </th>
+  </tr>
+  <tr>
+    <td> CoreDNS </td>
+    <td> CoreDNS pod delete experiment </td>
+    <td> Kubeadm, Minikube </td>
+  </tr>
+</table>
 
 ## Prerequisites
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
@@ -96,15 +105,38 @@ subjects:
 
 #### Supported Experiment Tunables
 
-| Variables             | Description                                         | Type      | Notes           |
-| ----------------------|-----------------------------------------------------|-----------|-----------------|
-| TOTAL_CHAOS_DURATION  | The time duration for chaos insertion (seconds)     | Mandatory | Defaults to 15s |
-| CHAOS_INTERVAL        | Time interval b/w two successive pod failures (sec) | Mandatory | Defaults to 5s  | 
-| APP_NAMESPACE         | Namespace in which application pods are deployed	  | Mandatory | Defaults to `kube-system` |
-| APP_LABEL             | Unique Labels in `key=value` format of application deployment	 | Mandatory | Defaults to `k8s-app=kube-dns` |
-| APP_KIND              | This describe the application Kind | Mandatory | Defaults to `Deployment` | 
-| CHAOS_NAMESPACE       | This ischaos namespace which will create all infra chaos resources in that namespace	| Mandatory | Default to `kube-system` |
-| LIB                   | The chaos lib used to inject the chaos              | Optional  | Defaults to `litmus`, Supported: `litmus`  |
+<table>
+  <tr>
+    <th> Variables </th>
+    <th> Description  </th>
+    <th> Type </th>
+    <th> Notes </th>
+  </tr>
+  <tr>
+    <td> TOTAL_CHAOS_DURATION </td>
+    <td> The time duration for chaos insertion (sec) </td>
+    <td> Optional </td>
+    <td> Defaults to 15s </td>
+  </tr>
+  <tr>
+    <td> CHAOS_INTERVAL </td>
+    <td> Time interval b/w two successive pod failures (sec) </td>
+    <td> Optional </td>
+    <td> Defaults to 5s </td>
+  </tr> 
+  <tr>
+    <td> CHAOS_NAMESPACE </td>
+    <td> This ischaos namespace which will create all infra chaos resources in that namespace </td>
+    <td> Mandatory </td>
+    <td> Default to `kube-system` </td>
+  </tr>
+  <tr>
+    <td> LIB  </td>
+    <td> The chaos lib used to inject the chaos </td>
+    <td> Optional  </td>
+    <td> Defaults to `litmus`, Supported: `litmus` </td>
+  </tr>
+</table>
 
 #### Sample ChaosEngine Manifest
 ```yaml
@@ -115,9 +147,9 @@ metadata:
   namespace: kube-system
 spec:
   appinfo:
-    appns: kube-system
+    appns: 'kube-system'
     applabel: 'k8s-app=kube-dns'
-    appkind: deployment
+    appkind: 'deployment'
   # It can be true/false
   annotationCheck: 'false'
   #ex. values: ns1:name=percona,ns2:run=nginx 
@@ -129,7 +161,7 @@ spec:
   chaosServiceAccount: coredns-sa
   monitoring: false
   # It can be delete/retain
-  jobCleanUpPolicy: delete
+  jobCleanUpPolicy: 'delete'
   experiments:
     - name: coredns-pod-delete
       spec:
@@ -142,18 +174,7 @@ spec:
             # set chaos interval (in sec) as desired
             - name: CHAOS_INTERVAL
               value: '10'
-            
-            - name: APP_NAMESPACE
-              value: 'kube-system'
-
-            # provide application labels
-            - name: APP_LABEL
-              value: 'k8s-app=kube-dns'
-
-            # provide application kind
-            - name: APP_KIND
-              value: 'deployment'
-            
+              
             - name: CHAOS_NAMESPACE
               value: 'kube-system'
 ```
@@ -168,7 +189,7 @@ spec:
 
 - View coredns pod terminations & recovery by setting up a watch on the coredns pods in the application namespace
 
-  `watch kubectl get pod coredns-xxxx -n kube-system` 
+  `watch kubectl get pods -n kube-system` 
 
 ### Check Chaos Experiment Result
 

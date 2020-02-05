@@ -8,16 +8,16 @@ sidebar_label: Node Drain
 ## Experiment Metadata
 
 <table>
-<tr>
-<th> Type </th>
-<th> Description  </th>
-<th> Tested K8s Platform </th>
-</tr>
-<tr>
-<td> Generic </td>
-<td> Drain the node where application pod is scheduled. </td>
-<td> GKE, AWS, Packet(Kubeadm), Konvoy(AWS) </td>
-</tr>
+  <tr>
+    <th> Type </th>
+    <th> Description  </th>
+    <th> Tested K8s Platform </th>
+  </tr>
+  <tr>
+    <td> Generic </td>
+    <td> Drain the node where application pod is scheduled. </td>
+    <td> GKE, AWS, Packet(Kubeadm), Konvoy(AWS) </td>
+  </tr>
 </table>
 
 ## Prerequisites
@@ -41,7 +41,6 @@ sidebar_label: Node Drain
 
 - This experiment drains the node where application pod is running and verifies if it is scheduled on another available node.
 - In the end of experiment it uncordons the specified node so that it can be utilised in future.
-
 
 ## Integrations
 
@@ -107,30 +106,30 @@ subjects:
 #### Supported Experiment Tunables
 
 <table>
-<tr>
-<th>  Variables </th>
-<th>  Description </th>
-<th> Type  </th>
-<th> Notes </th>
-</tr>
-<tr>
-<td> APP_NODE </td>
-<td> Name of the node to drain  </td>
-<td> Mandatory  </td>
-<td> </td>
-</tr>
-<tr>
-<td> TOTAL_CHAOS_DURATION </td>
-<td> The time duration for chaos insertion (seconds)  </td>
-<td> Optional </td>
-<td> Defaults to 60s </td>
-</tr>
-<tr>
-<td> RAMP_TIME </td>
-<td> Period to wait before injection of chaos in sec </td>
-<td> Optional  </td>
-<td> </td>
-</tr>
+  <tr>
+    <th>  Variables </th>
+    <th>  Description </th>
+    <th> Type  </th>
+    <th> Notes </th>
+  </tr>
+  <tr>
+    <td> APP_NODE </td>
+    <td> Name of the node to drain  </td>
+    <td> Mandatory  </td>
+    <td> </td>
+  </tr>
+  <tr>
+    <td> TOTAL_CHAOS_DURATION </td>
+    <td> The time duration for chaos insertion (seconds)  </td>
+    <td> Optional </td>
+    <td> Defaults to 60s </td>
+  </tr>
+  <tr>
+    <td> RAMP_TIME </td>
+    <td> Period to wait before injection of chaos in sec </td>
+    <td> Optional  </td>
+    <td> </td>
+  </tr>
 </table>
                       
 #### Sample ChaosEngine Manifest
@@ -147,9 +146,9 @@ spec:
   #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ''
   appinfo:
-    appns: default
+    appns: 'default'
     applabel: 'app=nginx'
-    appkind: deployment
+    appkind: 'deployment'
   chaosServiceAccount: nginx-sa
   monitoring: false
   components:
@@ -157,7 +156,7 @@ spec:
       image: 'litmuschaos/chaos-executor:1.0.0'
       type: 'go'
   # It can be delete/retain
-  jobCleanUpPolicy: delete
+  jobCleanUpPolicy: 'delete'
   experiments:
     - name: node-drain
       spec:

@@ -7,16 +7,16 @@ sidebar_label: Disk Loss
 ## Experiment Metadata
 
 <table>
-<tr>
-<th> Type </th>
-<th> Description  </th>
-<th> Tested K8s Platform </th>
-</tr>
-<tr>
-<td> Generic </td>
-<td> External disk loss from the node </td>
-<td> GKE, AWS(KOPS) </td>
-</tr>
+  <tr>
+    <th> Type </th>
+    <th> Description  </th>
+    <th> Tested K8s Platform </th>
+  </tr>
+  <tr>
+    <td> Generic </td>
+    <td> External disk loss from the node </td>
+    <td> GKE, AWS(KOPS) </td>
+  </tr>
 </table>
 
 ## Prerequisites
@@ -103,7 +103,6 @@ subjects:
 - kind: ServiceAccount
   name: nginx-sa
   namespace: default
-
 ```
 
 ### Prepare ChaosEngine
@@ -115,96 +114,96 @@ subjects:
 ### Supported Experiment Tunables for application
 
 <table>
-<tr>
-<th> Parameter </th>
-<th> Description  </th>
-<th> Type </th>
-<th> Notes </th>
-</tr>
-<tr>
-<td> CHAOS_NAMESPACE </td>
-<td> This is a chaos namespace which will create all infra chaos resources in that namespace </td>
-<td> Mandatory </td>
-<td>  </td>
-</tr>
-<tr>
-<td> CLOUD_PLATFORM </td>
-<td> Cloud Platform name </td>
-<td> Mandatory </td>
-<td>  </td>
-</tr>
-<tr>
-<td> PROJECT_ID </td>
-<td> GCP project ID, leave blank if it's AWS </td>
-<td> Mandatory </td>
-<td>  </td>
-</tr>
-<tr>
-<td> NODE_NAME </td>
-<td> Node name of the cluster </td>
-<td> Mandatory </td>
-<td>  </td>
-</tr>
-<tr>
-<td> DISK_NAME </td>
-<td> Disk Name of the node, it must be an external disk. </td>
-<td> Mandatory </td>
-<td>  </td>
-</tr>
-<tr>
-<td> DEVICE_NAME </td>
-<td> Enter the device name which you wanted to mount only for AWS. </td>
-<td> Mandatory </td>
-<td>  </td>
-</tr>
-<tr>
-<td> ZONE_NAME </td>
-<td> Zone Name for GCP and region name for AWS </td>
-<td> Mandatory </td>
-<td> Note: Use REGION_NAME for AWS </td>
-</tr>
-<tr>
-<td> CHAOSENGINE </td>
-<td> ChaosEngine CR name associated with the experiment instance </td>
-<td> Mandatory </td>
-<td>  </td>
-</tr>
-<tr>
-<td> CHAOS_SERVICE_ACCOUNT </td>
-<td> Service account used by the litmus </td>
-<td> Mandatory </td>
-<td>  </td>
-</tr>
-<tr>
-<td> TOTAL_CHAOS_DURATION </td>
-<td> The time duration for chaos insertion (sec) </td>
-<td> Optional </td>
-<td> Defaults to 15s </td>
-</tr>
-<tr>
-<td> APP_CHECK </td>
-<td> If it checks to true, the experiment will check the status of the application. </td>
-<td> Optional </td>
-<td>  </td>
-</tr>
-<tr>
-<td> APP_NAMESPACE </td>
-<td> Namespace in which application pods are deployed </td>
-<td> Optional </td>
-<td>  </td>
-</tr>
-<tr>
-<td> APP_LABEL </td>
-<td> Unique Labels in `key=value` format of application deployment </td>
-<td> Optional </td>
-<td>  </td>
-</tr>
-<tr>
-<td> RAMP_TIME </td>
-<td> Period to wait before injection of chaos in sec </td>
-<td> Optional  </td>
-<td> </td>
-</tr>
+  <tr>
+    <th> Parameter </th>
+    <th> Description  </th>
+    <th> Type </th>
+    <th> Notes </th>
+  </tr>
+  <tr>
+    <td> CHAOS_NAMESPACE </td>
+    <td> This is a chaos namespace which will create all infra chaos resources in that namespace </td>
+    <td> Mandatory </td>
+    <td>  </td>
+  </tr>
+  <tr>
+    <td> CLOUD_PLATFORM </td>
+    <td> Cloud Platform name </td>
+    <td> Mandatory </td>
+    <td>  </td>
+  </tr>
+  <tr>
+    <td> PROJECT_ID </td>
+    <td> GCP project ID, leave blank if it's AWS </td>
+    <td> Mandatory </td>
+    <td>  </td>
+  </tr>
+  <tr>
+    <td> NODE_NAME </td>
+    <td> Node name of the cluster </td>
+    <td> Mandatory </td>
+    <td>  </td>
+  </tr>
+  <tr>
+    <td> DISK_NAME </td>
+    <td> Disk Name of the node, it must be an external disk. </td>
+    <td> Mandatory </td>
+    <td>  </td>
+  </tr>
+  <tr>
+    <td> DEVICE_NAME </td>
+    <td> Enter the device name which you wanted to mount only for AWS. </td>
+    <td> Mandatory </td>
+    <td>  </td>
+  </tr>
+  <tr>
+    <td> ZONE_NAME </td>
+    <td> Zone Name for GCP and region name for AWS </td>
+    <td> Mandatory </td>
+    <td> Note: Use REGION_NAME for AWS </td>
+  </tr>
+  <tr>
+    <td> CHAOSENGINE </td>
+    <td> ChaosEngine CR name associated with the experiment instance </td>
+    <td> Mandatory </td>
+    <td>  </td>
+  </tr>
+  <tr>
+    <td> CHAOS_SERVICE_ACCOUNT </td>
+    <td> Service account used by the litmus </td>
+    <td> Mandatory </td>
+    <td>  </td>
+  </tr>
+  <tr>
+    <td> TOTAL_CHAOS_DURATION </td>
+    <td> The time duration for chaos insertion (sec) </td>
+    <td> Optional </td>
+    <td> Defaults to 15s </td>
+  </tr>
+  <tr>
+    <td> APP_CHECK </td>
+    <td> If it checks to true, the experiment will check the status of the application. </td>
+    <td> Optional </td>
+    <td>  </td>
+  </tr>
+  <tr>
+    <td> APP_NAMESPACE </td>
+    <td> Namespace in which application pods are deployed </td>
+    <td> Optional </td>
+    <td>  </td>
+  </tr>
+  <tr>
+    <td> APP_LABEL </td>
+    <td> Unique Labels in `key=value` format of application deployment </td>
+    <td> Optional </td>
+    <td>  </td>
+  </tr>
+  <tr>
+    <td> RAMP_TIME </td>
+    <td> Period to wait before injection of chaos in sec </td>
+    <td> Optional  </td>
+    <td> </td>
+  </tr>
 </table>
 
 ## Sample ChaosEngine Manifest
@@ -221,9 +220,9 @@ spec:
   #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ''
   appinfo:
-    appns: default
+    appns: 'default'
     applabel: 'app=nginx'
-    appkind: deployment
+    appkind: 'deployment'
   chaosServiceAccount: nginx-sa
   monitoring: false
   components:
@@ -231,7 +230,7 @@ spec:
       image: 'litmuschaos/chaos-executor:1.0.0'
       type: 'go'
   # It can be retain/delete
-  jobCleanUpPolicy: delete
+  jobCleanUpPolicy: 'delete'
   experiments:
     - name: disk-loss
       spec:
@@ -265,12 +264,6 @@ spec:
             # Use Region Name when running with AWS (ex: us-central1)
             - name: ZONE_NAME
               value: 'us-central1-a'
-            # ChaosEngine CR name associated with the experiment instance	
-            - name: CHAOSENGINE
-              value: ''
-            # Service account used by the litmus	
-            - name: CHAOS_SERVICE_ACCOUNT
-              value: ''
 ```
 ## Create the ChaosEngine Resource
 -   Create the ChaosEngine manifest prepared in the previous step to trigger the Chaos.
