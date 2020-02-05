@@ -115,36 +115,41 @@ kubectl get chaosexperiments
 A Service Account should be created to allow chaosengine to run experiments in your application namespace. Copy the following into `rbac.yaml` and run `kubectl apply -f rbac.yaml` to create one such account on your default namespace. You can change the service account name and namespace as needed.
 
 ```yaml
----
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: nginx-sa
-  namespace: default # App namespace
+  namespace: default
   labels:
-    app: nginx-sa
+    name: nginx-sa
 ---
-kind: ClusterRole
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
 metadata:
   name: nginx-sa
+  namespace: default
+  labels:
+    name: nginx-sa
 rules:
-- apiGroups: ["", "apps", "batch", "litmuschaos.io"]
-  resources: ["daemonsets", "jobs", "pods", "pods/exec", "chaosengines", "chaosexperiments", "chaosresults"]
-  verbs: ["create", "list", "get", "update", "patch", "delete"] 
+- apiGroups: ["","litmuschaos.io","batch","apps"]
+  resources: ["pods","jobs","daemonsets","pods/exec","chaosengines","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","update","delete"]
 ---
-kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
 metadata:
+  name: nginx-sa
+  namespace: default
+  labels:
+    name: nginx-sa
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
   name: nginx-sa
 subjects:
 - kind: ServiceAccount
   name: nginx-sa
-  namespace: default # App namespace
-roleRef:
-  kind: ClusterRole
-  name: nginx-sa
-  apiGroup: rbac.authorization.k8s.io
+  namespace: default
 ```
 
 ### Annotate your application
