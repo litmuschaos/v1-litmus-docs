@@ -19,12 +19,12 @@
           "container-kill",
           "pod-network-latency",
           "pod-network-loss",
-	  "pod-network-corruption",
-	  "pod-cpu-hog",
+	        "pod-network-corruption",
+	        "pod-cpu-hog",
           "disk-fill",
           "disk-loss",
-          "cpu-hog",
-	  "node-drain"
+          "node-cpu-hog",
+	        "node-drain"
         ]
       },
       {
