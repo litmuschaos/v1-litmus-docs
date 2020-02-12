@@ -70,6 +70,24 @@ Expected output:
 >
 > chaosresults.litmuschaos.io             2019-10-02T08:45:26Z
 
+- Verify if the chaos api resources are successfully created in the desired (application) namespace.
+ 
+  *Note*: Sometimes, it can take a few seconds for the resources to be available post the CRD installation
+
+```
+kubectl api-resources | grep chaos
+```
+
+Expected output: 
+
+> chaosengines							    litmuschaos.io 			     true	  ChaosEngine
+>
+> chaosexperiments                                                  litmuschaos.io                           true         ChaosExperiment
+>
+> chaosresults                                                      litmuschaos.io                           true         ChaosResult
+
+ 
+
 <div class="danger">
 <strong>NOTE</strong>: 
 In this guide, we shall describe the steps to inject chaos on an application
@@ -83,7 +101,7 @@ Chaos experiments contain the actual chaos details. These experiments are instal
 The generic chaos experiments such as `pod-kill`,  `container-kill`,` network-delay` are available under Generic Chaos Chart. This is the first chart you install. You can later install application specific chaos charts for running application oriented chaos.
 
 ```
-kubectl create -f https://hub.litmuschaos.io/api/chaos?file=charts/generic/experiments.yaml
+kubectl apply -f https://hub.litmuschaos.io/api/chaos?file=charts/generic/experiments.yaml
 ```
 
 Verify if the chaos experiments are installed.
@@ -97,36 +115,41 @@ kubectl get chaosexperiments
 A Service Account should be created to allow chaosengine to run experiments in your application namespace. Copy the following into `rbac.yaml` and run `kubectl apply -f rbac.yaml` to create one such account on your default namespace. You can change the service account name and namespace as needed.
 
 ```yaml
----
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: nginx-sa
-  namespace: default # App namespace
+  namespace: default
   labels:
-    app: nginx-sa
+    name: nginx-sa
 ---
-kind: ClusterRole
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
 metadata:
   name: nginx-sa
+  namespace: default
+  labels:
+    name: nginx-sa
 rules:
-- apiGroups: ["", "apps", "batch", "litmuschaos.io"]
-  resources: ["daemonsets", "jobs", "pods", "pods/exec", "chaosengines", "chaosexperiments", "chaosresults"]
-  verbs: ["create", "list", "get", "update", "patch", "delete"] 
+- apiGroups: ["","litmuschaos.io","batch","apps"]
+  resources: ["pods","jobs","daemonsets","pods/exec","chaosengines","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","update","delete"]
 ---
-kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
 metadata:
+  name: nginx-sa
+  namespace: default
+  labels:
+    name: nginx-sa
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
   name: nginx-sa
 subjects:
 - kind: ServiceAccount
   name: nginx-sa
-  namespace: default # App namespace
-roleRef:
-  kind: ClusterRole
-  name: nginx-sa
-  apiGroup: rbac.authorization.k8s.io
+  namespace: default
 ```
 
 ### Annotate your application
@@ -149,29 +172,30 @@ metadata:
   name: engine-nginx
   namespace: default
 spec:
-  # It can be app/infra
-  chaosType: 'app'
+  # It can be true/false
+  annotationCheck: 'true'
   #ex. values: ns1:name=percona,ns2:run=nginx  
-  auxiliaryAppInfo: ""
+  auxiliaryAppInfo: ''
   components:
     runner:
-      image: "litmuschaos/chaos-executor:1.0.0"
-      type: "go"
+      image: 'litmuschaos/chaos-executor:1.0.0'
+      type: 'go'
   # It can be delete/retain
-  jobCleanUpPolicy: delete
+  jobCleanUpPolicy: 'delete'
   monitoring: false
   appinfo: 
-    appns: default 
+    appns: 'default' 
     # FYI, To see app label, apply kubectl get pods --show-labels
-    applabel: "app=nginx" 
-    appkind: deployment
+    applabel: 'app=nginx'
+    appkind: 'deployment'
   chaosServiceAccount: nginx-sa
   experiments:
     - name: container-kill
       spec:
         components:
-        - name: TARGET_CONTAINER
-          value: nginx
+          env:
+            - name: TARGET_CONTAINER
+              value: nginx
 ```
 
 ### Override Default Chaos Experiments Variables
@@ -194,7 +218,7 @@ experiments:
 
 
 ```console
-kubectl create -f chaosengine.yaml
+kubectl apply -f chaosengine.yaml
 ```
 
 <div class="danger">

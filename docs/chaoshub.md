@@ -32,7 +32,7 @@ Chaos actions that apply to generic Kubernetes resources are classified into thi
 | Pod Delete | Fail the application pod | [pod-delete](pod-delete.md) |
 | Pod Network Latency | Experiment to inject network latency to the POD | [pod-network-latency](pod-network-latency.md) |
 | Pod Network Loss | Experiment to inject network loss to the POD | [pod-network-loss](pod-network-loss.md) |
-| CPU Hog | Exhaust CPU resources on the Kubernetes Node | [cpu-hog](cpu-hog.md) |
+| Node CPU Hog | Exhaust CPU resources on the Kubernetes Node | [node-cpu-hog](node-cpu-hog.md) |
 | Disk Fill | Fillup Ephemeral Storage of a Resource | [disk-fill](disk-fill.md) |
 | Disk Loss | External disk loss from the node | [disk-loss](disk-loss.md)|
 | Node Drain| Drain the node where application pod is scheduled | [node-drain](node-drain.md) |

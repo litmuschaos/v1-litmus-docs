@@ -6,9 +6,20 @@ sidebar_label: Broker Pod Failure
 
 ## Experiment Metadata
 
-| Type  | Description                    | Kafka Distribution   | Tested K8s Platform
-| ----- | -------------------------------|----------------------|---------------------
-| Kafka | Fail kafka leader-broker pods  | Confluent, Kudo-Kafka| AWS Konvoy, GKE
+<table>
+  <tr>
+    <th> Type </th>
+    <th> Description  </th>
+    <th> Kafka Distribution </th>
+    <th> Tested K8s Platform </th>
+  </tr>
+  <tr>
+    <td> Kafka </td>
+    <td> Fail kafka leader-broker pods </td>
+    <td> Confluent, Kudo-Kafka </td>
+    <td> AWS Konvoy, GKE </td>
+  </tr>
+</table>
 
 ## Prerequisites
 
@@ -96,7 +107,6 @@ subjects:
 - kind: ServiceAccount
   name: kafka-sa
   namespace: default
-
 ```
 
 ### Prepare ChaosEngine
@@ -106,27 +116,128 @@ subjects:
 
 #### Supported Experiment Tunables
 
-| Variables             | Description                                                  |Type       | Notes                                                   |
-| ----------------------| ------------------------------------------------------------ |-----------|---------------------------------------------------------|
-| KAFKA_NAMESPACE       | Namespace of Kafka Brokers                                   | Mandatory | May be same as value for `spec.appinfo.appns`           |
-| KAFKA_LABEL           | Unique label of Kafka Brokers                                | Mandatory | May be same as value for `spec.appinfo.applabel`        |
-| KAFKA_SERVICE         | Headless service of the Kafka Statefulset                    | Mandatory |                                                         |
-| KAFKA_PORT            | Port of the Kafka ClusterIP service                          | Mandatory |                                                         |
-| ZOOKEEPER_NAMESPACE   | Namespace of Zookeeper Cluster                               | Mandatory | May be same as value for KAFKA_NAMESPACE or other       |
-| ZOOKEEPER_LABEL       | Unique label of Zokeeper statefulset                         | Mandatory |                                                         |
-| ZOOKEEPER_SERVICE     | Headless service of the Zookeeper Statefulset                | Mandatory |                                                         |
-| ZOOKEEPER_PORT        | Port of the Zookeeper ClusterIP service                      | Mandatory |                                                         |
-| KAFKA_KIND            | Kafka deployment type                                        | Optional  | Same as `spec.appinfo.appkind`. Supported: `statefulset`| 
-| KAFKA_LIVENESS_STREAM | Kafka liveness message stream                                | Optional  | Supported: `enabled`, `disabled`                        |
-| KAFKA_LIVENESS_IMAGE	| Image used for liveness message stream                       | Optional  | Image as `<registry_url>/<repository>/<image>:<tag>`    |
-| KAFKA_REPLICATION_FACTOR| Number of partition replicas for liveness topic partition  | Optional  | Necessary if KAFKA_LIVENESS_STREAM is `enabled`         |
-| KAFKA_INSTANCE_NAME   | Name of the Kafka chroot path on zookeeper                   | Optional  | Necessary if installation involves use of such path     |
-| KAFKA_CONSUMER_TIMEOUT| Kafka consumer message timeout, post which it terminates     | Optional  | Defaults to 30000ms                                     |
-| KAFKA_BROKER          | Kafka broker pod (name) to be deleted                        | Optional  | A target selection mode (random/liveness-based/specific)|
-| TOTAL_CHAOS_DURATION  | The time duration for chaos insertion (seconds)              | Optional  | Defaults to 15s                                         |
-| CHAOS_INTERVAL        | Time interval b/w two successive broker failures (sec)       | Optional  | Defaults to 5s                                          |
-| LIB                   | The chaos lib used to inject the chaos                       | Optional  | Defaults to `litmus`. Supported: `litmus`, `powerfulseal| 
-| CHAOS_SERVICE_ACCOUNT	| Service account used by the powerfulseal deployment          | Optional  | Defaults to `default` on namespace `spec.appinfo.appns` |
+<table>
+  <tr>
+    <th> Parameter </th>
+    <th> Description  </th>
+    <th> Type </th>
+    <th> Notes </th>
+  </tr>
+  <tr>
+    <td> KAFKA_NAMESPACE </td>
+    <td> Namespace of Kafka Brokers </td>
+    <td> Mandatory </td>
+    <td> May be same as value for `spec.appinfo.appns` </td>
+  </tr>
+  <tr>
+    <td> KAFKA_LABEL </td>
+    <td> Unique label of Kafka Brokers </td>
+    <td> Mandatory </td>
+    <td> May be same as value for `spec.appinfo.applabel` </td>
+  </tr>
+  <tr>
+    <td> KAFKA_SERVICE </td>
+    <td> Headless service of the Kafka Statefulset </td>
+    <td> Mandatory </td>
+    <td>  </td>
+  </tr>
+  <tr>
+    <td> KAFKA_PORT </td>
+    <td> Port of the Kafka ClusterIP service </td>
+    <td> Mandatory </td>
+    <td>  </td>
+  </tr>
+  <tr>
+    <td> ZOOKEEPER_NAMESPACE </td>
+    <td> Namespace of Zookeeper Cluster </td>
+    <td> Mandatory </td>
+    <td> May be same as value for KAFKA_NAMESPACE or other </td>
+  </tr>
+  <tr>
+    <td> ZOOKEEPER_LABEL </td>
+    <td> Unique label of Zokeeper statefulset </td>
+    <td> Mandatory </td>
+    <td>  </td>
+  </tr>
+  <tr>
+    <td> ZOOKEEPER_SERVICE </td>
+    <td> Headless service of the Zookeeper Statefulset </td>
+    <td> Mandatory </td>
+    <td>  </td>
+  </tr>
+  <tr>
+    <td> ZOOKEEPER_PORT </td>
+    <td> Port of the Zookeeper ClusterIP service </td>
+    <td> Mandatory </td>
+    <td>  </td>
+  </tr>
+  <tr>
+    <td> KAFKA_BROKER </td>
+    <td> Kafka broker pod (name) to be deleted </td>
+    <td> Optional </td>
+    <td> A target selection mode (random/liveness-based/specific) </td>
+  </tr>
+  <tr>
+    <td> KAFKA_KIND </td>
+    <td> Kafka deployment type </td>
+    <td> Optional </td>
+    <td> Same as `spec.appinfo.appkind`. Supported: `statefulset` </td>
+  </tr>
+  <tr>
+    <td> KAFKA_LIVENESS_STREAM </td>
+    <td> Kafka liveness message stream </td>
+    <td> Optional </td>
+    <td> Supported: `enabled`, `disabled` </td>
+  </tr>
+  <tr>
+    <td> KAFKA_LIVENESS_IMAGE </td>
+    <td> Image used for liveness message stream </td>
+    <td> Optional </td>
+    <td> Image as `<registry_url>/<repository>/<image>:<tag>` </td>
+  </tr>
+  <tr>
+    <td> KAFKA_REPLICATION_FACTOR </td>
+    <td> Number of partition replicas for liveness topic partition </td>
+    <td> Optional </td>
+    <td> Necessary if KAFKA_LIVENESS_STREAM is `enabled` </td>
+  </tr>
+  <tr>
+    <td> KAFKA_INSTANCE_NAME </td>
+    <td> Name of the Kafka chroot path on zookeeper </td>
+    <td> Optional </td>
+    <td> Necessary if installation involves use of such path </td>
+  </tr>
+  <tr>
+    <td> KAFKA_CONSUMER_TIMEOUT </td>
+    <td> Kafka consumer message timeout, post which it terminates </td>
+    <td> Optional </td>
+    <td> Defaults to 30000ms </td>
+  </tr>
+  <tr>
+    <td> TOTAL_CHAOS_DURATION </td>
+    <td> The time duration for chaos insertion (seconds) </td>
+    <td> Optional </td>
+    <td> Defaults to 15s </td>
+  </tr>
+  <tr>
+    <td> CHAOS_INTERVAL </td>
+    <td> Time interval b/w two successive broker failures (sec) </td>
+    <td> Optional </td>
+    <td> Defaults to 5s </td>
+  </tr>
+  <tr>
+    <td> LIB </td>
+    <td> The chaos lib used to inject the chaos </td>
+    <td> Optional </td>
+    <td> Defaults to `litmus`. Supported: `litmus`, `powerfulseal </td>
+  </tr>
+  <tr>
+    <td> CHAOS_SERVICE_ACCOUNT </td>
+    <td> Service account used by the powerfulseal deployment </td>
+    <td> Optional </td>
+    <td> Defaults to `default` on namespace `spec.appinfo.appns </td>
+  </tr>
+</table>
 
 #### Sample ChaosEngine Manifest
 
@@ -137,79 +248,80 @@ metadata:
   name: kafka-chaos
   namespace: default
 spec:
-  # It can be app/infra
-  chaosType: 'app'
+  # It can be true/false
+  annotationCheck: 'true'
   #ex. values: ns1:name=percona,ns2:run=nginx 
-  auxiliaryAppInfo: ""
+  auxiliaryAppInfo: ''
   appinfo: 
-    appns: default
+    appns: 'default'
     applabel: 'app=cp-kafka'
-    appkind: statefulset
+    appkind: 'statefulset'
   chaosServiceAccount: kafka-sa
   monitoring: false
   components:
     runner:
-      image: "litmuschaos/chaos-executor:1.0.0"
-      type: "go"
+      image: 'litmuschaos/chaos-executor:1.0.0'
+      type: 'go'
   # It can be delete/retain
-  jobCleanUpPolicy: delete 
+  jobCleanUpPolicy: 'delete' 
   experiments:
     - name: kafka-broker-pod-failure
       spec:
-        components:  
-          # choose based on available kafka broker replicas           
-          - name: KAFKA_REPLICATION_FACTOR
-            value: '3'
+        components:
+          env:  
+            # choose based on available kafka broker replicas           
+            - name: KAFKA_REPLICATION_FACTOR
+              value: '3'
 
-          # get via "kubectl get pods --show-labels -n <kafka-namespace>"
-          - name: KAFKA_LABEL
-            value: 'app=cp-kafka'
+            # get via "kubectl get pods --show-labels -n <kafka-namespace>"
+            - name: KAFKA_LABEL
+              value: 'app=cp-kafka'
 
-          - name: KAFKA_NAMESPACE
-            value: 'default'
+            - name: KAFKA_NAMESPACE
+              value: 'default'
      
-          # get via "kubectl get svc -n <kafka-namespace>" 
-          - name: KAFKA_SERVICE
-            value: 'kafka-cp-kafka-headless'
+            # get via "kubectl get svc -n <kafka-namespace>" 
+            - name: KAFKA_SERVICE
+              value: 'kafka-cp-kafka-headless'
 
-          # get via "kubectl get svc -n <kafka-namespace>  
-          - name: KAFKA_PORT
-            value: '9092'
+            # get via "kubectl get svc -n <kafka-namespace>  
+            - name: KAFKA_PORT
+              value: '9092'
 
-          # in milliseconds  
-          - name: KAFKA_CONSUMER_TIMEOUT
-            value: '70000'
+            # in milliseconds  
+            - name: KAFKA_CONSUMER_TIMEOUT
+              value: '70000'
 
-          # ensure to set the instance name if using KUDO operator
-          - name: KAFKA_INSTANCE_NAME
-            value: ''
+            # ensure to set the instance name if using KUDO operator
+            - name: KAFKA_INSTANCE_NAME
+              value: ''
 
-          - name: ZOOKEEPER_NAMESPACE
-            value: 'default'
+            - name: ZOOKEEPER_NAMESPACE
+              value: 'default'
 
-          # get via "kubectl get pods --show-labels -n <zk-namespace>"
-          - name: ZOOKEEPER_LABEL
-            value: 'app=cp-zookeeper'
+            # get via "kubectl get pods --show-labels -n <zk-namespace>"
+            - name: ZOOKEEPER_LABEL
+              value: 'app=cp-zookeeper'
 
-          # get via "kubectl get svc -n <zk-namespace>  
-          - name: ZOOKEEPER_SERVICE
-            value: 'kafka-cp-zookeeper-headless'
+            # get via "kubectl get svc -n <zk-namespace>  
+            - name: ZOOKEEPER_SERVICE
+              value: 'kafka-cp-zookeeper-headless'
 
-          # get via "kubectl get svc -n <zk-namespace>  
-          - name: ZOOKEEPER_PORT
-            value: '2181'
+            # get via "kubectl get svc -n <zk-namespace>  
+            - name: ZOOKEEPER_PORT
+              value: '2181'
 
-          # set chaos duration (in sec) as desired
-          - name: TOTAL_CHAOS_DURATION
-            value: '60'
+            # set chaos duration (in sec) as desired
+            - name: TOTAL_CHAOS_DURATION
+              value: '60'
             
-          # set chaos interval (in sec) as desired
-          - name: CHAOS_INTERVAL
-            value: '20'
+            # set chaos interval (in sec) as desired
+            - name: CHAOS_INTERVAL
+              value: '20'
 
-          # pod failures without '--force' & default terminationGracePeriodSeconds
-          - name: FORCE
-            value: "false"
+            # pod failures without '--force' & default terminationGracePeriodSeconds
+            - name: FORCE
+              value: 'false'
 ```
 
 ### Create the ChaosEngine Resource 

@@ -7,9 +7,18 @@ sidebar_label: Pool Container Failure
 
 ## Experiment Metadata
 
-| Type      | Description              | Tested K8s Platform                                               |
-| ----------| ------------------------ | ------------------------------------------------------------------|
-| OpenEBS   | Kill the cstor pool pod container and check if gets created again | GKE, Konvoy(AWS), Packet(Kubeadm), Minikube, OpenShift(Baremetal)  |
+<table>
+  <tr>
+    <th> Type </th>
+    <th> Description </th>
+    <th> Tested K8s Platform </th>
+  </tr>
+  <tr>
+    <td> OpenEBS </td>
+    <td> Kill the cstor pool pod container and check if gets created again </td>
+    <td> GKE, Konvoy(AWS), Packet(Kubeadm), Minikube, OpenShift(Baremetal) </td>
+  </tr>
+</table>
 
 <b>Note:</b> In this example, we are using nginx as stateful application that stores static pages on a Kubernetes volume.
 
@@ -17,21 +26,35 @@ sidebar_label: Pool Container Failure
 
 - Ensure that the Litmus Chaos Operator is running in the cluster. If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
 - Ensure that the `openebs-pool-container-failure` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-pool-container-failure)
-- If DATA_PERSISTENCE is 'enabled', provide the application info in a configmap volume so that the experiment can perform necessary checks. Currently, LitmusChaos supports
-  data consistency checks only on MySQL databases. Create a configmap as shown below in the application namespace (replace with actual credentials):
+- The DATA_PERSISTENCE can be enabled by provide the application's info in a configmap volume so that the experiment can perform necessary checks. Currently, LitmusChaos supports data consistency checks only for MySQL and Busybox. 
+    - For MYSQL data persistence check create a configmap as shown below in the application namespace (replace with actual credentials):
 
-  ```
-  ---
-  apiVersion: v1
-  kind: ConfigMap
-  metadata:
-    name: openebs-pool-container-failure
-  data:
-    parameters.yml: | 
-      dbuser: root
-      dbpassword: k8sDem0
-      dbname: test
-  ```
+    ```
+    ---
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: openebs-pool-container-failure
+    data:
+      parameters.yml: | 
+        dbuser: root
+        dbpassword: k8sDem0
+        dbname: test
+    ```
+    - For Busybox data persistence check create a configmap as shown below in the application namespace (replace with actual credentials):
+
+    ```
+    ---
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: openebs-pool-container-failure
+    data:
+      parameters.yml: | 
+        blocksize: 4k
+        blockcount: 1024
+        testfile: exampleFile
+    ```
 - Ensure that the chaosServiceAccount used for the experiment has cluster-scope permissions as the experiment may involve carrying out the chaos in the `openebs` namespace
   while performing application health checks in its respective namespace. 
 
@@ -119,13 +142,44 @@ subjects:
 
 #### Supported Experiment Tunables
 
-| Variables             | Description                                                  | Type      | Notes                                                      |
-| ----------------------| ------------------------------------------------------------ |-----------|------------------------------------------------------------|
-| APP_PVC               | The PersistentVolumeClaim used by the stateful application   | Mandatory | PVC must use OpenEBS cStor storage class        |
-| DEPLOY_TYPE           | Type of Kubernetes resource used by the stateful application | Optional  | Defaults to `deployment`. Supported: `deployment`, `statefulset`|                           |
-| LIB_IMAGE             | The chaos library image used to inject the latency           | Optional  | Defaults to `gaiaadm/pumba:0.4.8`. Supported: `gaiaadm/pumba:0.4.8`|                
-| TOTAL_CHAOS_DURATION  | Amount of soak time for I/O post pod kill              | Optional  | Defaults to 600 seconds					|
-| DATA_PERSISTENCE      | Flag to perform data consistency checks on the application   | Optional  | Default value is disabled (empty/unset). Set to `enabled` to perform data checks. Ensure configmap with app details are created                                                                                                                   |             
+<table>
+  <tr>
+    <th> Variables </th>
+    <th> Description  </th>
+    <th> Type </th>
+    <th> Notes </th>
+  </tr>
+  <tr>
+    <td> APP_PVC </td>
+    <td> The PersistentVolumeClaim used by the stateful application </td>
+    <td> Mandatory </td>
+    <td> PVC must use OpenEBS cStor storage class </td>
+  </tr>
+  <tr>
+    <td> TOTAL_CHAOS_DURATION </td>
+    <td> Amount of soak time for I/O post container kill </td>
+    <td> Optional </td>
+    <td> Defaults to 600 seconds </td>
+  </tr>
+  <tr>
+    <td> LIB_IMAGE </td>
+    <td> The chaos library image used to inject the latency </td>
+    <td> Optional  </td>
+    <td> Defaults to `gaiaadm/pumba:0.4.8`. Supported: `gaiaadm/pumba:0.4.8` </td>
+  </tr>
+  <tr>
+    <td> DEPLOY_TYPE </td>
+    <td> Type of Kubernetes resource used by the stateful application </td>
+    <td> Optional  </td>
+    <td> Defaults to `deployment`. Supported: `deployment`, `statefulset` </td>
+  </tr>
+  <tr>
+    <td> DATA_PERSISTENCE </td>
+    <td> Flag to perform data consistency checks on the application </td>
+    <td> Optional  </td>
+    <td> Default value is disabled (empty/unset). It supports only `mysql` and `busybox`. Ensure configmap with app details are created </td>
+  </tr>
+</table>
 
 #### Sample ChaosEngine Manifest
 
@@ -136,30 +190,31 @@ metadata:
   name: target-chaos
   namespace: default
 spec:
-  # It can be app/infra
-  chaosType: 'infra' 
+  # It can be true/false
+  annotationCheck: 'false'
   #ex. values: ns1:name=percona,ns2:run=nginx 
-  auxiliaryAppInfo: ""
+  auxiliaryAppInfo: ''
   appinfo:
-    appns: default
+    appns: 'default'
     applabel: 'app=nginx'
-    appkind: deployment
+    appkind: 'deployment'
   chaosServiceAccount: nginx-sa
   monitoring: false
   components:
     runner:
-      image: "litmuschaos/chaos-executor:1.0.0"
-      type: "go"
-  # It can be delete/infra
-  jobCleanUpPolicy: delete
+      image: 'litmuschaos/chaos-executor:1.0.0'
+      type: 'go'
+  # It can be delete/retain
+  jobCleanUpPolicy: 'delete'
   experiments:
     - name: openebs-pool-container-failure
       spec:
         components:
-          - name: APP_PVC
-            value: 'pvc-c466262a-a5f2-4f0f-b594-5daddfc2e29d'    
-          - name: DEPLOY_TYPE
-            value: deployment        
+          env:
+            - name: APP_PVC
+              value: 'pvc-c466262a-a5f2-4f0f-b594-5daddfc2e29d'    
+            - name: DEPLOY_TYPE
+              value: deployment        
 ```
 
 ### Create the ChaosEngine Resource
