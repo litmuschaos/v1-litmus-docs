@@ -155,10 +155,10 @@ subjects:
 
 ### Annotate your application
 
-Your application has to be annotated with `litmuschaos.io/chaos="true"`. As a security measure, Chaos Operator checks for this annotation on the application before invoking chaos experiment(s) on the application. Replace `myserver` with the name of your deployment.
+Your application has to be annotated with `litmuschaos.io/chaos="true"`. As a security measure, Chaos Operator checks for this annotation on the application before invoking chaos experiment(s) on the application. Replace `nginx` with the name of your deployment.
 
 ```console
-kubectl annotate deploy/myserver litmuschaos.io/chaos="true"
+kubectl annotate deploy/nginx litmuschaos.io/chaos="true"
 ```
 
 ### Prepare ChaosEngine 
@@ -173,8 +173,8 @@ metadata:
   name: engine-nginx
   namespace: default
 spec:
-  # It can be true/false
-  annotationCheck: 'true'
+  # It can be app/infra
+  chaosType: 'app'
   #ex. values: ns1:name=percona,ns2:run=nginx  
   auxiliaryAppInfo: ''
   components:
@@ -194,9 +194,8 @@ spec:
     - name: container-kill
       spec:
         components:
-          env:
-            - name: TARGET_CONTAINER
-              value: nginx
+          - name: TARGET_CONTAINER
+            value: 'nginx'
 ```
 
 ### Override Default Chaos Experiments Variables
