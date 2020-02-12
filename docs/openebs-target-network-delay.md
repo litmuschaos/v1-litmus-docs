@@ -7,9 +7,18 @@ sidebar_label: Target Network Latency
 
 ## Experiment Metadata
 
-| Type      | Description              | Tested K8s Platform                                               |
-| ----------| ------------------------ | ------------------------------------------------------------------|
-| OpenEBS   | Induce latency into the cStor target/Jiva controller container | GKE, Konvoy(AWS), Packet(Kubeadm), OpenShift(Baremetal)  |
+<table>
+  <tr>
+    <th> Type </th>
+    <th> Description </th>
+    <th> Tested K8s Platform </th>
+  </tr>
+  <tr>
+    <td> OpenEBS </td>
+    <td> Induce latency into the cStor target/Jiva controller container </td>
+    <td> GKE, Konvoy(AWS), Packet(Kubeadm), Minikube, OpenShift(Baremetal) </td>
+  </tr>
+</table>
 
 <b>Note:</b> In this example, we are using nginx as stateful application that stores static pages on a Kubernetes volume. 
 
@@ -18,21 +27,35 @@ sidebar_label: Target Network Latency
 - Ensure that the Kubernetes Cluster uses Docker runtime
 - Ensure that the Litmus Chaos Operator is running
 - Ensure that the `openebs-target-network-delay` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-target-network-delay)
-- If DATA_PERSISTENCE is 'enabled', provide the application info in a configmap volume so that the experiment can perform necessary checks. Currently, LitmusChaos supports
-  data consistency checks only on MySQL databases. Create a configmap as shown below in the application namespace (replace with actual credentials):
+- The DATA_PERSISTENCE can be enabled by provide the application's info in a configmap volume so that the experiment can perform necessary checks. Currently, LitmusChaos supports data consistency checks only for MySQL and Busybox. 
+    - For MYSQL data persistence check create a configmap as shown below in the application namespace (replace with actual credentials):
 
-  ```
-  ---
-  apiVersion: v1
-  kind: ConfigMap
-  metadata:
-    name: openebs-target-network-delay
-  data:
-    parameters.yml: | 
-      dbuser: root
-      dbpassword: k8sDem0
-      dbname: test
-  ```
+    ```
+    ---
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: openebs-target-network-delay
+    data:
+      parameters.yml: | 
+        dbuser: root
+        dbpassword: k8sDem0
+        dbname: test
+    ```
+    - For Busybox data persistence check create a configmap as shown below in the application namespace (replace with actual credentials):
+
+    ```
+    ---
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: openebs-target-network-delay
+    data:
+      parameters.yml: | 
+        blocksize: 4k
+        blockcount: 1024
+        testfile: exampleFile
+    ```
 - Ensure that the chaosServiceAccount used for the experiment has cluster-scope permissions as the experiment may involve carrying out the chaos in the `openebs` namespace
   while performing application health checks in its respective namespace. 
 
@@ -120,16 +143,62 @@ subjects:
 
 #### Supported Experiment Tunables
 
-| Variables             | Description                                                  | Type      | Notes                                                      |
-| ----------------------| ------------------------------------------------------------ |-----------|------------------------------------------------------------|
-| APP_PVC               | The PersistentVolumeClaim used by the stateful application   | Mandatory | PVC may use either OpenEBS Jiva/cStor storage class        |
-| DEPLOY_TYPE           | Type of Kubernetes resource used by the stateful application | Optional  | Defaults to `deployment`. Supported: `deployment`, `statefulset`|
-| CONTAINER_RUNTIME     | The container runtime used in the Kubernetes Cluster         | Optional  | Defaults to `docker`. Supported: `docker`                  |
-| LIB_IMAGE             | The chaos library image used to inject the latency           | Optional  | Defaults to `gaiaadm/pumba:0.4.8`. Supported: `gaiaadm/pumba:0.4.8`|                
-| TARGET_CONTAINER      | The container into which delays are injected in the storage controller pod  | Optional  | Defaults to `cstor-istgt`                   |
-| NETWORK_DELAY         | Egress delay injected into the target container              | Optional  | Defaults to 60000 milliseconds (60s)                       |
-| TOTAL_CHAOS_DURATION  | Total duration for which latency is injected                 | Optional  | Defaults to 60000 milliseconds (60s)	                |
-| DATA_PERSISTENCE      | Flag to perform data consistency checks on the application   | Optional  | Default value is disabled (empty/unset). Set to `enabled` to perform data checks. Ensure configmap with app details are created                                                                                                                   |             
+<table>
+  <tr>
+    <th> Variables </th>
+    <th> Description  </th>
+    <th> Type </th>
+    <th> Notes </th>
+  </tr>
+  <tr>
+    <td> APP_PVC </td>
+    <td> The PersistentVolumeClaim used by the stateful application </td>
+    <td> Mandatory </td>
+    <td> PVC may use either OpenEBS Jiva/cStor storage class </td>
+  </tr>
+  <tr>
+    <td> LIB_IMAGE </td>
+    <td> The chaos library image used to inject the latency </td>
+    <td> Optional  </td>
+    <td> Defaults to `gaiaadm/pumba:0.6.5`. Supported: `docker : gaiaadm/pumba:0.6.5` </td>
+  </tr>
+  <tr>
+    <td> CONTAINER_RUNTIME </td>
+    <td> The container runtime used in the Kubernetes Cluster </td>
+    <td> Optional  </td>
+    <td> Defaults to `docker`. Supported: `docker` </td>
+  </tr>
+  <tr>
+    <td> TARGET_CONTAINER </td>
+    <td> The container into which delays are injected in the storage controller pod </td>
+    <td> Optional  </td>
+    <td> Defaults to `cstor-istgt` </td>
+  </tr>
+  <tr>
+    <td> TOTAL_CHAOS_DURATION </td>
+    <td> Total duration for which network latency is injected </td>
+    <td> Optional </td>
+    <td> Defaults to 60 seconds </td>
+  </tr>
+  <tr>
+    <td> DEPLOY_TYPE </td>
+    <td> Type of Kubernetes resource used by the stateful application </td>
+    <td> Optional  </td>
+    <td> Defaults to `deployment`. Supported: `deployment`, `statefulset` </td>
+  </tr>
+  <tr>
+    <td> NETWORK_DELAY </td>
+    <td> Egress delay injected into the target container </td>
+    <td> Optional  </td>
+    <td> Defaults to 60000 milliseconds (60s) </td>
+  </tr>
+  <tr>
+    <td> DATA_PERSISTENCE </td>
+    <td> Flag to perform data consistency checks on the application </td>
+    <td> Optional  </td>
+    <td> Default value is disabled (empty/unset). It supports only `mysql` and `busybox`. Ensure configmap with app details are created </td>
+  </tr>
+</table>
 
 #### Sample ChaosEngine Manifest
 
@@ -140,36 +209,37 @@ metadata:
   name: target-chaos
   namespace: default
 spec:
-  # It can be app/infra
-  chaosType: 'infra' 
+  # It can be true/false
+  annotationCheck: 'false' 
   #ex. values: ns1:name=percona,ns2:run=nginx 
-  auxiliaryAppInfo: ""
+  auxiliaryAppInfo: ''
   appinfo:
-    appns: default
+    appns: 'default'
     applabel: 'app=nginx'
-    appkind: deployment
+    appkind: 'deployment'
   chaosServiceAccount: nginx-sa
   monitoring: false
   components:
     runner:
-      image: "litmuschaos/chaos-executor:1.0.0"
-      type: "go"
-  # It can be delete/infra
-  jobCleanUpPolicy: delete
+      image: 'litmuschaos/chaos-executor:1.0.0'
+      type: 'go'
+  # It can be delete/retain
+  jobCleanUpPolicy: 'delete'
   experiments:
     - name: openebs-target-network-delay
       spec:
         components:
-          - name: TARGET_CONTAINER
-            value: 'cstor-istgt'
-          - name: APP_PVC
-            value: 'pvc-c466262a-a5f2-4f0f-b594-5daddfc2e29d'    
-          - name: DEPLOY_TYPE
-            value: deployment       
-          - name: NETWORK_DELAY
-            value: '30000'
-          - name: TOTAL_CHAOS_DURATION
-            value: '60000' 
+          env:
+            - name: TARGET_CONTAINER
+              value: 'cstor-istgt'
+            - name: APP_PVC
+              value: 'pvc-c466262a-a5f2-4f0f-b594-5daddfc2e29d'    
+            - name: DEPLOY_TYPE
+              value: deployment       
+            - name: NETWORK_DELAY
+              value: '30000'
+            - name: TOTAL_CHAOS_DURATION
+              value: '60000' 
 ```
 
 ### Create the ChaosEngine Resource

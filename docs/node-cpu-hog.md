@@ -1,29 +1,29 @@
 ---
-id: cpu-hog
-title: CPU Hog Experiment Details
-sidebar_label: CPU Hog
+id: node-cpu-hog
+title: Node CPU Hog Experiment Details
+sidebar_label: Node CPU Hog
 ---
 ------
 
 ## Experiment Metadata
 
 <table>
-<tr>
-<th> Type </th>
-<th> Description </th>
-<th> Tested K8s Platform </th>
-</tr>
-<tr>
-<td> Generic </td>
-<td> Exhaust CPU resources on the Kubernetes Node </td>
-<td> GKE </td>
-</tr>
+  <tr>
+    <th> Type </th>
+    <th> Description </th>
+    <th> Tested K8s Platform </th>
+  </tr>
+  <tr>
+    <td> Generic </td>
+    <td> Exhaust CPU resources on the Kubernetes Node </td>
+    <td> GKE </td>
+  </tr>
 </table>
 
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
-- Ensure that the `cpu-hog` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/cpu-hog)
+- Ensure that the `node-cpu-hog` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/node-cpu-hog)
 - There should be administrative access to the platform on which the Kubernetes cluster is hosted, as the recovery of the affected node could be manual. For example, gcloud access to the GKE project
 ## Entry Criteria
 
@@ -39,7 +39,6 @@ sidebar_label: CPU Hog
 - The CPU chaos is injected using a daemonset running the linux stress tool (a workload generator). The chaos is effected for a period equalling the TOTAL_CHAOS_DURATION
 - Application implies services. Can be reframed as:
 Tests application resiliency upon replica evictions caused due to lack of CPU resources
-
 
 ## Integrations
 
@@ -95,7 +94,6 @@ subjects:
 - kind: ServiceAccount
   name: nginx-sa
   namespace: default
-
 ```
 
 ### Prepare ChaosEngine
@@ -107,36 +105,36 @@ subjects:
 #### Supported Experiment Tunables
 
 <table>
-<tr>
-<th> Variables </th>
-<th> Description  </th>
-<th> Type </th>
-<th> Notes </th>
-</tr>
-<tr>
-<td> PLATFORM </td>
-<td> The platform on which the chaos experiment will run </td>
-<td> Mandatory </td>
-<td> Defaults to GKE </td>
-</tr>
-<tr>
-<td> TOTAL_CHAOS_DURATION </td>
-<td> The time duration for chaos insertion (seconds) </td>
-<td> Optional </td>
-<td> Defaults to 60 </td>
-</tr>
-<tr>
-<td> LIB  </td>
-<td> The chaos lib used to inject the chaos </td>
-<td> Optional  </td>
-<td> Defaults to `litmus` </td>
-</tr>
-<tr>
-<td> RAMP_TIME </td>
-<td> Period to wait before injection of chaos in sec </td>
-<td> Optional  </td>
-<td> </td>
-</tr>
+  <tr>
+    <th> Variables </th>
+    <th> Description  </th>
+    <th> Type </th>
+    <th> Notes </th>
+  </tr>
+  <tr>
+    <td> PLATFORM </td>
+    <td> The platform on which the chaos experiment will run </td>
+    <td> Mandatory </td>
+    <td> Defaults to GKE </td>
+  </tr>
+  <tr>
+    <td> TOTAL_CHAOS_DURATION </td>
+    <td> The time duration for chaos insertion (seconds) </td>
+    <td> Optional </td>
+    <td> Defaults to 60 </td>
+  </tr>
+  <tr>
+    <td> LIB  </td>
+    <td> The chaos lib used to inject the chaos </td>
+    <td> Optional  </td>
+    <td> Defaults to `litmus` </td>
+  </tr>
+  <tr>
+    <td> RAMP_TIME </td>
+    <td> Period to wait before injection of chaos in sec </td>
+    <td> Optional  </td>
+    <td> </td>
+  </tr>
 </table>
 
 #### Sample ChaosEngine Manifest
@@ -148,35 +146,36 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
-  # It can be app/infra
-  chaosType: 'infra'  
+  # It can be true/false
+  annotationCheck: 'false' 
   #ex. values: ns1:name=percona,ns2:run=nginx 
-  auxiliaryAppInfo: ""
+  auxiliaryAppInfo: ''
   appinfo:
-    appns: default
+    appns: 'default'
     applabel: 'app=nginx'
-    appkind: deployment
+    appkind: 'deployment'
   chaosServiceAccount: nginx-sa
   monitoring: false
   components:
     runner:
-      image: "litmuschaos/chaos-executor:1.0.0"
-      type: "go"
+      image: 'litmuschaos/chaos-executor:1.0.0'
+      type: 'go'
   # It can be delete/retain
-  jobCleanUpPolicy: delete
+  jobCleanUpPolicy: 'delete'
   experiments:
-    - name: cpu-hog
+    - name: node-cpu-hog
       spec:
         components:
-           # set chaos duration (in sec) as desired
-          - name: TOTAL_CHAOS_DURATION
-            value: '60'
-          # set chaos platform as desired
-          - name: PLATFORM
-            value: 'GKE'
-          # chaos lib used to inject the chaos
-          - name: LIB
-            value: 'litmus'
+          env:
+             # set chaos duration (in sec) as desired
+            - name: TOTAL_CHAOS_DURATION
+              value: '60'
+            # set chaos platform as desired
+            - name: PLATFORM
+              value: 'GKE'
+            # chaos lib used to inject the chaos
+            - name: LIB
+              value: 'litmus'
 ```
 
 ### Create the ChaosEngine Resource
@@ -195,9 +194,8 @@ spec:
 
 - Check whether the application is resilient to the CPU hog, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult nginx-chaos-cpu-hog -n <application-namespace>`
+  `kubectl describe chaosresult nginx-chaos-node-cpu-hog -n <application-namespace>`
 
-## Application Pod Failure Demo
+## Node Cpu Hog Demo [TODO]
 
-- A sample recording of this experiment execution is provided here.   
-
+- A sample recording of this experiment execution is provided here.
