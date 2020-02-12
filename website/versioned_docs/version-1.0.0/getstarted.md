@@ -232,7 +232,7 @@ Describe the ChaosResult CR to know the status of each experiment. The ```spec.v
 <strong> NOTE:</strong>  ChaosResult CR name will be `<chaos-engine-name>-<chaos-experiment-name>`
 
 ```console
-kubectl describe chaosresult engine-nginx-pod-delete
+kubectl describe chaosresult engine-nginx-container-kill
 ```
 
 ## Uninstallation
@@ -245,7 +245,7 @@ kubectl delete -f https://litmuschaos.github.io/pages/litmus-operator-v1.0.0.yam
 
 ## More Chaos Experiments
 
-- For more details on supported chaos experiments and the steps to run them, refer the **Experiments** section.
+- For more details on supported chaos experiments and the steps to run them, refer to [chaoshub](chaoshub.md) section.
 
 ## Join our community
 
