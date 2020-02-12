@@ -53,7 +53,7 @@ spec:
         ephemeral-storage: "2Gi"
       limits:
         ephemeral-storage: "4Gi"
-  ```
+```
 
 ## Entry-Criteria
 
@@ -88,21 +88,23 @@ spec:
 
 #### Sample Rbac Manifest
 
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/disk-fill/rbac.yaml yaml)
 ```yaml
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: nginx-sa
+  name: disk-fill-sa
   namespace: default
   labels:
-    name: nginx-sa
+    name: disk-fill-sa
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
-  name: nginx-sa
+  name: disk-fill-sa
   labels:
-    name: nginx-sa
+    name: disk-fill-sa
 rules:
 - apiGroups: ["","apps","litmuschaos.io","batch"]
   resources: ["pods","jobs","pods/exec","daemonsets","chaosengines","chaosexperiments","chaosresults"]
@@ -111,16 +113,16 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
-  name: nginx-sa
+  name: disk-fill-sa
   labels:
-    name: nginx-sa
+    name: disk-fill-sa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: nginx-sa
+  name: disk-fill-sa
 subjects:
 - kind: ServiceAccount
-  name: nginx-sa
+  name: disk-fill-sa
   namespace: default
 ```
 
@@ -179,6 +181,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/disk-fill/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -188,18 +191,16 @@ metadata:
 spec:
   # It can be true/false
   annotationCheck: 'false'
+  # It can be active/stop
+  engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx  
   auxiliaryAppInfo: ''
   appinfo:
     appns: 'default'
     applabel: 'app=nginx'
     appkind: 'deployment'
-  chaosServiceAccount: nginx-sa
+  chaosServiceAccount: disk-fill-sa
   monitoring: false
-  components:
-    runner:
-      image: 'litmuschaos/chaos-executor:1.0.0'
-      type: 'go'
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:
@@ -236,6 +237,6 @@ spec:
 
   `kubectl describe chaosresult nginx-chaos-disk-fill -n <application-namespace>`
 
-## Disk Fill Experiment Demo [TODO]
+### Disk Fill Experiment Demo [TODO]
 
 - A sample recording of this experiment execution is provided here.

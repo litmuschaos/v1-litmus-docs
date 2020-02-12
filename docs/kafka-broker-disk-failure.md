@@ -71,39 +71,41 @@ sidebar_label: Broker Disk Failure
 
 #### Sample Rbac Manifest
 
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kafka/kafka-broker-disk-failure/rbac.yaml yaml)
 ```yaml
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: kafka-sa
+  name: kafka-broker-disk-failure-sa
   namespace: default
   labels:
-    name: kafka-sa
+    name: kafka-broker-disk-failure-sa
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
-  name: kafka-sa
+  name: kafka-broker-disk-failure-sa
   labels:
-    name: kafka-sa
+    name: kafka-broker-disk-failure-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps"]
-  resources: ["pods","jobs","pod/exec","statefulsets","secrets","chaosengines","chaosexperiments","chaosresults"]
+  resources: ["pods","jobs","pods/exec","statefulsets","secrets","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
-  name: kafka-sa
+  name: kafka-broker-disk-failure-sa
   labels:
-    name: kafka-sa
+    name: kafka-broker-disk-failure-sa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: kafka-role
+  name: kafka-broker-disk-failure-sa
 subjects:
 - kind: ServiceAccount
-  name: kafka-sa
+  name: kafka-broker-disk-failure-sa
   namespace: default
 
 ```
@@ -246,6 +248,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kafka/kafka-broker-disk-failure/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -255,41 +258,39 @@ metadata:
 spec:
   # It can be true/false
   annotationCheck: 'true'
+  # It can be active/stop
+  engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ''
   appinfo: 
     appns: 'default'
     applabel: 'app=cp-kafka'
     appkind: 'statefulset'
-  chaosServiceAccount: kafka-sa
+  chaosServiceAccount: kafka-broker-disk-failure-sa
   monitoring: false
-  components:
-    runner:
-      image: 'litmuschaos/chaos-executor:1.0.0'
-      type: 'go'
   # It can be delete/retain
-  jobCleanUpPolicy: 'delete'
+  jobCleanUpPolicy: 'delete' 
   experiments:
     - name: kafka-broker-disk-failure
       spec:
-        components:
-          env:  
+        components:  
+          env:
             # choose based on available kafka broker replicas           
             - name: KAFKA_REPLICATION_FACTOR
               value: '3'
 
-            # get via "kubectl get pods --show-labels -n <kafka-namespace>"
+            # get via 'kubectl get pods --show-labels -n <kafka-namespace>'
             - name: KAFKA_LABEL
               value: 'app=cp-kafka'
 
             - name: KAFKA_NAMESPACE
               value: 'default'
-     
-            # get via "kubectl get svc -n <kafka-namespace>" 
+      
+            # get via 'kubectl get svc -n <kafka-namespace>' 
             - name: KAFKA_SERVICE
               value: 'kafka-cp-kafka-headless'
 
-            # get via "kubectl get svc -n <kafka-namespace>  
+            # get via 'kubectl get svc -n <kafka-namespace>'  
             - name: KAFKA_PORT
               value: '9092'
 
@@ -304,19 +305,19 @@ spec:
             - name: ZOOKEEPER_NAMESPACE
               value: 'default'
 
-            # get via "kubectl get pods --show-labels -n <zk-namespace>"
+            # get via 'kubectl get pods --show-labels -n <zk-namespace>'
             - name: ZOOKEEPER_LABEL
               value: 'app=cp-zookeeper'
 
-            # get via "kubectl get svc -n <zk-namespace>  
+            # get via 'kubectl get svc -n <zk-namespace>  
             - name: ZOOKEEPER_SERVICE
               value: 'kafka-cp-zookeeper-headless'
 
-            # get via "kubectl get svc -n <zk-namespace>  
+            # get via 'kubectl get svc -n <zk-namespace>  
             - name: ZOOKEEPER_PORT
               value: '2181'
 
-            # get from google cloud console or "gcloud projects list"
+            # get from google cloud console or 'gcloud projects list'
             - name: PROJECT_ID
               value: 'argon-tractor-237811'
 
@@ -327,14 +328,16 @@ spec:
             - name: ZONE_NAME
               value: 'us-central1-a'
 
-            # Uses "disk-1" attached to the node on which it is scheduled
+            # Uses 'disk-1' attached to the node on which it is scheduled
             - name: KAFKA_BROKER
               value: 'kafka-0'
 
             # set chaos duration (in sec) as desired
             - name: TOTAL_CHAOS_DURATION
-              value: '60'           
+              value: '60'
+              
 ```
+
 ### Create the ChaosEngine Resource 
 
 - Create the ChaosEngine manifest prepared in the previous step to trigger the Chaos. 

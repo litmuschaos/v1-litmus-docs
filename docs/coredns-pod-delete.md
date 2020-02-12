@@ -54,21 +54,23 @@ sidebar_label: CoreDNS Pod Delete
 - Use this sample RBAC manifest to create a chaosServiceAccount in the desired (app) namespace. This example consists of the minimum necessary role permissions to execute the experiment.
 
 ### Sample Rbac Manifest
+
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/coredns/coredns-pod-delete/rbac.yaml yaml)
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: coredns-sa
+  name: coredns-pod-delete-sa
   namespace: kube-system
   labels:
-    name: coredns-sa
+    name: coredns-pod-delete-sa
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
-  name: coredns-sa
+  name: coredns-pod-delete-sa
   labels:
-    name: coredns-sa
+    name: coredns-pod-delete-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch"]
   resources: ["services", "pods","jobs","chaosengines","chaosexperiments","chaosresults"]
@@ -77,16 +79,16 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
-  name: coredns-sa
+  name: coredns-pod-delete-sa
   labels:
-    name: coredns-sa
+    name: coredns-pod-delete-sa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: coredns-sa
+  name: coredns-pod-delete-sa
 subjects:
 - kind: ServiceAccount
-  name: coredns-sa
+  name: coredns-pod-delete-sa
   namespace: kube-system
 ```
 
@@ -139,6 +141,8 @@ subjects:
 </table>
 
 #### Sample ChaosEngine Manifest
+
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/coredns/coredns-pod-delete/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -152,13 +156,11 @@ spec:
     appkind: 'deployment'
   # It can be true/false
   annotationCheck: 'false'
+  # It can be active/stop
+  engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ''
-  components:
-    runner:
-       image: 'litmuschaos/chaos-executor:1.0.0'
-       type: 'go'
-  chaosServiceAccount: coredns-sa
+  chaosServiceAccount: coredns-pod-delete-sa
   monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
@@ -166,15 +168,15 @@ spec:
     - name: coredns-pod-delete
       spec:
         components:
-          env:
-             # set chaos duration (in sec) as desired
+          env: 
+            # set chaos duration (in sec) as desired
             - name: TOTAL_CHAOS_DURATION
               value: '30'
-      
+        
             # set chaos interval (in sec) as desired
             - name: CHAOS_INTERVAL
               value: '10'
-              
+                
             - name: CHAOS_NAMESPACE
               value: 'kube-system'
 ```
