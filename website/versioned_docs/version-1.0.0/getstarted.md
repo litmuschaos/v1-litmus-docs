@@ -195,7 +195,7 @@ spec:
       spec:
         components:
           - name: TARGET_CONTAINER
-            value: nginx
+            value: 'nginx'
 ```
 
 ### Override Default Chaos Experiments Variables
