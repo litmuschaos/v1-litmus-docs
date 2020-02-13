@@ -1,5 +1,5 @@
 ---
-id: version-1.0.0-getstarted
+id: version-1.0.0-getstarted 
 title: Getting Started with Litmus
 sidebar_label: Introduction
 original_id: getstarted
@@ -71,6 +71,24 @@ Expected output:
 >
 > chaosresults.litmuschaos.io             2019-10-02T08:45:26Z
 
+- Verify if the chaos api resources are successfully created in the desired (application) namespace.
+ 
+  *Note*: Sometimes, it can take a few seconds for the resources to be available post the CRD installation
+
+```
+kubectl api-resources | grep chaos
+```
+
+Expected output: 
+
+> chaosengines							    litmuschaos.io 			     true	  ChaosEngine
+>
+> chaosexperiments                                                  litmuschaos.io                           true         ChaosExperiment
+>
+> chaosresults                                                      litmuschaos.io                           true         ChaosResult
+
+ 
+
 <div class="danger">
 <strong>NOTE</strong>: 
 In this guide, we shall describe the steps to inject chaos on an application
@@ -84,7 +102,7 @@ Chaos experiments contain the actual chaos details. These experiments are instal
 The generic chaos experiments such as `pod-kill`,  `container-kill`,` network-delay` are available under Generic Chaos Chart. This is the first chart you install. You can later install application specific chaos charts for running application oriented chaos.
 
 ```
-kubectl create -f https://hub.litmuschaos.io/api/chaos?file=charts/generic/experiments.yaml
+kubectl apply -f https://hub.litmuschaos.io/api/chaos?file=charts/generic/experiments.yaml
 ```
 
 Verify if the chaos experiments are installed.
@@ -98,43 +116,49 @@ kubectl get chaosexperiments
 A Service Account should be created to allow chaosengine to run experiments in your application namespace. Copy the following into `rbac.yaml` and run `kubectl apply -f rbac.yaml` to create one such account on your default namespace. You can change the service account name and namespace as needed.
 
 ```yaml
----
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: nginx-sa
+  namespace: default
   labels:
-    app: nginx-sa
+    name: nginx-sa
 ---
-kind: ClusterRole
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
 metadata:
   name: nginx-sa
+  namespace: default
+  labels:
+    name: nginx-sa
 rules:
-- apiGroups: ["", "extensions", "apps", "batch", "litmuschaos.io"]
-  resources: ["daemonsets", "deployments", "replicasets", "jobs", "pods", "pods/exec","nodes","events", "chaosengines", "chaosexperiments", "chaosresults"]
-  verbs: ["*"] 
+- apiGroups: ["","litmuschaos.io","batch","apps"]
+  resources: ["pods","jobs","daemonsets","pods/exec","chaosengines","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","update","delete"]
 ---
-kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
 metadata:
+  name: nginx-sa
+  namespace: default
+  labels:
+    name: nginx-sa
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
   name: nginx-sa
 subjects:
 - kind: ServiceAccount
   name: nginx-sa
-  namespace: default # App namespace
-roleRef:
-  kind: ClusterRole
-  name: nginx-sa
-  apiGroup: rbac.authorization.k8s.io
+  namespace: default
 ```
 
 ### Annotate your application
 
-Your application has to be annotated with `litmuschaos.io/chaos="true"`. As a security measure, Chaos Operator checks for this annotation on the application before invoking chaos experiment(s) on the application. Replace `myserver` with the name of your deployment.
+Your application has to be annotated with `litmuschaos.io/chaos="true"`. As a security measure, Chaos Operator checks for this annotation on the application before invoking chaos experiment(s) on the application. Replace `nginx` with the name of your deployment.
 
 ```console
-kubectl annotate deploy/myserver litmuschaos.io/chaos="true"
+kubectl annotate deploy/nginx litmuschaos.io/chaos="true"
 ```
 
 ### Prepare ChaosEngine 
@@ -152,26 +176,26 @@ spec:
   # It can be app/infra
   chaosType: 'app'
   #ex. values: ns1:name=percona,ns2:run=nginx  
-  auxiliaryAppInfo: ""
+  auxiliaryAppInfo: ''
   components:
     runner:
-      image: "litmuschaos/chaos-executor:1.0.0"
-      type: "go"
+      image: 'litmuschaos/chaos-executor:1.0.0'
+      type: 'go'
   # It can be delete/retain
-  jobCleanUpPolicy: delete
+  jobCleanUpPolicy: 'delete'
   monitoring: false
   appinfo: 
-    appns: default 
+    appns: 'default' 
     # FYI, To see app label, apply kubectl get pods --show-labels
-    applabel: "app=nginx" 
-    appkind: deployment
-  chaosServiceAccount: nginx 
+    applabel: 'app=nginx'
+    appkind: 'deployment'
+  chaosServiceAccount: nginx-sa
   experiments:
     - name: container-kill
       spec:
         components:
-        - name: TARGET_CONTAINER
-          value: nginx
+          - name: TARGET_CONTAINER
+            value: 'nginx'
 ```
 
 ### Override Default Chaos Experiments Variables
@@ -194,7 +218,7 @@ experiments:
 
 
 ```console
-kubectl create -f chaosengine.yaml
+kubectl apply -f chaosengine.yaml
 ```
 
 <div class="danger">
@@ -208,7 +232,7 @@ Describe the ChaosResult CR to know the status of each experiment. The ```spec.v
 <strong> NOTE:</strong>  ChaosResult CR name will be `<chaos-engine-name>-<chaos-experiment-name>`
 
 ```console
-kubectl describe chaosresult engine-nginx-pod-delete
+kubectl describe chaosresult engine-nginx-container-kill
 ```
 
 ## Uninstallation
@@ -221,7 +245,7 @@ kubectl delete -f https://litmuschaos.github.io/pages/litmus-operator-v1.0.0.yam
 
 ## More Chaos Experiments
 
-- For more details on supported chaos experiments and the steps to run them, refer the **Experiments** section.
+- For more details on supported chaos experiments and the steps to run them, refer to [chaoshub](chaoshub.md) section.
 
 ## Join our community
 
