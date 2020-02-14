@@ -69,7 +69,9 @@ stringData:
 
 #### Sample Rbac Manifest
 
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/disk-loss/rbac.yaml yaml)
 ```yaml
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -208,6 +210,7 @@ subjects:
 
 ## Sample ChaosEngine Manifest
 
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/disk-loss/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -235,7 +238,7 @@ spec:
     - name: disk-loss
       spec:
         components:
-          env:
+          env: 
             # set chaos duration (in sec) as desired
             - name: TOTAL_CHAOS_DURATION
               value: '60'
@@ -254,17 +257,24 @@ spec:
             # Node name of the cluster
             - name: NODE_NAME
               value: 'demo-node-123'
-            # Disk Name of the node, it must be an external disk.	
+            # Disk Name of the node, it must be an external disk. 
             - name: DISK_NAME
               value: 'demo-disk-123'
-            # Enter the device name which you wanted to mount only for AWS.	
+            # Enter the device name which you wanted to mount only for AWS.   
             - name: DEVICE_NAME
               value: '/dev/sdb'
             # Name of Zone in which node is present (GCP)
             # Use Region Name when running with AWS (ex: us-central1)
             - name: ZONE_NAME
               value: 'us-central1-a'
+            # ChaosEngine CR name associated with the experiment instance 
+            - name: CHAOSENGINE
+              value: ''
+            # Service account used by the litmus  
+            - name: CHAOS_SERVICE_ACCOUNT
+              value: ''
 ```
+
 ## Create the ChaosEngine Resource
 -   Create the ChaosEngine manifest prepared in the previous step to trigger the Chaos.
 

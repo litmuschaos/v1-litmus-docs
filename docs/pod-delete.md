@@ -56,22 +56,24 @@ sidebar_label: Pod Delete
 
 #### Sample Rbac Manifest
 
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-delete/rbac.yaml yaml)
 ```yaml
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: nginx-sa
+  name: pod-delete-sa
   namespace: default
   labels:
-    name: nginx-sa
+    name: pod-delete-sa
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: Role
 metadata:
-  name: nginx-sa
+  name: pod-delete-sa
   namespace: default
   labels:
-    name: nginx-sa
+    name: pod-delete-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps"]
   resources: ["pods","deployments","jobs","configmaps","chaosengines","chaosexperiments","chaosresults"]
@@ -83,17 +85,17 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
 metadata:
-  name: nginx-sa
+  name: pod-delete-sa
   namespace: default
   labels:
-    name: nginx-sa
+    name: pod-delete-sa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: nginx-sa
+  name: pod-delete-sa
 subjects:
 - kind: ServiceAccount
-  name: nginx-sa
+  name: pod-delete-sa
   namespace: default
 
 ```
@@ -152,6 +154,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-delete/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -164,17 +167,15 @@ spec:
     applabel: 'app=nginx'
     appkind: 'deployment'
   # It can be true/false
-  annotationCheck: 'true'  
-  #ex. values: ns1:name=percona,ns2:run=nginx 
+  annotationCheck: 'true'
+  # It can be active/stop
+  engineState: 'active'
+  #ex. values: ns1:name=percona,ns2:run=nginx
   auxiliaryAppInfo: ''
-  chaosServiceAccount: nginx-sa
+  chaosServiceAccount: pod-delete-sa
   monitoring: false
-  components:
-    runner:
-      image: 'litmuschaos/chaos-executor:1.0.0'
-      type: 'go'
   # It can be delete/retain
-  jobCleanUpPolicy: 'delete' 
+  jobCleanUpPolicy: 'delete'
   experiments:
     - name: pod-delete
       spec:

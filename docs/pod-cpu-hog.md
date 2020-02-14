@@ -57,22 +57,24 @@ Use this sample RBAC manifest to create a chaosServiceAccount in the desired (ap
 
 #### Sample Rbac Manifest
 
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-cpu-hog/rbac.yaml yaml)
 ```yaml
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: nginx-sa
+  name: pod-cpu-hog-sa
   namespace: default
   labels:
-    name: nginx-sa
+    name: pod-cpu-hog-sa
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: Role
 metadata:
-  name: nginx-sa
+  name: pod-cpu-hog-sa
   namespace: default
   labels:
-    name: nginx-sa
+    name: pod-cpu-hog-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch"]
   resources: ["pods","jobs","chaosengines","chaosexperiments","chaosresults"]
@@ -81,17 +83,17 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
 metadata:
-  name: nginx-sa
+  name: pod-cpu-hog-sa
   namespace: default
   labels:
-    name: nginx-sa
+    name: pod-cpu-hog-sa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: nginx-sa
+  name: pod-cpu-hog-sa
 subjects:
 - kind: ServiceAccount
-  name: nginx-sa
+  name: pod-cpu-hog-sa
   namespace: default
 ```
 
@@ -145,6 +147,7 @@ subjects:
                       
 #### Sample ChaosEngine Manifest
 
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-cpu-hog/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -154,18 +157,16 @@ metadata:
 spec:
   # It can be true/false
   annotationCheck: 'true'
+  # It can be active/stop
+  engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ''
   appinfo:
     appns: 'default'
     applabel: 'app=nginx'
     appkind: 'deployment'
-  chaosServiceAccount: nginx-sa
+  chaosServiceAccount: pod-cpu-hog-sa
   monitoring: false
-  components:
-    runner:
-      image: 'litmuschaos/chaos-executor:1.0.0'
-      type: 'go'
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:
@@ -181,7 +182,8 @@ spec:
               value: '1'
               # in ms 
             - name: TOTAL_CHAOS_DURATION
-              value: '60000'        
+              value: '60000' 
+            
 ```
 
 ### Create the ChaosEngine Resource

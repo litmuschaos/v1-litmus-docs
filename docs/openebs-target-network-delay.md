@@ -98,22 +98,24 @@ Use this sample RBAC manifest to create a chaosServiceAccount in the desired (ap
 
 #### Sample Rbac Manifest
 
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/openebs-target-network-delay/rbac.yaml yaml)
 ```yaml
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: nginx-sa
+  name: target-network-delay-sa
   namespace: default
   labels:
-    name: nginx-sa
+    name: target-network-delay-sa
 ---
 # Source: openebs/templates/clusterrole.yaml
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
-  name: nginx-sa
+  name: target-network-delay-sa
   labels:
-    name: nginx-sa
+    name: target-network-delay-sa
 rules:
 - apiGroups: ["","apps","litmuschaos.io","batch","extensions","storage.k8s.io"]
   resources: ["pods","pods/exec","jobs","configmaps","secrets","services","persistentvolumeclaims","storageclasses","persistentvolumes","chaosexperiments","chaosresults","chaosengines"]
@@ -122,16 +124,16 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
-  name: nginx-sa
+  name: target-network-delay-sa
   labels:
-    name: nginx-sa
+    name: target-network-delay-sa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: nginx-sa
+  name: target-network-delay-sa
 subjects:
 - kind: ServiceAccount
-  name: nginx-sa
+  name: target-network-delay-sa
   namespace: default
 ```
 
@@ -202,6 +204,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/openebs-target-network-delay/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -211,18 +214,16 @@ metadata:
 spec:
   # It can be true/false
   annotationCheck: 'false' 
+  # It can be active/stop
+  engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ''
   appinfo:
     appns: 'default'
     applabel: 'app=nginx'
     appkind: 'deployment'
-  chaosServiceAccount: nginx-sa
+  chaosServiceAccount: target-network-delay-sa
   monitoring: false
-  components:
-    runner:
-      image: 'litmuschaos/chaos-executor:1.0.0'
-      type: 'go'
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:
@@ -235,7 +236,7 @@ spec:
             - name: APP_PVC
               value: 'pvc-c466262a-a5f2-4f0f-b594-5daddfc2e29d'    
             - name: DEPLOY_TYPE
-              value: deployment       
+              value: 'deployment'       
             - name: NETWORK_DELAY
               value: '30000'
             - name: TOTAL_CHAOS_DURATION

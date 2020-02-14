@@ -57,22 +57,24 @@ sidebar_label: Pod Network Corruption
 
 #### Sample Rbac Manifest
 
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-network-corruption/rbac.yaml yaml)
 ```yaml
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: nginx-sa
+  name: pod-network-corruption-sa
   namespace: default
   labels:
-    name: nginx-sa
+    name: pod-network-corruption-sa
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: Role
 metadata:
-  name: nginx-sa
+  name: pod-network-corruption-sa
   namespace: default
   labels:
-    name: nginx-sa
+    name: pod-network-corruption-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch"]
   resources: ["pods","jobs","chaosengines","chaosexperiments","chaosresults"]
@@ -81,19 +83,18 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
 metadata:
-  name: nginx-sa
+  name: pod-network-corruption-sa
   namespace: default
   labels:
-    name: nginx-sa
+    name: pod-network-corruption-sa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: nginx-sa
+  name: pod-network-corruption-sa
 subjects:
 - kind: ServiceAccount
-  name: nginx-sa
+  name: pod-network-corruption-sa
   namespace: default
-
 ```
 
 ### Prepare ChaosEngine
@@ -156,6 +157,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-network-corruption/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -166,20 +168,18 @@ spec:
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   # It can be true/false
-  annotationCheck: 'true' 
+  annotationCheck: 'true'
+  # It can be active/stop
+  engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ''
   monitoring: false
-  components:
-    runner:
-      image: 'litmuschaos/chaos-executor:1.0.0'
-      type: 'go'
   appinfo: 
     appns: 'default'
     # FYI, To see app label, apply kubectl get pods --show-labels
     applabel: 'app=nginx'
     appkind: 'deployment'
-  chaosServiceAccount: nginx-sa
+  chaosServiceAccount: pod-network-corruption-sa
   experiments:
     - name: pod-network-corruption
       spec:
@@ -187,13 +187,14 @@ spec:
           env:
             - name: ANSIBLE_STDOUT_CALLBACK
               value: 'default'
-            #Container name where chaos has to be injected
+              #Container name where chaos has to be injected
             - name: TARGET_CONTAINER
-              value: 'nginx'
-              #Network interface inside target container
+              value: 'nginx' 
+              #Network interface inside target container              
             - name: NETWORK_INTERFACE
               value: 'eth0'                   
 ```
+
 ### Create the ChaosEngine Resource
 
 - Create the ChaosEngine manifest prepared in the previous step to trigger the Chaos.
