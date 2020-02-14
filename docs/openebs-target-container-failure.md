@@ -98,22 +98,24 @@ If the experiment tunable DATA_PERSISTENCE is set to 'enabled':
 
 #### Sample Rbac Manifest
 
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/openebs-target-container-failure/rbac.yaml yaml)
 ```yaml
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: nginx-sa
+  name: target-container-failure-sa
   namespace: default
   labels:
-    name: nginx-sa
+    name: target-container-failure-sa
 ---
 # Source: openebs/templates/clusterrole.yaml
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
-  name: nginx-sa
+  name: target-container-failure-sa
   labels:
-    name: nginx-sa
+    name: target-container-failure-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps","storage.k8s.io"]
   resources: ["pods","jobs","pods/exec","configmaps","secrets","persistentvolumeclaims","storageclasses","persistentvolumes","chaosengines","chaosexperiments","chaosresults"]
@@ -122,18 +124,17 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
-  name: nginx-sa
+  name: target-container-failure-sa
   labels:
-    name: nginx-sa
+    name: target-container-failure-sa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: nginx-sa
+  name: target-container-failure-sa
 subjects:
 - kind: ServiceAccount
-  name: nginx-sa
+  name: target-container-failure-sa
   namespace: default
-
 ```
 
 ### Prepare ChaosEngine
@@ -197,6 +198,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/openebs-target-container-failure/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -206,18 +208,16 @@ metadata:
 spec:
   # It can be true/false
   annotationCheck: 'false' 
+  # It can be active/stop
+  engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ''
   appinfo:
     appns: 'default'
     applabel: 'app=percona'
     appkind: 'deployment'
-  chaosServiceAccount: nginx-sa
+  chaosServiceAccount: target-container-failure-sa
   monitoring: false
-  components:
-    runner:
-      image: 'litmuschaos/chaos-executor:1.0.0'
-      type: 'go'
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:
@@ -230,7 +230,7 @@ spec:
             - name: APP_PVC
               value: 'pvc-c466262a-a5f2-4f0f-b594-5daddfc2e29d'    
             - name: DEPLOY_TYPE
-              value: deployment        
+              value: 'deployment'        
 ```
 
 ### Create the ChaosEngine Resource

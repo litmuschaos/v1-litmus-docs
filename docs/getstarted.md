@@ -114,22 +114,24 @@ kubectl get chaosexperiments
 
 A Service Account should be created to allow chaosengine to run experiments in your application namespace. Copy the following into `rbac.yaml` and run `kubectl apply -f rbac.yaml` to create one such account on your default namespace. You can change the service account name and namespace as needed.
 
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/container-kill/rbac.yaml yaml)
 ```yaml
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: nginx-sa
+  name: container-kill-sa
   namespace: default
   labels:
-    name: nginx-sa
+    name: container-kill-sa
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: Role
 metadata:
-  name: nginx-sa
+  name: container-kill-sa
   namespace: default
   labels:
-    name: nginx-sa
+    name: container-kill-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps"]
   resources: ["pods","jobs","daemonsets","pods/exec","chaosengines","chaosexperiments","chaosresults"]
@@ -138,64 +140,63 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
 metadata:
-  name: nginx-sa
+  name: container-kill-sa
   namespace: default
   labels:
-    name: nginx-sa
+    name: container-kill-sa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: nginx-sa
+  name: container-kill-sa
 subjects:
 - kind: ServiceAccount
-  name: nginx-sa
+  name: container-kill-sa
   namespace: default
+
 ```
 
 ### Annotate your application
 
-Your application has to be annotated with `litmuschaos.io/chaos="true"`. As a security measure, Chaos Operator checks for this annotation on the application before invoking chaos experiment(s) on the application. Replace `myserver` with the name of your deployment.
+Your application has to be annotated with `litmuschaos.io/chaos="true"`. As a security measure, Chaos Operator checks for this annotation on the application before invoking chaos experiment(s) on the application. Replace `nginx` with the name of your deployment.
 
 ```console
-kubectl annotate deploy/myserver litmuschaos.io/chaos="true"
+kubectl annotate deploy/nginx litmuschaos.io/chaos="true"
 ```
 
 ### Prepare ChaosEngine 
 
 ChaosEngine connects application to the Chaos Experiment. Copy the following YAML snippet into a file called `chaosengine.yaml` and update the values of `applabel` , `appns`, `appkind` and `experiments` as per your choice. Toggle `monitoring` between `true`/`false`, to allow the chaos-exporter to fetch experiment related metrics. Change the `chaosServiceAccount` to the name of Service Account created in above step, if applicable.
 
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/container-kill/engine.yaml yaml)
 ```yaml
-# chaosengine.yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
-  name: engine-nginx
+  name: nginx-chaos
   namespace: default
 spec:
   # It can be true/false
   annotationCheck: 'true'
-  #ex. values: ns1:name=percona,ns2:run=nginx  
+  # It can be active/stop
+  engineState: 'active'
+  #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ''
-  components:
-    runner:
-      image: 'litmuschaos/chaos-executor:1.0.0'
-      type: 'go'
-  # It can be delete/retain
-  jobCleanUpPolicy: 'delete'
-  monitoring: false
-  appinfo: 
-    appns: 'default' 
-    # FYI, To see app label, apply kubectl get pods --show-labels
+  appinfo:
+    appns: 'default'
     applabel: 'app=nginx'
     appkind: 'deployment'
-  chaosServiceAccount: nginx-sa
+  chaosServiceAccount: container-kill-sa
+  monitoring: false
+  # It can be delete/retain
+  jobCleanUpPolicy: 'delete' 
   experiments:
     - name: container-kill
       spec:
         components:
           env:
+            # specify the name of the container to be killed
             - name: TARGET_CONTAINER
-              value: nginx
+              value: 'nginx'
 ```
 
 ### Override Default Chaos Experiments Variables

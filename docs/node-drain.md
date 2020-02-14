@@ -58,21 +58,23 @@ Use this sample RBAC manifest to create a chaosServiceAccount in the desired (ap
 
 #### Sample Rbac Manifest
 
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/node-drain/rbac.yaml yaml)
 ```yaml
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: nginx-sa
+  name: node-drain-sa
   namespace: default
   labels:
-    name: nginx-sa
+    name: node-drain-sa
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
-  name: nginx-sa
+  name: node-drain-sa
   labels:
-    name: nginx-sa
+    name: node-drain-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch","extensions"]
   resources: ["pods","jobs","chaosengines","daemonsets","pods/eviction","chaosexperiments","chaosresults"]
@@ -84,17 +86,18 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
-  name: nginx-sa
+  name: node-drain-sa
   labels:
-    name: nginx-sa
+    name: node-drain-sa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: nginx-sa
+  name: node-drain-sa
 subjects:
 - kind: ServiceAccount
-  name: nginx-sa
+  name: node-drain-sa
   namespace: default
+  
 ```
 
 ### Prepare ChaosEngine
@@ -134,6 +137,7 @@ subjects:
                       
 #### Sample ChaosEngine Manifest
 
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/node-drain/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -143,18 +147,16 @@ metadata:
 spec:
   # It can be true/false
   annotationCheck: 'false'
+  # It can be active/stop
+  engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ''
   appinfo:
     appns: 'default'
     applabel: 'app=nginx'
     appkind: 'deployment'
-  chaosServiceAccount: nginx-sa
+  chaosServiceAccount: node-drain-sa
   monitoring: false
-  components:
-    runner:
-      image: 'litmuschaos/chaos-executor:1.0.0'
-      type: 'go'
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:

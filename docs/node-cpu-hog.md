@@ -57,21 +57,23 @@ Tests application resiliency upon replica evictions caused due to lack of CPU re
 
 #### Sample Rbac Manifest
 
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/node-cpu-hog/rbac.yaml yaml)
 ```yaml
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: nginx-sa
+  name: node-cpu-hog-sa
   namespace: default
   labels:
-    name: nginx-sa
+    name: node-cpu-hog-sa
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
-  name: nginx-sa
+  name: node-cpu-hog-sa
   labels:
-    name: nginx-sa
+    name: node-cpu-hog-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps"]
   resources: ["pods","daemonsets","jobs","pods/exec","chaosengines","chaosexperiments","chaosresults"]
@@ -83,16 +85,16 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
-  name: nginx-sa
+  name: node-cpu-hog-sa
   labels:
-    name: nginx-sa
+    name: node-cpu-hog-sa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: nginx-sa
+  name: node-cpu-hog-sa
 subjects:
 - kind: ServiceAccount
-  name: nginx-sa
+  name: node-cpu-hog-sa
   namespace: default
 ```
 
@@ -139,6 +141,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/node-cpu-hog/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -147,19 +150,17 @@ metadata:
   namespace: default
 spec:
   # It can be true/false
-  annotationCheck: 'false' 
+  annotationCheck: 'false'
+  # It can be active/stop
+  engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ''
   appinfo:
     appns: 'default'
     applabel: 'app=nginx'
     appkind: 'deployment'
-  chaosServiceAccount: nginx-sa
+  chaosServiceAccount: node-cpu-hog-sa
   monitoring: false
-  components:
-    runner:
-      image: 'litmuschaos/chaos-executor:1.0.0'
-      type: 'go'
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:
@@ -167,7 +168,7 @@ spec:
       spec:
         components:
           env:
-             # set chaos duration (in sec) as desired
+            # set chaos duration (in sec) as desired
             - name: TOTAL_CHAOS_DURATION
               value: '60'
             # set chaos platform as desired
