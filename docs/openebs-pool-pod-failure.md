@@ -210,7 +210,7 @@ spec:
             - name: FORCE
               value: 'true'
             - name: APP_PVC
-              value: 'pvc-c466262a-a5f2-4f0f-b594-5daddfc2e29d'    
+              value: 'demo-nginx-claim'    
             - name: DEPLOY_TYPE
               value: 'deployment'     
 ```

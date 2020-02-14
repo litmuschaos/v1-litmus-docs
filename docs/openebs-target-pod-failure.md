@@ -115,7 +115,7 @@ metadata:
     name: target-pod-failure-sa
 rules:
 - apiGroups: ["","apps","litmuschaos.io","batch","extensions","storage.k8s.io"]
-  resources: ["pods","jobs","deployments","pods/exec","chaosexperiments","chaosresults","chaosengines","configmaps","secrets","services,"persistentvolumeclaims","storageclasses","persistentvolumes"]
+  resources: ["pods","jobs","deployments","pods/exec","chaosexperiments","chaosresults","chaosengines","configmaps","secrets","services","persistentvolumeclaims","storageclasses","persistentvolumes"]
   verbs: ["create","list","get","patch","update","delete"]
 - apiGroups: [""]
   resources: ["nodes"]
@@ -197,7 +197,7 @@ spec:
   auxiliaryAppInfo: ''
   appinfo:
     appns: 'default'
-    applabel: 'app=percona'
+    applabel: 'app=nginx'
     appkind: 'deployment'
   chaosServiceAccount: target-pod-failure-sa
   monitoring: false
@@ -211,7 +211,7 @@ spec:
             - name: FORCE
               value: 'true'
             - name: APP_PVC
-              value: 'pvc-c466262a-a5f2-4f0f-b594-5daddfc2e29d'    
+              value: 'demo-nginx-claim'    
             - name: DEPLOY_TYPE
               value: 'deployment'     
 ```

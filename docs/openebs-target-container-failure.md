@@ -118,7 +118,7 @@ metadata:
     name: target-container-failure-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps","storage.k8s.io"]
-  resources: ["pods","jobs","pods/exec","configmaps","secrets","persistentvolumeclaims","storageclasses","persistentvolumes","chaosengines","chaosexperiments","chaosresults"]
+  resources: ["pods","jobs","pods/exec","daemonsets","configmaps","secrets","persistentvolumeclaims","storageclasses","persistentvolumes","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
@@ -214,7 +214,7 @@ spec:
   auxiliaryAppInfo: ''
   appinfo:
     appns: 'default'
-    applabel: 'app=percona'
+    applabel: 'app=nginx'
     appkind: 'deployment'
   chaosServiceAccount: target-container-failure-sa
   monitoring: false
@@ -228,7 +228,7 @@ spec:
             - name: TARGET_CONTAINER
               value: 'cstor-istgt'
             - name: APP_PVC
-              value: 'pvc-c466262a-a5f2-4f0f-b594-5daddfc2e29d'    
+              value: 'demo-nginx-claim'   
             - name: DEPLOY_TYPE
               value: 'deployment'        
 ```
