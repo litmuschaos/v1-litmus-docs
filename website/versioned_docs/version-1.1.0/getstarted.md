@@ -1,7 +1,8 @@
 ---
-id: getstarted 
+id: version-1.1.0-getstarted
 title: Getting Started with Litmus
 sidebar_label: Introduction
+original_id: getstarted
 ---
 ------
 

@@ -1,7 +1,8 @@
 ---
-id: openebs-pool-container-failure
-title: OpenEBS Pool Container Failure Experiment Details
-sidebar_label: Pool Container Failure
+id: version-1.1.0-openebs-target-network-loss
+title: OpenEBS Target Network Loss Experiment Details
+sidebar_label: Target Network Loss
+original_id: openebs-target-network-loss
 ---
 ------
 
@@ -15,17 +16,18 @@ sidebar_label: Pool Container Failure
   </tr>
   <tr>
     <td> OpenEBS </td>
-    <td> Kill the cstor pool pod container and check if gets created again </td>
+    <td> Induce network loss into the cStor target/Jiva controller container </td>
     <td> GKE, Konvoy(AWS), Packet(Kubeadm), Minikube, OpenShift(Baremetal) </td>
   </tr>
 </table>
 
-<b>Note:</b> In this example, we are using nginx as stateful application that stores static pages on a Kubernetes volume.
+<b>Note:</b> In this example, we are using nginx as stateful application that stores static pages on a Kubernetes volume. 
 
 ## Prerequisites
 
+- Ensure that the Kubernetes Cluster uses Docker runtime
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
-- Ensure that the `openebs-pool-container-failure` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-pool-container-failure)
+- Ensure that the `openebs-target-network-loss` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-target-network-loss)
 - The DATA_PERSISTENCE can be enabled by provide the application's info in a configmap volume so that the experiment can perform necessary checks. Currently, LitmusChaos supports data consistency checks only for MySQL and Busybox. 
     - For MYSQL data persistence check create a configmap as shown below in the application namespace (replace with actual credentials):
 
@@ -34,7 +36,7 @@ sidebar_label: Pool Container Failure
     apiVersion: v1
     kind: ConfigMap
     metadata:
-      name: openebs-pool-container-failure
+      name: openebs-target-network-loss
     data:
       parameters.yml: | 
         dbuser: root
@@ -48,7 +50,7 @@ sidebar_label: Pool Container Failure
     apiVersion: v1
     kind: ConfigMap
     metadata:
-      name: openebs-pool-container-failure
+      name: openebs-target-network-loss
     data:
       parameters.yml: | 
         blocksize: 4k
@@ -75,64 +77,64 @@ If the experiment tunable DATA_PERSISTENCE is set to 'enabled':
 
 ## Details
 
-- This scenario validates the behaviour of stateful applications and OpenEBS data plane upon forced termination of the targeted pool pod container
-- Containers are killed using the kill command provided by pumba
-- Pumba is run as a daemonset on all nodes in dry-run mode to begin with; the kill command is issued during experiment execution via kubectl exec
-- Can test the stateful application's resilience to momentary iSCSI connection loss
+- This scenario validates the behaviour of stateful applications and OpenEBS data plane upon high latencies/network loss in accessing the storage controller pod
+- Injects network loss on the specified container in the controller pod by starting a traffic control `tc` process with `netem` rules to add egress delays
+- Network loss is injected via pumba library with command `pumba netem delay` by passing the relevant network interface, network loss, chaos duration and regex filter for container name
+- Can test the stateful application's resilience to loss/slow iSCSI connections
 
 ## Integrations
 
-- Container kill is achieved using the pumba chaos library for docker runtime.
-- The desired lib image can be configured in the env variable LIB_IMAGE.
+- Network loss is achieved using the `pumba` chaos library in case of docker runtime. Support for other other runtimes via tc direct invocation of `tc` will be added soon. 
+- The desired lib image can be configured in the env variable `LIB_IMAGE`. 
 
 ## Steps to Execute the Chaos Experiment
 
-- This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to be provided in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
+- This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to provide in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
 
 - Follow the steps in the sections below to prepare the ChaosEngine & execute the experiment.
 
 ### Prepare chaosServiceAccount
 
-Use this sample RBAC manifest to create a chaosServiceAccount in the desired (app) namespace. This example consists of the minimum necessary cluster role permissions to execute the experiment.
+Use this sample RBAC manifest to create a chaosServiceAccount in the desired (app)namespace. This example consists of the minimum necessary cluster role permissions to execute the experiment.
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/openebs-pool-container-failure/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/openebs-target-network-loss/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: pool-container-failure-sa
+  name: target-network-loss-sa
   namespace: default
   labels:
-    name: pool-container-failure-sa
+    name: target-network-loss-sa
 ---
 # Source: openebs/templates/clusterrole.yaml
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
-  name: pool-container-failure-sa
+  name: target-network-loss-sa
   labels:
-    name: pool-container-failure-sa
+    name: target-network-loss-sa
 rules:
-- apiGroups: ["","apps","litmuschaos.io","batch","extensions","storage.k8s.io","openebs.io"]
-  resources: ["pods","jobs","daemonsets","replicasets","pods/exec","configmaps","secrets","persistentvolumeclaims","cstorvolumereplicas","chaosexperiments","chaosresults","chaosengines"]
+- apiGroups: ["","apps","litmuschaos.io","batch","extensions","storage.k8s.io"]
+  resources: ["pods","pods/exec","jobs","configmaps","secrets","services","persistentvolumeclaims","storageclasses","persistentvolumes","chaosexperiments","chaosresults","chaosengines"]
   verbs: ["create","list","get","patch","update","delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
-  name: pool-container-failure-sa
+  name: target-network-loss-sa
   labels:
-    name: pool-container-failure-sa
+    name: target-network-loss-sa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: pool-container-failure-sa
+  name: target-network-loss-sa
 subjects:
 - kind: ServiceAccount
-  name: pool-container-failure-sa
+  name: target-network-loss-sa
   namespace: default
 ```
 
@@ -155,25 +157,31 @@ subjects:
     <td> APP_PVC </td>
     <td> The PersistentVolumeClaim used by the stateful application </td>
     <td> Mandatory </td>
-    <td> PVC must use OpenEBS cStor storage class </td>
-  </tr>
-  <tr>
-    <td> TOTAL_CHAOS_DURATION </td>
-    <td> Amount of soak time for I/O post container kill </td>
-    <td> Optional </td>
-    <td> Defaults to 600 seconds </td>
+    <td> PVC may use either OpenEBS Jiva/cStor storage class </td>
   </tr>
   <tr>
     <td> LIB_IMAGE </td>
-    <td> The chaos library image used to inject the latency </td>
+    <td> chaos library image used to inject the network loss </td>
     <td> Optional  </td>
-    <td> Defaults to `gaiaadm/pumba:0.4.8`. Supported: `gaiaadm/pumba:0.4.8` </td>
+    <td> Defaults to `gaiaadm/pumba:0.6.5`. Supported: `docker : gaiaadm/pumba:0.6.5` </td>
+  </tr>
+  <tr>
+    <td> TOTAL_CHAOS_DURATION </td>
+    <td> Total duration for which network loss is injected </td>
+    <td> Optional </td>
+    <td> Defaults to 120 seconds </td>
   </tr>
   <tr>
     <td> DEPLOY_TYPE </td>
     <td> Type of Kubernetes resource used by the stateful application </td>
     <td> Optional  </td>
     <td> Defaults to `deployment`. Supported: `deployment`, `statefulset` </td>
+  </tr>
+  <tr>
+    <td> NETWORK_PACKET_LOSS_PERCENTAGE </td>
+    <td> Total percentage for which network loss is injected </td>
+    <td> Optional  </td>
+    <td>  Defaults to 100 (percent) </td>
   </tr>
   <tr>
     <td> DATA_PERSISTENCE </td>
@@ -185,7 +193,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/openebs-pool-container-failure/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/openebs-target-network-loss/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -203,19 +211,23 @@ spec:
     appns: 'default'
     applabel: 'app=nginx'
     appkind: 'deployment'
-  chaosServiceAccount: pool-container-failure-sa
+  chaosServiceAccount: target-network-loss-sa
   monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:
-    - name: openebs-pool-container-failure
+    - name: openebs-target-network-loss
       spec:
         components:
           env:
+            - name: TARGET_CONTAINER
+              value: 'cstor-istgt'
             - name: APP_PVC
               value: 'demo-nginx-claim'    
             - name: DEPLOY_TYPE
-              value: 'deployment'   
+              value: 'deployment'       
+            - name: TOTAL_CHAOS_DURATION
+              value: '120000' 
 ```
 
 ### Create the ChaosEngine Resource
@@ -226,17 +238,18 @@ spec:
 
 ### Watch Chaos progress
 
-- View pod restart count by setting up a watch on the pods in the OpenEBS namespace
+- View network loss in action by setting up a ping to the storage controller in the OpenEBS namespace
+- Watch the behaviour of the application pod and the OpenEBS data replica/pool pods by setting up in a watch on the respective namespaces
 
   `watch -n 1 kubectl get pods -n <application-namespace>`
 
 ### Check Chaos Experiment Result
 
-- Check whether the application is resilient to the pool pod container failure, once the experiment (job) is completed. The ChaosResult resource naming convention 
-  is: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
+- Check whether the application is resilient to the target network loss, once the experiment (job) is completed. The ChaosResult resource naming 
+  convention is: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult target-chaos-openebs-pool-container-failure -n <application-namespace>`
+  `kubectl describe chaosresult target-chaos-openebs-target-network-loss -n <application-namespace>`
 
-## OpenEBS Pool Container Failure Demo [TODO]
+## OpenEBS Target Network Loss Demo [TODO]
 
 - A sample recording of this experiment execution is provided here.

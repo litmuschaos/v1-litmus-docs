@@ -1,7 +1,8 @@
 ---
-id: openebs-pool-container-failure
+id: version-1.1.0-openebs-pool-container-failure
 title: OpenEBS Pool Container Failure Experiment Details
 sidebar_label: Pool Container Failure
+original_id: openebs-pool-container-failure
 ---
 ------
 

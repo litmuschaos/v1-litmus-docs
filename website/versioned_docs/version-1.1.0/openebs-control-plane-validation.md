@@ -1,0 +1,196 @@
+---
+id: version-1.1.0-openebs-control-plane-validation
+title: OpenEBS Control Plane Validation Experiment Details
+sidebar_label: Control Plane Validation
+original_id: openebs-control-plane-validation
+---
+------
+
+## Experiment Metadata
+
+<table>
+  <tr>
+    <th> Type </th>
+    <th> Description </th>
+    <th> Tested K8s Platform </th>
+  </tr>
+  <tr>
+    <td> OpenEBS </td>
+    <td> Kill all the openebs control plane pod and check if gets created again </td>
+    <td> GKE </td>
+  </tr>
+</table>
+
+## Prerequisites
+
+- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
+
+- Ensure that the `openebs-control-plane-validation` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the `openebs` namespace. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-control-plane-validation)
+
+- Ensure that the chaosServiceAccount used for the experiment has namespaced-scope permissions as the experiment may involve carrying out the chaos in the `openebs` namespace while performing application health checks in its respective namespace. 
+
+## Entry Criteria
+
+- OpenEBS control plane pods are healthy before chaos injection
+
+## Exit Criteria
+
+- OpenEBS control plane pods are healthy after chaos injection
+
+## Details
+
+- This scenario Validates graceful & forced terminations of OpenEBS control plane pods
+- List of control plane components used to kill in this experiment:
+  - maya-apiserver
+  - openebs-admission-server
+  - openebs-localpv-provisioner
+  - openebs-localpv-provisioner
+  - openebs-provisioner
+  - openebs-provisioner
+  - openebs-ndm
+
+## Integrations
+
+- Pod kill is achieved using the litmus or powerfulseal chaos libraries.
+- The desired lib can be configured in the env variable `LIB` using `litmus` or `powerfulseal`.
+
+## Steps to Execute the Chaos Experiment
+
+- This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to be provided in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
+
+- Follow the steps in the sections below to create the chaosServiceAccount, prepare the ChaosEngine & execute the experiment.
+
+
+### Prepare chaosServiceAccount
+
+Use this sample RBAC manifest to create a chaosServiceAccount in the desired (openebs) namespace. This example consists of the minimum necessary role permissions to execute the experiment.
+
+#### Sample Rbac Manifest
+
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/openebs-control-plane-validation/rbac.yaml)
+```yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: control-plane-sa
+  namespace: openebs
+  labels:
+    name: control-plane-sa
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
+metadata:
+  name: control-plane-sa
+  namespace: openebs
+  labels:
+    name: control-plane-sa
+rules:
+- apiGroups: ["","litmuschaos.io","batch","apps"]
+  resources: ["pods","deployments","jobs","configmaps","chaosengines","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","update","delete"]
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs : ["get","list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: control-plane-sa
+  namespace: openebs
+  labels:
+    name: control-plane-sa
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: control-plane-sa
+subjects:
+- kind: ServiceAccount
+  name: control-plane-sa
+  namespace: openebs
+```
+
+### Prepare ChaosEngine
+
+- Provide the application info in `spec.appinfo`
+- Override the experiment tunables if desired
+
+#### Supported Experiment Tunables
+
+<table>
+  <tr>
+    <th> Variables </th>
+    <th> Description  </th>
+    <th> Type </th>
+    <th> Notes </th>
+  </tr>
+  <tr>
+    <td> LIB </td>
+    <td> The chaos library used to inject the chaos </td>
+    <td> Optional  </td>
+    <td> Defaults to `litmus`. Supported: `litmus, powerfulseal` </td>
+  </tr>
+</table>
+
+#### Sample ChaosEngine Manifest
+
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/openebs-control-plane-validation/engine.yaml)
+```yaml
+apiVersion: litmuschaos.io/v1alpha1
+kind: ChaosEngine
+metadata:
+  name: control-plane-chaos
+  namespace: openebs
+spec:
+  # It can be true/false
+  annotationCheck: 'false'
+  # It can be active/stop
+  engineState: 'active'
+  appinfo:
+    appns: 'openebs'
+    applabel: 'name=maya-apiserver'
+    appkind: 'deployment'
+  chaosServiceAccount: control-plane-sa
+  monitoring: false
+  # It can be delete/retain
+  jobCleanUpPolicy: 'delete'
+  experiments:
+    - name: openebs-control-plane-validation
+      spec:
+        components:
+          env:
+            - name: OPENEBS_NAMESPACE
+              value: 'openebs'
+
+            ## Period to wait before injection of chaos  
+            - name: RAMP_TIME
+              value: '10'
+
+            - name: FORCE
+              value: ''
+
+            - name: LIB
+              value: ''
+```
+
+### Create the ChaosEngine Resource
+
+- Create the ChaosEngine manifest prepared in the previous step to trigger the Chaos.
+
+  `kubectl apply -f chaosengine.yml -n openebs`
+
+### Watch Chaos progress
+
+- View pod restart by setting up a watch on the pods in the OpenEBS namespace
+
+  `watch -n 1 kubectl get pods -n openebs`
+
+### Check Chaos Experiment Result
+
+- Check whether the openEBS control plane is resilient to the pod failure, once the experiment (job) is completed. The ChaosResult resource naming convention is: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
+
+  `kubectl describe chaosresult control-plane-chaos-openebs-control-plane-validation -n openebs`
+
+## OpenEBS Control Plane Validation Demo [TODO]
+
+- A sample recording of this experiment execution is provided here.

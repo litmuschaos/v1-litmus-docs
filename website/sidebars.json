@@ -55,6 +55,10 @@
            "coredns-pod-delete"
         ]
       }
+    ],
+    "Litmus FAQs": [
+      "faq-general",
+      "faq-troubleshooting"
     ]
   }
 }

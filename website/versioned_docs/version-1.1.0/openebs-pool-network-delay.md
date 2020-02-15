@@ -1,7 +1,8 @@
 ---
-id: openebs-target-network-delay 
-title: OpenEBS Target Network Latency Experiment Details
-sidebar_label: Target Network Latency
+id: version-1.1.0-openebs-pool-network-delay
+title: OpenEBS Pool Network Latency Experiment Details
+sidebar_label: Pool Network Latency
+original_id: openebs-pool-network-delay
 ---
 ------
 
@@ -15,8 +16,8 @@ sidebar_label: Target Network Latency
   </tr>
   <tr>
     <td> OpenEBS </td>
-    <td> Induce latency into the cStor target/Jiva controller container </td>
-    <td> GKE, Konvoy(AWS), Packet(Kubeadm), Minikube, OpenShift(Baremetal) </td>
+    <td> Induce latency into the cStor pool pod </td>
+    <td> GKE</td>
   </tr>
 </table>
 
@@ -25,39 +26,42 @@ sidebar_label: Target Network Latency
 ## Prerequisites
 
 - Ensure that the Kubernetes Cluster uses Docker runtime
+
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
-- Ensure that the `openebs-target-network-delay` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-target-network-delay)
-- The DATA_PERSISTENCE can be enabled by provide the application's info in a configmap volume so that the experiment can perform necessary checks. Currently, LitmusChaos supports data consistency checks only for MySQL and Busybox. 
-    - For MYSQL data persistence check create a configmap as shown below in the application namespace (replace with actual credentials):
 
-    ```
-    ---
-    apiVersion: v1
-    kind: ConfigMap
-    metadata:
-      name: openebs-target-network-delay
-    data:
-      parameters.yml: | 
-        dbuser: root
-        dbpassword: k8sDem0
-        dbname: test
-    ```
-    - For Busybox data persistence check create a configmap as shown below in the application namespace (replace with actual credentials):
+- - Ensure that the `openebs-pool-network-delay` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the specificed namespace. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-pool-network-delay)
 
-    ```
-    ---
-    apiVersion: v1
-    kind: ConfigMap
-    metadata:
-      name: openebs-target-network-delay
-    data:
-      parameters.yml: | 
-        blocksize: 4k
-        blockcount: 1024
-        testfile: exampleFile
-    ```
-- Ensure that the chaosServiceAccount used for the experiment has cluster-scope permissions as the experiment may involve carrying out the chaos in the `openebs` namespace
-  while performing application health checks in its respective namespace. 
+- The DATA_PERSISTENCE can be enabled by provide the application's info in a configmap volume so that the experiment can perform necessary checks. Currently, LitmusChaos supports data consistency checks only for `MySQL` and `Busybox`.
+
+- For MYSQL data persistence check create a configmap as shown below in the application namespace (replace with actual credentials):
+
+```yaml
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: openebs-pool-network-delay
+data:
+  parameters.yml: | 
+    dbuser: root
+    dbpassword: k8sDem0
+    dbname: test
+```
+- For Busybox data persistence check create a configmap as shown below in the application namespace (replace with actual credentials):
+
+```yaml
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: openebs-pool-network-delay
+data:
+  parameters.yml: | 
+    blocksize: 4k
+    blockcount: 1024
+    testfile: exampleFile
+```
+- Ensure that the chaosServiceAccount used for the experiment has cluster-scope permissions as the experiment may involve carrying out the chaos in the `openebs` namespace  while performing application health checks in its respective namespace. 
 
 ## Entry Criteria
 
@@ -67,16 +71,16 @@ sidebar_label: Target Network Latency
 ## Exit Criteria
 
 - Stateful application pods are healthy post chaos injection
-- OpenEBS Storage target pods are healthy
+- OpenEBS Storage pool pods are healthy
 
-If the experiment tunable DATA_PERSISTENCE is set to 'enabled':
+If the experiment tunable DATA_PERSISTENCE is set to 'mysql' or 'busybox':
 
 - Application data written prior to chaos is successfully retrieved/read 
 - Database consistency is maintained as per db integrity check utils 
 
 ## Details
 
-- This scenario validates the behaviour of stateful applications and OpenEBS data plane upon high latencies/network delays in accessing the storage controller pod
+- This scenario validates the behaviour of stateful applications and OpenEBS data plane upon high latencies/network delays in accessing the storage replicas pod
 - Injects latency on the specified container in the controller pod by staring a traffic control `tc` process with `netem` rules to add egress delays
 - Latency is injected via pumba library with command `pumba netem delay` by passing the relevant network interface, latency, chaos duration and regex filter for container name
 - Can test the stateful application's resilience to loss/slow iSCSI connections
@@ -90,51 +94,49 @@ If the experiment tunable DATA_PERSISTENCE is set to 'enabled':
 
 - This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to provide in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
 
-- Follow the steps in the sections below to prepare the ChaosEngine & execute the experiment.
+- Follow the steps in the sections below to create the chaosServiceAccount, prepare the ChaosEngine & execute the experiment.
 
 ### Prepare chaosServiceAccount
 
 Use this sample RBAC manifest to create a chaosServiceAccount in the desired (app)namespace. This example consists of the minimum necessary cluster role permissions to execute the experiment.
 
 #### Sample Rbac Manifest
-
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/openebs-target-network-delay/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/openebs-pool-network-delay/rbac.yaml)
 ```yaml
----
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: target-network-delay-sa
-  namespace: default
+  name: pool-network-delay-sa
+  namespace: openebs
   labels:
-    name: target-network-delay-sa
+    name: pool-network-delay-sa
 ---
 # Source: openebs/templates/clusterrole.yaml
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
-  name: target-network-delay-sa
+  name: pool-network-delay-sa
   labels:
-    name: target-network-delay-sa
+    name: pool-network-delay-sa
 rules:
-- apiGroups: ["","apps","litmuschaos.io","batch","extensions","storage.k8s.io"]
-  resources: ["pods","pods/exec","jobs","configmaps","secrets","services","persistentvolumeclaims","storageclasses","persistentvolumes","chaosexperiments","chaosresults","chaosengines"]
+- apiGroups: ["","apps","litmuschaos.io","batch","extensions","storage.k8s.io","openebs.io"]
+  resources: ["pods","pods/exec","jobs","configmaps","services","persistentvolumeclaims","storageclasses","persistentvolumes","chaosengines","chaosexperiments","chaosresults","cstorpools","cstorvolumereplicas","replicasets"]
   verbs: ["create","list","get","patch","update","delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
-  name: target-network-delay-sa
+  name: pool-network-delay-sa
   labels:
-    name: target-network-delay-sa
+    name: pool-network-delay-sa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: target-network-delay-sa
+  name: pool-network-delay-sa
 subjects:
 - kind: ServiceAccount
-  name: target-network-delay-sa
-  namespace: default
+  name: pool-network-delay-sa
+  namespace: openebs
 ```
 
 ### Prepare ChaosEngine
@@ -156,7 +158,7 @@ subjects:
     <td> APP_PVC </td>
     <td> The PersistentVolumeClaim used by the stateful application </td>
     <td> Mandatory </td>
-    <td> PVC may use either OpenEBS Jiva/cStor storage class </td>
+    <td> PVC can use OpenEBS cStor storage class </td>
   </tr>
   <tr>
     <td> LIB_IMAGE </td>
@@ -165,32 +167,14 @@ subjects:
     <td> Defaults to `gaiaadm/pumba:0.6.5`. Supported: `docker : gaiaadm/pumba:0.6.5` </td>
   </tr>
   <tr>
-    <td> CONTAINER_RUNTIME </td>
-    <td> The container runtime used in the Kubernetes Cluster </td>
-    <td> Optional  </td>
-    <td> Defaults to `docker`. Supported: `docker` </td>
-  </tr>
-  <tr>
-    <td> TARGET_CONTAINER </td>
-    <td> The container into which delays are injected in the storage controller pod </td>
-    <td> Optional  </td>
-    <td> Defaults to `cstor-istgt` </td>
-  </tr>
-  <tr>
     <td> TOTAL_CHAOS_DURATION </td>
     <td> Total duration for which network latency is injected </td>
     <td> Optional </td>
     <td> Defaults to 60 seconds </td>
   </tr>
   <tr>
-    <td> DEPLOY_TYPE </td>
-    <td> Type of Kubernetes resource used by the stateful application </td>
-    <td> Optional  </td>
-    <td> Defaults to `deployment`. Supported: `deployment`, `statefulset` </td>
-  </tr>
-  <tr>
     <td> NETWORK_DELAY </td>
-    <td> Egress delay injected into the target container </td>
+    <td> Egress delay injected into the pool container </td>
     <td> Optional  </td>
     <td> Defaults to 60000 milliseconds (60s) </td>
   </tr>
@@ -203,44 +187,42 @@ subjects:
 </table>
 
 #### Sample ChaosEngine Manifest
-
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/openebs-target-network-delay/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/openebs-pool-network-delay/engine.yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
-  name: target-chaos
+  name: pool-chaos
   namespace: default
 spec:
-  # It can be true/false
-  annotationCheck: 'false' 
-  # It can be active/stop
-  engineState: 'active'
-  #ex. values: ns1:name=percona,ns2:run=nginx 
-  auxiliaryAppInfo: ''
+  annotationCheck: 'false'
   appinfo:
     appns: 'default'
     applabel: 'app=nginx'
     appkind: 'deployment'
-  chaosServiceAccount: target-network-delay-sa
+  chaosServiceAccount: pool-network-delay-sa
   monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:
-    - name: openebs-target-network-delay
+    - name: openebs-pool-network-delay
       spec:
         components:
           env:
-            - name: TARGET_CONTAINER
-              value: 'cstor-istgt'
             - name: APP_PVC
-              value: 'demo-nginx-claim'    
-            - name: DEPLOY_TYPE
-              value: 'deployment'       
+              value: 'demo-nginx-claim' 
+
+            - name: OPENEBS_NAMESPACE
+              value: 'openebs'
+             
+            # in milliseconds
             - name: NETWORK_DELAY
-              value: '30000'
+              value: '60000'
+
+            # in milliseconds  
             - name: TOTAL_CHAOS_DURATION
-              value: '60000' 
+              value: '60000'
+        
 ```
 
 ### Create the ChaosEngine Resource
@@ -258,11 +240,10 @@ spec:
 
 ### Check Chaos Experiment Result
 
-- Check whether the application is resilient to the target network delays, once the experiment (job) is completed. The ChaosResult resource naming 
-  convention is: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
+- Check whether the application is resilient to the pool network delays, once the experiment (job) is completed. The ChaosResult resource naming convention is: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult target-chaos-openebs-target-network-delay -n <application-namespace>`
+  `kubectl describe chaosresult pool-chaos-openebs-pool-network-delay -n <application-namespace>`
 
-## OpenEBS Target Network Delay Demo [TODO]
+## OpenEBS Pool Network Delay Demo [TODO]
 
 - A sample recording of this experiment execution is provided here.

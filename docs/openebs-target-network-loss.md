@@ -25,7 +25,7 @@ sidebar_label: Target Network Loss
 ## Prerequisites
 
 - Ensure that the Kubernetes Cluster uses Docker runtime
-- Ensure that the Litmus Chaos Operator is running in the cluster. If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
+- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
 - Ensure that the `openebs-target-network-loss` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-target-network-loss)
 - The DATA_PERSISTENCE can be enabled by provide the application's info in a configmap volume so that the experiment can perform necessary checks. Currently, LitmusChaos supports data consistency checks only for MySQL and Busybox. 
     - For MYSQL data persistence check create a configmap as shown below in the application namespace (replace with actual credentials):
@@ -98,22 +98,24 @@ Use this sample RBAC manifest to create a chaosServiceAccount in the desired (ap
 
 #### Sample Rbac Manifest
 
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/openebs-target-network-loss/rbac.yaml yaml)
 ```yaml
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: nginx-sa
+  name: target-network-loss-sa
   namespace: default
   labels:
-    name: nginx-sa
+    name: target-network-loss-sa
 ---
 # Source: openebs/templates/clusterrole.yaml
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
-  name: nginx-sa
+  name: target-network-loss-sa
   labels:
-    name: nginx-sa
+    name: target-network-loss-sa
 rules:
 - apiGroups: ["","apps","litmuschaos.io","batch","extensions","storage.k8s.io"]
   resources: ["pods","pods/exec","jobs","configmaps","secrets","services","persistentvolumeclaims","storageclasses","persistentvolumes","chaosexperiments","chaosresults","chaosengines"]
@@ -122,16 +124,16 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
-  name: nginx-sa
+  name: target-network-loss-sa
   labels:
-    name: nginx-sa
+    name: target-network-loss-sa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: nginx-sa
+  name: target-network-loss-sa
 subjects:
 - kind: ServiceAccount
-  name: nginx-sa
+  name: target-network-loss-sa
   namespace: default
 ```
 
@@ -190,6 +192,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/openebs-target-network-loss/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -199,18 +202,16 @@ metadata:
 spec:
   # It can be true/false
   annotationCheck: 'false'
+  # It can be active/stop
+  engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ''
   appinfo:
     appns: 'default'
     applabel: 'app=nginx'
     appkind: 'deployment'
-  chaosServiceAccount: nginx-sa
+  chaosServiceAccount: target-network-loss-sa
   monitoring: false
-  components:
-    runner:
-      image: 'litmuschaos/chaos-executor:1.0.0'
-      type: 'go'
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:
@@ -221,9 +222,9 @@ spec:
             - name: TARGET_CONTAINER
               value: 'cstor-istgt'
             - name: APP_PVC
-              value: 'pvc-c466262a-a5f2-4f0f-b594-5daddfc2e29d'    
+              value: 'demo-nginx-claim'    
             - name: DEPLOY_TYPE
-              value: deployment       
+              value: 'deployment'       
             - name: TOTAL_CHAOS_DURATION
               value: '120000' 
 ```
@@ -239,7 +240,7 @@ spec:
 - View network loss in action by setting up a ping to the storage controller in the OpenEBS namespace
 - Watch the behaviour of the application pod and the OpenEBS data replica/pool pods by setting up in a watch on the respective namespaces
 
-  `watch -n 1 kubectl get pods -n <app/openebs-namespace>`
+  `watch -n 1 kubectl get pods -n <application-namespace>`
 
 ### Check Chaos Experiment Result
 

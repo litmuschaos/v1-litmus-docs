@@ -1,7 +1,8 @@
 ---
-id: coredns-pod-delete
+id: version-1.1.0-coredns-pod-delete
 title: CoreDNS Pod Delete Experiment Details
 sidebar_label: CoreDNS Pod Delete
+original_id: coredns-pod-delete
 ---
 ------
 

@@ -1,7 +1,8 @@
 ---
-id: pod-cpu-hog
+id: version-1.1.0-pod-cpu-hog
 title: Pod CPU Hog Details
 sidebar_label: Pod CPU Hog
+original_id: pod-cpu-hog
 ---
 ------
 

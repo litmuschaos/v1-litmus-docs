@@ -1,7 +1,8 @@
 ---
-id: node-drain
+id: version-1.1.0-node-drain
 title: Node Drain Experiment Details
 sidebar_label: Node Drain
+original_id: node-drain
 ---
 ------
 

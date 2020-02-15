@@ -1,7 +1,8 @@
 ---
-id: node-cpu-hog
+id: version-1.1.0-node-cpu-hog
 title: Node CPU Hog Experiment Details
 sidebar_label: Node CPU Hog
+original_id: node-cpu-hog
 ---
 ------
 

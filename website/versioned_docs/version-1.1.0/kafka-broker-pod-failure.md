@@ -1,7 +1,8 @@
 ---
-id: kafka-broker-disk-failure
-title: Kafka Broker Disk Failure Experiment Details
-sidebar_label: Broker Disk Failure
+id: version-1.1.0-kafka-broker-pod-failure
+title: Kafka Broker Pod Failure Experiment Details
+sidebar_label: Broker Pod Failure
+original_id: kafka-broker-pod-failure
 ---
 
 ## Experiment Metadata
@@ -15,15 +16,16 @@ sidebar_label: Broker Disk Failure
   </tr>
   <tr>
     <td> Kafka </td>
-    <td> Fail kafka broker disk/storage </td>
+    <td> Fail kafka leader-broker pods </td>
     <td> Confluent, Kudo-Kafka </td>
-    <td> GKE </td>
+    <td> AWS Konvoy, GKE </td>
   </tr>
 </table>
 
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
+- Ensure that the `kafka-broker-pod-failure` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/kafka/experiments/kafka-broker-pod-failure) 
 - Ensure that Kafka & Zookeeper are deployed as Statefulsets
 - If Confluent/Kudo Operators have been used to deploy Kafka, note the instance name, which will be 
   used as the value of `KAFKA_INSTANCE_NAME` experiment environment variable 
@@ -33,11 +35,8 @@ sidebar_label: Broker Disk Failure
  
   Zookeeper uses this to construct a path in which kafka cluster data is stored. 
 
-- Ensure that the kafka-broker-disk failure experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/kafka/experiments/kafka-broker-disk-failure)
+- Ensure that the kafka-broker-disk failure experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/kafka/experiments/kafka-broker-pod-failure) 
 
-- Create a secret with the gcloud serviceaccount key (placed in a file `cloud_config.yml`) named `kafka-broker-disk-failure` in the namespace where the experiment CRs are created. This is necessary to perform the disk-detach steps from the litmus experiment container.
-
-  `kubectl create secret generic kafka-broker-disk-failure --from-file=cloud_config.yml -n <kafka-namespace>` 
 
 ## Entry Criteria
 
@@ -50,13 +49,14 @@ sidebar_label: Broker Disk Failure
 
 ## Details
 
-- Causes forced detach of specified disk serving as storage for the Kafka broker pod
+- Causes (forced/graceful) pod failure of specific/random Kafka broker pods
 - Tests deployment sanity (replica availability & uninterrupted service) and recovery workflows of the Kafka cluster
 - Tests unbroken message stream when `KAFKA_LIVENESS_STREAM` experiment environment variable is set to `enabled`
 
 ## Integrations
 
-- Currently, the disk detach is supported only on GKE using LitmusLib, which internally uses the gcloud tools. 
+- Pod failures can be effected using one of these chaos libraries: `litmus`, `powerfulseal`
+- The desired chaos library can be selected by setting one of the above options as value for the environment variable `LIB`
 
 ## Steps to Execute the Chaos Experiment
 
@@ -71,43 +71,44 @@ sidebar_label: Broker Disk Failure
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kafka/kafka-broker-disk-failure/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kafka/kafka-broker-pod-failure/rbac.yaml yaml)
 ```yaml
----
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: kafka-broker-disk-failure-sa
+  name: kafka-broker-pod-failure-sa
   namespace: default
   labels:
-    name: kafka-broker-disk-failure-sa
+    name: kafka-broker-pod-failure-sa
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
-  name: kafka-broker-disk-failure-sa
+  name: kafka-broker-pod-failure-sa
   labels:
-    name: kafka-broker-disk-failure-sa
+    name: kafka-broker-pod-failure-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps"]
-  resources: ["pods","jobs","pods/exec","statefulsets","secrets","chaosengines","chaosexperiments","chaosresults"]
+  resources: ["pods","deployments","jobs","pods/exec","statefulsets","configmaps","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","delete"]
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs : ["get","list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
-  name: kafka-broker-disk-failure-sa
+  name: kafka-broker-pod-failure-sa
   labels:
-    name: kafka-broker-disk-failure-sa
+    name: kafka-broker-pod-failure-sa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: kafka-broker-disk-failure-sa
+  name: kafka-broker-pod-failure-sa
 subjects:
 - kind: ServiceAccount
-  name: kafka-broker-disk-failure-sa
+  name: kafka-broker-pod-failure-sa
   namespace: default
-
 ```
 
 ### Prepare ChaosEngine
@@ -173,34 +174,10 @@ subjects:
     <td>  </td>
   </tr>
   <tr>
-    <td> CLOUD_PLATFORM </td>
-    <td> Cloud platform type on which to inject disk loss </td>
-    <td> Mandatory </td>
-    <td> Supported platforms: GCP </td>
-  </tr>
-  <tr>
-    <td> PROJECT_ID </td>
-    <td> GCP Project ID in which the Cluster is created </td>
-    <td> Mandatory </td>
-    <td>  </td>
-  </tr>
-  <tr>
-    <td> DISK_NAME </td>
-    <td> GCloud Disk attached to the Cluster Node where specified broker is scheduled </td>
-    <td> Mandatory </td>
-    <td>  </td>
-  </tr>
-  <tr>
-    <td> ZONE_NAME </td>
-    <td> Zone in which the Disks/Cluster are created </td>
-    <td> Mandatory </td>
-    <td>  </td>
-  </tr>
-  <tr>
     <td> KAFKA_BROKER </td>
-    <td> Kafka broker pod which is using the specified disk </td>
-    <td> Mandatory </td>
-    <td> Experiment verifies this by mapping node details </td>
+    <td> Kafka broker pod (name) to be deleted </td>
+    <td> Optional </td>
+    <td> A target selection mode (random/liveness-based/specific) </td>
   </tr>
   <tr>
     <td> KAFKA_KIND </td>
@@ -244,11 +221,29 @@ subjects:
     <td> Optional </td>
     <td> Defaults to 15s </td>
   </tr>
+  <tr>
+    <td> CHAOS_INTERVAL </td>
+    <td> Time interval b/w two successive broker failures (sec) </td>
+    <td> Optional </td>
+    <td> Defaults to 5s </td>
+  </tr>
+  <tr>
+    <td> LIB </td>
+    <td> The chaos lib used to inject the chaos </td>
+    <td> Optional </td>
+    <td> Defaults to `litmus`. Supported: `litmus`, `powerfulseal </td>
+  </tr>
+  <tr>
+    <td> CHAOS_SERVICE_ACCOUNT </td>
+    <td> Service account used by the powerfulseal deployment </td>
+    <td> Optional </td>
+    <td> Defaults to `default` on namespace `spec.appinfo.appns </td>
+  </tr>
 </table>
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kafka/kafka-broker-disk-failure/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kafka/kafka-broker-pod-failure/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -266,12 +261,12 @@ spec:
     appns: 'default'
     applabel: 'app=cp-kafka'
     appkind: 'statefulset'
-  chaosServiceAccount: kafka-broker-disk-failure-sa
+  chaosServiceAccount: kafka-broker-pod-failure-sa
   monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete' 
   experiments:
-    - name: kafka-broker-disk-failure
+    - name: kafka-broker-pod-failure
       spec:
         components:  
           env:
@@ -317,25 +312,17 @@ spec:
             - name: ZOOKEEPER_PORT
               value: '2181'
 
-            # get from google cloud console or 'gcloud projects list'
-            - name: PROJECT_ID
-              value: 'argon-tractor-237811'
-
-            # attached to (in use by) node where 'kafka-0' is scheduled
-            - name: DISK_NAME
-              value: 'disk-1'
-
-            - name: ZONE_NAME
-              value: 'us-central1-a'
-
-            # Uses 'disk-1' attached to the node on which it is scheduled
-            - name: KAFKA_BROKER
-              value: 'kafka-0'
-
             # set chaos duration (in sec) as desired
             - name: TOTAL_CHAOS_DURATION
               value: '60'
               
+            # set chaos interval (in sec) as desired
+            - name: CHAOS_INTERVAL
+              value: '20'
+
+            # pod failures without '--force' & default terminationGracePeriodSeconds
+            - name: FORCE
+              value: 'false'
 ```
 
 ### Create the ChaosEngine Resource 
@@ -346,29 +333,18 @@ spec:
 
 ### Watch Chaos progress  
 
-- View broker pod termination upon disk loss by setting up a watch on the pods in the Kafka namespace
+- View pod terminations & recovery by setting up a watch on the pods in the Kafka namespace
 
   `watch -n 1 kubectl get pods -n <kafka-namespace>` 
 
 ### Check Chaos Experiment Result 
 
-- Check whether the kafka deployment is resilient to the broker disk failure, once the experiment (job) is completed.
+- Check whether the kafka deployment is resilient to the broker pod failure, once the experiment (job) is completed.
   The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult kafka-chaos-kafka-broker-disk-failure -n <kafka-namespace>` 
+  `kubectl describe chaosresult kafka-chaos-kafka-broker-pod-failure -n <kafka-namespace>` 
 
-### Kafka Broker Recovery Post Experiment Execution
-
-- The experiment re-attaches the detached disk to the same node as part of recovery steps. However, if the disk is not provisioned
-  as a Persistent Volume & instead provides the backing store to a PV carved out of it, the brokers may continue to stay in `CrashLoopBackOff` 
-  state (example: as hostPath directory for a Kubernetes Local PV) 
-
-- The complete recovery steps involve: 
-
-  - Remounting the disk into the desired mount point
-  - Deleting the affected broker pod to force reschedule 
-
-## Kafka Broker Disk Failure Demo 
+## Kafka Broker Pod Failure Demo 
 
 - TODO: A sample recording of this experiment execution is provided here.
 

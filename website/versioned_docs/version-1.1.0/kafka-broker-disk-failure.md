@@ -1,7 +1,8 @@
 ---
-id: kafka-broker-disk-failure
+id: version-1.1.0-kafka-broker-disk-failure
 title: Kafka Broker Disk Failure Experiment Details
 sidebar_label: Broker Disk Failure
+original_id: kafka-broker-disk-failure
 ---
 
 ## Experiment Metadata

@@ -1,7 +1,8 @@
 ---
-id: container-kill
+id: version-1.1.0-container-kill
 title: Container Kill Experiment Details
 sidebar_label: Container Kill
+original_id: container-kill
 ---
 ------
 

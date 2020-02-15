@@ -1,7 +1,8 @@
 ---
-id: disk-loss
+id: version-1.1.0-disk-loss
 title: Disk Loss Experiment Details
 sidebar_label: Disk Loss
+original_id: disk-loss
 ---
 ------
 ## Experiment Metadata
