@@ -25,7 +25,7 @@ sidebar_label: Target Network Loss
 ## Prerequisites
 
 - Ensure that the Kubernetes Cluster uses Docker runtime
-- Ensure that the Litmus Chaos Operator is running in the cluster. If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
+- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
 - Ensure that the `openebs-target-network-loss` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-target-network-loss)
 - The DATA_PERSISTENCE can be enabled by provide the application's info in a configmap volume so that the experiment can perform necessary checks. Currently, LitmusChaos supports data consistency checks only for MySQL and Busybox. 
     - For MYSQL data persistence check create a configmap as shown below in the application namespace (replace with actual credentials):
@@ -240,7 +240,7 @@ spec:
 - View network loss in action by setting up a ping to the storage controller in the OpenEBS namespace
 - Watch the behaviour of the application pod and the OpenEBS data replica/pool pods by setting up in a watch on the respective namespaces
 
-  `watch -n 1 kubectl get pods -n <app/openebs-namespace>`
+  `watch -n 1 kubectl get pods -n <application-namespace>`
 
 ### Check Chaos Experiment Result
 

@@ -24,10 +24,10 @@ sidebar_label: Pool Pod Failure
 
 ## Prerequisites
 
-- Ensure that the Litmus Chaos Operator is running in the cluster. If not, install from [here](https://github.com/litmuschaos/chaos-operator/blob/master/deploy/operator.yaml)
+- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
 - Ensure that the `openebs-pool-pod-failure` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-pool-pod-failure)
 - The DATA_PERSISTENCE can be enabled by provide the application's info in a configmap volume so that the experiment can perform necessary checks. Currently, LitmusChaos supports data consistency checks only for MySQL and Busybox. 
-    - For MYSQL data persistence check create a configmap as shown below in the application namespace (replace with actual credentials):
+  - For MYSQL data persistence check create a configmap as shown below in the application namespace (replace with actual credentials):
 
     ```
     ---
@@ -55,8 +55,7 @@ sidebar_label: Pool Pod Failure
         blockcount: 1024
         testfile: exampleFile
     ```
-- Ensure that the chaosServiceAccount used for the experiment has cluster-scope permissions as the experiment may involve carrying out the chaos in the `openebs` namespace
-  while performing application health checks in its respective namespace. 
+- Ensure that the chaosServiceAccount used for the experiment has cluster-scope permissions as the experiment may involve carrying out the chaos in the `openebs` namespace while performing application health checks in its respective namespace. 
 
 ## Entry Criteria
 
@@ -65,7 +64,7 @@ sidebar_label: Pool Pod Failure
 
 ## Exit Criteria
 
-- Stateful application pods are healthy post chaos injection
+- Application pods are healthy post chaos injection
 - OpenEBS Storage target pods are healthy
 
 If the experiment tunable DATA_PERSISTENCE is set to 'enabled':
@@ -225,12 +224,11 @@ spec:
 
 - View pod restart count by setting up a watch on the pods in the OpenEBS namespace
 
-  `watch -n 1 kubectl get pods -n <openebs-namespace>`
+  `watch -n 1 kubectl get pods -n <application-namespace>`
 
 ### Check Chaos Experiment Result
 
-- Check whether the application is resilient to the pool pod failure, once the experiment (job) is completed. The ChaosResult resource naming convention 
-  is: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
+- Check whether the application is resilient to the pool pod failure, once the experiment (job) is completed. The ChaosResult resource naming convention is: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
   `kubectl describe chaosresult target-chaos-openebs-pool-pod-failure -n <application-namespace>`
 
