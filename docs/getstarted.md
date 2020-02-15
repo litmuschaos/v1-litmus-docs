@@ -34,7 +34,7 @@ Running chaos on your application involves the following steps:
 ###  Install Litmus
 
 ```
-kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-v1.0.0.yaml
+kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-v1.1.0.yaml
 ```
 
 The above command install all the CRDs, required service account configuration, and chaos-operator. Before you start running a chaos experiment, verify if your Litmus is installed correctly.
@@ -91,7 +91,9 @@ Expected output:
 <div class="danger">
 <strong>NOTE</strong>: 
 In this guide, we shall describe the steps to inject chaos on an application
-deployed in the default namespace.
+already deployed in the default namespace. It is a mandatory requirement to ensure that the 
+chaosexperiment & chaosengine custom resoures are created in the same namespace (typically, 
+the same as the namespace of the application under test (AUT).
 </div>
 
 ### Install Chaos Experiments
@@ -201,7 +203,7 @@ spec:
 
 ### Override Default Chaos Experiments Variables
 
-After LitmusChaos v0.7.0, to override the default environment variables in chaosExperiments, add the entry of those variable with the same name under `experiments.<experiment_name>.spec.components` with the overriding value.
+After LitmusChaos v1.1.0, to override the default environment variables in chaosExperiments, add the entry of those variables with the same name under `experiments.<experiment_name>.spec.components.env` with the overriding value.
 
 ```console
 ...
@@ -209,8 +211,9 @@ experiments:
     - name: container-kill
       spec:
         components:
-        - name: TARGET_CONTAINER
-          value: nginx
+          env:
+            - name: TARGET_CONTAINER
+              value: nginx
 ```
 
 
@@ -222,18 +225,14 @@ experiments:
 kubectl apply -f chaosengine.yaml
 ```
 
-<div class="danger">
-<strong>NOTE</strong>: It is recommended to create Application, ChaosEngine, ChaosExperiment and ServiceAccount in the same namespace for smooth execution of experiments.
-</div>
-
 ### Observe Chaos results
 
-Describe the ChaosResult CR to know the status of each experiment. The ```spec.verdict``` is set to Running when the experiment is in progress, eventually changing to either pass or fail.
+Describe the ChaosResult CR to know the status of each experiment. The ```spec.verdict``` is set to `Awaited` when the experiment is in progress, eventually changing to either `Pass` or `Fail`.
 
 <strong> NOTE:</strong>  ChaosResult CR name will be `<chaos-engine-name>-<chaos-experiment-name>`
 
 ```console
-kubectl describe chaosresult engine-nginx-pod-delete
+kubectl describe chaosresult engine-nginx-container-kill
 ```
 
 ## Uninstallation
@@ -241,7 +240,7 @@ kubectl describe chaosresult engine-nginx-pod-delete
 You can uninstall Litmus by deleting the namespace.
 
 ```console
-kubectl delete -f https://litmuschaos.github.io/pages/litmus-operator-v1.0.0.yaml
+kubectl delete -f https://litmuschaos.github.io/pages/litmus-operator-v1.1.0.yaml
 ```
 
 ## More Chaos Experiments
