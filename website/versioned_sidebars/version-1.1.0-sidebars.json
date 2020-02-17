@@ -36,7 +36,9 @@
           "version-1.1.0-openebs-target-pod-failure",
           "version-1.1.0-openebs-pool-pod-failure",
           "version-1.1.0-openebs-pool-container-failure",
-          "version-1.1.0-openebs-target-network-delay"
+          "version-1.1.0-openebs-pool-network-delay",
+          "version-1.1.0-openebs-pool-network-loss",
+          "version-1.1.0-openebs-control-plane-validation"
         ]
       },
       {
