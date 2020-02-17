@@ -39,7 +39,8 @@
           "openebs-pool-container-failure",
           "openebs-pool-network-delay",
           "openebs-pool-network-loss",
-          "openebs-control-plane-validation"
+          "openebs-control-plane-validation",
+          "cStor-pool-validation"
         ]
       },
       {
