@@ -16,7 +16,7 @@ original_id: openebs-control-plane-validation
   </tr>
   <tr>
     <td> OpenEBS </td>
-    <td> Kill all the openebs control plane pod and check if gets created again </td>
+    <td> Kill the OpenEBS control plane pods and check if they are rescheduled and healthy </td>
     <td> GKE </td>
   </tr>
 </table>
@@ -26,8 +26,6 @@ original_id: openebs-control-plane-validation
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
 
 - Ensure that the `openebs-control-plane-validation` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the `openebs` namespace. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-control-plane-validation)
-
-- Ensure that the chaosServiceAccount used for the experiment has namespaced-scope permissions as the experiment may involve carrying out the chaos in the `openebs` namespace while performing application health checks in its respective namespace. 
 
 ## Entry Criteria
 
@@ -39,20 +37,20 @@ original_id: openebs-control-plane-validation
 
 ## Details
 
-- This scenario Validates graceful & forced terminations of OpenEBS control plane pods
-- List of control plane components used to kill in this experiment:
+- This scenario validates graceful & forced terminations of OpenEBS control plane pods
+- List of control plane components killed in this experiment:
   - maya-apiserver
   - openebs-admission-server
   - openebs-localpv-provisioner
-  - openebs-localpv-provisioner
+  - openebs-ndm-operator
   - openebs-provisioner
-  - openebs-provisioner
+  - openebs-snapshot-operator
   - openebs-ndm
 
 ## Integrations
 
-- Pod kill is achieved using the litmus or powerfulseal chaos libraries.
-- The desired lib can be configured in the env variable `LIB` using `litmus` or `powerfulseal`.
+- Pod kill is achieved using either the litmus or powerfulseal chaos libraries.
+- The desired lib can be configured using the env variable `LIB` using `litmus` or `powerfulseal`.
 
 ## Steps to Execute the Chaos Experiment
 
@@ -164,7 +162,7 @@ spec:
 
             ## Period to wait before injection of chaos  
             - name: RAMP_TIME
-              value: '10'
+              value: '2'
 
             - name: FORCE
               value: ''
@@ -181,13 +179,13 @@ spec:
 
 ### Watch Chaos progress
 
-- View pod restart by setting up a watch on the pods in the OpenEBS namespace
+- View pod terminations by setting up a watch on the pods in the OpenEBS namespace
 
   `watch -n 1 kubectl get pods -n openebs`
 
 ### Check Chaos Experiment Result
 
-- Check whether the openEBS control plane is resilient to the pod failure, once the experiment (job) is completed. The ChaosResult resource naming convention is: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
+- Check whether the OpenEBS control plane is resilient to the pod failure, once the experiment (job) is completed. The ChaosResult resource naming convention is: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
   `kubectl describe chaosresult control-plane-chaos-openebs-control-plane-validation -n openebs`
 
