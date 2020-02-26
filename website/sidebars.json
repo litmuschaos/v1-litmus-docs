@@ -10,6 +10,9 @@
       "community",
       "devguide"
     ],
+    "Concepts": [
+      "chaosengine"
+    ],
     "Experiments": [
       {
         "type": "subcategory",
