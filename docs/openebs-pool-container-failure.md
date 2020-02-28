@@ -56,7 +56,9 @@ sidebar_label: Pool Container Failure
         testfile: exampleFile
     ```
 - Ensure that the chaosServiceAccount used for the experiment has cluster-scope permissions as the experiment may involve carrying out the chaos in the `openebs` namespace
-  while performing application health checks in its respective namespace. 
+  while performing application health checks in its respective namespace.
+
+- Ensure that you have adequate amount of `CPU` and `Memory` resources available in your cluster to run the experiment.
 
 ## Entry Criteria
 
