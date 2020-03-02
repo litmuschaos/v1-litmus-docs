@@ -1,7 +1,7 @@
 ---
-id: cStor-pool-validation
-title: cStor Pool Validation Experiment Details
-sidebar_label: cStor Pool Validation
+id: cStor-pool-chaos
+title: cStor Pool Chaos Experiment Details
+sidebar_label: cStor Pool Chaos
 ---
 ------
 
@@ -23,7 +23,7 @@ sidebar_label: cStor Pool Validation
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`).If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
-- Ensure that the `openebs-pool-pod-failure` experiment resource is available in the cluster by executing `kubectl get chaosexperiments -n openebs` in the openebs namespace. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-pool-pod-validation)
+- Ensure that the `openebs-pool-pod-failure` experiment resource is available in the cluster by executing `kubectl get chaosexperiments -n openebs` in the openebs namespace. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-pool-pod-failure)
 
 ## Entry Criteria
 
@@ -59,18 +59,18 @@ sidebar_label: cStor Pool Validation
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: openebs-sa
+  name: cStor-pool-chaos-sa
   namespace: openebs
   labels:
-    name: openebs-sa
+    name: cStor-pool-chaos-sa
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: Role
 metadata:
-  name: openebs-sa
+  name: cStor-pool-chaos-sa
   namespace: openebs
   labels:
-    name: openebs-sa
+    name: cStor-pool-chaos-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps"]
   resources: ["pods","deployments","jobs","configmaps","chaosengines","chaosexperiments","chaosresults"]
@@ -82,17 +82,17 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
 metadata:
-  name: openebs-sa
+  name: cStor-pool-chaos-sa
   namespace: openebs
   labels:
-    name: openebs-sa
+    name: cStor-pool-chaos-sa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: openebs-sa
+  name: cStor-pool-chaos-sa
 subjects:
 - kind: ServiceAccount
-  name: openebs-sa
+  name: cStor-pool-chaos-sa
   namespace: openebs
 ```
 
@@ -130,7 +130,7 @@ subjects:
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
-  name: openebs-chaos
+  name: cStor-pool-chaos
   namespace: openebs
 spec:
   appinfo:
@@ -139,7 +139,7 @@ spec:
     appkind: 'deployment'
   # It can be true/false
   annotationCheck: 'false'
-  chaosServiceAccount: openebs-sa
+  chaosServiceAccount: cStor-pool-chaos-sa
   monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete' 
@@ -172,8 +172,12 @@ spec:
 
 - Check whether the cStor pool pod is resilient to the pod failure, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult openebs-chaos-openebs-pool-pod-failure -n openebs`
+  `kubectl describe chaosresult cStor-pool-chaos-openebs-pool-pod-failure -n openebs`
 
-## cStor Pool Pod Validation Demo
+## Recovery 
+
+- If the verdict of the ChaosResult is `Fail` then please refer [troubleshooting section](https://docs.openebs.io/docs/next/troubleshooting.html#ndm-related).
+
+## cStor Pool Pod Chaos Demo
 
 - A sample recording of this experiment will be available soon.

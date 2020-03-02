@@ -1,7 +1,8 @@
 ---
-id: openebs-control-plane-validation
-title: OpenEBS Control Plane Validation Experiment Details
-sidebar_label: Control Plane Validation
+id: version-1.1.0-openebs-control-plane-chaos
+title: OpenEBS Control Plane Chaos Experiment Details
+sidebar_label: Control Plane Chaos
+original_id: openebs-control-plane-chaos
 ---
 ------
 
@@ -24,7 +25,7 @@ sidebar_label: Control Plane Validation
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 
-- Ensure that the `openebs-control-plane-validation` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the `openebs` namespace. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-control-plane-validation)
+- Ensure that the `openebs-control-plane-chaos` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the `openebs` namespace. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-control-plane-chaos)
 
 ## Entry Criteria
 
@@ -64,7 +65,7 @@ Use this sample RBAC manifest to create a chaosServiceAccount in the desired (op
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/openebs-control-plane-validation/rbac.yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/openebs-control-plane-chaos/rbac.yaml)
 ```yaml
 ---
 apiVersion: v1
@@ -131,7 +132,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/openebs-control-plane-validation/engine.yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/openebs-control-plane-chaos/engine.yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -152,7 +153,7 @@ spec:
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:
-    - name: openebs-control-plane-validation
+    - name: openebs-control-plane-chaos
       spec:
         components:
           env:
@@ -161,7 +162,7 @@ spec:
 
             ## Period to wait before injection of chaos  
             - name: RAMP_TIME
-              value: '2'
+              value: '10'
 
             - name: FORCE
               value: ''
@@ -186,8 +187,12 @@ spec:
 
 - Check whether the OpenEBS control plane is resilient to the pod failure, once the experiment (job) is completed. The ChaosResult resource naming convention is: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult control-plane-chaos-openebs-control-plane-validation -n openebs`
+  `kubectl describe chaosresult control-plane-chaos-openebs-control-plane-chaos -n openebs`
 
-## OpenEBS Control Plane Validation Demo [TODO]
+## Recovery 
+
+- If the verdict of the ChaosResult is `Fail` then please refer [troubleshooting section](https://docs.openebs.io/docs/next/troubleshooting.html#installation).
+
+## OpenEBS Control Plane Chaos Demo [TODO]
 
 - A sample recording of this experiment execution is provided here.
