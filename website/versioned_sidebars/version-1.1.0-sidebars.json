@@ -38,8 +38,8 @@
           "version-1.1.0-openebs-pool-container-failure",
           "version-1.1.0-openebs-pool-network-delay",
           "version-1.1.0-openebs-pool-network-loss",
-          "version-1.1.0-openebs-control-plane-validation",
-          "version-1.1.0-cStor-pool-validation"
+          "version-1.1.0-openebs-control-plane-chaos",
+          "version-1.1.0-cStor-pool-chaos"
         ]
       },
       {

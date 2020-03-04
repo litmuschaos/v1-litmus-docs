@@ -236,6 +236,10 @@ spec:
 
   `kubectl describe chaosresult target-chaos-openebs-target-pod-failure -n <application-namespace>`
 
+## Recovery 
+
+- If the verdict of the ChaosResult is `Fail` then please refer [troubleshooting section](https://docs.openebs.io/docs/next/troubleshooting.html#volume-provisioning).
+
 ## OpenEBS Target Pod Failure Demo [TODO]
 
 - A sample recording of this experiment execution is provided here.
