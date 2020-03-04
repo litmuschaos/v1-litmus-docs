@@ -107,7 +107,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: pool-network-delay-sa
-  namespace: openebs
+  namespace: default
   labels:
     name: pool-network-delay-sa
 ---
@@ -136,7 +136,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: pool-network-delay-sa
-  namespace: openebs
+  namespace: default
 ```
 
 ### Prepare ChaosEngine
@@ -219,9 +219,8 @@ spec:
             - name: NETWORK_DELAY
               value: '60000'
 
-            # in milliseconds  
             - name: TOTAL_CHAOS_DURATION
-              value: '60000'
+              value: '60' # in seconds
         
 ```
 
