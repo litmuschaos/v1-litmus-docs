@@ -177,7 +177,7 @@ spec:
 
 ## Recovery 
 
-- If the verdict of the ChaosResult is `Fail` then please refer [troubleshooting section](https://docs.openebs.io/docs/next/troubleshooting.html#ndm-related).
+- If the verdict of the ChaosResult is `Fail`, and/or the OpenEBS components do not return to healthy state post the chaos experiment, then please refer the [OpenEBS troubleshooting guide](https://docs.openebs.io/docs/next/troubleshooting.html#ndm-related) for more info on how to recover the same. 
 
 ## cStor Pool Pod Chaos Demo
 

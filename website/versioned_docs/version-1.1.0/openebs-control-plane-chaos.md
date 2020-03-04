@@ -191,7 +191,7 @@ spec:
 
 ## Recovery 
 
-- If the verdict of the ChaosResult is `Fail` then please refer [troubleshooting section](https://docs.openebs.io/docs/next/troubleshooting.html#installation).
+- If the verdict of the ChaosResult is `Fail`, and/or the OpenEBS components do not return to healthy state post the chaos experiment, then please refer the [OpenEBS troubleshooting guide](https://docs.openebs.io/docs/next/troubleshooting.html#installation) for more info on how to recover the same. 
 
 ## OpenEBS Control Plane Chaos Demo [TODO]
 
