@@ -109,7 +109,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: pool-network-loss-sa
-  namespace: openebs
+  namespace: default
   labels:
     name: pool-network-loss-sa
 ---
@@ -120,7 +120,7 @@ metadata:
   name: pool-network-loss-sa
   labels:
     name: pool-network-loss-sa
-rules: 
+rules:
 - apiGroups:
     - ""
     - "apps"
@@ -166,7 +166,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: pool-network-loss-sa
-  namespace: openebs
+  namespace: default
 ```
 
 ### Prepare ChaosEngine
@@ -255,7 +255,7 @@ spec:
             value: '100'
 
           - name: TOTAL_CHAOS_DURATION
-            value: '60000'
+            value: '120' # in seconds
       
 ```
 

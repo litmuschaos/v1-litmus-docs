@@ -222,12 +222,15 @@ spec:
           env:
             - name: TARGET_CONTAINER
               value: 'cstor-istgt'
+
             - name: APP_PVC
-              value: 'demo-nginx-claim'    
+              value: 'demo-nginx-claim'  
+
             - name: DEPLOY_TYPE
-              value: 'deployment'       
+              value: 'deployment'  
+
             - name: TOTAL_CHAOS_DURATION
-              value: '120000' 
+              value: '120' # in seconds
 ```
 
 ### Create the ChaosEngine Resource
