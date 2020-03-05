@@ -6,6 +6,10 @@ env:
 
 services:
 - docker
+install:
+  - go get -u -v github.com/bmuschko/link-verifier
+before_script:
+  - link-verifier --dirs docs,website,README.md --fail=false
 script:
   - python tag.py
   - cd website
