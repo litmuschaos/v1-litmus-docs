@@ -132,6 +132,7 @@ rules:
     - "pods"
     - "pods/exec"
     - "jobs"
+    - "events"
     - "configmaps"
     - "services"
     - "persistentvolumeclaims"
