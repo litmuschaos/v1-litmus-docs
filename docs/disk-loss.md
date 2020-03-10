@@ -75,35 +75,35 @@ stringData:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: nginx-sa
+  name: disk-loss-sa
   namespace: default
   labels:
-    name: nginx-sa
+    name: disk-loss-sa
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
-  name: nginx-sa
+  name: disk-loss-sa
   labels:
-    name: nginx-sa
+    name: disk-loss-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch"]
-  resources: ["pods","jobs","secrets","chaosengines","chaosexperiments","chaosresults"]
+  resources: ["pods","jobs","secrets","events","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
-  name: nginx-sa
+  name: disk-loss-sa
   labels:
-    name: nginx-sa
+    name: disk-loss-sa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: nginx-sa
+  name: disk-loss-sa
 subjects:
 - kind: ServiceAccount
-  name: nginx-sa
+  name: disk-loss-sa
   namespace: default
 ```
 
@@ -220,18 +220,16 @@ metadata:
 spec:
   # It can be true/false
   annotationCheck: 'false'
+  # It can be active/stop
+  engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ''
   appinfo:
     appns: 'default'
     applabel: 'app=nginx'
     appkind: 'deployment'
-  chaosServiceAccount: nginx-sa
+  chaosServiceAccount: disk-loss-sa
   monitoring: false
-  components:
-    runner:
-      image: 'litmuschaos/chaos-executor:1.0.0'
-      type: 'go'
   # It can be retain/delete
   jobCleanUpPolicy: 'delete'
   experiments:
@@ -267,12 +265,6 @@ spec:
             # Use Region Name when running with AWS (ex: us-central1)
             - name: ZONE_NAME
               value: 'us-central1-a'
-            # ChaosEngine CR name associated with the experiment instance 
-            - name: CHAOSENGINE
-              value: ''
-            # Service account used by the litmus  
-            - name: CHAOS_SERVICE_ACCOUNT
-              value: ''
 ```
 
 ## Create the ChaosEngine Resource
