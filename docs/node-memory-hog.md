@@ -1,7 +1,7 @@
 ---
-id: node-cpu-hog
-title: Node CPU Hog Experiment Details
-sidebar_label: Node CPU Hog
+id: node-memory-hog
+title: Node Memory Hog Experiment Details
+sidebar_label: Node Memory Hog
 ---
 ------
 
@@ -15,7 +15,7 @@ sidebar_label: Node CPU Hog
   </tr>
   <tr>
     <td> Generic </td>
-    <td> Exhaust CPU resources on the Kubernetes Node </td>
+    <td> Exhaust Memory resources on the Kubernetes Node </td>
     <td> GKE </td>
   </tr>
 </table>
@@ -23,8 +23,9 @@ sidebar_label: Node CPU Hog
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `node-cpu-hog` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/node-cpu-hog)
+- Ensure that the `node-memory-hog` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/node-memory-hog)
 - There should be administrative access to the platform on which the Kubernetes cluster is hosted, as the recovery of the affected node could be manual. For example, gcloud access to the GKE project
+
 ## Entry Criteria
 
 - Application pods are healthy on the respective Nodes before chaos injection
@@ -35,14 +36,14 @@ sidebar_label: Node CPU Hog
 
 ## Details
 
-- This experiment causes CPU resource exhaustion on the Kubernetes node. The experiment aims to verify resiliency of applications whose replicas may be evicted on account on nodes turning unschedulable (Not Ready) due to lack of CPU resources.
-- The CPU chaos is injected using a daemonset running the linux stress tool (a workload generator). The chaos is effected for a period equalling the TOTAL_CHAOS_DURATION
+- This experiment causes Memory resource exhaustion on the Kubernetes node. The experiment aims to verify resiliency of applications whose replicas may be evicted on account on nodes turning unschedulable (Not Ready) due to lack of Memory resources.
+- The Memory chaos is injected using a job running the linux stress-ng tool (a workload generator). The chaos is effected for a period equalling the TOTAL_CHAOS_DURATION and upto MEMORY_PERCENTAGE(out of 100).
 - Application implies services. Can be reframed as:
-Tests application resiliency upon replica evictions caused due to lack of CPU resources
+Tests application resiliency upon replica evictions caused due to lack of Memory resources
 
 ## Integrations
 
-- CPU Hog can be effected using the chaos library: `litmus`
+- Node Memory Hog can be effected using the chaos library: `litmus`
 - The desired chaos library can be selected by setting `litmus` as value for the env variable `LIB` 
 
 ## Steps to Execute the Chaos Experiment
@@ -57,26 +58,26 @@ Tests application resiliency upon replica evictions caused due to lack of CPU re
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/node-cpu-hog/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/node-memory-hog/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: node-cpu-hog-sa
+  name: node-memory-hog-sa
   namespace: default
   labels:
-    name: node-cpu-hog-sa
+    name: node-memory-hog-sa
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
-  name: node-cpu-hog-sa
+  name: node-memory-hog-sa
   labels:
-    name: node-cpu-hog-sa
+    name: node-memory-hog-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps"]
-  resources: ["pods","jobs","events","chaosengines","chaosexperiments","chaosresults"]
+  resources: ["pods","jobs","pods/log","events","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete"]
 - apiGroups: [""]
   resources: ["nodes"]
@@ -85,16 +86,16 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
-  name: node-cpu-hog-sa
+  name: node-memory-hog-sa
   labels:
-    name: node-cpu-hog-sa
+    name: node-memory-hog-sa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: node-cpu-hog-sa
+  name: node-memory-hog-sa
 subjects:
 - kind: ServiceAccount
-  name: node-cpu-hog-sa
+  name: node-memory-hog-sa
   namespace: default
 ```
 
@@ -125,6 +126,12 @@ subjects:
     <td> Optional </td>
     <td> Defaults to 60 </td>
   </tr>
+    <tr>
+    <td> MEMORY_PERCENTAGE </td>
+    <td> The size as percent of total available memory </td>
+    <td> Optional </td>
+    <td> Defaults to 90 </td>
+  </tr>
   <tr>
     <td> LIB  </td>
     <td> The chaos lib used to inject the chaos </td>
@@ -141,7 +148,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/node-cpu-hog/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/node-memory-hog/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -159,18 +166,22 @@ spec:
     appns: 'default'
     applabel: 'app=nginx'
     appkind: 'deployment'
-  chaosServiceAccount: node-cpu-hog-sa
+  chaosServiceAccount: node-memory-hog-sa
   monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:
-    - name: node-cpu-hog
+    - name: node-memory-hog
       spec:
         components:
           env:
             # set chaos duration (in sec) as desired
             - name: TOTAL_CHAOS_DURATION
               value: '60'
+            ## specify the size as percent of total available memory (in percentage %)
+            ## default value 90%
+            - name: MEMORY_PERCENTAGE
+              value: '90'             
             # set chaos platform as desired
             - name: PLATFORM
               value: 'GKE'
@@ -187,16 +198,16 @@ spec:
 
 ### Watch Chaos progress
 
-- Setting up a watch of the CPU consumed by nodes in the Kubernetes Cluster
+- Setting up a watch of the Memory consumed by nodes in the Kubernetes Cluster
 
   `watch kubectl top nodes`
 
 ### Check Chaos Experiment Result
 
-- Check whether the application is resilient to the CPU hog, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
+- Check whether the application is resilient to the memory hog, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult nginx-chaos-node-cpu-hog -n <application-namespace>`
+  `kubectl describe chaosresult nginx-chaos-node-memory-hog -n <application-namespace>`
 
-## Node Cpu Hog Demo [TODO]
+## Node Memory Hog Demo [TODO]
 
 - A sample recording of this experiment execution is provided here.
