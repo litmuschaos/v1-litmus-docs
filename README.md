@@ -1,5 +1,7 @@
 Documentation for the Litmus Project
 
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Flitmuschaos%2Flitmus-docs.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Flitmuschaos%2Flitmus-docs?ref=badge_shield)
+
 Additional details on the Docusaurus project can be found [here](https://docusaurus.io/docs/en/installation.html).
 
 ## For Developers
@@ -72,3 +74,6 @@ docker-compose up
 ## Browse local documentation
 http://localhost:3000/docs/next/getstarted.html
 
+## License
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Flitmuschaos%2Flitmus-docs.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Flitmuschaos%2Flitmus-docs?ref=badge_large)
