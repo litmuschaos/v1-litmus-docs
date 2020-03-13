@@ -16,7 +16,7 @@
     "Experiments": [
       {
         "type": "subcategory",
-        "label": "Generic",
+        "label": "Kubernetes",
         "ids": [
           "pod-delete",
           "container-kill",

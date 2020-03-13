@@ -16,15 +16,14 @@ To contribute new chaos charts visit: https://github.com/litmuschaos/chaos-chart
 
 Litmus chaos hub is a place where the chaos engineering community members publish their chaos experiments. A set of related chaos experiments are bundled into a `Chaos Chart`. Chaos Charts are classified into the following categories.
 
-- [Generic Chaos](#generic-chaos)
+- [Kubernetes Chaos](#kubernetes-chaos)
 - [Application Chaos](#application-chaos)
 - [Platform Chaos](#platform-chaos)
 
 
+### Kubernetes Chaos 
 
-### Generic Chaos 
-
-Chaos actions that apply to generic Kubernetes resources are classified into this category. Following chaos experiments are supported under Generic Chaos Chart
+Chaos actions that apply to Kubernetes resources are classified into this category. Following chaos experiments are supported under Kubernetes Chaos Chart
 
 | Experiment name | Description                               | User guide link                                         |
 | ----------- | ----------------------------------------- | --------------------------------------------------------- |
@@ -41,7 +40,7 @@ Chaos actions that apply to generic Kubernetes resources are classified into thi
 
 ### Application Chaos
 
-While Chaos Experiments under the Generic category offer the ability to induce chaos into Kubernetes resources, it is difficult to analyze and conclude if the chaos induced found a weakness in a given application. The application specific chaos experiments are built with some checks on *pre-conditions* and some expected outcomes after the chaos injection. The result of the chaos experiment is determined by matching the outcome with the expected outcome. 
+While Chaos Experiments under the Kubernetes category offer the ability to induce chaos into Kubernetes resources, it is difficult to analyze and conclude if the chaos induced found a weakness in a given application. The application specific chaos experiments are built with some checks on *pre-conditions* and some expected outcomes after the chaos injection. The result of the chaos experiment is determined by matching the outcome with the expected outcome. 
 
 <div class="danger">
 <strong>NOTE:</strong> If the result of the chaos experiment is `pass`, it means that the application is resilient to that chaos.

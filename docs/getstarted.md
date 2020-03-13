@@ -104,11 +104,11 @@ application.
 Chaos experiments contain the actual chaos details. These experiments are installed on your cluster as Kubernetes CRs. 
 The Chaos Experiments are grouped as Chaos Charts and are published on <a href=" https://hub.litmuschaos.io" target="_blank">Chaos Hub</a>. 
 
-The generic chaos experiments such as `pod-delete`,  `container-kill`,` pod-network-latency` are available under Generic Chaos Chart. 
+The kubernetes chaos experiments such as `pod-delete`,  `container-kill`,` pod-network-latency` are available under Kubernetes Chaos Chart. 
 This is the first chart you are recommended to install. 
 
 ```
-kubectl apply -f https://hub.litmuschaos.io/api/chaos?file=charts/generic/experiments.yaml -n nginx
+kubectl apply -f https://hub.litmuschaos.io/api/chaos?file=charts/kubernetes/experiments.yaml -n nginx
 ```
 
 Verify if the chaos experiments are installed.
@@ -126,10 +126,10 @@ has just enough permissions needed to run the container-kill chaos experiment.
 **NOTE**: 
 
 - For rbac samples corresponding to other experiments such as, say, pod-delete, please refer the respective experiment folder in 
-the [chaos-charts](https://github.com/litmuschaos/chaos-charts/tree/master/charts/generic/pod-delete) repository.  
+the [chaos-charts](https://github.com/litmuschaos/chaos-charts/tree/master/charts/kubernetes/pod-delete) repository.  
 
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/container-kill/rbac_nginx_getstarted.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kubernetes/container-kill/rbac_nginx_getstarted.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
@@ -192,7 +192,7 @@ ChaosEngine connects the application instance to a Chaos Experiment. Copy the fo
 `chaosengine.yaml` and update the values of `applabel` , `appns`, `appkind` and `experiments` as per your choice. 
 Change the `chaosServiceAccount` to the name of service account created in above previous steps.
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/container-kill/engine_nginx_getstarted.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kubernetes/container-kill/engine_nginx_getstarted.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine

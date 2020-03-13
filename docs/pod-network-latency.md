@@ -14,7 +14,7 @@ sidebar_label: Pod Network Latency
    <th> Tested K8s Platform </th>
   </tr>
   <tr>
-    <td> Generic </td>
+    <td> Kubernetes </td>
     <td> Inject Network Latency Into Application Pod </td>
     <td> GKE, Packet(Kubeadm), Minikube > v1.6.0 </td>
   </tr>
@@ -22,7 +22,7 @@ sidebar_label: Pod Network Latency
 
 ## Prerequisites
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `pod-network-latency` experiment resource is available in the cluster by executing kubectl `get chaosexperiments` in the desired namespace. . If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/pod-network-latency)
+- Ensure that the `pod-network-latency` experiment resource is available in the cluster by executing kubectl `get chaosexperiments` in the desired namespace. . If not, install from [here](https://hub.litmuschaos.io/charts/kubernetes/experiments/pod-network-latency)
 
 
 <div class="danger">
@@ -58,7 +58,7 @@ sidebar_label: Pod Network Latency
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-network-latency/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kubernetes/pod-network-latency/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
@@ -158,7 +158,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-network-latency/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kubernetes/pod-network-latency/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine

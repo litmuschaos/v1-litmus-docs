@@ -14,7 +14,7 @@ sidebar_label: Node Drain
     <th> Tested K8s Platform </th>
   </tr>
   <tr>
-    <td> Generic </td>
+    <td> Kubernetes </td>
     <td> Drain the node where application pod is scheduled. </td>
     <td> GKE, AWS, Packet(Kubeadm), Konvoy(AWS) </td>
   </tr>
@@ -23,7 +23,7 @@ sidebar_label: Node Drain
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `node-drain` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/node-drain)
+- Ensure that the `node-drain` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/kubernetes/experiments/node-drain)
 - Ensure that the node specified in the experiment ENV variable `APP_NODE` (the node which will be drained)  should be cordoned before execution of the chaos experiment (before applying the chaosengine manifest) to ensure that the litmus experiment runner pods are not scheduled on it / subjected to eviction. This can be achieved with the following steps: 
 
   - Get node names against the applications pods: `kubectl get pods -o wide`
@@ -58,7 +58,7 @@ Use this sample RBAC manifest to create a chaosServiceAccount in the desired (ap
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/node-drain/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kubernetes/node-drain/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
@@ -137,7 +137,7 @@ subjects:
                       
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/node-drain/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kubernetes/node-drain/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine

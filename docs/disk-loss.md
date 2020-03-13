@@ -13,7 +13,7 @@ sidebar_label: Disk Loss
     <th> Tested K8s Platform </th>
   </tr>
   <tr>
-    <td> Generic </td>
+    <td> Kubernetes </td>
     <td> External disk loss from the node </td>
     <td> GKE, AWS(KOPS) </td>
   </tr>
@@ -21,7 +21,7 @@ sidebar_label: Disk Loss
 
 ## Prerequisites
 -   Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
--   Ensure that the `disk-loss` experiment resource is available in the cluster by `kubectl get chaosexperiments` in the desired namespace. If not, install from  <a href="https://hub.litmuschaos.io/charts/generic/experiments/disk-loss" target="_blank">here</a>
+-   Ensure that the `disk-loss` experiment resource is available in the cluster by `kubectl get chaosexperiments` in the desired namespace. If not, install from  <a href="https://hub.litmuschaos.io/charts/kubernetes/experiments/disk-loss" target="_blank">here</a>
 -   Ensure to create a Kubernetes secret having the gcloud/aws access configuration(key) in the namespace of `CHAOS_NAMESPACE`.
 -   There should be administrative access to the platform on which the cluster is hosted, as the recovery of the affected node could be manual. Example gcloud access to the project
 
@@ -69,7 +69,7 @@ stringData:
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/disk-loss/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kubernetes/disk-loss/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
@@ -210,7 +210,7 @@ subjects:
 
 ## Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/disk-loss/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kubernetes/disk-loss/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine

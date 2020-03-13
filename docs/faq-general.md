@@ -80,7 +80,7 @@ By default, the Litmus operator uses the “litmus” serviceaccount that is bou
 to watch for the ChaosEngine resource across namespaces. However, the experiments themselves are associated 
 with “chaosServiceAccounts” which are created by the developers with bare-minimum permissions necessary to 
 execute the experiment in question. Visit the [chaos-charts](https://github.com/litmuschaos/chaos-charts) repo 
-to view the experiment-specific rbac permissions. For example, here are the [permissions](https://github.com/litmuschaos/chaos-charts/blob/master/charts/generic/container-kill/rbac.yaml) for container-kill chaos.
+to view the experiment-specific rbac permissions. For example, here are the [permissions](https://github.com/litmuschaos/chaos-charts/blob/master/charts/kubernetes/container-kill/rbac.yaml) for container-kill chaos.
 
 
 ### What is the scope of a Litmus Chaos Experiment? 

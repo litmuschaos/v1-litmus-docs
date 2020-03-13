@@ -14,7 +14,7 @@ sidebar_label: Pod Network Loss
     <th> Tested K8s Platform </th>
   </tr>
   <tr>
-    <td> Generic </td>
+    <td> Kubernetes </td>
     <td> Inject Packet Loss Into Application Pod </td>
     <td> GKE, Packet(Kubeadm), Minikube > v1.6.0 </td>
   </tr>
@@ -23,7 +23,7 @@ sidebar_label: Pod Network Loss
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `pod-network-loss` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/pod-network-loss)
+- Ensure that the `pod-network-loss` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/kubernetes/experiments/pod-network-loss)
   <div class="danger">
     <strong>NOTE</strong>: 
         Experiment is supported only on Docker Runtime. Support for containerd/CRIO runtimes will be added in subsequent releases.
@@ -55,7 +55,7 @@ sidebar_label: Pod Network Loss
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-network-loss/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kubernetes/pod-network-loss/rbac.yaml yaml)
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
@@ -154,7 +154,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-network-loss/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kubernetes/pod-network-loss/engine.yaml yaml)
 ```yaml
 # chaosengine.yaml
 apiVersion: litmuschaos.io/v1alpha1

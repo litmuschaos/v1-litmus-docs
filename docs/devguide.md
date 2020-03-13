@@ -29,7 +29,7 @@ A group of Choas Experiments put together in a YAML file. Each group or chart ha
 that holds data such as `ChartVersion`, `Contributors`, `Description`, `links` etc.., This metadata is rendered on the ChartHub. 
 A chaos chart also consists of a `package` manifest that is an index of available experiments in the chart.
 
-Here is an example of the [ChartServiceVersion](https://github.com/litmuschaos/chaos-charts/blob/master/charts/generic/generic.chartserviceversion.yaml) & [package](https://github.com/litmuschaos/chaos-charts/blob/master/charts/generic/generic.package.yaml) manifests of the generic chaos chart.
+Here is an example of the [ChartServiceVersion](https://github.com/litmuschaos/chaos-charts/blob/master/charts/kubernetes/kubernetes.chartserviceversion.yaml) & [package](https://github.com/litmuschaos/chaos-charts/blob/master/charts/kubernetes/kubernetes.package.yaml) manifests of the kubernetes chaos chart.
 
 
 ### Chaos Experiment
@@ -38,14 +38,14 @@ ChaosExperiment is a CRD that specifies the nature of a Chaos Experiment. The YA
 is stored under a Chaos Chart of ChaosHub and typically consists of low-level chaos parameters specific to that experiment, set
 to their default values. 
 
-Here is an example chaos experiment CR for a [pod-delete](https://github.com/litmuschaos/chaos-charts/blob/master/charts/generic/pod-delete/experiment.yaml) experiment
+Here is an example chaos experiment CR for a [pod-delete](https://github.com/litmuschaos/chaos-charts/blob/master/charts/kubernetes/pod-delete/experiment.yaml) experiment
 
 ### Litmus Book
 
 Litmus book is an `ansible` playbook that encompasses the logic of pre-checks, chaos-injection, post-checks, and result-updates. 
 Typically, these are accompanied by a Kubernetes job that can execute the respective playbook. 
 
-Here is an example of the litmus book for the [pod-delete](https://github.com/litmuschaos/litmus/tree/master/experiments/generic/pod_delete) experiment.
+Here is an example of the litmus book for the [pod-delete](https://github.com/litmuschaos/litmus/tree/master/experiments/kubernetes/pod_delete) experiment.
 
 ### Chaos functions
 

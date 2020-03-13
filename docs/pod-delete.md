@@ -14,7 +14,7 @@ sidebar_label: Pod Delete
     <th> Tested K8s Platform </th>
   </tr>
   <tr>
-    <td> Generic </td>
+    <td> Kubernetes </td>
     <td> Fail the application pod </td>
     <td> GKE, Konvoy(AWS), Packet(Kubeadm), Minikube </td>
   </tr>
@@ -23,7 +23,7 @@ sidebar_label: Pod Delete
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`).If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `pod-delete` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/pod-delete)
+- Ensure that the `pod-delete` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/kubernetes/experiments/pod-delete)
 
 ## Entry Criteria
 
@@ -56,7 +56,7 @@ sidebar_label: Pod Delete
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-delete/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kubernetes/pod-delete/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
@@ -154,7 +154,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-delete/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kubernetes/pod-delete/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
