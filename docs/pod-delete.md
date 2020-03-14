@@ -16,7 +16,7 @@ sidebar_label: Pod Delete
   <tr>
     <td> Generic </td>
     <td> Fail the application pod </td>
-    <td> GKE, Konvoy(AWS), Packet(Kubeadm), Minikube </td>
+    <td> GKE, Konvoy(AWS), Packet(Kubeadm), Minikube, EKS </td>
   </tr>
 </table>
 

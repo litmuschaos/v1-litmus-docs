@@ -16,7 +16,7 @@ sidebar_label: Pod Network Latency
   <tr>
     <td> Generic </td>
     <td> Inject Network Latency Into Application Pod </td>
-    <td> GKE, Packet(Kubeadm), Minikube > v1.6.0 </td>
+    <td> GKE, Packet(Kubeadm), EKS, Minikube > v1.6.0 </td>
   </tr>
 </table>
 

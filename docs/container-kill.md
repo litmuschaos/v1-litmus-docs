@@ -16,7 +16,7 @@ sidebar_label: Container Kill
   <tr>
     <td> Generic </td>
     <td> Kill one container in the application pod </td>
-    <td> GKE, Packet(Kubeadm), Minikube </td>
+    <td> GKE, Packet(Kubeadm), Minikube, EKS </td>
   </tr>
 </table>
 

@@ -16,7 +16,7 @@ sidebar_label: Pod CPU Hog
   <tr>
      <td> Generic </td>
     <td> Consume CPU resources on the application container</td>
-    <td> GKE, Packet(Kubeadm), Minikube  </td>
+    <td> GKE, Packet(Kubeadm), Minikube, EKS  </td>
   </tr>
 </table>
 

@@ -16,7 +16,7 @@ sidebar_label: Node Memory Hog
   <tr>
     <td> Generic </td>
     <td> Exhaust Memory resources on the Kubernetes Node </td>
-    <td> GKE </td>
+    <td> GKE, EKS </td>
   </tr>
 </table>
 
@@ -124,7 +124,7 @@ subjects:
     <td> TOTAL_CHAOS_DURATION </td>
     <td> The time duration for chaos insertion (seconds) </td>
     <td> Optional </td>
-    <td> Defaults to 60 </td>
+    <td> Defaults to 120 </td>
   </tr>
     <tr>
     <td> MEMORY_PERCENTAGE </td>
@@ -177,7 +177,7 @@ spec:
           env:
             # set chaos duration (in sec) as desired
             - name: TOTAL_CHAOS_DURATION
-              value: '60'
+              value: '120'
             ## specify the size as percent of total available memory (in percentage %)
             ## default value 90%
             - name: MEMORY_PERCENTAGE
