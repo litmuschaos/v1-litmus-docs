@@ -16,7 +16,7 @@ sidebar_label: Pod Network Loss
   <tr>
     <td> Generic </td>
     <td> Inject Packet Loss Into Application Pod </td>
-    <td> GKE, Packet(Kubeadm), Minikube > v1.6.0 </td>
+    <td> GKE, Packet(Kubeadm), EKS, Minikube > v1.6.0 </td>
   </tr>
 </table>
 
@@ -74,7 +74,7 @@ metadata:
     name: pod-network-loss-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch"]
-  resources: ["pods","jobs","events","chaosengines","chaosexperiments","chaosresults"]
+  resources: ["pods","jobs","events","pods/log","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1

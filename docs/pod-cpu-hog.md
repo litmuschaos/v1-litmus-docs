@@ -16,7 +16,7 @@ sidebar_label: Pod CPU Hog
   <tr>
      <td> Generic </td>
     <td> Consume CPU resources on the application container</td>
-    <td> GKE, Packet(Kubeadm), Minikube  </td>
+    <td> GKE, Packet(Kubeadm), Minikube, EKS  </td>
   </tr>
 </table>
 
@@ -77,7 +77,7 @@ metadata:
     name: pod-cpu-hog-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch"]
-  resources: ["pods","jobs","events","chaosengines","chaosexperiments","chaosresults"]
+  resources: ["pods","jobs","events","pods/log","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1

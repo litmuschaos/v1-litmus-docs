@@ -16,7 +16,7 @@ sidebar_label: Node CPU Hog
   <tr>
     <td> Generic </td>
     <td> Exhaust CPU resources on the Kubernetes Node </td>
-    <td> GKE </td>
+    <td> GKE, EKS </td>
   </tr>
 </table>
 
@@ -76,7 +76,7 @@ metadata:
     name: node-cpu-hog-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps"]
-  resources: ["pods","daemonsets","jobs","pods/exec","events","chaosengines","chaosexperiments","chaosresults"]
+  resources: ["pods","jobs","events","chaosengines","pods/log","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete"]
 - apiGroups: [""]
   resources: ["nodes"]

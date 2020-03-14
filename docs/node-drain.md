@@ -16,7 +16,7 @@ sidebar_label: Node Drain
   <tr>
     <td> Generic </td>
     <td> Drain the node where application pod is scheduled. </td>
-    <td> GKE, AWS, Packet(Kubeadm), Konvoy(AWS) </td>
+    <td> GKE, AWS, Packet(Kubeadm), Konvoy(AWS), EKS </td>
   </tr>
 </table>
 
@@ -77,7 +77,7 @@ metadata:
     name: node-drain-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch","extensions"]
-  resources: ["pods","jobs","events","chaosengines","daemonsets","pods/eviction","chaosexperiments","chaosresults"]
+  resources: ["pods","jobs","events","chaosengines","pods/log","daemonsets","pods/eviction","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete"]
 - apiGroups: [""]
   resources: ["nodes"]

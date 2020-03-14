@@ -16,7 +16,7 @@ sidebar_label: Disk Fill
   <tr>
     <td> Chaos </td>
     <td> Fill up Ephemeral Storage of a Pod </td>
-    <td> GKE </td>
+    <td> GKE, EKS </td>
   </tr>
 </table>
 
@@ -107,7 +107,7 @@ metadata:
     name: disk-fill-sa
 rules:
 - apiGroups: ["","apps","litmuschaos.io","batch"]
-  resources: ["pods","jobs","pods/exec","events","daemonsets","chaosengines","chaosexperiments","chaosresults"]
+  resources: ["pods","jobs","pods/exec","events","pods/log","daemonsets","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1

@@ -16,7 +16,7 @@ sidebar_label: Pod Delete
   <tr>
     <td> Generic </td>
     <td> Fail the application pod </td>
-    <td> GKE, Konvoy(AWS), Packet(Kubeadm), Minikube </td>
+    <td> GKE, Konvoy(AWS), Packet(Kubeadm), Minikube, EKS </td>
   </tr>
 </table>
 
@@ -76,7 +76,7 @@ metadata:
     name: pod-delete-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps"]
-  resources: ["pods","deployments","events","jobs","configmaps","chaosengines","chaosexperiments","chaosresults"]
+  resources: ["pods","deployments","pods/log","events","jobs","configmaps","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete"]
 - apiGroups: [""]
   resources: ["nodes"]

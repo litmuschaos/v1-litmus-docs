@@ -16,7 +16,7 @@ sidebar_label: Container Kill
   <tr>
     <td> Generic </td>
     <td> Kill one container in the application pod </td>
-    <td> GKE, Packet(Kubeadm), Minikube </td>
+    <td> GKE, Packet(Kubeadm), Minikube, EKS </td>
   </tr>
 </table>
 
@@ -84,7 +84,7 @@ metadata:
     name: container-kill-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps"]
-  resources: ["pods","jobs","daemonsets","pods/exec","events","chaosengines","chaosexperiments","chaosresults"]
+  resources: ["pods","jobs","daemonsets","pods/exec","pods/log","events","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
