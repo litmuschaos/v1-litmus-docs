@@ -337,7 +337,7 @@ spec:
               value: 'us-central1-a' 
               
             - name: OPENEBS_NAMESPACE
-							value: 'openebs'
+              value: 'openebs'
 ```
 
 ### Create the ChaosEngine Resource
@@ -348,10 +348,10 @@ spec:
 
 ### Watch Chaos progress
 
-- View disk loss in action by setting up a ping to the storage controller in the OpenEBS namespace
-- Watch the behaviour of the application pod and the OpenEBS data replica/pool pods by setting up in a watch on the respective namespaces
+- Watch the behaviour of the application pod and the OpenEBS data replica/pool pods by setting up a watch on the respective namespaces
 
   `watch -n 1 kubectl get pods -n <application-namespace>`
+  `watch -n 1 kubectl get pods -n <openebs-namespace>`
 
 ### Check Chaos Experiment Result
 
