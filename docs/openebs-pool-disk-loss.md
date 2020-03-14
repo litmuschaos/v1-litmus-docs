@@ -16,7 +16,7 @@ sidebar_label: Pool Disk Loss
   <tr>
     <td> OpenEBS </td>
     <td> OpenEBS Pool Disk Loss contains chaos to disrupt state of infra resources. Experiments can inject disk loss against OpenEBS pool. </td>
-    <td> GKE </td>
+    <td> GCP </td>
   </tr>
 </table>
 
@@ -169,7 +169,7 @@ subjects:
     <td> TOTAL_CHAOS_DURATION </td>
     <td> Total duration for which disk loss is injected </td>
     <td> Optional </td>
-    <td> Defaults to 120 seconds </td>
+    <td> Defaults to 60 seconds </td>
   </tr>
   <tr>
     <td> DATA_PERSISTENCE </td>
@@ -177,9 +177,9 @@ subjects:
     <td> Optional  </td>
     <td> Default value is disabled (empty/unset). It supports only `mysql` and `busybox`. Ensure configmap with app details are created </td>
   </tr>
-	  <tr>
+  <tr>
     <td> CHAOS_NAMESPACE </td>
-    <td> This is a chaos namespace which will create all infra chaos resources in that namespace </td>
+    <td> This is a chaos namespace in which the infra chaos resources are created </td>
     <td> Mandatory </td>
     <td>  </td>
   </tr>
@@ -187,7 +187,7 @@ subjects:
     <td> CLOUD_PLATFORM </td>
     <td> Cloud Platform name </td>
     <td> Mandatory </td>
-    <td>  </td>
+    <td> Supported platforms: GCP </td>
   </tr>
   <tr>
     <td> PROJECT_ID </td>
@@ -203,13 +203,13 @@ subjects:
   </tr>
   <tr>
     <td> DISK_NAME </td>
-    <td> Disk Name of the node, it must be an external disk. </td>
+    <td> Name of external/cloud disk attached of the node </td>
     <td> Mandatory </td>
     <td>  </td>
   </tr>
   <tr>
     <td> DEVICE_NAME </td>
-    <td> Enter the device name which you wanted to mount only for AWS. </td>
+    <td> Enter the device name which you wanted to mount. Applies only to AWS. </td>
     <td> Mandatory </td>
     <td>  </td>
   </tr>
@@ -220,44 +220,20 @@ subjects:
     <td> Note: Use REGION_NAME for AWS </td>
   </tr>
   <tr>
-    <td> CHAOSENGINE </td>
-    <td> ChaosEngine CR name associated with the experiment instance </td>
-    <td> Mandatory </td>
-    <td>  </td>
-  </tr>
-  <tr>
-    <td> TOTAL_CHAOS_DURATION </td>
-    <td> The time duration for chaos insertion (sec) </td>
-    <td> Optional </td>
-    <td> Defaults to 15s </td>
-  </tr>
-  <tr>
     <td> APP_CHECK </td>
     <td> If it checks to true, the experiment will check the status of the application. </td>
     <td> Optional </td>
     <td>  </td>
   </tr>
   <tr>
-    <td> APP_NAMESPACE </td>
-    <td> Namespace in which application pods are deployed </td>
-    <td> Optional </td>
-    <td>  </td>
-  </tr>
-  <tr>
-    <td> APP_LABEL </td>
-    <td> Unique Labels in `key=value` format of application deployment </td>
-    <td> Optional </td>
-    <td>  </td>
-  </tr>
-	<tr>
     <td> APP_PVC </td>
     <td> The PersistentVolumeClaim used by the stateful application </td>
     <td> Mandatory </td>
-    <td> PVC may use either OpenEBS cStor storage class </td>
+    <td> Corresponds to the PVC using OpenEBS cStor storage class </td>
   </tr>
   <tr>
     <td> RAMP_TIME </td>
-    <td> Period to wait before injection of chaos in sec </td>
+    <td> Period to wait before and after injection of chaos in sec </td>
     <td> Optional  </td>
     <td> </td>
   </tr>
@@ -312,7 +288,7 @@ spec:
             - name: TOTAL_CHAOS_DURATION
               value: '60'
 
-            # Period to wait before injection of chaos in sec
+            # Period to wait before and after injection of chaos in sec
             - name: RAMP_TIME
               value: ''
 
