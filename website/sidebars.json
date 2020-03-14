@@ -27,6 +27,7 @@
           "disk-fill",
           "disk-loss",
           "node-cpu-hog",
+	  "node-memory-hog",
 	        "node-drain"
         ]
       },
@@ -43,7 +44,8 @@
           "openebs-pool-network-delay",
           "openebs-pool-network-loss",
           "openebs-control-plane-chaos",
-          "cStor-pool-chaos"
+          "cStor-pool-chaos",
+	  "openebs-pool-disk-loss"
         ]
       },
       {
