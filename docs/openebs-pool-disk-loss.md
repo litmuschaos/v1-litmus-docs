@@ -15,7 +15,7 @@ sidebar_label: Pool Disk Loss
   </tr>
   <tr>
     <td> OpenEBS </td>
-    <td> OpenEBS Pool Disk Loss contains chaos to disrupt state of infra resources. Experiments can inject disk loss against openEBS pool. </td>
+    <td> OpenEBS Pool Disk Loss contains chaos to disrupt state of infra resources. Experiments can inject disk loss against OpenEBS pool. </td>
     <td> GKE </td>
   </tr>
 </table>
@@ -92,7 +92,7 @@ If the experiment tunable DATA_PERSISTENCE is set to 'mysql' or 'busybox':
 ## Details
 
 - This scenario validates the behaviour of stateful applications and OpenEBS disk pool upon disk loss.
-- Injects disk loss on the specified openEBS disk pool and node pool
+- Injects disk loss on the specified OpenEBS disk pool and node pool
 - Can test the stateful application's resilience to disk loss
 
 ## Integrations
@@ -263,7 +263,7 @@ subjects:
   </tr>
   <tr>
     <td> OPENEBS_NAMESPACE </td>
-    <td> Namespace in which openEBS pods are deployed </td>
+    <td> Namespace in which OpenEBS pods are deployed </td>
     <td> Mandatory  </td>
     <td> </td>
   </tr>
