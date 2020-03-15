@@ -9,6 +9,8 @@ sidebar_label: General
 
 [What type of chaos experiments are supported by Litmus?](#what-type-of-chaos-experiments-are-supported-by-litmus)
 
+[What licensing model does Litmus use?](#what-licensing-model-does-litmus-use)
+
 [What are the prerequisites to get started with Litmus?](#what-are-the-prerequisites-to-get-started-with-litmus)
 
 [How to Install Litmus on the Kubernetes Cluster?](#how-to-install-litmus-on-the-kubernetes-cluster)
@@ -58,6 +60,11 @@ deployed on the Kubernetes cluster. Litmus also categorizes experiments on the b
 with the experiments consisting of app-specific health checks. For example, OpenEBS, Kafka, CoreDNS. 
 
 For a full list of supported chaos experiments, visit: https://hub.litmuschaos.io
+
+### What licensing model does Litmus use?
+
+Litmus is developed under Apache License 2.0 license at the project level. Some components of the projects 
+are derived from the other Open Source projects and are distributed under their respective licenses.
 
 ### What are the prerequisites to get started with Litmus?
  
