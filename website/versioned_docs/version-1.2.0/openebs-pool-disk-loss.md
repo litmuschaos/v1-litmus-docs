@@ -17,7 +17,7 @@ original_id: openebs-pool-disk-loss
   <tr>
     <td> OpenEBS </td>
     <td> OpenEBS Pool Disk Loss contains chaos to disrupt state of infra resources. Experiments can inject disk loss against OpenEBS pool. </td>
-    <td> GCP </td>
+    <td> GKE, AWS (KOPS) </td>
   </tr>
 </table>
 
@@ -188,7 +188,7 @@ subjects:
     <td> CLOUD_PLATFORM </td>
     <td> Cloud Platform name </td>
     <td> Mandatory </td>
-    <td> Supported platforms: GCP </td>
+    <td> Supported platforms: GKE, AWS </td>
   </tr>
   <tr>
     <td> PROJECT_ID </td>
@@ -281,15 +281,15 @@ spec:
             - name: CHAOS_NAMESPACE
               value: ''
 
-            # Only GCP and AWS is supported
+            # GKE and AWS supported
             - name: CLOUD_PLATFORM
-              value: 'GCP'
+              value: 'GKE'
 
             # Enter the time duration in sec after the disk is dettached
             - name: TOTAL_CHAOS_DURATION
               value: '60'
 
-            # Period to wait before and after injection of chaos in sec
+            # Period to wait before injection of chaos in sec
             - name: RAMP_TIME
               value: ''
 

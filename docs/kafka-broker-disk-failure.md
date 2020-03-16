@@ -176,7 +176,7 @@ subjects:
     <td> CLOUD_PLATFORM </td>
     <td> Cloud platform type on which to inject disk loss </td>
     <td> Mandatory </td>
-    <td> Supported platforms: GCP </td>
+    <td> Supported platforms: GKE </td>
   </tr>
   <tr>
     <td> PROJECT_ID </td>
