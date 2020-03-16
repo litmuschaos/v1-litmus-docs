@@ -211,6 +211,7 @@ spec:
             # specify the fill percentage according to the disk pressure required
             - name: FILL_PERCENTAGE
               value: '80'
+              
             - name: TARGET_CONTAINER
               value: 'nginx'
 ```

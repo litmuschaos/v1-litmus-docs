@@ -18,7 +18,7 @@ original_id: kafka-broker-pod-failure
     <td> Kafka </td>
     <td> Fail kafka leader-broker pods </td>
     <td> Confluent, Kudo-Kafka </td>
-    <td> AWS Konvoy, GKE </td>
+    <td> AWS Konvoy, GKE, EKS </td>
   </tr>
 </table>
 
@@ -213,7 +213,7 @@ subjects:
     <td> KAFKA_CONSUMER_TIMEOUT </td>
     <td> Kafka consumer message timeout, post which it terminates </td>
     <td> Optional </td>
-    <td> Defaults to 30000ms </td>
+    <td> Defaults to 30000ms, Recommended timeout for EKS platform: 60000 ms </td>
   </tr>
   <tr>
     <td> TOTAL_CHAOS_DURATION </td>
@@ -289,9 +289,9 @@ spec:
             - name: KAFKA_PORT
               value: '9092'
 
-            # in milliseconds  
+            # Recommended timeout for EKS platform: 60000 ms
             - name: KAFKA_CONSUMER_TIMEOUT
-              value: '70000'
+              value: '30000' # in milliseconds  
 
             # ensure to set the instance name if using KUDO operator
             - name: KAFKA_INSTANCE_NAME
