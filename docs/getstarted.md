@@ -260,7 +260,7 @@ kubectl describe chaosresult nginx-chaos-container-kill -n nginx
 You can uninstall Litmus by deleting the namespace.
 
 ```console
-kubectl delete -f https://litmuschaos.github.io/pages/litmus-operator-v1.1.0.yaml
+kubectl delete -f https://litmuschaos.github.io/pages/litmus-operator-v1.2.0.yaml
 ```
 
 ## More Chaos Experiments
