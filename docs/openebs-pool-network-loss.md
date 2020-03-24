@@ -16,7 +16,7 @@ sidebar_label: Pool Network Loss
   <tr>
     <td> OpenEBS </td>
     <td> Induce network loss into the cStor pool pod </td>
-    <td> GKE </td>
+    <td> GKE, EKS </td>
   </tr>
 </table>
 

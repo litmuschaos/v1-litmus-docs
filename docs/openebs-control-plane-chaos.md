@@ -16,7 +16,7 @@ sidebar_label: Control Plane Chaos
   <tr>
     <td> OpenEBS </td>
     <td> Kill the OpenEBS control plane pods and check if they are rescheduled and healthy </td>
-    <td> GKE </td>
+    <td> GKE, EKS </td>
   </tr>
 </table>
 

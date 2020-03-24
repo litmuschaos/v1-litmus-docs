@@ -16,7 +16,7 @@ sidebar_label: Target Container Failure
   <tr>
     <td> OpenEBS </td>
     <td> Kill the cStor target/Jiva controller container </td>
-    <td> GKE, Konvoy(AWS), Packet(Kubeadm), Minikube, OpenShift(Baremetal) </td>
+    <td> GKE, EKS, Konvoy(AWS), Packet(Kubeadm), Minikube, OpenShift(Baremetal) </td>
   </tr>
 </table>
 

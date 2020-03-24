@@ -16,7 +16,7 @@ sidebar_label: Target Pod Failure
   <tr>
     <td> OpenEBS </td>
     <td> Kill the cstor/jiva target/controller pod and check if gets created again </td>
-   <td> GKE, Konvoy(AWS), Packet(Kubeadm), Minikube, OpenShift(Baremetal) </td>
+   <td> GKE, EKS, Konvoy(AWS), Packet(Kubeadm), Minikube, OpenShift(Baremetal) </td>
   </tr>
 </table>
 
