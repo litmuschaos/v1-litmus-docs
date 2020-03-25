@@ -16,7 +16,7 @@ sidebar_label: Target Network Loss
   <tr>
     <td> OpenEBS </td>
     <td> Induce network loss into the cStor target/Jiva controller container </td>
-    <td> GKE, Konvoy(AWS), Packet(Kubeadm), Minikube, OpenShift(Baremetal) </td>
+    <td> GKE, EKS, Konvoy(AWS), Packet(Kubeadm), Minikube, OpenShift(Baremetal) </td>
   </tr>
 </table>
 

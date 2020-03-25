@@ -16,7 +16,7 @@ sidebar_label: Pool Network Latency
   <tr>
     <td> OpenEBS </td>
     <td> Induce latency into the cStor pool pod </td>
-    <td> GKE</td>
+    <td> GKE, EKS</td>
   </tr>
 </table>
 
