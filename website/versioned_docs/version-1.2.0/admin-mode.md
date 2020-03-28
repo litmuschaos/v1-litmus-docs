@@ -8,13 +8,14 @@ original_id: admin-mode
 
 ###  What is Adminstator Mode? 
 
-Admin Mode is a priviledged mode that LitmusChaos support in order to make SRE's/ Cluster Admins/ Developers life easier.
-This mode helps to induce chaos in different namespaces, by managing all the chaos resources in a single namespace.
+Admin mode is one of the ways the chaos orchestration is set up in Litmus, wherein all chaos resources (i.e., install time resources like the operator, chaosexperiment CRs, chaosServiceAccount/rbac and runtime resources like chaosengine, chaos-runner, experiment jobs & chaosresults) are setup in a single admin namespace (typically, litmus). In other words, centralized administration of chaos. 
+This feature is aimed at making the SRE/Cluster Admins life easier by doing away with setting up chaos pre-requisites on a per namespace basis (which may be more relevant in an autonomous/self-service cluster sharing model in dev environments).
+This mode typically needs a "wider" & "stronger" ClusterRole, albeit one that is still just a superset of the individual experiment permissions. In this mode, the applications in their respective namespaces are subjected to chaos while the chaos job runs elsewhere, i.e., admin namespace. 
 
 ### How to use Adminstator Mode?
 
-In order to use Admin Mode, you just have to create a ServiceAccount in Chaos Resources Namespace, that has the permissions to perform operations on different kubernetes resources, in different namespaces.
-Just use this ServiceAccount Name in ChaosEngine chaosServiceAccount, this will let you to have all chaos resources in a single namespace, with chaos being performed on various namespaces.
+In order to use Admin Mode, you just have to create a ServiceAccount in the *admin* or so called *chaos* namespace (`litmus` itself can be used), which is tied to a ClusterRole that has the permissions to perform operations on Kubernetes resources involved in the selected experiments across namespaces.
+Use provide this ServiceAccount in ChaosEngine's `.spec.chaosServiceAccount`. 
 
 ### Example
 
@@ -108,16 +109,16 @@ spec:
 
 - Describe Chaos Engine for chaos steps.
 
-  `kubectl describe chaosengine <chaos-engine> -n <chaos-resources-namespace>`
+  `kubectl describe chaosengine nginx-chaos -n litmus`
 
 ### Watch Chaos progress
 
 - View pod terminations & recovery by setting up a watch on the pods in the application namespace
 
-  `watch -n 1 kubectl get pods -n <application-namespace>`
+  `watch -n 1 kubectl get pods -n default`
 
 ### Check Chaos Experiment Result
 
 - Check whether the application is resilient to the pod failure, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult nginx-chaos-pod-delete -n <application-namespace>`
+  `kubectl describe chaosresult nginx-chaos-pod-delete -n litmus`
