@@ -25,18 +25,18 @@ Use provide this ServiceAccount in ChaosEngine's `.spec.chaosServiceAccount`.
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: litmus
+  name: litmus-admin
   namespace: litmus
   labels:
-    name: litmus
+    name: litmus-admin
 ---
 # Source: openebs/templates/clusterrole.yaml
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
-  name: litmus
+  name: litmus-admin-clusterrole
   labels:
-    name: litmus
+    name: litmus-admin-clusterrole
 rules:
 - apiGroups: ["","apps","batch","extensions","litmuschaos.io","openebs.io","storage.k8s.io"]
   resources: ["chaosengines","chaosexperiments","chaosresults","configmaps","cstorpools","cstorvolumereplicas","events","jobs","persistentvolumeclaims","persistentvolumes","pods","pods/exec","pods/log","secrets","storageclasses",chaosengines","chaosexperiments","chaosresults","configmaps","cstorpools","cstorvolumereplicas","daemonsets","deployments","events","jobs","persistentvolumeclaims","persistentvolumes","pods","pods/eviction","pods/exec","pods/log","replicasets","secrets","services","statefulsets","storageclasses"]
@@ -48,16 +48,16 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
-  name: litmus
+  name: litmus-admin-clusterrolebinding
   labels:
-    name: litmus
+    name: litmus-admin-clusterrolebinding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: litmus
+  name: litmus-admin-clusterrole
 subjects:
 - kind: ServiceAccount
-  name: litmus
+  name: litmus-admin
   namespace: litmus
 ```
 
@@ -80,7 +80,7 @@ spec:
   engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx
   auxiliaryAppInfo: ''
-  chaosServiceAccount: litmus
+  chaosServiceAccount: litmus-admin
   monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
