@@ -21,45 +21,9 @@ Use provide this ServiceAccount in ChaosEngine's `.spec.chaosServiceAccount`.
 
 #### Prepare RBAC Manifest 
 
-```yaml
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: litmus-admin
-  namespace: litmus
-  labels:
-    name: litmus-admin
----
-# Source: openebs/templates/clusterrole.yaml
-apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: ClusterRole
-metadata:
-  name: litmus-admin-clusterrole
-  labels:
-    name: litmus-admin-clusterrole
-rules:
-- apiGroups: ["","apps","batch","extensions","litmuschaos.io","openebs.io","storage.k8s.io"]
-  resources: ["chaosengines","chaosexperiments","chaosresults","configmaps","cstorpools","cstorvolumereplicas","events","jobs","persistentvolumeclaims","persistentvolumes","pods","pods/exec","pods/log","secrets","storageclasses",chaosengines","chaosexperiments","chaosresults","configmaps","cstorpools","cstorvolumereplicas","daemonsets","deployments","events","jobs","persistentvolumeclaims","persistentvolumes","pods","pods/eviction","pods/exec","pods/log","replicasets","secrets","services","statefulsets","storageclasses"]
-  verbs: ["create","delete","get","list","patch","update"]
-- apiGroups: [""]
-  resources: ["nodes"]
-  verbs: ["get","list","patch"]
----
-apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: ClusterRoleBinding
-metadata:
-  name: litmus-admin-clusterrolebinding
-  labels:
-    name: litmus-admin-clusterrolebinding
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: litmus-admin-clusterrole
-subjects:
-- kind: ServiceAccount
-  name: litmus-admin
-  namespace: litmus
-```
+https://litmuschaos.github.io/pages/litmus-admin-rbac.yaml
+
+Here is a perfectly built RBAC, that has the priviledge to run all chaos experiments.
 
 #### Prepare ChaosEngine 
 
