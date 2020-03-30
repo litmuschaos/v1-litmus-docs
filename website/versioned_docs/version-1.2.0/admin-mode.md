@@ -38,9 +38,12 @@ metadata:
   labels:
     name: litmus
 rules:
-- apiGroups: ["*"]
-  resources: ["*"]
-  verbs: ["*"]
+- apiGroups: ["","apps","batch","extensions","litmuschaos.io","openebs.io","storage.k8s.io"]
+  resources: ["chaosengines","chaosexperiments","chaosresults","configmaps","cstorpools","cstorvolumereplicas","events","jobs","persistentvolumeclaims","persistentvolumes","pods","pods/exec","pods/log","secrets","storageclasses",chaosengines","chaosexperiments","chaosresults","configmaps","cstorpools","cstorvolumereplicas","daemonsets","deployments","events","jobs","persistentvolumeclaims","persistentvolumes","pods","pods/eviction","pods/exec","pods/log","replicasets","secrets","services","statefulsets","storageclasses"]
+  verbs: ["create","delete","get","list","patch","update"]
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["get","list","patch"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
