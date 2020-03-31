@@ -67,6 +67,9 @@
     "Litmus FAQs": [
       "faq-general",
       "faq-troubleshooting"
+    ],
+    "Advanced": [
+      "admin-mode"
     ]
   }
 }
