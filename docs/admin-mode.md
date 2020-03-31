@@ -2,7 +2,6 @@
 id: admin-mode
 title: Administrator Mode
 sidebar_label: Administrator Mode
-original_id: admin-mode
 ---
 ------
 
