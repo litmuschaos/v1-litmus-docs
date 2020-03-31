@@ -20,9 +20,50 @@ Provide this ServiceAccount in ChaosEngine's .spec.chaosServiceAccount.
 
 #### Prepare RBAC Manifest 
 
-https://litmuschaos.github.io/pages/litmus-admin-rbac.yaml
+Here is an RBAC definition, which in essence is a superset of individual experiments RBAC that has the permissions to run all chaos experiments across different namespaces.
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/container-kill/rbac.yaml yaml)
+```yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: container-kill-sa
+  namespace: default
+  labels:
+    name: container-kill-sa
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
+metadata:
+  name: container-kill-sa
+  namespace: default
+  labels:
+    name: container-kill-sa
+rules:
+- apiGroups: ["","litmuschaos.io","batch","apps"]
+  resources: ["pods","jobs","daemonsets","pods/exec","pods/log","events","chaosengines","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","update","delete"]
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["get","list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: container-kill-sa
+  namespace: default
+  labels:
+    name: container-kill-sa
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: container-kill-sa
+subjects:
+- kind: ServiceAccount
+  name: container-kill-sa
+  namespace: default
 
-Here is a perfectly built RBAC, that has the priviledge to run all chaos experiments.
+```
 
 #### Prepare ChaosEngine 
 
