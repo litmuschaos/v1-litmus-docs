@@ -1,5 +1,5 @@
 ---
-id: version-1.2.0-admin-mode
+id: admin-mode
 title: Administrator Mode
 sidebar_label: Administrator Mode
 original_id: admin-mode
@@ -15,7 +15,7 @@ This mode typically needs a "wider" & "stronger" ClusterRole, albeit one that is
 ### How to use Adminstator Mode?
 
 In order to use Admin Mode, you just have to create a ServiceAccount in the *admin* or so called *chaos* namespace (`litmus` itself can be used), which is tied to a ClusterRole that has the permissions to perform operations on Kubernetes resources involved in the selected experiments across namespaces.
-Use provide this ServiceAccount in ChaosEngine's `.spec.chaosServiceAccount`. 
+Provide this ServiceAccount in ChaosEngine's .spec.chaosServiceAccount. 
 
 ### Example
 
