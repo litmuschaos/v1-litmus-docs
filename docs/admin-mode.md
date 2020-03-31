@@ -21,49 +21,47 @@ Provide this ServiceAccount in ChaosEngine's .spec.chaosServiceAccount.
 #### Prepare RBAC Manifest 
 
 Here is an RBAC definition, which in essence is a superset of individual experiments RBAC that has the permissions to run all chaos experiments across different namespaces.
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/container-kill/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-admin-rbac.yaml)
 ```yaml
----
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: container-kill-sa
-  namespace: default
+  name: litmus-admin
+  namespace: litmus
   labels:
-    name: container-kill-sa
+    name: litmus-admin
 ---
+# Source: openebs/templates/clusterrole.yaml
 apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: Role
+kind: ClusterRole
 metadata:
-  name: container-kill-sa
-  namespace: default
+  name: litmus-admin
   labels:
-    name: container-kill-sa
+    name: litmus-admin
 rules:
-- apiGroups: ["","litmuschaos.io","batch","apps"]
-  resources: ["pods","jobs","daemonsets","pods/exec","pods/log","events","chaosengines","chaosexperiments","chaosresults"]
-  verbs: ["create","list","get","patch","update","delete"]
+- apiGroups: ["","apps","batch","extensions","litmuschaos.io","openebs.io","storage.k8s.io"]
+  resources: ["chaosengines","chaosexperiments","chaosresults","configmaps","cstorpools","cstorvolumereplicas","events","jobs","persistentvolumeclaims","persistentvolumes","pods","pods/exec","pods/log","secrets","storageclasses",chaosengines","chaosexperiments","chaosresults","configmaps","cstorpools","cstorvolumereplicas","daemonsets","deployments","events","jobs","persistentvolumeclaims","persistentvolumes","pods","pods/eviction","pods/exec","pods/log","replicasets","secrets","services","statefulsets","storageclasses"]
+  verbs: ["create","delete","get","list","patch","update"]
 - apiGroups: [""]
   resources: ["nodes"]
-  verbs: ["get","list"]
+  verbs: ["get","list","patch"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: RoleBinding
+kind: ClusterRoleBinding
 metadata:
-  name: container-kill-sa
-  namespace: default
+  name: litmus-admin
   labels:
-    name: container-kill-sa
+    name: litmus-admin
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: container-kill-sa
+  kind: ClusterRole
+  name: litmus-admin
 subjects:
 - kind: ServiceAccount
-  name: container-kill-sa
-  namespace: default
-
+  name: litmus-admin
+  namespace: litmus
 ```
+
 
 #### Prepare ChaosEngine 
 
