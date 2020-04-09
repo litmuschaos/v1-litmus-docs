@@ -112,14 +112,8 @@ subjects:
   <tr>
     <th> Variables </th>
     <th> Description  </th>
-    <th> Type </th>
+    <th> Specify In ChaosEngine </th>
     <th> Notes </th>
-  </tr>
-  <tr>
-    <td> PLATFORM </td>
-    <td> The platform on which the chaos experiment will run </td>
-    <td> Mandatory </td>
-    <td> Defaults to GKE </td>
   </tr>
   <tr>
     <td> TOTAL_CHAOS_DURATION </td>
@@ -127,17 +121,17 @@ subjects:
     <td> Optional </td>
     <td> Defaults to 120 </td>
   </tr>
+   <tr>
+    <td> LIB  </td>
+    <td> The chaos lib used to inject the chaos </td>
+    <td> Optional </td>
+    <td> Defaults to `litmus` </td>
+  </tr>
     <tr>
     <td> MEMORY_PERCENTAGE </td>
     <td> The size as percent of total available memory </td>
     <td> Optional </td>
     <td> Defaults to 90 </td>
-  </tr>
-  <tr>
-    <td> LIB  </td>
-    <td> The chaos lib used to inject the chaos </td>
-    <td> Optional  </td>
-    <td> Defaults to `litmus` </td>
   </tr>
   <tr>
     <td> RAMP_TIME </td>
@@ -183,16 +177,7 @@ spec:
             ## specify the size as percent of total available memory (in percentage %)
             ## default value 90%
             - name: MEMORY_PERCENTAGE
-              value: '90'   
-
-             # It supprts GKE and EKS Platform
-             # GKE is the default Platform
-            - name: PLATFORM
-              value: 'GKE'
-              
-            # chaos lib used to inject the chaos
-            - name: LIB
-              value: 'litmus'
+              value: '90'
 ```
 
 ### Create the ChaosEngine Resource

@@ -112,8 +112,14 @@ subjects:
   <tr>
     <th> Variables </th>
     <th> Description  </th>
-    <th> Type </th>
+    <th> Specify In ChaosEngine </th>
     <th> Notes </th>
+  </tr>
+  <tr>
+    <td> CHAOS_NAMESPACE </td>
+    <td> This ischaos namespace which will create all infra chaos resources in that namespace </td>
+    <td> Mandatory </td>
+    <td> Default to `kube-system` </td>
   </tr>
   <tr>
     <td> TOTAL_CHAOS_DURATION </td>
@@ -126,12 +132,6 @@ subjects:
     <td> Time interval b/w two successive pod failures (sec) </td>
     <td> Optional </td>
     <td> Defaults to 5s </td>
-  </tr> 
-  <tr>
-    <td> CHAOS_NAMESPACE </td>
-    <td> This ischaos namespace which will create all infra chaos resources in that namespace </td>
-    <td> Mandatory </td>
-    <td> Default to `kube-system` </td>
   </tr>
   <tr>
     <td> LIB  </td>
@@ -177,9 +177,9 @@ spec:
             # set chaos interval (in sec) as desired
             - name: CHAOS_INTERVAL
               value: '10'
-                
+
             - name: CHAOS_NAMESPACE
-              value: 'kube-system'
+              value: 'kube-system' 
 ```
 
 ### Create the ChaosEngine Resource

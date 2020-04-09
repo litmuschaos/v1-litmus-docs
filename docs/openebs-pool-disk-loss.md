@@ -164,26 +164,14 @@ subjects:
   <tr>
     <th> Variables </th>
     <th> Description  </th>
-    <th> Type </th>
+    <th> Specify In ChaosEngine </th>
     <th> Notes </th>
   </tr>
   <tr>
-    <td> TOTAL_CHAOS_DURATION </td>
-    <td> Total duration for which disk loss is injected </td>
-    <td> Optional </td>
-    <td> Defaults to 60 seconds </td>
-  </tr>
-  <tr>
-    <td> DATA_PERSISTENCE </td>
-    <td> Flag to perform data consistency checks on the application </td>
-    <td> Optional  </td>
-    <td> Default value is disabled (empty/unset). It supports only `mysql` and `busybox`. Ensure configmap with app details are created </td>
-  </tr>
-  <tr>
-    <td> CHAOS_NAMESPACE </td>
-    <td> This is a chaos namespace in which the infra chaos resources are created </td>
+    <td> APP_PVC </td>
+    <td> The PersistentVolumeClaim used by the stateful application </td>
     <td> Mandatory </td>
-    <td>  </td>
+    <td> Corresponds to the PVC using OpenEBS cStor storage class </td>
   </tr>
   <tr>
     <td> CLOUD_PLATFORM </td>
@@ -222,16 +210,22 @@ subjects:
     <td> Note: Use REGION_NAME for AWS </td>
   </tr>
   <tr>
+    <td> TOTAL_CHAOS_DURATION </td>
+    <td> Total duration for which disk loss is injected </td>
+    <td> Optional </td>
+    <td> Defaults to 60 seconds </td>
+  </tr>
+  <tr>
+    <td> DATA_PERSISTENCE </td>
+    <td> Flag to perform data consistency checks on the application </td>
+    <td> Optional  </td>
+    <td> Default value is disabled (empty/unset). It supports only `mysql` and `busybox`. Ensure configmap with app details are created </td>
+  </tr>
+  <tr>
     <td> APP_CHECK </td>
     <td> If it checks to true, the experiment will check the status of the application. </td>
     <td> Optional </td>
     <td>  </td>
-  </tr>
-  <tr>
-    <td> APP_PVC </td>
-    <td> The PersistentVolumeClaim used by the stateful application </td>
-    <td> Mandatory </td>
-    <td> Corresponds to the PVC using OpenEBS cStor storage class </td>
   </tr>
   <tr>
     <td> RAMP_TIME </td>
@@ -242,7 +236,7 @@ subjects:
   <tr>
     <td> OPENEBS_NAMESPACE </td>
     <td> Namespace in which OpenEBS pods are deployed </td>
-    <td> Mandatory  </td>
+    <td> Optional  </td>
     <td> </td>
   </tr>
 </table>
@@ -277,10 +271,6 @@ spec:
           env:              
             - name: APP_PVC
               value: 'demo-nginx-claim'
-
-            # This is a chaos namespace which will create all infra chaos resources in that namespace
-            - name: CHAOS_NAMESPACE
-              value: ''
 
             # GKE and AWS supported
             - name: CLOUD_PLATFORM
