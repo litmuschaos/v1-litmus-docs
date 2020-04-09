@@ -129,7 +129,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> The pumba/containerd image used to run the kill command </td>
     <td> Optional </td>
-    <td> Defaults to `gaiaadm/pumba:0.6.5`,For containerd runtime use `gprasath/crictl:ci`. Note: pumba images >=0.6 do not work with this experiment. </td>
+    <td> Defaults to `gaiaadm/pumba:0.6.5`, for containerd runtime use `gprasath/crictl:ci`</td>
   </tr>
   <tr>
     <td> LIB  </td>
