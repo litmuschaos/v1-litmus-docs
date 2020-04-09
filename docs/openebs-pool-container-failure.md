@@ -168,7 +168,7 @@ subjects:
     <td> LIB_IMAGE </td>
     <td> The chaos library image used to inject the latency </td>
     <td> Optional  </td>
-    <td> Defaults to `gaiaadm/pumba:0.4.8`. Supported: `gaiaadm/pumba:0.4.8` </td>
+    <td> Defaults to `gaiaadm/pumba:0.6.5`. Supported: `gaiaadm/pumba:0.6.5` </td>
   </tr>
   <tr>
     <td> DEPLOY_TYPE </td>
