@@ -53,8 +53,9 @@ sidebar_label: Pod Delete
 ### Prepare chaosServiceAccount
 
 - Use this sample RBAC manifest to create a chaosServiceAccount in the desired (app) namespace. This example consists of the minimum necessary role permissions to execute the experiment.
+- The RBAC sample manifest is different for both LIB (litmus, powerseal). Use the respective rbac sample manifest on the basis of LIB ENV.
 
-#### Sample Rbac Manifest
+#### Sample Rbac Manifest for litmus LIB
 
 [embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-delete/rbac.yaml yaml)
 ```yaml
@@ -80,7 +81,7 @@ rules:
   verbs: ["create","list","get","patch","update","delete"]
 - apiGroups: [""]
   resources: ["nodes"]
-  verbs : ["get","list"]
+  verbs: ["get","list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
@@ -92,6 +93,50 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
+  name: pod-delete-sa
+subjects:
+- kind: ServiceAccount
+  name: pod-delete-sa
+  namespace: default
+
+```
+
+#### Sample Rbac Manifest for powerfulseal LIB
+
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-delete/powerfulseal_rbac.yaml yaml)
+```yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: pod-delete-sa
+  namespace: default
+  labels:
+    name: pod-delete-sa
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: pod-delete-sa
+  labels:
+    name: pod-delete-sa
+rules:
+- apiGroups: ["","litmuschaos.io","batch","apps"]
+  resources: ["pods","deployments","pods/log","events","jobs","configmaps","chaosengines","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","update","delete"]
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["get","list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: pod-delete-sa
+  labels:
+    name: pod-delete-sa
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
   name: pod-delete-sa
 subjects:
 - kind: ServiceAccount
