@@ -122,7 +122,14 @@ const siteConfig = {
   // You may provide arbitrary config keys to be used as needed by your
   // template. For example, if you need your repo's URL...
   repoUrl: 'https://github.com/litmuschaos/litmus',
-  twitterUsername: 'LitmusChaos'
+  twitterUsername: 'LitmusChaos',
+
+  scrollToTop: true,
+  scrollToTopOptions: {
+    scrollDuration: 200,
+    diameter: 35,
+    backgroundColor: 'gray',
+  },
 };
 
 module.exports = siteConfig;

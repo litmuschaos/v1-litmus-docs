@@ -77,7 +77,7 @@ metadata:
     name: node-drain-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch","extensions"]
-  resources: ["pods","jobs","events","chaosengines","pods/log","daemonsets","pods/eviction","chaosexperiments","chaosresults"]
+  resources: ["pods","jobs","events","chaosengines","pods/log","pods/eviction","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete"]
 - apiGroups: [""]
   resources: ["nodes"]
@@ -97,7 +97,6 @@ subjects:
 - kind: ServiceAccount
   name: node-drain-sa
   namespace: default
-  
 ```
 
 ### Prepare ChaosEngine

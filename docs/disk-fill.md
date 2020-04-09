@@ -107,11 +107,8 @@ metadata:
     name: disk-fill-sa
 rules:
 - apiGroups: ["","apps","litmuschaos.io","batch"]
-  resources: ["pods","jobs","pods/exec","events","pods/log","daemonsets","chaosengines","chaosexperiments","chaosresults"]
+  resources: ["pods","jobs","pods/exec","events","pods/log","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete"]
-- apiGroups: [""]
-  resources: ["nodes"]
-  verbs: ["get","list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding

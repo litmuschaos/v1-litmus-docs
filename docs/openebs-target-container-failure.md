@@ -120,11 +120,8 @@ metadata:
     name: target-container-failure-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps","storage.k8s.io"]
-  resources: ["pods","jobs","pods/log","pods/exec","daemonsets","events","configmaps","secrets","persistentvolumeclaims","storageclasses","persistentvolumes","chaosengines","chaosexperiments","chaosresults"]
+  resources: ["pods","jobs","pods/log","pods/exec","events","configmaps","secrets","persistentvolumeclaims","storageclasses","persistentvolumes","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete"]
-- apiGroups: [""]
-  resources: ["nodes"]
-  verbs: ["get","list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
