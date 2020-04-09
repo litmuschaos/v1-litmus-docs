@@ -166,7 +166,7 @@ subjects:
     <td> LIB_IMAGE </td>
     <td> The chaos library image used to run the kill command </td>
     <td> Optional  </td>
-    <td> Defaults to `gaiaadm/pumba:0.4.8`. Supported: `{docker : gaiaadm/pumba:0.4.8, containerd: gprasath/crictl:ci}` </td>
+    <td> Defaults to `gaiaadm/pumba:0.6.5`. Supported: `{docker : gaiaadm/pumba:0.6.5, containerd: gprasath/crictl:ci}` </td>
   </tr>
   <tr>
     <td> CONTAINER_RUNTIME </td>
