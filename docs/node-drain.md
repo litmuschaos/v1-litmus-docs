@@ -97,14 +97,14 @@ subjects:
 - kind: ServiceAccount
   name: node-drain-sa
   namespace: default
-  
 ```
 
 ### Prepare ChaosEngine
 
 - Provide the application info in `spec.appinfo`
 - Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
-- Override the experiment tunables if desired 
+- Override the experiment tunables if desired in `experiments.spec.components.env`
+- To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
 
 #### Supported Experiment Tunables
 

@@ -142,8 +142,10 @@ subjects:
 ### Prepare ChaosEngine
 
 - Provide the application info in `spec.appinfo`
-- Override the experiment tunables if desired
+- Override the experiment tunables if desired in `experiments.spec.components.env`
 - Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
+- Provide the configMaps and secrets in `experiments.spec.components.configMaps/secrets`, For more info refer [Sample ChaosEngine](https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/sample_openebs_engine_with_data_persistency_enabled.yaml)
+- To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
 
 #### Supported Experiment Tunables
 

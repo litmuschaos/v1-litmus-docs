@@ -103,7 +103,8 @@ subjects:
         appkind: deployment
     ```
 
-- Override the experiment tunables if desired
+- Override the experiment tunables if desired in `experiments.spec.components.env`
+- To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
 
 #### Supported Experiment Tunables
 
