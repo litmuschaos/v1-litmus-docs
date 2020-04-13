@@ -215,6 +215,7 @@ spec:
               
             - name: TARGET_CONTAINER
               value: 'nginx'
+              
 ```
 
 ### Create the ChaosEngine Resource

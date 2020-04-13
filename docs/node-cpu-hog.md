@@ -172,15 +172,9 @@ spec:
             # set chaos duration (in sec) as desired
             - name: TOTAL_CHAOS_DURATION
               value: '60'
-
-             # It supprts GKE and EKS Platform
-             # GKE is the default Platform
-            - name: PLATFORM
-              value: 'GKE'
-              
-            # chaos lib used to inject the chaos
-            - name: LIB
-              value: 'litmus'
+            
+            - name: NODE_CPU_CORE
+              value: ''
 ```
 
 ### Create the ChaosEngine Resource
