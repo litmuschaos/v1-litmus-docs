@@ -119,8 +119,8 @@ subjects:
     <td> </td>
   </tr>
   <tr>
-    <td> MEMORY_PERCENTAGE </td>
-    <td> Name of the container subjected to Memory stress  </td>
+    <td> MEMORY_CONSUMPTION </td>
+    <td>  The amount of memory used of hogging a Kubernetes pod (megabytes)</td>
     <td> Optional  </td>
     <td> Defaults to 1 </td>
     <td> </td>
