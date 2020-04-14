@@ -122,7 +122,7 @@ subjects:
     <td> MEMORY_CONSUMPTION </td>
     <td>  The amount of memory used of hogging a Kubernetes pod (megabytes)</td>
     <td> Optional  </td>
-    <td> Defaults to 1 </td>
+    <td> Defaults to 500MB </td>
     <td> </td>
   </tr>
   <tr>
@@ -139,7 +139,7 @@ subjects:
   </tr>
   <tr>
     <td> RAMP_TIME </td>
-    <td> Period to wait before injection of chaos in sec </td>
+    <td> Period to wait before and after injection of chaos in sec </td>
     <td> Optional  </td>
     <td> </td>
   </tr>
@@ -209,4 +209,4 @@ spec:
 
 ## Pod Memory Hog Experiment Demo 
 
-- A sample recording of this experiment will be aaded very soon.
+- A sample recording of this experiment will be added very soon.
