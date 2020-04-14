@@ -42,7 +42,7 @@ Tests application resiliency upon replica evictions caused due to lack of CPU re
 
 ## Integrations
 
-- CPU Hog can be effected using the chaos library: `litmus`
+- Node CPU Hog can be effected using the chaos library: `litmus` 
 - The desired chaos library can be selected by setting `litmus` as value for the env variable `LIB` 
 
 ## Steps to Execute the Chaos Experiment
@@ -111,14 +111,8 @@ subjects:
   <tr>
     <th> Variables </th>
     <th> Description  </th>
-    <th> Type </th>
+    <th> Specify In ChaosEngine </th>
     <th> Notes </th>
-  </tr>
-  <tr>
-    <td> PLATFORM </td>
-    <td> The platform on which the chaos experiment will run </td>
-    <td> Mandatory </td>
-    <td> Defaults to GKE </td>
   </tr>
   <tr>
     <td> TOTAL_CHAOS_DURATION </td>
@@ -126,10 +120,10 @@ subjects:
     <td> Optional </td>
     <td> Defaults to 60 </td>
   </tr>
-  <tr>
+   <tr>
     <td> LIB  </td>
     <td> The chaos lib used to inject the chaos </td>
-    <td> Optional  </td>
+    <td> Optional </td>
     <td> Defaults to `litmus` </td>
   </tr>
   <tr>

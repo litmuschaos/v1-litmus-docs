@@ -212,8 +212,10 @@ spec:
           env:
             - name: FORCE
               value: 'true'
+
             - name: APP_PVC
               value: 'demo-nginx-claim'    
+              
             - name: DEPLOY_TYPE
               value: 'deployment'     
 ```

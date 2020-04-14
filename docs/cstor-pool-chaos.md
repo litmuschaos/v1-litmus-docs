@@ -108,20 +108,20 @@ subjects:
   <tr>
     <th> Variables </th>
     <th> Description  </th>
-    <th> Type </th>
+    <th> Specify In ChaosEngine </th>
     <th> Notes </th>
+  </tr>
+  <tr>
+    <td> APP_PVC </td>
+    <td> Name of the application PVC </td>
+    <td> Mandatory </td>
+    <td> Please leave it blank, for this experiment</td>
   </tr>
   <tr>
     <td> OPENEBS_NS </td>
     <td> The namespace where OpenEBS has been installed </td>
     <td> Optional </td>
     <td> Defaults to openebs </td>
-  </tr>
-  <tr>
-    <td> APP_PVC </td>
-    <td> Name of the application PVC </td>
-    <td> Optional </td>
-    <td> Please leave it blank, for this experiment</td>
   </tr>
 </table>
 

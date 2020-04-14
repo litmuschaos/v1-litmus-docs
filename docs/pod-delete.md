@@ -154,18 +154,18 @@ subjects:
   <tr>
     <th> Variables </th>
     <th> Description  </th>
-    <th> Type </th>
+    <th> Specify In ChaosEngine </th>
     <th> Notes </th>
   </tr>
   <tr>
     <td> TOTAL_CHAOS_DURATION </td>
-    <td> The time duration for chaos insertion (seconds) </td>
+    <td> The time duration for chaos insertion (in sec) </td>
     <td> Optional </td>
     <td> Defaults to 15s </td>
   </tr>
   <tr>
     <td> CHAOS_INTERVAL </td>
-    <td> Time interval b/w two successive pod failures (sec) </td>
+    <td> Time interval b/w two successive pod failures (in sec) </td>
     <td> Optional </td>
     <td> Defaults to 5s </td>
   </tr>

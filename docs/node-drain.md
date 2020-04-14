@@ -45,6 +45,7 @@ sidebar_label: Node Drain
 ## Integrations
 
 - Drain node can be effected using the chaos library: `litmus`
+- The desired chaos library can be selected by setting `litmus` as value for the env variable `LIB` 
 
 ## Steps to Execute the Chaos Experiment
 
@@ -112,7 +113,7 @@ subjects:
   <tr>
     <th>  Variables </th>
     <th>  Description </th>
-    <th> Type  </th>
+    <th> Specify In ChaosEngine </th>
     <th> Notes </th>
   </tr>
   <tr>
@@ -126,6 +127,12 @@ subjects:
     <td> The time duration for chaos insertion (seconds)  </td>
     <td> Optional </td>
     <td> Defaults to 60s </td>
+  </tr>
+   <tr>
+    <td> LIB  </td>
+    <td> The chaos lib used to inject the chaos </td>
+    <td> Optional </td>
+    <td> Defaults to `litmus` </td>
   </tr>
   <tr>
     <td> RAMP_TIME </td>

@@ -122,7 +122,7 @@ subjects:
   <tr>
     <th> Parameter </th>
     <th> Description  </th>
-    <th> Type </th>
+    <th> Specify In ChaosEngine </th>
     <th> Notes </th>
   </tr>
   <tr>
@@ -232,12 +232,6 @@ subjects:
     <td> The chaos lib used to inject the chaos </td>
     <td> Optional </td>
     <td> Defaults to `litmus`. Supported: `litmus`, `powerfulseal </td>
-  </tr>
-  <tr>
-    <td> CHAOS_SERVICE_ACCOUNT </td>
-    <td> Service account used by the powerfulseal deployment </td>
-    <td> Optional </td>
-    <td> Defaults to `default` on namespace `spec.appinfo.appns </td>
   </tr>
 </table>
 

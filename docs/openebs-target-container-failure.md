@@ -231,8 +231,10 @@ spec:
           env:
             - name: TARGET_CONTAINER
               value: 'cstor-istgt'
+
             - name: APP_PVC
               value: 'demo-nginx-claim'   
+              
             - name: DEPLOY_TYPE
               value: 'deployment'        
 ```
