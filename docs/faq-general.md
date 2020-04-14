@@ -37,8 +37,8 @@ sidebar_label: General
 
 [Does Litmus track any usage metrics on the deployment clusters?](#does-litmus-track-any-usage-metrics-on-the-test-clusters)
 
-[How to restart chaosengine after graceful completion, or forceful abort scenario?]
-(#how-to-restart-chaosengine-after-graceful-completion-or-forceful-abort-scenario)
+[How to restart chaosengine after graceful completion]
+(#how-to-restart-chaosengine-after-graceful-completion)
 
 [How to add Custom Annotation rather than using the default one?]
   
@@ -200,9 +200,10 @@ The same effect will be caused by deleting the respective chaosengine resource.
 
 ### Can a chaos experiment be resumed once stopped/aborted? 
 
-Once stopped/aborted, patching the chaosengine `.spec.engineState` with `active` causes the experiment to be 
-re-executed. However, support is yet to be added for saving state and resuming an in-flight experiment (i.e., execute 
-pending iterations etc.,) 
+Once stopped/aborted, patching the chaosengine `.spec.engineState` with `active` causes the experiment to be re-executed. Another way is to re-apply the chaos engine YAML, this will delete all stale chaos resources, and restart chaos engine lifecycle.
+However, support is yet to be added for saving state and resuming an in-flight experiment (i.e., execute 
+pending iterations etc.,)
+
 
 ```console
 kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"active"}}'
@@ -226,13 +227,13 @@ env:
   value: 'FALSE' 
 ```
 
-### How to restart chaosengine after graceful completion, or forceful abort scenario?
+### How to restart chaosengine after graceful completion?
 
-To restart chaosengine, check the `.spec.engineState`, which should be equal to `stop`, which means your chaosengine has gracefully completed, or forcefully aborted. In this case, restart is quite easy, as you can re-apply the chaosengine YAML to restart it. This will remove all chaos resources linked to this chaosengine, and restart its own lifecycle.
+To restart chaosengine, check the `.spec.engineState`, which should be equal to `stop`, which means your chaosengine has gracefully completed, or forcefully aborted. In this case, restart is quite easy, as you can re-apply the chaosengine YAML to restart it. This will remove all stale chaos resources linked to this chaosengine, and restart its own lifecycle.
 
 ### How to add Custom Annotation rather than using the default one?
 
-Currently Litmus can only lets you can the key for Custom Annotation, the value being `true`/`false`. To use your custom annotation key, add this key under an ENV named as `CUSTOM_ANNOTATION` for litmus/chaos operator. A sample deployment spec is populated right here.
+Currently Litmus allows you to set your own/custom keys for Annotation filters, the value being `true`/`false`. To use your custom annotation, add this key under an ENV named as `CUSTOM_ANNOTATION` in chaos operator deployment. A sample chaos-operator deployment spec is provided here for reference: 
 
 ```yaml
 ...
@@ -254,7 +255,4 @@ spec:
         image: litmuschaos/chaos-operator:1.3
         imagePullPolicy: Always
         name: chaos-operator
-        resources: {}
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
 ```
