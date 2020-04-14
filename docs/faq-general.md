@@ -25,22 +25,22 @@ sidebar_label: General
 
 [Is it mandatory to annotate application deployments for chaos?](#is-it-mandatory-to-annotate-application-deployments-for-chaos)
 
+[How to add Custom Annotations as chaos filters?](#how-to-add-custom-annotations-as-chaos-filters)
+
 [Is it mandatory for the chaosengine and chaos experiment resources to exist in the same namespace?](#is-it-mandatory-for-the-chaosengine-and-chaos-experiment-resources-to-exist-in-the-same-namespace)
 
 [How to get the chaos logs in Litmus?](#how-to-get-the-chaos-logs-in-litmus)
 
 [Does Litmus support generation of events during chaos?](#does-litmus-support-generation-of-events-during-chaos) 
 
-[How to stop/abort a chaos experiment?](#how-to-stop/abort-a-chaos-experiment)
+[How to stop/abort a chaos experiment?](#how-to-stop-abort-a-chaos-experiment)
+
+[How to restart chaosengine after graceful completion](#how-to-restart-chaosengine-after-graceful-completion)
 
 [Can a chaos experiment be resumed once stopped/aborted?](#can-a-chaos-experiment-be-resumed-once-stopped-aborted)
 
 [Does Litmus track any usage metrics on the deployment clusters?](#does-litmus-track-any-usage-metrics-on-the-test-clusters)
 
-[How to restart chaosengine after graceful completion]
-(#how-to-restart-chaosengine-after-graceful-completion)
-
-[How to add Custom Annotation rather than using the default one?]
   
 <hr>
 
@@ -147,6 +147,50 @@ not expected to be modified, or in cases where annotating a single application f
 known to have a higher blast radius doesn’t make sense (ex: infra chaos), the annotation check can be disabled via the
 chaosEngine tunable `annotationCheck` (`.spec.annotationCheck: false`).
 
+### How to add Custom Annotations as chaos filters?
+
+Currently Litmus allows you to set your own/custom keys for Annotation filters, the value being `true`/`false`. To use your custom annotation, add this key under an ENV named as `CUSTOM_ANNOTATION` in chaos operator deployment. A sample chaos-operator deployment spec is provided here for reference: 
+
+```yaml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chaos-operator-ce
+  namespace: litmus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: chaos-operator
+  template:
+    metadata:
+      labels:
+        name: chaos-operator
+    spec:
+      serviceAccountName: litmus
+      containers:
+        - name: chaos-operator
+          # 'latest' tag corresponds to the latest released image
+          image: litmuschaos/chaos-operator:latest
+          command:
+          - chaos-operator
+          imagePullPolicy: Always
+          env:
+            - name: CUSTOM_ANNOTATION
+              value: "mayadata.io/chaos"
+            - name: CHAOS_RUNNER_IMAGE
+              value: "litmuschaos/chaos-runner:latest"
+            - name: WATCH_NAMESPACE
+              value: 
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: OPERATOR_NAME
+              value: "chaos-operator"
+```
+
 ### Is it mandatory for the chaosengine and chaos experiment resources to exist in the same namespace?
 
 Yes. As of today, the chaos resources are expected to co-exist in the same namespace, which, typically is also the 
@@ -230,29 +274,3 @@ env:
 ### How to restart chaosengine after graceful completion?
 
 To restart chaosengine, check the `.spec.engineState`, which should be equal to `stop`, which means your chaosengine has gracefully completed, or forcefully aborted. In this case, restart is quite easy, as you can re-apply the chaosengine YAML to restart it. This will remove all stale chaos resources linked to this chaosengine, and restart its own lifecycle.
-
-### How to add Custom Annotation rather than using the default one?
-
-Currently Litmus allows you to set your own/custom keys for Annotation filters, the value being `true`/`false`. To use your custom annotation, add this key under an ENV named as `CUSTOM_ANNOTATION` in chaos operator deployment. A sample chaos-operator deployment spec is provided here for reference: 
-
-```yaml
-...
-spec:
-      containers:
-      - command:
-        - chaos-operator
-        env:
-        - name: CUSTOM_ANNOTATION
-          value: mayadata.io/litmus
-        - name: WATCH_NAMESPACE
-        - name: POD_NAME
-          valueFrom:
-            fieldRef:
-              apiVersion: v1
-              fieldPath: metadata.name
-        - name: OPERATOR_NAME
-          value: chaos-operator
-        image: litmuschaos/chaos-operator:1.3
-        imagePullPolicy: Always
-        name: chaos-operator
-```
