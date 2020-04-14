@@ -122,7 +122,7 @@ subjects:
   <tr>
     <th> Parameter </th>
     <th> Description  </th>
-    <th> Type </th>
+    <th> Specify In ChaosEngine </th>
     <th> Notes </th>
   </tr>
   <tr>
@@ -228,16 +228,16 @@ subjects:
     <td> Defaults to 5s </td>
   </tr>
   <tr>
+    <td> KILL_COUNT </td>
+    <td> No. of application pods to be deleted </td>
+    <td> Optional  </td>
+    <td> Default to `1`, kill_count > 1 is only supported by litmus lib , not by the powerfulseal </td>
+  </tr>
+  <tr>
     <td> LIB </td>
     <td> The chaos lib used to inject the chaos </td>
     <td> Optional </td>
     <td> Defaults to `litmus`. Supported: `litmus`, `powerfulseal </td>
-  </tr>
-  <tr>
-    <td> CHAOS_SERVICE_ACCOUNT </td>
-    <td> Service account used by the powerfulseal deployment </td>
-    <td> Optional </td>
-    <td> Defaults to `default` on namespace `spec.appinfo.appns </td>
   </tr>
 </table>
 

@@ -122,7 +122,7 @@ subjects:
   <tr>
     <th> Parameter </th>
     <th> Description  </th>
-    <th> Type </th>
+    <th> Specify In ChaosEngine </th>
     <th> Notes </th>
   </tr>
   <tr>
@@ -130,7 +130,7 @@ subjects:
     <td> Namespace of Kafka Brokers </td>
     <td> Mandatory </td>
     <td> May be same as value for `spec.appinfo.appns` </td>
-  </tr>
+  </tr> 
   <tr>
     <td> KAFKA_LABEL </td>
     <td> Unique label of Kafka Brokers </td>

@@ -139,7 +139,7 @@ subjects:
   <tr>
     <th> Variables </th>
     <th> Description </th>
-    <th> Type </th>
+    <th> Specify In ChaosEngine </th>
     <th> Notes </th>
   </tr>
   <tr> 
@@ -160,17 +160,11 @@ subjects:
     <td> Optional </td>
     <td> Defaults to 60s </td>
   </tr>
-  <tr> 
-    <td> CHAOSENGINE </td>
-    <td> ChaosEngine CR name associated with the experiment instance </td>
+  <tr>
+    <td> LIB  </td>
+    <td> The chaos lib used to inject the chaos </td>
     <td> Optional </td>
-    <td>  </td>
-  </tr>
-  <tr> 
-    <td> CHAOS_SERVICE_ACCOUNT </td>
-    <td> Service account used by the deployment </td>
-    <td> Optional </td>
-    <td>  </td>
+    <td> Defaults to `litmus` </td>
   </tr>
   <tr>
     <td> RAMP_TIME </td>
@@ -215,6 +209,7 @@ spec:
               
             - name: TARGET_CONTAINER
               value: 'nginx'
+              
 ```
 
 ### Create the ChaosEngine Resource

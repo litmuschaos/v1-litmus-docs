@@ -120,14 +120,8 @@ subjects:
   <tr>
     <th> Parameter </th>
     <th> Description  </th>
-    <th> Type </th>
+    <th> Specify In ChaosEngine </th>
     <th> Notes </th>
-  </tr>
-  <tr>
-    <td> CHAOS_NAMESPACE </td>
-    <td> This is a chaos namespace which will create all infra chaos resources in that namespace </td>
-    <td> Mandatory </td>
-    <td>  </td>
   </tr>
   <tr>
     <td> CLOUD_PLATFORM </td>
@@ -166,18 +160,6 @@ subjects:
     <td> Note: Use REGION_NAME for AWS </td>
   </tr>
   <tr>
-    <td> CHAOSENGINE </td>
-    <td> ChaosEngine CR name associated with the experiment instance </td>
-    <td> Mandatory </td>
-    <td>  </td>
-  </tr>
-  <tr>
-    <td> CHAOS_SERVICE_ACCOUNT </td>
-    <td> Service account used by the litmus </td>
-    <td> Mandatory </td>
-    <td>  </td>
-  </tr>
-  <tr>
     <td> TOTAL_CHAOS_DURATION </td>
     <td> The time duration for chaos insertion (sec) </td>
     <td> Optional </td>
@@ -186,18 +168,6 @@ subjects:
   <tr>
     <td> APP_CHECK </td>
     <td> If it checks to true, the experiment will check the status of the application. </td>
-    <td> Optional </td>
-    <td>  </td>
-  </tr>
-  <tr>
-    <td> APP_NAMESPACE </td>
-    <td> Namespace in which application pods are deployed </td>
-    <td> Optional </td>
-    <td>  </td>
-  </tr>
-  <tr>
-    <td> APP_LABEL </td>
-    <td> Unique Labels in `key=value` format of application deployment </td>
     <td> Optional </td>
     <td>  </td>
   </tr>
@@ -249,10 +219,6 @@ spec:
             # set app_check to check application state
             - name: APP_CHECK
               value: 'true'
-
-            # This is a chaos namespace into which all infra chaos resources are created
-            - name: CHAOS_NAMESPACE
-              value: 'default'
 
             # GCP project ID
             - name: PROJECT_ID

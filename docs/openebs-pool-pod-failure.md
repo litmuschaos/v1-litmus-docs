@@ -150,7 +150,7 @@ subjects:
   <tr>
     <th> Variables </th>
     <th> Description  </th>
-    <th> Type </th>
+    <th> Specify In ChaosEngine </th>
     <th> Notes </th>
   </tr>
   <tr>
@@ -164,6 +164,12 @@ subjects:
     <td> Amount of soak time for I/O post pod kill </td>
     <td> Optional </td>
     <td> Defaults to 600 seconds </td>
+  </tr>
+  <tr>
+    <td> KILL_COUNT </td>
+    <td> No. of pool pods to be deleted </td>
+    <td> Optional  </td>
+    <td> Default to `1` </td>
   </tr>
   <tr>
     <td> DEPLOY_TYPE </td>
@@ -210,8 +216,10 @@ spec:
           env:
             - name: FORCE
               value: 'true'
+
             - name: APP_PVC
-              value: 'demo-nginx-claim'    
+              value: 'demo-nginx-claim' 
+                 
             - name: DEPLOY_TYPE
               value: 'deployment'     
 ```

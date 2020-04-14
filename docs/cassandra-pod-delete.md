@@ -29,13 +29,13 @@ sidebar_label: Cassandra Pod Delete
 
 - Cassandra pods are healthy before chaos injection
 
-- The load should be evenly distributed on the ring.
+- The load should be distributed on the each replicas.
 
 ## Exit Criteria
 
 - Cassandra pods are healthy post chaos injection
 
-- The load should be evenly distributed on the ring.
+- The load should be distributed on the each replicas.
 
 ## Details
 
@@ -81,7 +81,7 @@ metadata:
     name: cassandra-pod-delete-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps"]
-  resources: ["pods","deployments","pods/log","events","jobs","chaosengines","chaosexperiments","chaosresults"]
+  resources: ["pods","deployments","statefulsets","services","pods/log","pods/exec","events","jobs","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
@@ -104,7 +104,7 @@ subjects:
 
 #### Sample Rbac Manifest for powerfulseal LIB
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/cassandra/cassandra-pod-delete-sa/powerfulseal_rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/cassandra/cassandra-pod-delete/powerfulseal_rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
@@ -123,7 +123,7 @@ metadata:
     name: cassandra-pod-delete-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps"]
-  resources: ["pods","deployments","pods/log","events","jobs","configmaps","chaosengines","chaosexperiments","chaosresults"]
+  resources: ["pods","deployments","statefulsets","pods/log","pods/exec","services","events","jobs","configmaps","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete"]
 - apiGroups: [""]
   resources: ["nodes"]
@@ -158,7 +158,7 @@ subjects:
   <tr>
     <th> Variables </th>
     <th> Description  </th>
-    <th> Type </th>
+    <th> Specify In ChaosEngine </th>
     <th> Notes </th>
   </tr>
   <tr>
@@ -208,6 +208,12 @@ subjects:
     <td> Time interval b/w two successive pod failures (sec) </td>
     <td> Optional </td>
     <td> Defaults to 5s </td>
+  </tr>
+  <tr>
+    <td> KILL_COUNT </td>
+    <td> No. of cassandra pods to be deleted </td>
+    <td> Optional  </td>
+    <td> Default to `1`, kill_count > 1 is only supported by litmus lib , not by the powerfulseal </td>
   </tr>
   <tr>
     <td> LIB </td>
@@ -260,15 +266,36 @@ spec:
           env:
             # set chaos duration (in sec) as desired
             - name: TOTAL_CHAOS_DURATION
-              value: '30'
+              value: '15'
 
             # set chaos interval (in sec) as desired
             - name: CHAOS_INTERVAL
-              value: '10'
+              value: '15'
               
             # pod failures without '--force' & default terminationGracePeriodSeconds
             - name: FORCE
               value: 'false'
+
+            # provide cassandra service name
+            # default service: cassandra
+            - name: CASSANDRA_SVC_NAME
+              value: 'cassandra'
+
+            # provide the keyspace replication factor
+            - name: KEYSPACE_REPLICATION_FACTOR
+              value: '3'
+
+            # provide cassandra port 
+            # default port: 9042
+            - name: CASSANDRA_PORT
+              value: '9042'
+
+            # SET THE CASSANDRA_LIVENESS_CHECK
+            # IT CAN BE `enabled` OR `disabled`
+            - name: CASSANDRA_LIVENESS_CHECK
+              value: ''
+
+            
 ```
 
 ### Create the ChaosEngine Resource
@@ -291,3 +318,4 @@ spec:
 
 ## Cassandra Pod Failure Demo
 
+- It will be added soon.
