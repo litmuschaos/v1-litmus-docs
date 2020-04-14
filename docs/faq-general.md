@@ -33,11 +33,11 @@ sidebar_label: General
 
 [Does Litmus support generation of events during chaos?](#does-litmus-support-generation-of-events-during-chaos) 
 
-[How to stop/abort a chaos experiment?](#how-to-stop-abort-a-chaos-experiment)
+[How to stop or abort a chaos experiment?](#how-to-stop-or-abort-a-chaos-experiment)
+
+[Can a chaos experiment be resumed once stopped or aborted?](#can-a-chaos-experiment-be-resumed-once-stopped-or-aborted)
 
 [How to restart chaosengine after graceful completion](#how-to-restart-chaosengine-after-graceful-completion)
-
-[Can a chaos experiment be resumed once stopped/aborted?](#can-a-chaos-experiment-be-resumed-once-stopped-aborted)
 
 [Does Litmus track any usage metrics on the deployment clusters?](#does-litmus-track-any-usage-metrics-on-the-test-clusters)
 
@@ -231,7 +231,7 @@ kubectl describe chaosengine <chaosengine-name> -n <namespace>
 
 Note: Efforts are underway to add more events around chaos injection in subsequent releases. 
 
-### How to stop/abort a chaos experiment?
+### How to stop or abort a chaos experiment?
 
 A chaos experiment can be stopped/aborted inflight by patching the `.spec.engineState` property of the chaosengine 
 to `stop` . This will delete all the chaos resources associated with the engine/experiment at once. 
@@ -242,7 +242,7 @@ kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch
 
 The same effect will be caused by deleting the respective chaosengine resource. 
 
-### Can a chaos experiment be resumed once stopped/aborted? 
+### Can a chaos experiment be resumed once stopped or aborted? 
 
 Once stopped/aborted, patching the chaosengine `.spec.engineState` with `active` causes the experiment to be re-executed. Another way is to re-apply the chaos engine YAML, this will delete all stale chaos resources, and restart chaos engine lifecycle.
 However, support is yet to be added for saving state and resuming an in-flight experiment (i.e., execute 
@@ -252,6 +252,10 @@ pending iterations etc.,)
 ```console
 kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"active"}}'
 ```
+
+### How to restart chaosengine after graceful completion?
+
+To restart chaosengine, check the `.spec.engineState`, which should be equal to `stop`, which means your chaosengine has gracefully completed, or forcefully aborted. In this case, restart is quite easy, as you can re-apply the chaosengine YAML to restart it. This will remove all stale chaos resources linked to this chaosengine, and restart its own lifecycle.
 
 ### Does Litmus support any chaos metrics for experiments?
 
@@ -271,6 +275,3 @@ env:
   value: 'FALSE' 
 ```
 
-### How to restart chaosengine after graceful completion?
-
-To restart chaosengine, check the `.spec.engineState`, which should be equal to `stop`, which means your chaosengine has gracefully completed, or forcefully aborted. In this case, restart is quite easy, as you can re-apply the chaosengine YAML to restart it. This will remove all stale chaos resources linked to this chaosengine, and restart its own lifecycle.
