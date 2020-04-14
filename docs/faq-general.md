@@ -36,6 +36,11 @@ sidebar_label: General
 [Can a chaos experiment be resumed once stopped/aborted?](#can-a-chaos-experiment-be-resumed-once-stopped-aborted)
 
 [Does Litmus track any usage metrics on the deployment clusters?](#does-litmus-track-any-usage-metrics-on-the-test-clusters)
+
+[How to restart chaosengine after graceful completion, or forceful abort scenario?]
+(#how-to-restart-chaosengine-after-graceful-completion-or-forceful-abort-scenario)
+
+[How to add Custom Annotation rather than using the default one?]
   
 <hr>
 
@@ -221,6 +226,35 @@ env:
   value: 'FALSE' 
 ```
 
+### How to restart chaosengine after graceful completion, or forceful abort scenario?
 
+To restart chaosengine, check the `.spec.engineState`, which should be equal to `stop`, which means your chaosengine has gracefully completed, or forcefully aborted. In this case, restart is quite easy, as you can re-apply the chaosengine YAML to restart it. This will remove all chaos resources linked to this chaosengine, and restart its own lifecycle.
 
+### How to add Custom Annotation rather than using the default one?
 
+Currently Litmus can only lets you can the key for Custom Annotation, the value being `true`/`false`. To use your custom annotation key, add this key under an ENV named as `CUSTOM_ANNOTATION` for litmus/chaos operator. A sample deployment spec is populated right here.
+
+```yaml
+...
+spec:
+      containers:
+      - command:
+        - chaos-operator
+        env:
+        - name: CUSTOM_ANNOTATION
+          value: mayadata.io/litmus
+        - name: WATCH_NAMESPACE
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        - name: OPERATOR_NAME
+          value: chaos-operator
+        image: litmuschaos/chaos-operator:1.3
+        imagePullPolicy: Always
+        name: chaos-operator
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+```
