@@ -117,7 +117,7 @@ subjects:
   </tr>
   <tr>
     <td> CHAOS_NAMESPACE </td>
-    <td> This ischaos namespace which will create all infra chaos resources in that namespace </td>
+    <td> This is chaos namespace which will create all infra chaos resources in that namespace </td>
     <td> Mandatory </td>
     <td> Default to `kube-system` </td>
   </tr>
