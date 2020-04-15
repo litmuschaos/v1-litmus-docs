@@ -24,7 +24,7 @@ sidebar_label: Pool Disk Loss
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 
-- Ensure that the `openebs-pool-disk-loss` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the specificed namespace. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-pool-disk-loss)
+- Ensure that the `openebs-pool-disk-loss` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the specificed namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.3.0?file=charts/openebs/experiments/openebs-pool-disk-loss/experiment.yaml)
 
 - The DATA_PERSISTENCE can be enabled by provide the application's info in a configmap volume so that the experiment can perform necessary checks. Currently, LitmusChaos supports data consistency checks only for `MySQL` and `Busybox`.
 
