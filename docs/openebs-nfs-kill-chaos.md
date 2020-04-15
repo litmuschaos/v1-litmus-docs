@@ -26,7 +26,7 @@ sidebar_label: OpenEBS NFS Provisioner Kill
 
 - Ensure that the `openebs-nfs-provisioner-kill` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the `openebs` namespace. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-nfs-provisioner-kill)
 
-- The "DATA_PERSISTENCE"env variable takes effect only if the "EXTERNAL_APP_CHECK" is enabled. A stateful busybox deployment is used to create and validate data persistence on the RMW NFS persistent volumes.
+- The "DATA_PERSISTENCE" env variable takes effect only if the "EXTERNAL_APP_CHECK" is enabled. A stateful busybox deployment is used to create and validate data persistence on the RMW NFS persistent volumes.
 
 The data persistence also needs the users to create a minimal configmap upfront (like described below) in the namespace where the experiment resources are created.
 
@@ -55,7 +55,7 @@ data:
 
 ## Details
 
-- This scenario validates crashes/failure of OpenEBS NFS provisioner container
+- This scenario verifies application behaviour upon crash/failure of OpenEBS NFS provisioner container, when the NFS provisioner is backed by OpenEBS PVs
 
 ## Integrations
 
@@ -221,7 +221,7 @@ spec:
 
 - Check whether the OpenEBS NFS pod is resilient to the container kill, once the experiment (job) is completed. The ChaosResult resource naming convention is: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult nfs-kill-chaos-openebs-nfs-provisioner-kill -n <application-namespace>`
+  `kubectl describe chaosresult nfs-chaos-openebs-nfs-provisioner-kill -n <application-namespace>`
 
 ## Recovery 
 
