@@ -63,6 +63,13 @@
         "ids": [
            "coredns-pod-delete"
         ]
+      },
+      {
+        "type": "subcategory",
+        "label": "Cassandra",
+        "ids": [
+           "cassandra-pod-delete"
+        ]
       }
     ],
     "Litmus FAQs": [

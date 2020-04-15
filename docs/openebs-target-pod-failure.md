@@ -168,6 +168,12 @@ subjects:
     <td> Defaults to 60 seconds </td>
   </tr>
   <tr>
+    <td> KILL_COUNT </td>
+    <td> No. of target pods to be deleted </td>
+    <td> Optional  </td>
+    <td> Default to `1` </td>
+  </tr>
+  <tr>
     <td> DEPLOY_TYPE </td>
     <td> Type of Kubernetes resource used by the stateful application </td>
     <td> Optional  </td>

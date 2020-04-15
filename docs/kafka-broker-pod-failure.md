@@ -228,6 +228,12 @@ subjects:
     <td> Defaults to 5s </td>
   </tr>
   <tr>
+    <td> KILL_COUNT </td>
+    <td> No. of application pods to be deleted </td>
+    <td> Optional  </td>
+    <td> Default to `1`, kill_count > 1 is only supported by litmus lib , not by the powerfulseal </td>
+  </tr>
+  <tr>
     <td> LIB </td>
     <td> The chaos lib used to inject the chaos </td>
     <td> Optional </td>
