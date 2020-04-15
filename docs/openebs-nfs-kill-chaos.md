@@ -110,7 +110,8 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: nfs-chaos-sa
-  namespace: default```
+  namespace: default
+```
 
 ### Prepare ChaosEngine
 
