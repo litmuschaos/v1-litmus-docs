@@ -180,12 +180,6 @@ subjects:
     <td> Defaults value: 9042 </td>
   </tr>
   <tr>
-    <td> LIVENESS_SVC_PORT </td>
-    <td> Port of the liveness deployment </td>
-    <td> Mandatory </td>
-    <td> Default port: 8088, It only supports 8088 port </td>
-  </tr>
-  <tr>
     <td> CASSANDRA_LIVENESS_CHECK </td>
     <td> It allows to check the liveness of the cassandra statefulset </td>
     <td> Optional </td>
