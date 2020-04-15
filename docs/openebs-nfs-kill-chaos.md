@@ -81,10 +81,10 @@ Use this sample RBAC manifest to create a chaosServiceAccount in the desired nam
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-	name: nfs-kill-sa
-	namespace: default
-	labels:
-		name: nfs-kill-sa
+  name: nfs-kill-sa
+  namespace: default
+  labels:
+    name: nfs-kill-sa
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
@@ -215,7 +215,7 @@ spec:
 
 ### Watch Chaos progress
 
-- View pod terminations by setting up a watch on the pods in the Application namespace
+- View pod terminations by setting up a watch on the pods in the application namespace
 
   `watch -n 1 kubectl get pods -n -n <application-namespace>`
 
