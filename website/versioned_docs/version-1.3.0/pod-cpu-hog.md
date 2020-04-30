@@ -37,9 +37,9 @@ original_id: pod-cpu-hog
 
 ## Details
 
-- This experiment consumes the CPU resources on the application container (upward of 80%) on specified number of cores 
+- This experiment consumes the CPU resources on the application container (upward of 80%) on specified number of cores
 - It simulates conditions where app pods experience CPU spikes either due to expected/undesired processes thereby testing how the
-  overall application stack behaves when this occurs. 
+  overall application stack behaves when this occurs.
 
 
 ## Integrations
@@ -122,7 +122,7 @@ subjects:
   </tr>
   <tr>
     <td> CPU_CORES </td>
-    <td> Name of the container subjected to CPU stress  </td>
+    <td> Number of the cpu cores subjected to CPU stress  </td>
     <td> Optional  </td>
     <td> Defaults to 1 </td>
     <td> </td>
@@ -146,7 +146,7 @@ subjects:
     <td> </td>
   </tr>
 </table>
-                      
+
 #### Sample ChaosEngine Manifest
 
 [embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-cpu-hog/engine.yaml yaml)
@@ -161,7 +161,7 @@ spec:
   annotationCheck: 'true'
   # It can be active/stop
   engineState: 'active'
-  #ex. values: ns1:name=percona,ns2:run=nginx 
+  #ex. values: ns1:name=percona,ns2:run=nginx
   auxiliaryAppInfo: ''
   appinfo:
     appns: 'default'
@@ -188,7 +188,7 @@ spec:
 
             - name: TOTAL_CHAOS_DURATION
               value: '60' # in seconds
-            
+
 ```
 
 ### Create the ChaosEngine Resource
@@ -209,6 +209,6 @@ spec:
 
   `kubectl describe chaosresult nginx-chaos-pod-cpu-hog -n <application-namespace>`
 
-## Pod CPU Hog Experiment Demo 
+## Pod CPU Hog Experiment Demo
 
 - A sample recording of this experiment execution is provided [here](https://youtu.be/MBGSPmZKb2I).
