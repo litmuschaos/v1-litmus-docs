@@ -46,7 +46,8 @@
           "openebs-pool-network-loss",
           "openebs-control-plane-chaos",
           "cStor-pool-chaos",
-	  "openebs-pool-disk-loss"
+          "openebs-pool-disk-loss",
+          "openebs-nfs-provisioner-kill"
         ]
       },
       {

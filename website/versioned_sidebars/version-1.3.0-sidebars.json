@@ -45,7 +45,8 @@
           "version-1.3.0-openebs-pool-network-loss",
           "version-1.3.0-openebs-control-plane-chaos",
           "version-1.3.0-cStor-pool-chaos",
-          "version-1.3.0-openebs-pool-disk-loss"
+          "version-1.3.0-openebs-pool-disk-loss",
+          "version-1.3.0-openebs-nfs-provisioner-kill"
         ]
       },
       {
