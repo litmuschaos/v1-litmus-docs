@@ -1,7 +1,7 @@
 ---
 id: version-1.3.0-openebs-nfs-provisioner-kill
 title: OpenEBS NFS Provisioner Kill Chaos Experiment Details
-sidebar_label: OpenEBS NFS Provisioner Kill
+sidebar_label: NFS Provisioner Kill
 original_id: openebs-nfs-provisioner-kill
 ---
 ------
