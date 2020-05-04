@@ -193,6 +193,12 @@ subjects:
     <td> Optional  </td>
     <td> </td>
   </tr>
+  <tr>
+    <td> INSTANCE_ID </td>
+    <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
+    <td> Optional  </td>
+    <td> Ensure that the overall length of the chaosresult CR is still < 64 characters </td>
+  </tr>
 </table>
 
 #### Sample ChaosEngine Manifest
