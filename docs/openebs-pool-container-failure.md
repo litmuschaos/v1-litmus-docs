@@ -207,7 +207,7 @@ subjects:
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
-  name: target-chaos
+  name: pool-chaos
   namespace: default
 spec:
   # It can be true/false
