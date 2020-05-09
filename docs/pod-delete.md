@@ -161,7 +161,7 @@ subjects:
     <td> TOTAL_CHAOS_DURATION </td>
     <td> The time duration for chaos insertion (in sec) </td>
     <td> Optional </td>
-    <td> Defaults to 15s </td>
+    <td> Defaults to 15s, <b>NOTE:</b> Overall run duration of the experiment may exceed the TOTAL_CHAOS_DURATION by a few min </td>
   </tr>
   <tr>
     <td> CHAOS_INTERVAL </td>

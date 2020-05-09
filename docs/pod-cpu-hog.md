@@ -167,7 +167,7 @@ spec:
   annotationCheck: 'true'
   # It can be active/stop
   engineState: 'active'
-  #ex. values: ns1:name=percona,ns2:run=nginx
+  #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ''
   appinfo:
     appns: 'default'
@@ -194,7 +194,7 @@ spec:
 
             - name: TOTAL_CHAOS_DURATION
               value: '60' # in seconds
-
+            
 ```
 
 ### Create the ChaosEngine Resource
