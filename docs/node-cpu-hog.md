@@ -133,6 +133,13 @@ subjects:
     <td> </td>
   </tr>
   <tr>
+    <td> NODE_CPU_CORE </td>
+    <td> Number of cores of node CPU to be consumed  </td>
+    <td> Defaults to `2` </td>
+    <td> Optional  </td>
+    <td> </td>
+  </tr>  
+  <tr>
     <td> INSTANCE_ID </td>
     <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
     <td> Optional </td>
