@@ -170,7 +170,7 @@ subjects:
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
-  name:  nginx-network-chaos
+  name: nginx-network-chaos
   namespace: default
 spec:
   # It can be delete/retain

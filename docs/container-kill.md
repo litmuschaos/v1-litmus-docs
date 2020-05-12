@@ -127,6 +127,18 @@ subjects:
     <td> If the TARGET_CONTAINER is not provided it will delete the first container </td>
   </tr>
   <tr>
+    <td> CHAOS_INTERVAL  </td>
+    <td> Time interval b/w two successive container kill (in sec) </td>
+    <td> Optional </td>
+    <td> If the CHAOS_INTERVAL is not provided it will take the default value of 10s </td>
+  </tr>
+  <tr>
+    <td> TOTAL_CHAOS_DURATION  </td>
+    <td> The time duration for chaos injection (seconds) </td>
+    <td> Optional </td>
+    <td> Defaults to 20s </td>
+  </tr>    
+  <tr>
     <td> LIB_IMAGE  </td>
     <td> The pumba/containerd image used to run the kill command </td>
     <td> Optional </td>
@@ -184,6 +196,14 @@ spec:
             # specify the name of the container to be killed
             - name: TARGET_CONTAINER
               value: 'nginx'
+
+            # provide the chaos interval
+            - name: CHAOS_INTERVAL
+              value: '10'
+
+            # provide the total chaos duration
+            - name: TOTAL_CHAOS_DURATION
+              value: '20'
 ```
 
 ### Create the ChaosEngine Resource
