@@ -155,6 +155,12 @@ subjects:
     <td>  </td>
   </tr>
   <tr> 
+     <td> CONTAINER_PATH </td>
+    <td> Storage Location of containers</td>
+    <td> Mandatory </td>
+    <td> Defaults to '/var/lib/docker/containers' </td>
+  </tr>
+  <tr> 
     <td> TOTAL_CHAOS_DURATION </td>
     <td> The time duration for chaos insertion (sec) </td>
     <td> Optional </td>
