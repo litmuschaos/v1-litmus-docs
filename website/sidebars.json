@@ -11,7 +11,8 @@
       "devguide"
     ],
     "Concepts": [
-      "chaosengine"
+      "chaosengine",
+      "chaosschedule"
     ],
     "Experiments": [
       {
