@@ -157,7 +157,7 @@ subjects:
   <tr> 
      <td> CONTAINER_PATH </td>
     <td> Storage Location of containers</td>
-    <td> Mandatory </td>
+    <td> Optional </td>
     <td> Defaults to '/var/lib/docker/containers' </td>
   </tr>
   <tr> 
