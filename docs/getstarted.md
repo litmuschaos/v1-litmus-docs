@@ -99,6 +99,11 @@ the chaos to their respective work-namespaces in shared environments.
 - In all subsequent steps, please follow these instructions by replacing the nginx namespace and labels with that of your 
 application.
 
+- The chaos operator collects some usage metrics (operator installation count & experiment run count) via a google analytics 
+  hook. This is done in order to gather chaos trends that will help us to improve the project. However, if you would like to
+  prevent the collection of the same or are operating in an airgapped environment, you can disable it using the procedure 
+  suggested [here](https://docs.litmuschaos.io/docs/faq-general/#does-litmus-track-any-usage-metrics-on-the-test-clusters).
+
 ### Install Chaos Experiments
 
 Chaos experiments contain the actual chaos details. These experiments are installed on your cluster as Kubernetes CRs. 
