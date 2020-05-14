@@ -74,6 +74,9 @@
         ]
       }
     ],
+    "Scheduler (alpha)": [
+      "scheduling"
+    ],
     "Litmus FAQs": [
       "faq-general",
       "faq-troubleshooting"
