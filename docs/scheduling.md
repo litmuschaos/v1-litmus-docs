@@ -28,7 +28,7 @@ spec:
     endTime: "2020-05-12T05:52:00Z"   #should be modified according to current UTC Time
     minChaosInterval: "2m"   #format should be like "10m" or "2h" accordingly for minutes and hours
     instanceCount: "2"
-    includedDays: 0-6
+    includedDays: "mon,tue,wed"
   engineTemplateSpec:
     appinfo:
       appns: 'default'
