@@ -1,7 +1,7 @@
 ---
 id: openshift-litmus
 title: Installation of LitmusChaos on OpenShift
-sidebar_label: Litmus on OpenShift
+sidebar_label: Install Litmus on OpenShift
 ---
 ------
 
@@ -260,7 +260,7 @@ oc describe chaosresult nginx-chaos-container-kill -n nginx
 You can uninstall Litmus by deleting the namespace.
 
 ```console
-oc delete -f https://litmuschaos.github.io/pages/litmus-operator-v1.2.0.yaml
+oc delete -f https://litmuschaos.github.io/pages/litmus-operator-v1.4.0.yaml
 ```
 
 ## More Chaos Experiments
