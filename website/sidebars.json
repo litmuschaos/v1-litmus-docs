@@ -11,7 +11,8 @@
       "devguide"
     ],
     "Concepts": [
-      "chaosengine"
+      "chaosengine",
+      "chaosschedule"
     ],
     "Experiments": [
       {
@@ -72,6 +73,9 @@
            "cassandra-pod-delete"
         ]
       }
+    ],
+    "Scheduler (alpha)": [
+      "scheduling"
     ],
     "Litmus FAQs": [
       "faq-general",
