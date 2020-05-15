@@ -15,7 +15,9 @@
       "chaosschedule"
     ],
     "Platforms": [{
-      "OpenShift" : [
+      "type": "subcategory",
+      "label": "OpenShift",
+      "ids" : [
         "openshift-litmus"
       ]
     }],
