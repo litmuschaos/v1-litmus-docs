@@ -38,8 +38,8 @@ const siteConfig = {
 
   // Algolia for searchbar
   algolia: {
-    apiKey: "dc657dfe30f42f228671f557f49ced7a",
-    indexName: "litmus",
+    apiKey: "7af78d639b7342f7da38c5c5c51993b0",
+    indexName: "litmuschaos",
     debug: true
   },
 
