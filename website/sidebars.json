@@ -13,11 +13,11 @@
     "Concepts": [
       "chaosengine"
     ],
-    "Platforms": {
+    "Platforms": [{
       "OpenShift" : [
         "openshift-litmus"
       ]
-    },
+    }],
     "Experiments": [
       {
         "type": "subcategory",
