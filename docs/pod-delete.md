@@ -23,7 +23,7 @@ sidebar_label: Pod Delete
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`).If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `pod-delete` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/pod-delete)
+- Ensure that the `pod-delete` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.3.0?file=charts/generic/pod-delete/experiment.yaml)
 
 ## Entry Criteria
 
@@ -53,8 +53,9 @@ sidebar_label: Pod Delete
 ### Prepare chaosServiceAccount
 
 - Use this sample RBAC manifest to create a chaosServiceAccount in the desired (app) namespace. This example consists of the minimum necessary role permissions to execute the experiment.
+- The RBAC sample manifest is different for both LIB (litmus, powerseal). Use the respective rbac sample manifest on the basis of LIB ENV.
 
-#### Sample Rbac Manifest
+#### Sample Rbac Manifest for litmus LIB
 
 [embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-delete/rbac.yaml yaml)
 ```yaml
@@ -76,11 +77,8 @@ metadata:
     name: pod-delete-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps"]
-  resources: ["pods","deployments","pods/log","events","jobs","configmaps","chaosengines","chaosexperiments","chaosresults"]
+  resources: ["pods","deployments","pods/log","events","jobs","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete"]
-- apiGroups: [""]
-  resources: ["nodes"]
-  verbs : ["get","list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
@@ -100,10 +98,55 @@ subjects:
 
 ```
 
+#### Sample Rbac Manifest for powerfulseal LIB
+
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-delete/powerfulseal_rbac.yaml yaml)
+```yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: pod-delete-sa
+  namespace: default
+  labels:
+    name: pod-delete-sa
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: pod-delete-sa
+  labels:
+    name: pod-delete-sa
+rules:
+- apiGroups: ["","litmuschaos.io","batch","apps"]
+  resources: ["pods","deployments","pods/log","events","jobs","configmaps","chaosengines","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","update","delete"]
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["get","list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: pod-delete-sa
+  labels:
+    name: pod-delete-sa
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: pod-delete-sa
+subjects:
+- kind: ServiceAccount
+  name: pod-delete-sa
+  namespace: default
+
+```
+
 ### Prepare ChaosEngine
 
 - Provide the application info in `spec.appinfo`
-- Override the experiment tunables if desired
+- Override the experiment tunables if desired in `experiments.spec.components.env`
+- To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
 
 #### Supported Experiment Tunables
 
@@ -111,18 +154,18 @@ subjects:
   <tr>
     <th> Variables </th>
     <th> Description  </th>
-    <th> Type </th>
+    <th> Specify In ChaosEngine </th>
     <th> Notes </th>
   </tr>
   <tr>
     <td> TOTAL_CHAOS_DURATION </td>
-    <td> The time duration for chaos insertion (seconds) </td>
+    <td> The time duration for chaos insertion (in sec) </td>
     <td> Optional </td>
-    <td> Defaults to 15s </td>
+    <td> Defaults to 15s, <b>NOTE:</b> Overall run duration of the experiment may exceed the TOTAL_CHAOS_DURATION by a few min </td>
   </tr>
   <tr>
     <td> CHAOS_INTERVAL </td>
-    <td> Time interval b/w two successive pod failures (sec) </td>
+    <td> Time interval b/w two successive pod failures (in sec) </td>
     <td> Optional </td>
     <td> Defaults to 5s </td>
   </tr>
@@ -149,6 +192,12 @@ subjects:
     <td> Period to wait before injection of chaos in sec </td>
     <td> Optional  </td>
     <td> </td>
+  </tr>
+  <tr>
+    <td> INSTANCE_ID </td>
+    <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
+    <td> Optional  </td>
+    <td> Ensure that the overall length of the chaosresult CR is still < 64 characters </td>
   </tr>
 </table>
 

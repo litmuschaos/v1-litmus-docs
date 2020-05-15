@@ -11,7 +11,8 @@
       "devguide"
     ],
     "Concepts": [
-      "chaosengine"
+      "chaosengine",
+      "chaosschedule"
     ],
     "Platforms": [{
       "OpenShift" : [
@@ -27,13 +28,14 @@
           "container-kill",
           "pod-network-latency",
           "pod-network-loss",
-	        "pod-network-corruption",
-	        "pod-cpu-hog",
+          "pod-network-corruption",
+          "pod-cpu-hog",
+          "pod-memory-hog",
           "disk-fill",
           "disk-loss",
           "node-cpu-hog",
-	  "node-memory-hog",
-	        "node-drain"
+          "node-memory-hog",
+	  "node-drain"
         ]
       },
       {
@@ -50,7 +52,8 @@
           "openebs-pool-network-loss",
           "openebs-control-plane-chaos",
           "cStor-pool-chaos",
-	  "openebs-pool-disk-loss"
+          "openebs-pool-disk-loss",
+          "openebs-nfs-provisioner-kill"
         ]
       },
       {
@@ -67,7 +70,17 @@
         "ids": [
            "coredns-pod-delete"
         ]
+      },
+      {
+        "type": "subcategory",
+        "label": "Cassandra",
+        "ids": [
+           "cassandra-pod-delete"
+        ]
       }
+    ],
+    "Scheduler (alpha)": [
+      "scheduling"
     ],
     "Litmus FAQs": [
       "faq-general",

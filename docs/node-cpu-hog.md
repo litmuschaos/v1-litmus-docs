@@ -23,7 +23,7 @@ sidebar_label: Node CPU Hog
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `node-cpu-hog` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/node-cpu-hog)
+- Ensure that the `node-cpu-hog` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.3.0?file=charts/generic/node-cpu-hog/experiment.yaml)
 - There should be administrative access to the platform on which the Kubernetes cluster is hosted, as the recovery of the affected node could be manual. For example, gcloud access to the GKE project
 ## Entry Criteria
 
@@ -42,7 +42,7 @@ Tests application resiliency upon replica evictions caused due to lack of CPU re
 
 ## Integrations
 
-- CPU Hog can be effected using the chaos library: `litmus`
+- Node CPU Hog can be effected using the chaos library: `litmus` 
 - The desired chaos library can be selected by setting `litmus` as value for the env variable `LIB` 
 
 ## Steps to Execute the Chaos Experiment
@@ -80,7 +80,7 @@ rules:
   verbs: ["create","list","get","patch","update","delete"]
 - apiGroups: [""]
   resources: ["nodes"]
-  verbs : ["get","list"]
+  verbs: ["get","list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
@@ -102,7 +102,8 @@ subjects:
 
 - Provide the application info in `spec.appinfo`
 - Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
-- Override the experiment tunables if desired 
+- Override the experiment tunables if desired in `experiments.spec.components.env`
+- To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
 
 #### Supported Experiment Tunables
 
@@ -110,14 +111,8 @@ subjects:
   <tr>
     <th> Variables </th>
     <th> Description  </th>
-    <th> Type </th>
+    <th> Specify In ChaosEngine </th>
     <th> Notes </th>
-  </tr>
-  <tr>
-    <td> PLATFORM </td>
-    <td> The platform on which the chaos experiment will run </td>
-    <td> Mandatory </td>
-    <td> Defaults to GKE </td>
   </tr>
   <tr>
     <td> TOTAL_CHAOS_DURATION </td>
@@ -125,10 +120,10 @@ subjects:
     <td> Optional </td>
     <td> Defaults to 60 </td>
   </tr>
-  <tr>
+   <tr>
     <td> LIB  </td>
     <td> The chaos lib used to inject the chaos </td>
-    <td> Optional  </td>
+    <td> Optional </td>
     <td> Defaults to `litmus` </td>
   </tr>
   <tr>
@@ -137,6 +132,20 @@ subjects:
     <td> Optional  </td>
     <td> </td>
   </tr>
+  <tr>
+    <td> NODE_CPU_CORE </td>
+    <td> Number of cores of node CPU to be consumed  </td>
+    <td> Defaults to `2` </td>
+    <td> Optional  </td>
+    <td> </td>
+  </tr>  
+  <tr>
+    <td> INSTANCE_ID </td>
+    <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
+    <td> Optional </td>
+    <td> Ensure that the overall length of the chaosresult CR is still < 64 characters </td>
+  </tr>
+
 </table>
 
 #### Sample ChaosEngine Manifest
@@ -171,15 +180,9 @@ spec:
             # set chaos duration (in sec) as desired
             - name: TOTAL_CHAOS_DURATION
               value: '60'
-
-             # It supprts GKE and EKS Platform
-             # GKE is the default Platform
-            - name: PLATFORM
-              value: 'GKE'
-              
-            # chaos lib used to inject the chaos
-            - name: LIB
-              value: 'litmus'
+            
+            - name: NODE_CPU_CORE
+              value: ''
 ```
 
 ### Create the ChaosEngine Resource

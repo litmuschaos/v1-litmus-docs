@@ -24,7 +24,7 @@ sidebar_label: Disk Fill
 
 - Ensure that Kubernetes Version > 1.13
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `disk-fill` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/disk-fill)
+- Ensure that the `disk-fill` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.3.0?file=charts/generic/disk-fill/experiment.yaml)
 - Cluster must run docker container runtime
 - Appropriate Ephemeral Storage Requests and Limits should be set for the application before running the experiment. 
   An example specification is shown below:
@@ -107,7 +107,7 @@ metadata:
     name: disk-fill-sa
 rules:
 - apiGroups: ["","apps","litmuschaos.io","batch"]
-  resources: ["pods","jobs","pods/exec","events","pods/log","daemonsets","chaosengines","chaosexperiments","chaosresults"]
+  resources: ["pods","jobs","pods/exec","events","pods/log","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
@@ -130,7 +130,8 @@ subjects:
 
 - Provide the application info in `spec.appinfo`
 - Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
-- Override the experiment tunables if desired
+- Override the experiment tunables if desired in `experiments.spec.components.env`
+- To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
 
 #### Supported Experiment Tunables
 
@@ -138,7 +139,7 @@ subjects:
   <tr>
     <th> Variables </th>
     <th> Description </th>
-    <th> Type </th>
+    <th> Specify In ChaosEngine </th>
     <th> Notes </th>
   </tr>
   <tr> 
@@ -154,22 +155,22 @@ subjects:
     <td>  </td>
   </tr>
   <tr> 
+     <td> CONTAINER_PATH </td>
+    <td> Storage Location of containers</td>
+    <td> Optional </td>
+    <td> Defaults to '/var/lib/docker/containers' </td>
+  </tr>
+  <tr> 
     <td> TOTAL_CHAOS_DURATION </td>
     <td> The time duration for chaos insertion (sec) </td>
     <td> Optional </td>
     <td> Defaults to 60s </td>
   </tr>
-  <tr> 
-    <td> CHAOSENGINE </td>
-    <td> ChaosEngine CR name associated with the experiment instance </td>
+  <tr>
+    <td> LIB  </td>
+    <td> The chaos lib used to inject the chaos </td>
     <td> Optional </td>
-    <td>  </td>
-  </tr>
-  <tr> 
-    <td> CHAOS_SERVICE_ACCOUNT </td>
-    <td> Service account used by the deployment </td>
-    <td> Optional </td>
-    <td>  </td>
+    <td> Defaults to `litmus` </td>
   </tr>
   <tr>
     <td> RAMP_TIME </td>
@@ -177,6 +178,13 @@ subjects:
     <td> Optional  </td>
     <td> </td>
   </tr>
+  <tr>
+    <td> INSTANCE_ID </td>
+    <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
+    <td> Optional </td>
+    <td> Ensure that the overall length of the chaosresult CR is still < 64 characters </td>
+  </tr>
+
 </table>
 
 #### Sample ChaosEngine Manifest
@@ -214,6 +222,7 @@ spec:
               
             - name: TARGET_CONTAINER
               value: 'nginx'
+              
 ```
 
 ### Create the ChaosEngine Resource

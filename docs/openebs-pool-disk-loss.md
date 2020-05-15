@@ -24,7 +24,7 @@ sidebar_label: Pool Disk Loss
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 
-- Ensure that the `openebs-pool-disk-loss` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the specificed namespace. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-pool-disk-loss)
+- Ensure that the `openebs-pool-disk-loss` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the specificed namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.3.0?file=charts/openebs/openebs-pool-disk-loss/experiment.yaml)
 
 - The DATA_PERSISTENCE can be enabled by provide the application's info in a configmap volume so that the experiment can perform necessary checks. Currently, LitmusChaos supports data consistency checks only for `MySQL` and `Busybox`.
 
@@ -154,7 +154,9 @@ subjects:
 
 - Provide the application info in `spec.appinfo`
 - Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
-- Override the experiment tunables if desired
+- Override the experiment tunables if desired in `experiments.spec.components.env`
+- Provide the configMaps and secrets in `experiments.spec.components.configMaps/secrets`, For more info refer [Sample ChaosEngine](https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/sample_openebs_engine_with_data_persistency_enabled.yaml)
+- To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
 
 #### Supported Experiment Tunables
 
@@ -162,26 +164,14 @@ subjects:
   <tr>
     <th> Variables </th>
     <th> Description  </th>
-    <th> Type </th>
+    <th> Specify In ChaosEngine </th>
     <th> Notes </th>
   </tr>
   <tr>
-    <td> TOTAL_CHAOS_DURATION </td>
-    <td> Total duration for which disk loss is injected </td>
-    <td> Optional </td>
-    <td> Defaults to 60 seconds </td>
-  </tr>
-  <tr>
-    <td> DATA_PERSISTENCE </td>
-    <td> Flag to perform data consistency checks on the application </td>
-    <td> Optional  </td>
-    <td> Default value is disabled (empty/unset). It supports only `mysql` and `busybox`. Ensure configmap with app details are created </td>
-  </tr>
-  <tr>
-    <td> CHAOS_NAMESPACE </td>
-    <td> This is a chaos namespace in which the infra chaos resources are created </td>
+    <td> APP_PVC </td>
+    <td> The PersistentVolumeClaim used by the stateful application </td>
     <td> Mandatory </td>
-    <td>  </td>
+    <td> Corresponds to the PVC using OpenEBS cStor storage class </td>
   </tr>
   <tr>
     <td> CLOUD_PLATFORM </td>
@@ -220,16 +210,22 @@ subjects:
     <td> Note: Use REGION_NAME for AWS </td>
   </tr>
   <tr>
+    <td> TOTAL_CHAOS_DURATION </td>
+    <td> Total duration for which disk loss is injected </td>
+    <td> Optional </td>
+    <td> Defaults to 60 seconds </td>
+  </tr>
+  <tr>
+    <td> DATA_PERSISTENCE </td>
+    <td> Flag to perform data consistency checks on the application </td>
+    <td> Optional  </td>
+    <td> Default value is disabled (empty/unset). It supports only `mysql` and `busybox`. Ensure configmap with app details are created </td>
+  </tr>
+  <tr>
     <td> APP_CHECK </td>
     <td> If it checks to true, the experiment will check the status of the application. </td>
     <td> Optional </td>
     <td>  </td>
-  </tr>
-  <tr>
-    <td> APP_PVC </td>
-    <td> The PersistentVolumeClaim used by the stateful application </td>
-    <td> Mandatory </td>
-    <td> Corresponds to the PVC using OpenEBS cStor storage class </td>
   </tr>
   <tr>
     <td> RAMP_TIME </td>
@@ -240,8 +236,14 @@ subjects:
   <tr>
     <td> OPENEBS_NAMESPACE </td>
     <td> Namespace in which OpenEBS pods are deployed </td>
-    <td> Mandatory  </td>
+    <td> Optional  </td>
     <td> </td>
+  </tr>
+  <tr>
+    <td> INSTANCE_ID </td>
+    <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
+    <td> Optional  </td>
+    <td> Ensure that the overall length of the chaosresult CR is still < 64 characters </td>
   </tr>
 </table>
 
@@ -275,10 +277,6 @@ spec:
           env:              
             - name: APP_PVC
               value: 'demo-nginx-claim'
-
-            # This is a chaos namespace which will create all infra chaos resources in that namespace
-            - name: CHAOS_NAMESPACE
-              value: ''
 
             # GKE and AWS supported
             - name: CLOUD_PLATFORM
