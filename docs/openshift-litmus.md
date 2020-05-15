@@ -1,7 +1,7 @@
 ---
 id: openshift-litmus
 title: Installation of LitmusChaos on OpenShift
-sidebar_label: Install Litmus on OpenShift
+sidebar_label: Install Litmus
 ---
 ------
 
