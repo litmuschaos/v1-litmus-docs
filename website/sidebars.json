@@ -14,6 +14,11 @@
       "chaosengine",
       "chaosschedule"
     ],
+    "Platforms": [{
+      "OpenShift" : [
+        "openshift-litmus"
+      ]
+    }],
     "Experiments": [
       {
         "type": "subcategory",
