@@ -3,7 +3,6 @@
   "docs": {
     "Getting Started": [
       "getstarted",
-      "Install Litmus on OpenShift",
       "chaoshub",
       "plugins",
       "architecture",
@@ -13,6 +12,9 @@
     ],
     "Concepts": [
       "chaosengine"
+    ],
+    "Platforms": [
+      "Install Litmus on OpenShift"
     ],
     "Experiments": [
       {
