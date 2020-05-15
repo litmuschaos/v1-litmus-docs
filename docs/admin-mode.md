@@ -18,6 +18,14 @@ Provide this ServiceAccount in ChaosEngine's .spec.chaosServiceAccount.
 
 ### Example
 
+#### Prepare Chaos Experiment
+
+- Select Chaos Experiment from [hub.litmuschaos.io](https://hub.litmuschaos.io/) and click on `INSTALL EXPERIMENT` button.
+
+```bash
+kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.4.0?file=charts/generic/pod-delete/experiment.yaml -n litmus
+```
+
 #### Prepare RBAC Manifest 
 
 Here is an RBAC definition, which in essence is a superset of individual experiments RBAC that has the permissions to run all chaos experiments across different namespaces.
