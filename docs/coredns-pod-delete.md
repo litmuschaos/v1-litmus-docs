@@ -22,7 +22,7 @@ sidebar_label: CoreDNS Pod Delete
 
 ## Prerequisites
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `coredns-pod-delete` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos?file=charts/coredns/coredns-pod-delete/experiment.yaml)
+- Ensure that the `coredns-pod-delete` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.3.0?file=charts/coredns/coredns-pod-delete/experiment.yaml)
 
 ## Entry Criteria
 
@@ -103,7 +103,8 @@ subjects:
         appkind: deployment
     ```
 
-- Override the experiment tunables if desired
+- Override the experiment tunables if desired in `experiments.spec.components.env`
+- To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
 
 #### Supported Experiment Tunables
 
@@ -111,8 +112,14 @@ subjects:
   <tr>
     <th> Variables </th>
     <th> Description  </th>
-    <th> Type </th>
+    <th> Specify In ChaosEngine </th>
     <th> Notes </th>
+  </tr>
+  <tr>
+    <td> CHAOS_NAMESPACE </td>
+    <td> This is chaos namespace which will create all infra chaos resources in that namespace </td>
+    <td> Mandatory </td>
+    <td> Default to `kube-system` </td>
   </tr>
   <tr>
     <td> TOTAL_CHAOS_DURATION </td>
@@ -125,12 +132,12 @@ subjects:
     <td> Time interval b/w two successive pod failures (sec) </td>
     <td> Optional </td>
     <td> Defaults to 5s </td>
-  </tr> 
+  </tr>
   <tr>
-    <td> CHAOS_NAMESPACE </td>
-    <td> This ischaos namespace which will create all infra chaos resources in that namespace </td>
-    <td> Mandatory </td>
-    <td> Default to `kube-system` </td>
+    <td> KILL_COUNT </td>
+    <td> No. of application pods to be deleted </td>
+    <td> Optional  </td>
+    <td> Default to `1`, kill_count > 1 is only supported by litmus lib , not by the powerfulseal </td>
   </tr>
   <tr>
     <td> LIB  </td>
@@ -138,6 +145,13 @@ subjects:
     <td> Optional  </td>
     <td> Defaults to `litmus`, Supported: `litmus` </td>
   </tr>
+  <tr>
+    <td> INSTANCE_ID </td>
+    <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
+    <td> Optional  </td>
+    <td> Ensure that the overall length of the chaosresult CR is still < 64 characters </td>
+  </tr>
+
 </table>
 
 #### Sample ChaosEngine Manifest
@@ -176,9 +190,9 @@ spec:
             # set chaos interval (in sec) as desired
             - name: CHAOS_INTERVAL
               value: '10'
-                
+
             - name: CHAOS_NAMESPACE
-              value: 'kube-system'
+              value: 'kube-system' 
 ```
 
 ### Create the ChaosEngine Resource

@@ -23,7 +23,7 @@ sidebar_label: Node Drain
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `node-drain` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/node-drain)
+- Ensure that the `node-drain` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.3.0?file=charts/generic/node-drain/experiment.yaml)
 - Ensure that the node specified in the experiment ENV variable `APP_NODE` (the node which will be drained)  should be cordoned before execution of the chaos experiment (before applying the chaosengine manifest) to ensure that the litmus experiment runner pods are not scheduled on it / subjected to eviction. This can be achieved with the following steps: 
 
   - Get node names against the applications pods: `kubectl get pods -o wide`
@@ -45,6 +45,7 @@ sidebar_label: Node Drain
 ## Integrations
 
 - Drain node can be effected using the chaos library: `litmus`
+- The desired chaos library can be selected by setting `litmus` as value for the env variable `LIB` 
 
 ## Steps to Execute the Chaos Experiment
 
@@ -97,14 +98,14 @@ subjects:
 - kind: ServiceAccount
   name: node-drain-sa
   namespace: default
-  
 ```
 
 ### Prepare ChaosEngine
 
 - Provide the application info in `spec.appinfo`
 - Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
-- Override the experiment tunables if desired 
+- Override the experiment tunables if desired in `experiments.spec.components.env`
+- To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
 
 #### Supported Experiment Tunables
 
@@ -112,7 +113,7 @@ subjects:
   <tr>
     <th>  Variables </th>
     <th>  Description </th>
-    <th> Type  </th>
+    <th> Specify In ChaosEngine </th>
     <th> Notes </th>
   </tr>
   <tr>
@@ -127,12 +128,25 @@ subjects:
     <td> Optional </td>
     <td> Defaults to 60s </td>
   </tr>
+   <tr>
+    <td> LIB  </td>
+    <td> The chaos lib used to inject the chaos </td>
+    <td> Optional </td>
+    <td> Defaults to `litmus` </td>
+  </tr>
   <tr>
     <td> RAMP_TIME </td>
     <td> Period to wait before injection of chaos in sec </td>
     <td> Optional  </td>
     <td> </td>
   </tr>
+  <tr>
+    <td> INSTANCE_ID </td>
+    <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
+    <td> Optional </td>
+    <td> Ensure that the overall length of the chaosresult CR is still < 64 characters </td>
+  </tr>
+
 </table>
                       
 #### Sample ChaosEngine Manifest

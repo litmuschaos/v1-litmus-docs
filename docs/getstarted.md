@@ -34,7 +34,7 @@ Running chaos on your application involves the following steps:
 ###  Install Litmus
 
 ```
-kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-v1.2.0.yaml
+kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-v1.3.0.yaml
 ```
 
 The above command install all the CRDs, required service account configuration, and chaos-operator. Before you start running a chaos experiment, verify if Litmus is installed correctly.
@@ -99,6 +99,11 @@ the chaos to their respective work-namespaces in shared environments.
 - In all subsequent steps, please follow these instructions by replacing the nginx namespace and labels with that of your 
 application.
 
+- The chaos operator collects some usage metrics (operator installation count & experiment run count) via a google analytics 
+  hook. This is done in order to gather chaos trends that will help us to improve the project. However, if you would like to
+  prevent the collection of the same or are operating in an airgapped environment, you can disable it using the procedure 
+  suggested [here](https://docs.litmuschaos.io/docs/faq-general/#does-litmus-track-any-usage-metrics-on-the-test-clusters).
+
 ### Install Chaos Experiments
 
 Chaos experiments contain the actual chaos details. These experiments are installed on your cluster as Kubernetes CRs. 
@@ -108,7 +113,7 @@ The generic chaos experiments such as `pod-delete`,  `container-kill`,` pod-netw
 This is the first chart you are recommended to install. 
 
 ```
-kubectl apply -f https://hub.litmuschaos.io/api/chaos?file=charts/generic/experiments.yaml -n nginx
+kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.3.0?file=charts/generic/experiments.yaml -n nginx
 ```
 
 Verify if the chaos experiments are installed.
@@ -149,7 +154,7 @@ metadata:
     name: container-kill-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps"]
-  resources: ["pods","jobs","daemonsets","pods/exec","pods/log","events","chaosengines","chaosexperiments","chaosresults"]
+  resources: ["pods","jobs","pods/exec","pods/log","events","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
@@ -260,7 +265,7 @@ kubectl describe chaosresult nginx-chaos-container-kill -n nginx
 You can uninstall Litmus by deleting the namespace.
 
 ```console
-kubectl delete -f https://litmuschaos.github.io/pages/litmus-operator-v1.2.0.yaml
+kubectl delete -f https://litmuschaos.github.io/pages/litmus-operator-v1.3.0.yaml
 ```
 
 ## More Chaos Experiments

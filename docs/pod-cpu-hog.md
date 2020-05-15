@@ -23,7 +23,7 @@ sidebar_label: Pod CPU Hog
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `pod-cpu-hog` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/pod-cpu-hog)
+- Ensure that the `pod-cpu-hog` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.3.0?file=charts/generic/pod-cpu-hog/experiment.yaml)
 - Cluster must run docker container runtime
 
 ## Entry Criteria
@@ -36,9 +36,9 @@ sidebar_label: Pod CPU Hog
 
 ## Details
 
-- This experiment consumes the CPU resources on the application container (upward of 80%) on specified number of cores 
+- This experiment consumes the CPU resources on the application container (upward of 80%) on specified number of cores
 - It simulates conditions where app pods experience CPU spikes either due to expected/undesired processes thereby testing how the
-  overall application stack behaves when this occurs. 
+  overall application stack behaves when this occurs.
 
 
 ## Integrations
@@ -101,7 +101,8 @@ subjects:
 
 - Provide the application info in `spec.appinfo`
 - Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
-- Override the experiment tunables if desired 
+- Override the experiment tunables if desired in `experiments.spec.components.env`
+- To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
 
 #### Supported Experiment Tunables
 
@@ -120,7 +121,7 @@ subjects:
   </tr>
   <tr>
     <td> CPU_CORES </td>
-    <td> Name of the container subjected to CPU stress  </td>
+    <td> Number of the cpu cores subjected to CPU stress  </td>
     <td> Optional  </td>
     <td> Defaults to 1 </td>
     <td> </td>
@@ -143,8 +144,15 @@ subjects:
     <td> Optional  </td>
     <td> </td>
   </tr>
+  <tr>
+    <td> INSTANCE_ID </td>
+    <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name. </td>
+    <td> Optional  </td>
+    <td> Ensure that the overall length of the chaosresult CR is still < 64 characters </td>
+  </tr>
+
 </table>
-                      
+
 #### Sample ChaosEngine Manifest
 
 [embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-cpu-hog/engine.yaml yaml)
@@ -207,6 +215,6 @@ spec:
 
   `kubectl describe chaosresult nginx-chaos-pod-cpu-hog -n <application-namespace>`
 
-## Pod CPU Hog Experiment Demo 
+## Pod CPU Hog Experiment Demo
 
 - A sample recording of this experiment execution is provided [here](https://youtu.be/MBGSPmZKb2I).

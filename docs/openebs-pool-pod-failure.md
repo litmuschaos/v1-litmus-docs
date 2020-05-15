@@ -25,7 +25,7 @@ sidebar_label: Pool Pod Failure
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `openebs-pool-pod-failure` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-pool-pod-failure)
+- Ensure that the `openebs-pool-pod-failure` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.3.0?file=charts/openebs/openebs-pool-pod-failure/experiment.yaml)
 - The DATA_PERSISTENCE can be enabled by provide the application's info in a configmap volume so that the experiment can perform necessary checks. Currently, LitmusChaos supports data consistency checks only for MySQL and Busybox. 
   - For MYSQL data persistence check create a configmap as shown below in the application namespace (replace with actual credentials):
 
@@ -140,7 +140,9 @@ subjects:
 
 - Provide the application info in `spec.appinfo`
 - Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
-- Override the experiment tunables if desired
+- Override the experiment tunables if desired in `experiments.spec.components.env`
+- Provide the configMaps and secrets in `experiments.spec.components.configMaps/secrets`, For more info refer [Sample ChaosEngine](https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/sample_openebs_engine_with_data_persistency_enabled.yaml)
+- To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
 
 #### Supported Experiment Tunables
 
@@ -148,7 +150,7 @@ subjects:
   <tr>
     <th> Variables </th>
     <th> Description  </th>
-    <th> Type </th>
+    <th> Specify In ChaosEngine </th>
     <th> Notes </th>
   </tr>
   <tr>
@@ -164,6 +166,12 @@ subjects:
     <td> Defaults to 600 seconds </td>
   </tr>
   <tr>
+    <td> KILL_COUNT </td>
+    <td> No. of pool pods to be deleted </td>
+    <td> Optional  </td>
+    <td> Default to `1` </td>
+  </tr>
+  <tr>
     <td> DEPLOY_TYPE </td>
     <td> Type of Kubernetes resource used by the stateful application </td>
     <td> Optional  </td>
@@ -175,6 +183,13 @@ subjects:
     <td> Optional  </td>
     <td> Default value is disabled (empty/unset). It supports only `mysql` and `busybox`. Ensure configmap with app details are created </td>
   </tr>
+  <tr>
+    <td> INSTANCE_ID </td>
+    <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
+    <td> Optional  </td>
+    <td> Ensure that the overall length of the chaosresult CR is still < 64 characters </td>
+  </tr>
+
 </table>
 
 #### Sample ChaosEngine Manifest
@@ -184,7 +199,7 @@ subjects:
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
-  name: target-chaos
+  name: pool-chaos
   namespace: default
 spec:
   # It can be true/false
@@ -208,8 +223,10 @@ spec:
           env:
             - name: FORCE
               value: 'true'
+
             - name: APP_PVC
-              value: 'demo-nginx-claim'    
+              value: 'demo-nginx-claim' 
+                 
             - name: DEPLOY_TYPE
               value: 'deployment'     
 ```

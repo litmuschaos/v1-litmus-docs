@@ -24,7 +24,7 @@ sidebar_label: Broker Pod Failure
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `kafka-broker-pod-failure` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/kafka/experiments/kafka-broker-pod-failure) 
+- Ensure that the `kafka-broker-pod-failure` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.3.0?file=charts/kafka/kafka-broker-pod-failure/experiment.yaml) 
 - Ensure that Kafka & Zookeeper are deployed as Statefulsets
 - If Confluent/Kudo Operators have been used to deploy Kafka, note the instance name, which will be 
   used as the value of `KAFKA_INSTANCE_NAME` experiment environment variable 
@@ -34,7 +34,7 @@ sidebar_label: Broker Pod Failure
  
   Zookeeper uses this to construct a path in which kafka cluster data is stored. 
 
-- Ensure that the kafka-broker-disk failure experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/kafka/experiments/kafka-broker-pod-failure) 
+- Ensure that the kafka-broker-disk failure experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.3.0?file=charts/kafka/kafka-broker-pod-failure/experiment.yaml) 
 
 
 ## Entry Criteria
@@ -92,7 +92,7 @@ rules:
   verbs: ["create","list","get","patch","delete"]
 - apiGroups: [""]
   resources: ["nodes"]
-  verbs : ["get","list"]
+  verbs: ["get","list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
@@ -113,7 +113,8 @@ subjects:
 ### Prepare ChaosEngine
 
 - Provide the application info in `spec.appinfo`
-- Provide the experiment tunables. While many tunables have default values specified in the ChaosExperiment CR, some need to be explicitly supplied.
+- Provide the experiment tunables. While many tunables have default values specified in the ChaosExperiment CR, some need to be explicitly supplied in `experiments.spec.components.env`.
+- To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
 
 #### Supported Experiment Tunables
 
@@ -121,7 +122,7 @@ subjects:
   <tr>
     <th> Parameter </th>
     <th> Description  </th>
-    <th> Type </th>
+    <th> Specify In ChaosEngine </th>
     <th> Notes </th>
   </tr>
   <tr>
@@ -227,17 +228,24 @@ subjects:
     <td> Defaults to 5s </td>
   </tr>
   <tr>
+    <td> KILL_COUNT </td>
+    <td> No. of application pods to be deleted </td>
+    <td> Optional  </td>
+    <td> Default to `1`, kill_count > 1 is only supported by litmus lib , not by the powerfulseal </td>
+  </tr>
+  <tr>
     <td> LIB </td>
     <td> The chaos lib used to inject the chaos </td>
     <td> Optional </td>
     <td> Defaults to `litmus`. Supported: `litmus`, `powerfulseal </td>
   </tr>
   <tr>
-    <td> CHAOS_SERVICE_ACCOUNT </td>
-    <td> Service account used by the powerfulseal deployment </td>
-    <td> Optional </td>
-    <td> Defaults to `default` on namespace `spec.appinfo.appns </td>
+    <td> INSTANCE_ID </td>
+    <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
+    <td> Optional  </td>
+    <td> Ensure that the overall length of the chaosresult CR is still < 64 characters </td>
   </tr>
+
 </table>
 
 #### Sample ChaosEngine Manifest

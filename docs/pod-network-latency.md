@@ -22,7 +22,7 @@ sidebar_label: Pod Network Latency
 
 ## Prerequisites
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `pod-network-latency` experiment resource is available in the cluster by executing kubectl `get chaosexperiments` in the desired namespace. . If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/pod-network-latency)
+- Ensure that the `pod-network-latency` experiment resource is available in the cluster by executing kubectl `get chaosexperiments` in the desired namespace. . If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.3.0?file=charts/generic/pod-network-latency/experiment.yaml)
 
 
 <div class="danger">
@@ -101,7 +101,8 @@ subjects:
 ### Prepare ChaosEngine
 
 - Provide the application info in `spec.appinfo`
-- Override the experiment tunables if desired
+- Override the experiment tunables if desired in `experiments.spec.components.env`
+- To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
 
 #### Supported Experiment Tunables
 
@@ -154,6 +155,13 @@ subjects:
     <td> Optional  </td>
     <td> </td>
   </tr>
+  <tr>
+    <td> INSTANCE_ID </td>
+    <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
+    <td> Ensure that the overall length of the chaosresult CR is still < 64 characters </td>
+    <td> </td>
+  </tr>
+
 </table>
 
 #### Sample ChaosEngine Manifest
@@ -163,7 +171,7 @@ subjects:
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
-  name:  nginx-network-chaos
+  name: nginx-network-chaos
   namespace: default
 spec: 
   # It can be delete/retain

@@ -106,6 +106,8 @@ Some of the possible reasons may include:
   helper-resources (i.e., some experiments in turn create other K8s resources like jobs/daemonsets/deployments etc..,
   For existing experiments, appropriate rbac manifests are already provided in chaos-charts/docs).  
 
-
-
+- The application's (AUT) unique label provided in the ChaosEngine is set only at the parent resource metadata but not 
+  propagated to the pod template spec. Note that the Operator uses this label to filter chaos candidates at the parent 
+  resource level (deployment/statefulset/daemonset) but the experiment pod uses this to pick application **pods** into 
+  which the chaos is injected. 
 

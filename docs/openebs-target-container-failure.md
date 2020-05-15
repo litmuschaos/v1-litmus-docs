@@ -25,7 +25,7 @@ sidebar_label: Target Container Failure
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `openebs-target-container-failure` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-target-container-failure)
+- Ensure that the `openebs-target-container-failure` experiment resource is available in the cluster. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.3.0?file=charts/openebs/openebs-target-container-failure/experiment.yaml)
 - The DATA_PERSISTENCE can be enabled by provide the application's info in a configmap volume so that the experiment can perform necessary checks. Currently, LitmusChaos supports data consistency checks only for MySQL and Busybox. 
     - For MYSQL data persistence check create a configmap as shown below in the application namespace (replace with actual credentials):
 
@@ -120,7 +120,7 @@ metadata:
     name: target-container-failure-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps","storage.k8s.io"]
-  resources: ["pods","jobs","pods/log","pods/exec","daemonsets","events","configmaps","secrets","persistentvolumeclaims","storageclasses","persistentvolumes","chaosengines","chaosexperiments","chaosresults"]
+  resources: ["pods","jobs","pods/log","pods/exec","events","configmaps","secrets","persistentvolumeclaims","storageclasses","persistentvolumes","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
@@ -142,8 +142,10 @@ subjects:
 ### Prepare ChaosEngine
 
 - Provide the application info in `spec.appinfo`
-- Override the experiment tunables if desired
+- Override the experiment tunables if desired in `experiments.spec.components.env`
 - Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
+- Provide the configMaps and secrets in `experiments.spec.components.configMaps/secrets`, For more info refer [Sample ChaosEngine](https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/sample_openebs_engine_with_data_persistency_enabled.yaml)
+- To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
 
 #### Supported Experiment Tunables
 
@@ -164,7 +166,7 @@ subjects:
     <td> LIB_IMAGE </td>
     <td> The chaos library image used to run the kill command </td>
     <td> Optional  </td>
-    <td> Defaults to `gaiaadm/pumba:0.4.8`. Supported: `{docker : gaiaadm/pumba:0.4.8, containerd: gprasath/crictl:ci}` </td>
+    <td> Defaults to `gaiaadm/pumba:0.6.5`. Supported: `{docker : gaiaadm/pumba:0.6.5, containerd: gprasath/crictl:ci}` </td>
   </tr>
   <tr>
     <td> CONTAINER_RUNTIME </td>
@@ -196,6 +198,13 @@ subjects:
     <td> Optional  </td>
     <td> Default value is disabled (empty/unset). It supports only `mysql` and `busybox`. Ensure configmap with app details are created </td>
   </tr>
+  <tr>
+    <td> INSTANCE_ID </td>
+    <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
+    <td> Optional  </td>
+    <td> Ensure that the overall length of the chaosresult CR is still < 64 characters </td>
+  </tr>
+
 </table>
 
 #### Sample ChaosEngine Manifest
@@ -229,8 +238,10 @@ spec:
           env:
             - name: TARGET_CONTAINER
               value: 'cstor-istgt'
+
             - name: APP_PVC
               value: 'demo-nginx-claim'   
+              
             - name: DEPLOY_TYPE
               value: 'deployment'        
 ```

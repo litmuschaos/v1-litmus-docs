@@ -33,7 +33,7 @@ sidebar_label: Broker Disk Failure
  
   Zookeeper uses this to construct a path in which kafka cluster data is stored. 
 
-- Ensure that the kafka-broker-disk failure experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/kafka/experiments/kafka-broker-disk-failure)
+- Ensure that the kafka-broker-disk failure experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.3.0?file=charts/kafka/kafka-broker-disk-failure/experiment.yaml)
 
 - Create a secret with the gcloud serviceaccount key (placed in a file `cloud_config.yml`) named `kafka-broker-disk-failure` in the namespace where the experiment CRs are created. This is necessary to perform the disk-detach steps from the litmus experiment container.
 
@@ -113,7 +113,8 @@ subjects:
 ### Prepare ChaosEngine
 
 - Provide the application info in `spec.appinfo`
-- Provide the experiment tunables. While many tunables have default values specified in the ChaosExperiment CR, some need to be explicitly supplied.
+- Provide the experiment tunables. While many tunables have default values specified in the ChaosExperiment CR, some need to be explicitly supplied in `experiments.spec.components.env`
+- To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
 
 #### Supported Experiment Tunables
 
@@ -121,7 +122,7 @@ subjects:
   <tr>
     <th> Parameter </th>
     <th> Description  </th>
-    <th> Type </th>
+    <th> Specify In ChaosEngine </th>
     <th> Notes </th>
   </tr>
   <tr>
@@ -129,7 +130,7 @@ subjects:
     <td> Namespace of Kafka Brokers </td>
     <td> Mandatory </td>
     <td> May be same as value for `spec.appinfo.appns` </td>
-  </tr>
+  </tr> 
   <tr>
     <td> KAFKA_LABEL </td>
     <td> Unique label of Kafka Brokers </td>
@@ -244,6 +245,13 @@ subjects:
     <td> Optional </td>
     <td> Defaults to 15s </td>
   </tr>
+  <tr>
+    <td> INSTANCE_ID </td>
+    <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
+    <td> Optional  </td>
+    <td> Ensure that the overall length of the chaosresult CR is still < 64 characters </td>
+  </tr>
+
 </table>
 
 #### Sample ChaosEngine Manifest

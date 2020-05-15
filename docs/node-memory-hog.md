@@ -23,7 +23,7 @@ sidebar_label: Node Memory Hog
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `node-memory-hog` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/charts/generic/experiments/node-memory-hog)
+- Ensure that the `node-memory-hog` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.3.0?file=charts/generic/node-memory-hog/experiment.yaml)
 - There should be administrative access to the platform on which the Kubernetes cluster is hosted, as the recovery of the affected node could be manual. For example, gcloud access to the GKE project
 
 ## Entry Criteria
@@ -81,7 +81,7 @@ rules:
   verbs: ["create","list","get","patch","update","delete"]
 - apiGroups: [""]
   resources: ["nodes"]
-  verbs : ["get","list"]
+  verbs: ["get","list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
@@ -103,7 +103,8 @@ subjects:
 
 - Provide the application info in `spec.appinfo`
 - Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
-- Override the experiment tunables if desired 
+- Override the experiment tunables if desired in `experiments.spec.components.env`
+- To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
 
 #### Supported Experiment Tunables
 
@@ -111,20 +112,20 @@ subjects:
   <tr>
     <th> Variables </th>
     <th> Description  </th>
-    <th> Type </th>
+    <th> Specify In ChaosEngine </th>
     <th> Notes </th>
-  </tr>
-  <tr>
-    <td> PLATFORM </td>
-    <td> The platform on which the chaos experiment will run </td>
-    <td> Mandatory </td>
-    <td> Defaults to GKE </td>
   </tr>
   <tr>
     <td> TOTAL_CHAOS_DURATION </td>
     <td> The time duration for chaos insertion (seconds) </td>
     <td> Optional </td>
     <td> Defaults to 120 </td>
+  </tr>
+   <tr>
+    <td> LIB  </td>
+    <td> The chaos lib used to inject the chaos </td>
+    <td> Optional </td>
+    <td> Defaults to `litmus` </td>
   </tr>
     <tr>
     <td> MEMORY_PERCENTAGE </td>
@@ -133,17 +134,18 @@ subjects:
     <td> Defaults to 90 </td>
   </tr>
   <tr>
-    <td> LIB  </td>
-    <td> The chaos lib used to inject the chaos </td>
-    <td> Optional  </td>
-    <td> Defaults to `litmus` </td>
-  </tr>
-  <tr>
     <td> RAMP_TIME </td>
     <td> Period to wait before and after injection of chaos in sec </td>
     <td> Optional  </td>
     <td> </td>
   </tr>
+  <tr>
+    <td> INSTANCE_ID </td>
+    <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
+    <td> Optional </td>
+    <td> Ensure that the overall length of the chaosresult CR is still < 64 characters </td>
+  </tr>
+
 </table>
 
 #### Sample ChaosEngine Manifest
@@ -182,16 +184,7 @@ spec:
             ## specify the size as percent of total available memory (in percentage %)
             ## default value 90%
             - name: MEMORY_PERCENTAGE
-              value: '90'   
-
-             # It supprts GKE and EKS Platform
-             # GKE is the default Platform
-            - name: PLATFORM
-              value: 'GKE'
-              
-            # chaos lib used to inject the chaos
-            - name: LIB
-              value: 'litmus'
+              value: '90'
 ```
 
 ### Create the ChaosEngine Resource

@@ -21,7 +21,7 @@ sidebar_label: Disk Loss
 
 ## Prerequisites
 -   Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
--   Ensure that the `disk-loss` experiment resource is available in the cluster by `kubectl get chaosexperiments` in the desired namespace. If not, install from  <a href="https://hub.litmuschaos.io/charts/generic/experiments/disk-loss" target="_blank">here</a>
+-   Ensure that the `disk-loss` experiment resource is available in the cluster by `kubectl get chaosexperiments` in the desired namespace. If not, install from  <a href="https://hub.litmuschaos.io/api/chaos/1.3.0?file=charts/generic/disk-loss/experiment.yaml" target="_blank">here</a>
 -   Ensure to create a Kubernetes secret having the gcloud/aws access configuration(key) in the namespace of `CHAOS_NAMESPACE`.
 -   There should be administrative access to the platform on which the cluster is hosted, as the recovery of the affected node could be manual. Example gcloud access to the project
 
@@ -111,7 +111,8 @@ subjects:
 
 -   Provide the application info in `spec.appinfo`
 -   Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
--   Override the experiment tunables if desired
+-   Override the experiment tunables if desired in `experiments.spec.components.env`
+- To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
 
 ### Supported Experiment Tunables for application
 
@@ -119,14 +120,8 @@ subjects:
   <tr>
     <th> Parameter </th>
     <th> Description  </th>
-    <th> Type </th>
+    <th> Specify In ChaosEngine </th>
     <th> Notes </th>
-  </tr>
-  <tr>
-    <td> CHAOS_NAMESPACE </td>
-    <td> This is a chaos namespace which will create all infra chaos resources in that namespace </td>
-    <td> Mandatory </td>
-    <td>  </td>
   </tr>
   <tr>
     <td> CLOUD_PLATFORM </td>
@@ -165,18 +160,6 @@ subjects:
     <td> Note: Use REGION_NAME for AWS </td>
   </tr>
   <tr>
-    <td> CHAOSENGINE </td>
-    <td> ChaosEngine CR name associated with the experiment instance </td>
-    <td> Mandatory </td>
-    <td>  </td>
-  </tr>
-  <tr>
-    <td> CHAOS_SERVICE_ACCOUNT </td>
-    <td> Service account used by the litmus </td>
-    <td> Mandatory </td>
-    <td>  </td>
-  </tr>
-  <tr>
     <td> TOTAL_CHAOS_DURATION </td>
     <td> The time duration for chaos insertion (sec) </td>
     <td> Optional </td>
@@ -189,23 +172,18 @@ subjects:
     <td>  </td>
   </tr>
   <tr>
-    <td> APP_NAMESPACE </td>
-    <td> Namespace in which application pods are deployed </td>
-    <td> Optional </td>
-    <td>  </td>
-  </tr>
-  <tr>
-    <td> APP_LABEL </td>
-    <td> Unique Labels in `key=value` format of application deployment </td>
-    <td> Optional </td>
-    <td>  </td>
-  </tr>
-  <tr>
     <td> RAMP_TIME </td>
     <td> Period to wait before injection of chaos in sec </td>
     <td> Optional  </td>
     <td> </td>
   </tr>
+  <tr>
+    <td> INSTANCE_ID </td>
+    <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
+    <td> Optional </td>
+    <td> Ensure that the overall length of the chaosresult CR is still < 64 characters </td>
+  </tr>
+
 </table>
 
 ## Sample ChaosEngine Manifest
@@ -248,10 +226,6 @@ spec:
             # set app_check to check application state
             - name: APP_CHECK
               value: 'true'
-
-            # This is a chaos namespace into which all infra chaos resources are created
-            - name: CHAOS_NAMESPACE
-              value: 'default'
 
             # GCP project ID
             - name: PROJECT_ID

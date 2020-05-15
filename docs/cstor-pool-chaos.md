@@ -23,7 +23,7 @@ sidebar_label: cStor Pool Chaos
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`).If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
-- Ensure that the `openebs-pool-pod-failure` experiment resource is available in the cluster by executing `kubectl get chaosexperiments -n openebs` in the openebs namespace. If not, install from [here](https://hub.litmuschaos.io/charts/openebs/experiments/openebs-pool-pod-failure)
+- Ensure that the `openebs-pool-pod-failure` experiment resource is available in the cluster by executing `kubectl get chaosexperiments -n openebs` in the openebs namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.3.0?file=charts/openebs/openebs-pool-pod-failure/experiment.yaml)
 
 ## Entry Criteria
 
@@ -99,7 +99,8 @@ subjects:
 ### Prepare ChaosEngine
 
 - Provide the cStor pool deployment info in `spec.appinfo`
-- Override the experiment tunables if desired
+- Override the experiment tunables if desired in `experiments.spec.components.env`
+- To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
 
 #### Supported Experiment Tunables
 
@@ -107,8 +108,14 @@ subjects:
   <tr>
     <th> Variables </th>
     <th> Description  </th>
-    <th> Type </th>
+    <th> Specify In ChaosEngine </th>
     <th> Notes </th>
+  </tr>
+  <tr>
+    <td> APP_PVC </td>
+    <td> Name of the application PVC </td>
+    <td> Mandatory </td>
+    <td> Please leave it blank, for this experiment</td>
   </tr>
   <tr>
     <td> OPENEBS_NS </td>
@@ -117,11 +124,12 @@ subjects:
     <td> Defaults to openebs </td>
   </tr>
   <tr>
-    <td> APP_PVC </td>
-    <td> Name of the application PVC </td>
-    <td> Optional </td>
-    <td> Please leave it blank, for this experiment</td>
+    <td> INSTANCE_ID </td>
+    <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
+    <td> Optional  </td>
+    <td> Ensure that the overall length of the chaosresult CR is still < 64 characters </td>
   </tr>
+
 </table>
 
 #### Sample ChaosEngine Manifest
