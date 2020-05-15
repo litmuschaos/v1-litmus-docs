@@ -34,7 +34,7 @@ Running chaos on your application involves the following steps:
 ###  Install Litmus
 
 ```
-kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-v1.3.0.yaml
+kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-v1.4.0.yaml
 ```
 
 The above command install all the CRDs, required service account configuration, and chaos-operator. Before you start running a chaos experiment, verify if Litmus is installed correctly.
@@ -113,7 +113,7 @@ The generic chaos experiments such as `pod-delete`,  `container-kill`,` pod-netw
 This is the first chart you are recommended to install. 
 
 ```
-kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.3.0?file=charts/generic/experiments.yaml -n nginx
+kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.4.0?file=charts/generic/experiments.yaml -n nginx
 ```
 
 Verify if the chaos experiments are installed.
@@ -265,7 +265,7 @@ kubectl describe chaosresult nginx-chaos-container-kill -n nginx
 You can uninstall Litmus by deleting the namespace.
 
 ```console
-kubectl delete -f https://litmuschaos.github.io/pages/litmus-operator-v1.3.0.yaml
+kubectl delete -f https://litmuschaos.github.io/pages/litmus-operator-v1.4.0.yaml
 ```
 
 ## More Chaos Experiments
