@@ -7,7 +7,7 @@ sidebar_label: Install Litmus
 
 ## Pre-requisites
 
-OpenShift 1.11 or later.
+OpenShift 3.11 or later.
 
 ## Getting Started
 
