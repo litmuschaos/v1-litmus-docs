@@ -62,3 +62,7 @@ spec:
               - name: FORCE
                 value: 'false'
 ```
+
+## Scheduler Demo
+
+- A sample recording of this experiment execution is provided [here](https://www.youtube.com/watch?v=2RIOFys9irc&list=UUa57PMqmz_j0wnteRa9nCaw&index=2).

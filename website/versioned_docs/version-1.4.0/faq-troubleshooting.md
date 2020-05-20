@@ -1,7 +1,8 @@
 ---
-id: faq-troubleshooting
+id: version-1.4.0-faq-troubleshooting
 title: Troubleshooting Litmus
 sidebar_label: Troubleshooting
+original_id: faq-troubleshooting
 ---
 ------
 
