@@ -1,7 +1,8 @@
 ---
-id: faq-general
-title: The What, Why & How of Litmus  
-sidebar_label: General  
+id: version-1.4.0-faq-general
+title: The What, Why & How of Litmus
+sidebar_label: General
+original_id: faq-general
 ---
 ------
 
