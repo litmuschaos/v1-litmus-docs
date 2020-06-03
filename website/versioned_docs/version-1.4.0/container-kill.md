@@ -24,7 +24,7 @@ original_id: container-kill
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `container-kill` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.3.0?file=charts/generic/container-kill/experiment.yaml)
+- Ensure that the `container-kill` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.4.1?file=charts/generic/container-kill/experiment.yaml)
 - Cluster should have docker runtime, if the chaos_lib is `pumba`. It should have containerd runtime in cluster, if the chaos_lib is `containerd`.
 
 ## Entry Criteria
@@ -38,13 +38,13 @@ original_id: container-kill
 ## Details
 
 - Pumba chaoslib details
-    - Kills one container in the specified application pod by sending SIGKILL termination signal to its docker socket (hence docker runtime is required)
+    - It can kill the multiple containers (can be tuned by KILL_COUNT env) in the specified application pod by sending SIGKILL termination signal to its docker socket (hence docker runtime is required)
     - Containers are killed using the `kill` command provided by [pumba](https://github.com/alexei-led/pumba)
-    - Pumba is run as a daemonset on all nodes in dry-run mode to begin with the `kill` command is issued during experiment execution via `kubectl exec`
+    - Pumba is run as a pod on the application node. It have ability to kill the application containers multiple times. Which can be varied by `TOTAL_CHAOS_DURATION` and `CHAOS_INTERVAL`.
 - Containerd chaoslib details
-    - Kills one container in the specified application pod by `crictl-chaos` Lib.
+    - It can kill the multiple containers in the specified application pod by `crictl-chaos` Lib.
     - Containers are killed using the `crictl stop` command.
-    - containerd-chaos is run as a daemonset on all nodes in dry-run mode to begin with the `stop` command is issued during experiment execution via `kubectl exec` 
+    - containerd-chaos is run as a pod on the application node. It have ability to kill the application containers multiple times. Which can be varied by `TOTAL_CHAOS_DURATION` and `CHAOS_INTERVAL`.
 - Tests deployment sanity (replica availability & uninterrupted service) and recovery workflow of the application
 - Good for testing recovery of pods having side-car containers
 
@@ -143,7 +143,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> The pumba/containerd image used to run the kill command </td>
     <td> Optional </td>
-    <td> Defaults to `gaiaadm/pumba:0.6.5`, for containerd runtime use `gprasath/crictl:ci`</td>
+    <td> Defaults to `gaiaadm/pumba:0.6.5`, for containerd runtime use `litmuschaos/container-killer:latest`</td>
   </tr>
   <tr>
     <td> LIB  </td>
@@ -156,6 +156,12 @@ subjects:
     <td> Period to wait before injection of chaos in sec </td>
     <td> Optional  </td>
     <td> </td>
+  </tr>
+  <tr>
+    <td> CONTAINER_PATH </td>
+    <td> Path of the containerd socket file </td>
+    <td> Optional  </td>
+    <td> Defaults to `/run/containerd/containerd.sock` </td>
   </tr>
   <tr>
     <td> INSTANCE_ID </td>
@@ -227,4 +233,4 @@ spec:
 
 ## Application Container Kill Demo 
 
-- A sample recording of this experiment execution is provided [here](https://youtu.be/XKyMNdVsKMo).
+- A sample recording of this experiment execution is provided [here](https://youtu.be/XKyMNdVsKMo)..
