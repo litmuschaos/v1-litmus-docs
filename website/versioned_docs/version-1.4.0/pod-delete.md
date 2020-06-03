@@ -24,7 +24,7 @@ original_id: pod-delete
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`).If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `pod-delete` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.3.0?file=charts/generic/pod-delete/experiment.yaml)
+- Ensure that the `pod-delete` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.4.1?file=charts/generic/pod-delete/experiment.yaml)
 
 ## Entry Criteria
 
@@ -38,7 +38,7 @@ original_id: pod-delete
 
 - Causes (forced/graceful) pod failure of specific/random replicas of an application resources
 - Tests deployment sanity (replica availability & uninterrupted service) and recovery workflow of the application
-- The pod delete by `Powerfulseal` is only supporting single pod failure (kill_count = 1)
+- The pod delete by `Powerfulseal` is only supporting single pod failure (kill_count = 1) 
 
 ## Integrations
 
@@ -181,6 +181,12 @@ subjects:
     <td> Application Pod failures type </td>
     <td> Optional  </td>
     <td> Default to `true`, With `terminationGracePeriodSeconds=0`  </td>
+  </tr>
+  <tr>
+    <td> LIB_IMAGE </td>
+    <td> Image of the helper pod </td>
+    <td> Optional  </td>
+    <td> Default to `litmuschaos/pod-deleter:latest` </td>
   </tr>
   <tr>
     <td> KILL_COUNT </td>
