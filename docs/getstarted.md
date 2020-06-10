@@ -1,4 +1,4 @@
----
+﻿---
 id: getstarted 
 title: Getting Started with Litmus
 sidebar_label: Introduction
@@ -69,6 +69,15 @@ Expected output:
 > chaosexperiments.litmuschaos.io         2019-10-02T08:45:26Z
 >
 > chaosresults.litmuschaos.io             2019-10-02T08:45:26Z
+
+
+
+
+
+
+
+
+
 
 - Verify if the chaos api resources are successfully created in the desired (application) namespace.
  
