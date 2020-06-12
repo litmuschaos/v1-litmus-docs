@@ -185,7 +185,7 @@ subjects:
     <td> LIB_IMAGE </td>
     <td> Image of the helper pod </td>
     <td> Optional  </td>
-    <td> Default to `litmuschaos/pod-deleter:latest` </td>
+    <td> Default to `litmuschaos/pod-delete-helper:latest` </td>
   </tr>
   <tr>
     <td> KILL_COUNT </td>
