@@ -37,7 +37,7 @@ This section describes the fields in the ChaosSchedule spec and the possible val
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>now</code> in the <code>spec.schedule</code> is a user defined flag to trigger type of schedule they want. Setting it to <code>true</code> ensures immediate formation of chaosengine.
+  <td>The <code>now</code> in the <code>spec.schedule</code> ensures immediate creation of chaosengine, i.e., injection of chaos.
 </tr>
 </table>
 
@@ -48,7 +48,7 @@ This section describes the fields in the ChaosSchedule spec and the possible val
 </tr>
 <tr>
   <th>Description</th>
-  <td>Time at which chaosengine is to be formed</td>
+  <td>Flag to specify execution timestamp at which chaos is injected, when the policy is <code>once</code>. The chaosengine is created exactly at this timestamp.</td>
 </tr>
 <tr>
   <th>Type</th>
@@ -64,7 +64,7 @@ This section describes the fields in the ChaosSchedule spec and the possible val
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>executionTime</code> in the spec specifies the exact time at which the chaosengine is to be formed</td>
+  <td><code>.spec.schedule.once</code> refers to a single-instance execution of chaos at a particular timestamp specified by <code>.spec.schedule.once.executionTime</code></td>
 </tr>
 </table>
 
@@ -75,7 +75,7 @@ This section describes the fields in the ChaosSchedule spec and the possible val
 </tr>
 <tr>
   <th>Description</th>
-  <td>Flag to specify start of the range of time within which chaosengine is to be formed</td>
+  <td>Flag to specify start timestamp of the range within which chaos is injected, when the policy is <code>repeat</code>. The chaosengine is not created before this timestamp.</td>
 </tr>
 <tr>
   <th>Type</th>
@@ -91,7 +91,7 @@ This section describes the fields in the ChaosSchedule spec and the possible val
 </tr>
 <tr>
   <th>Notes</th>
-  <td>When <code>startTime</code> is specified, ChaosEngine will not be formed before this time, no matter when it was created.</td>
+  <td>When <code>startTime</code> is specified against the policy <code>repeat</code>, ChaosEngine will not be formed before this time, no matter when it was created.</td>
 </tr>
 </table>
 
@@ -102,7 +102,7 @@ This section describes the fields in the ChaosSchedule spec and the possible val
 </tr>
 <tr>
   <th>Description</th>
-  <td>Flag to specify end of the range of time within which chaosengine is to be formed</td>
+  <td>Flag to specify end timestamp of the range within which chaos is injected, when the policy is <code>repeat</code>. The chaosengine is not created after this timestamp.</td>
 </tr>
 <tr>
   <th>Type</th>
@@ -118,7 +118,7 @@ This section describes the fields in the ChaosSchedule spec and the possible val
 </tr>
 <tr>
   <th>Notes</th>
-  <td>When <code>endTime</code> is specified, ChaosEngine will not be formed after this time.</td>
+  <td>When <code>endTime</code> is specified against the policy <code>repeat</code>, ChaosEngine will not be formed after this time.</td>
 </tr>
 </table>
 
