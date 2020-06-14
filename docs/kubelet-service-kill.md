@@ -15,8 +15,8 @@ sidebar_label: Kubelet Service Kill
   </tr>
   <tr>
     <td> Generic </td>
-    <td> Kill Kubelet Service of Application Node </td>
-    <td> GKE, EKS </td>
+    <td> Kills the kubelet service on the application node to check the resiliency. </td>
+    <td> GKE, EKS, Packet(Kubeadm), Minikube </td>
   </tr>
 </table>
 
@@ -27,16 +27,16 @@ sidebar_label: Kubelet Service Kill
 
 ## Entry Criteria
 
-- Application Node is healthy before chaos injection
+- Application pods should be healthy before chaos injection.
 
 ## Exit Criteria
 
-- Application Node should be healthy post chaos injection
+- Application pods and the node should be healthy post chaos injection.
 
 ## Details
 
 - This experiment Causes the application to become unreachable on account of node turning unschedulable (NotReady) due to kubelet service kill.
-- The kubelet service kill has been injected gracefully on a  node to make it unschedulable for a certain TOTAL_CHAOS_DURATION. The application node should be healthy once chaos is stopped and the services are reaccessable
+- The kubelet service has been stopped/killed on a node to make it unschedulable for a certain duration i.e `TOTAL_CHAOS_DURATION`. The application node should be healthy after the chaos injection and the services should be reaccessable.
 - The application implies services. Can be reframed as:
 Test application resiliency upon replica getting unreachable caused due to kubelet service down.
 
@@ -128,7 +128,7 @@ subjects:
   </tr>
   <tr>
     <td> RAMP_TIME </td>
-    <td> Period to wait before injection of chaos in sec </td>
+    <td> Period to wait before & after injection of chaos in sec </td>
     <td> Optional  </td>
     <td> </td>
   </tr>
