@@ -33,8 +33,10 @@ Running chaos on your application involves the following steps:
 
 ###  Install Litmus
 
+Apply the LitmusChaos Operator manifest:
+
 ```
-kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-v1.4.0.yaml
+kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-v1.5.0.yaml
 ```
 
 The above command install all the CRDs, required service account configuration, and chaos-operator. Before you start running a chaos experiment, verify if Litmus is installed correctly.
@@ -113,7 +115,7 @@ The generic chaos experiments such as `pod-delete`,  `container-kill`,` pod-netw
 This is the first chart you are recommended to install. 
 
 ```
-kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.4.0?file=charts/generic/experiments.yaml -n nginx
+kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.5.0?file=charts/generic/experiments.yaml -n nginx
 ```
 
 Verify if the chaos experiments are installed.
@@ -197,6 +199,8 @@ ChaosEngine connects the application instance to a Chaos Experiment. Copy the fo
 `chaosengine.yaml` and update the values of `applabel` , `appns`, `appkind` and `experiments` as per your choice. 
 Change the `chaosServiceAccount` to the name of service account created in above previous steps.
 
+<strong> NOTE:</strong> To learn more about the various fields in the ChaosEngine spec and their supported values, refer to [Constructing ChaosEngine](#chaosengine-concepts.md)
+
 [embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/container-kill/engine_nginx_getstarted.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
@@ -266,6 +270,7 @@ experiments:
 
 ### Run Chaos
 
+Apply the ChaosEngine manifest to trigger the experiment. 
 
 ```console
 kubectl apply -f chaosengine.yaml
@@ -273,7 +278,7 @@ kubectl apply -f chaosengine.yaml
 
 ### Observe Chaos results
 
-Describe the ChaosResult CR to know the status of each experiment. The ```spec.verdict``` is set to `Awaited` when the experiment is in progress, eventually changing to either `Pass` or `Fail`.
+Describe the ChaosResult CR to know the status of each experiment. The ```status.verdict``` is set to `Awaited` when the experiment is in progress, eventually changing to either `Pass` or `Fail`.
 
 <strong> NOTE:</strong>  ChaosResult CR name will be `<chaos-engine-name>-<chaos-experiment-name>`
 
@@ -283,15 +288,19 @@ kubectl describe chaosresult nginx-chaos-container-kill -n nginx
 
 ## Uninstallation
 
-You can uninstall Litmus by deleting the namespace.
+Firstly, delete any active ChaosEngines on the cluster, followed by the deletion of the Operator manifest. 
 
 ```console
-kubectl delete -f https://litmuschaos.github.io/pages/litmus-operator-v1.4.0.yaml
+kubectl delete -f https://litmuschaos.github.io/pages/litmus-operator-v1.5.0.yaml
 ```
+
+## Troubleshooting 
+
+For any issues experienced in running through the the aforementioned steps, refer to the [Troubleshooting](#faq-troubleshooting.md) section.
 
 ## More Chaos Experiments
 
-- For more details on supported chaos experiments and the steps to run them, refer the **Experiments** section.
+- For more details on supported chaos experiments and the steps to run them, refer the respective [Experiment](https://docs.litmuschaos.io/docs/chaoshub/#generic-chaos) docs.
 
 ## Join our community
 
