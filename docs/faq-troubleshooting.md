@@ -15,6 +15,8 @@ sidebar_label: Troubleshooting
   
 [Scheduler not forming chaosengines for type=repeat?](#scheduler-not-forming-chaosengines-for-type=repeat)
 
+[Litmus uninstallation is not successful and namespace is stuck in terminating state?](#litmus-uninstallation-is-not-successful-and-namespace-is-stuck-in-terminating-state)
+
 <hr>
 
 
@@ -116,5 +118,17 @@ Some of the possible reasons may include:
 ### Scheduler not forming chaosengines for type=repeat?
 
 If the chaosschedule has been created successfully created in the cluster and chaosengine is not being formed. The most common problem is that either start or end time has been wrongly specified. We should verify the times.
-We can identify that if this is the problem or not by changing type=now. If the chaosengine is formed successfully then the problem is with times, if chaosengine is still not formed, then the problem is with engineSpec. 
+We can identify that if this is the problem or not by changing type=now. If the chaosengine is formed successfully then the problem is with the specified time ranges, if chaosengine is still not formed, then the problem is with engineSpec. 
 Try to create a chaosengine with the same engineSpec.
+
+### Litmus uninstallation is not successful and namespace is stuck in terminating state?
+
+The Chaos Operator makes use of finalizers to ensure that the ChaosEngine is deleted only after chaos resources are removed. 
+It is possible, under some circumstances, that the ChaosEngine CRD deletion is unable to proceed due to the above reason which
+may manifest as namespace being stuck in terminating state. In such cases, ensure that the ChaosEngine is deleted successfully 
+(may necessitate removal of finalizer entry in the engine spec via a `kubectl edit` operation), which should complete 
+the uninstallation process. 
+
+If the namespace deletion remains stuck despite the above actions, follow the procedure described [here](https://medium.com/@clouddev.guru/how-to-fix-kubernetes-namespace-deleting-stuck-in-terminating-state-5ed75792647e) to complete the uninstallation. 
+
+ 
