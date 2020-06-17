@@ -199,7 +199,7 @@ ChaosEngine connects the application instance to a Chaos Experiment. Copy the fo
 `chaosengine.yaml` and update the values of `applabel` , `appns`, `appkind` and `experiments` as per your choice. 
 Change the `chaosServiceAccount` to the name of service account created in above previous steps.
 
-<strong> NOTE:</strong> To learn more about the various fields in the ChaosEngine spec and their supported values, refer to [Constructing ChaosEngine](#chaosengine-concepts.md)
+<strong> NOTE:</strong> To learn more about the various fields in the ChaosEngine spec and their supported values, refer to [Constructing ChaosEngine](https://docs.litmuschaos.io/docs/chaosengine/)
 
 [embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/container-kill/engine_nginx_getstarted.yaml yaml)
 ```yaml
@@ -296,7 +296,7 @@ kubectl delete -f https://litmuschaos.github.io/pages/litmus-operator-v1.5.0.yam
 
 ## Troubleshooting 
 
-For any issues experienced in running through the the aforementioned steps, refer to the [Troubleshooting](#faq-troubleshooting.md) section.
+For any issues experienced in running through the the aforementioned steps, refer to the [Troubleshooting](https://docs.litmuschaos.io/docs/faq-troubleshooting/) section.
 
 ## More Chaos Experiments
 
