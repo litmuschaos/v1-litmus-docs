@@ -241,6 +241,25 @@ spec:
 
   `watch -n 1 du -kh /var/lib/docker/containers/<container-id>`
 
+### Abort/Restart the Chaos Experiment
+
+- To stop the pod-delete experiment immediately, either delete the ChaosEngine resource or execute the following command:
+
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"stop"}}'`
+
+- To restart the experiment, either re-apply the ChaosEngine YAML or execute the following command:
+
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"active"}}'`
+
+**Notes:** 
+
+  - The abort will stop further fill of the local disk, but doesn't reclaim the used capacity. This is a manual operation
+    as of today. The auto-rollback, i.e., in this case reclaim of currently filled disk-space will be implemented in a future 
+    release
+
+  - However, upon graceful completion of the experiment (i.e.,un-aborted), the space is automatically reclaimed as the chaos 
+    impact is reverted. 
+
 ### Check Chaos Experiment Result
 
 - Check whether the application is resilient to the container kill, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.

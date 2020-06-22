@@ -197,6 +197,16 @@ spec:
 
   `watch kubectl top nodes`
 
+### Abort/Restart the Chaos Experiment
+
+- To stop the pod-delete experiment immediately, either delete the ChaosEngine resource or execute the following command:
+
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"stop"}}'`
+
+- To restart the experiment, either re-apply the ChaosEngine YAML or execute the following command:
+
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"active"}}'`
+
 ### Check Chaos Experiment Result
 
 - Check whether the application is resilient to the CPU hog, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
