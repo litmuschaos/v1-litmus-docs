@@ -1,5 +1,6 @@
 ---
-id: architecture 
+id: version-1.5.0-architecture
+original_id: architecture 
 title: Litmus Architecture
 sidebar_label: Architecture 
 ---
