@@ -180,6 +180,9 @@ spec:
 
   `kubectl apply -f chaosengine.yml`
 
+- If the chaos experiment is not executed, refer to the [troubleshooting](https://docs.litmuschaos.io/docs/faq-troubleshooting/) 
+  section to identify the root cause and fix the issues.
+
 ### Watch Chaos progress
 
 - Setting up a watch over the nodes getting not schedulable in the Kubernetes Cluster

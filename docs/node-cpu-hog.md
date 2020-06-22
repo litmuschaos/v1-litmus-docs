@@ -191,6 +191,9 @@ spec:
 
   `kubectl apply -f chaosengine.yml`
 
+- If the chaos experiment is not executed, refer to the [troubleshooting](https://docs.litmuschaos.io/docs/faq-troubleshooting/) 
+  section to identify the root cause and fix the issues.
+
 ### Watch Chaos progress
 
 - Setting up a watch of the CPU consumed by nodes in the Kubernetes Cluster
