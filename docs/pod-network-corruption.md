@@ -211,6 +211,9 @@ spec:
 
   `kubectl apply -f chaosengine.yml`
 
+- If the chaos experiment is not executed, refer to the [troubleshooting](https://docs.litmuschaos.io/docs/faq-troubleshooting/) 
+  section to identify the root cause and fix the issues.
+
 ### Watch Chaos progress
 
 - View impact of network packet corruption on the affected pod from the cluster nodes (alternate is to setup ping to a remote IP from inside the target pod) 

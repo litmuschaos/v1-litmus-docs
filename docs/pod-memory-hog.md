@@ -202,6 +202,9 @@ spec:
 
   `kubectl apply -f chaosengine.yml`
 
+- If the chaos experiment is not executed, refer to the [troubleshooting](https://docs.litmuschaos.io/docs/faq-troubleshooting/) 
+  section to identify the root cause and fix the issues.
+
 ### Watch Chaos progress
 
 - Set up a watch on the applications interacting/dependent on the affected pods and verify whether they are running

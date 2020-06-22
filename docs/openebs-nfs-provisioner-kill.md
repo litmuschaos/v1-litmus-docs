@@ -218,6 +218,9 @@ spec:
 
   `kubectl apply -f chaosengine.yml -n <application-namespace>`
 
+- If the chaos experiment is not executed, refer to the [troubleshooting](https://docs.litmuschaos.io/docs/faq-troubleshooting/) 
+  section to identify the root cause and fix the issues.
+
 ### Watch Chaos progress
 
 - View pod terminations by setting up a watch on the pods in the application namespace

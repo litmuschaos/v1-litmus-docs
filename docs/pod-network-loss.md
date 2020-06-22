@@ -216,6 +216,9 @@ spec:
 
   `kubectl apply -f chaosengine.yml`
 
+- If the chaos experiment is not executed, refer to the [troubleshooting](https://docs.litmuschaos.io/docs/faq-troubleshooting/) 
+  section to identify the root cause and fix the issues.
+
 ### Watch Chaos progress
 
 - View network latency by setting up a ping on the affected pod from the cluster nodes 
