@@ -1,4 +1,4 @@
- --
+---
 id: litmus-demo
 title: Chaos Engineering in a Microservices Environment
 sidebar_label: Litmus Demo
@@ -64,7 +64,8 @@ To get started with any of the above platforms we will follow the following step
 
   - Get the port of frontend deployment
 
-    ```kubectl get deploy front-end -n sock-shop -o jsonpath='{.spec.template.spec.containers[?(@.name == "front-end")].ports[0].containerPort}'
+    ```
+    kubectl get deploy front-end -n sock-shop -o jsonpath='{.spec.template.spec.containers[?(@.name == "front-end")].ports[0].containerPort}'
     ```
 
   - Perform port forwarding on the port obtained above
