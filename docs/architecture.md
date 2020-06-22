@@ -5,7 +5,7 @@ sidebar_label: Architecture
 ---
 <hr>
 
-<img src="/docs/assets/architecture.png" width="800">
+<img src="/docs/assets/litmus-schematic.png" width="800">
 
 **Chaos-Operator**
 
