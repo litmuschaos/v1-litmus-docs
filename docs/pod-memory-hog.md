@@ -219,4 +219,4 @@ spec:
 
 ## Pod Memory Hog Experiment Demo 
 
-- A sample recording of this experiment will be added very soon.
+- A sample recording of this experiment execution is provided [here](https://www.youtube.com/watch?v=HuAXg8W5Tzo)
