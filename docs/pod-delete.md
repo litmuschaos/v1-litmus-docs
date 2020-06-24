@@ -20,6 +20,12 @@ sidebar_label: Pod Delete
   </tr>
 </table>
 
+## Details
+
+- Causes (forced/graceful) pod failure of specific/random replicas of an application resources
+- Tests deployment sanity (replica availability & uninterrupted service) and recovery workflow of the application
+- The pod delete by `Powerfulseal` is only supporting single pod failure (kill_count = 1) 
+
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`).If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
@@ -32,12 +38,6 @@ sidebar_label: Pod Delete
 ## Exit Criteria
 
 - Application pods are healthy post chaos injection
-
-## Details
-
-- Causes (forced/graceful) pod failure of specific/random replicas of an application resources
-- Tests deployment sanity (replica availability & uninterrupted service) and recovery workflow of the application
-- The pod delete by `Powerfulseal` is only supporting single pod failure (kill_count = 1) 
 
 ## Integrations
 
