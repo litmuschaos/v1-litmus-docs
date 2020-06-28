@@ -130,6 +130,9 @@ const siteConfig = {
     diameter: 35,
     backgroundColor: 'gray',
   },
+
+  gaTrackingId: 'UA-155028077-2',
+  gaGtag: true,
 };
 
 module.exports = siteConfig;
