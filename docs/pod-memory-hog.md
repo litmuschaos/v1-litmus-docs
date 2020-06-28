@@ -37,7 +37,7 @@ sidebar_label: Pod Memory Hog
 ## Details
 
 - This experiment consumes the Memory resources on the application container on specified memory in megabytes.
-- It simulates conditions where app pods experience Memory spikes either due to expected/undesired processes thereby testing how the overall application stack behaves when this occurs. 
+- It simulates conditions where app pods experience Memory spikes either due to expected/undesired processes thereby testing how the overall application stack behaves when this occurs.
 
 
 ## Integrations
@@ -122,7 +122,7 @@ subjects:
     <td> MEMORY_CONSUMPTION </td>
     <td>  The amount of memory used of hogging a Kubernetes pod (megabytes)</td>
     <td> Optional  </td>
-    <td> Defaults to 500MB </td>
+    <td> Defaults to 500MB (Up to 2000MB)</td>
     <td> </td>
   </tr>
   <tr>
@@ -151,7 +151,7 @@ subjects:
   </tr>
 
 </table>
-                      
+
 #### Sample ChaosEngine Manifest
 
 [embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-memory-hog/engine.yaml yaml)
@@ -166,7 +166,7 @@ spec:
   annotationCheck: 'true'
   # It can be active/stop
   engineState: 'active'
-  #ex. values: ns1:name=percona,ns2:run=nginx 
+  #ex. values: ns1:name=percona,ns2:run=nginx
   auxiliaryAppInfo: ''
   appinfo:
     appns: 'default'
@@ -187,13 +187,13 @@ spec:
               value: 'nginx'
 
             # Enter the amount of memory in megabytes to be consumed by the application pod
-            # default: 500 (Megabytes) 
+            # default: 500 (Megabytes)
             - name: MEMORY_CONSUMPTION
               value: ''
 
             - name: TOTAL_CHAOS_DURATION
               value: '60' # in seconds
-            
+
 ```
 
 ### Create the ChaosEngine Resource
@@ -202,7 +202,7 @@ spec:
 
   `kubectl apply -f chaosengine.yml`
 
-- If the chaos experiment is not executed, refer to the [troubleshooting](https://docs.litmuschaos.io/docs/faq-troubleshooting/) 
+- If the chaos experiment is not executed, refer to the [troubleshooting](https://docs.litmuschaos.io/docs/faq-troubleshooting/)
   section to identify the root cause and fix the issues.
 
 ### Watch Chaos progress
@@ -217,6 +217,6 @@ spec:
 
   `kubectl describe chaosresult nginx-chaos-pod-memory-hog -n <application-namespace>`
 
-## Pod Memory Hog Experiment Demo 
+## Pod Memory Hog Experiment Demo
 
 - A sample recording of this experiment will be added very soon.
