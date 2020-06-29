@@ -107,7 +107,15 @@ class Footer extends React.Component {
             <p className="footerText">
               Litmus is an OSS licensed project <br /> as Apache License 2.0{' '}
               <br />
-              <br /> Founded by MayaData ❤️
+              <br /> Founded by{' '}
+              <a
+                href="https://mayadata.io/"
+                target="_"
+                style={{ display: 'inline', color: '#fff', fontWeight: 'bold' }}
+              >
+                MayaData{' '}
+              </a>
+              ❤️
             </p>
             <a
               className="github-button"
