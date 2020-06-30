@@ -12,7 +12,7 @@ Litmus provides a way to use any chaos library or a tool to inject chaos. The ch
 
 The `plugins` or `chaos-libraries` host the core logic to inject chaos. 
 
-These plugins are hosted at https://github.com/litmuschaos/litmus/tree/master/chaoslib
+These plugins are hosted at https://github.com/litmuschaos/litmus-ansible/tree/master/chaoslib
 
 Litmus project has integration into the following chaos-libraries.
 

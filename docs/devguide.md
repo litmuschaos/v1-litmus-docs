@@ -11,7 +11,7 @@ Below are some key points to remember before understanding how to write a new ch
 
 > Chaos Charts repository : https://github.com/litmuschaos/chaos-charts
 >
-> Litmusbooks repository : https://github.com/litmuschaos/litmus/tree/master/experiments
+> Litmusbooks repository : https://github.com/litmuschaos/litmus-ansible/tree/master/experiments
 >
 > Website rendering code repository: https://github.com/litmuschaos/charthub.litmuschaos.io
 
@@ -45,7 +45,7 @@ Here is an example chaos experiment CR for a [pod-delete](https://github.com/lit
 Litmus book is an `ansible` playbook that encompasses the logic of pre-checks, chaos-injection, post-checks, and result-updates. 
 Typically, these are accompanied by a Kubernetes job that can execute the respective playbook. 
 
-Here is an example of the litmus book for the [pod-delete](https://github.com/litmuschaos/litmus/tree/master/experiments/generic/pod_delete) experiment.
+Here is an example of the litmus book for the [pod-delete](https://github.com/litmuschaos/litmus-ansible/tree/master/experiments/generic/pod_delete) experiment.
 
 ### Chaos functions
 
@@ -55,7 +55,7 @@ The `ansible` business logic inside Litmus books can make use of readily availab
 
 ## Developing a Chaos Experiment
 
-A detailed how-to guide on developing chaos experiments is available [here](https://github.com/litmuschaos/litmus/tree/master/contribute/developer_guide)
+A detailed how-to guide on developing chaos experiments is available [here](https://github.com/litmuschaos/litmus-ansible/tree/master/contribute/developer_guide)
 
 <br>
 
