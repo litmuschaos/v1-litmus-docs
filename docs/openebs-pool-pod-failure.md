@@ -75,7 +75,7 @@ If the experiment tunable DATA_PERSISTENCE is set to 'enabled':
 ## Details
 
 - This scenario validates the behaviour of stateful applications and OpenEBS data plane upon forced termination of the target pod
-- Target pool pod are killed using the litmus chaoslib [random pod delete](https://github.com/litmuschaos/litmus/blob/master/chaoslib/litmus/kill_random_pod.yml)
+- Target pool pod are killed using the litmus chaoslib [random pod delete](https://github.com/litmuschaos/litmus-ansible/blob/master/chaoslib/litmus/kill_random_pod.yml)
 - Can test the stateful application's resilience to momentary iSCSI connection loss
 
 ## Integrations
