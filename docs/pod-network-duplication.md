@@ -1,7 +1,7 @@
 ---
-id: pod-network-loss
-title: Pod Network Loss Experiment Details
-sidebar_label: Pod Network Loss  
+id: pod-network-duplication
+title: Pod Network Duplication Experiment Details
+sidebar_label: Pod Network Duplication 
 ---
 ------
 
@@ -15,7 +15,7 @@ sidebar_label: Pod Network Loss
   </tr>
   <tr>
     <td> Generic </td>
-    <td> Inject Packet Loss Into Application Pod </td>
+    <td> Inject Packet Duplication Into Application Pod </td>
     <td> GKE, Packet(Kubeadm), EKS, Minikube > v1.6.0 </td>
   </tr>
 </table>
@@ -23,7 +23,7 @@ sidebar_label: Pod Network Loss
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `pod-network-loss` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.5.0?file=charts/generic/pod-network-loss/experiment.yaml)
+- Ensure that the `pod-network-duplication` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.5.1?file=charts/generic/pod-network-duplication/experiment.yaml)
   <div class="danger">
     <strong>NOTE</strong>: 
         Experiment is supported only on Docker Runtime. Support for containerd/CRIO runtimes will be added in subsequent releases.
@@ -39,9 +39,9 @@ sidebar_label: Pod Network Loss
 
 ## Details
 
-- Pod-network-loss injects chaos to disrupt network connectivity to kubernetes pods.
+- pod-network-duplication injects chaos to disrupt network connectivity to kubernetes pods.
 - The application pod should be healthy once chaos is stopped. Service-requests should be served despite chaos.
-- Causes loss of access to application replica by injecting packet loss using pumba
+- Causes Injection of network duplication on the specified container by starting a traffic control (tc) process with netem rules to add egress delays. It Can test the application's resilience to duplicate network.
 
 ## Steps to Execute the Chaos Experiment
 
@@ -55,23 +55,23 @@ sidebar_label: Pod Network Loss
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-network-loss/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-network-duplication/rbac.yaml yaml)
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: pod-network-loss-sa
+  name: pod-network-duplication-sa
   namespace: default
   labels:
-    name: pod-network-loss-sa
+    name: pod-network-duplication-sa
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: Role
 metadata:
-  name: pod-network-loss-sa
+  name: pod-network-duplication-sa
   namespace: default
   labels:
-    name: pod-network-loss-sa
+    name: pod-network-duplication-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch"]
   resources: ["pods","jobs","events","pods/log","chaosengines","chaosexperiments","chaosresults"]
@@ -80,19 +80,20 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
 metadata:
-  name: pod-network-loss-sa
+  name: pod-network-duplication-sa
   namespace: default
   labels:
-    name: pod-network-loss-sa
+    name: pod-network-duplication-sa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: pod-network-loss-sa
+  name: pod-network-duplication-sa
 subjects:
 - kind: ServiceAccount
-  name: pod-network-loss-sa
+  name: pod-network-duplication-sa
   namespace: default
 ```
+
 
 ### Prepare ChaosEngine
 
@@ -117,13 +118,13 @@ subjects:
   </tr>
   <tr>
     <td> TARGET_CONTAINER  </td>
-    <td> Name of container which is subjected to network loss </td>
-    <td> Mandatory </td>
-     <td> </td>
+    <td> Name of container which is subjected to network latency </td>
+    <td> Optional </td>
+     <td> By default it will take the first container of the target application pod </td>
   </tr>
   <tr>
-    <td> NETWORK_PACKET_LOSS_PERCENTAGE </td>
-    <td> The packet loss in percentage </td>
+    <td> NETWORK_PACKET_DUPLICATION_PERCENTAGE </td>
+    <td> The packet duplication in percentage </td>
     <td> Optional </td>
     <td> Default to 100 percentage </td>
   </tr>
@@ -131,7 +132,7 @@ subjects:
     <td> TOTAL_CHAOS_DURATION </td>
     <td> The time duration for chaos insertion (seconds) </td>
     <td> Optional </td>
-    <td> Default (60000ms) </td>
+    <td> Default (60s) </td>
   </tr>
   <tr>
     <td> LIB </td>
@@ -162,7 +163,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-network-loss/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-network-duplication/engine.yaml yaml)
 ```yaml
 # chaosengine.yaml
 apiVersion: litmuschaos.io/v1alpha1
@@ -185,15 +186,14 @@ spec:
     # FYI, To see app label, apply kubectl get pods --show-labels
     applabel: 'app=nginx'
     appkind: 'deployment'
-  chaosServiceAccount: pod-network-loss-sa 
+  chaosServiceAccount: pod-network-duplication-sa 
   experiments:
-    - name: pod-network-loss
+    - name: pod-network-duplication
       spec:
         components:
           env:
-            #Container name where chaos has to be injected              
-            - name: TARGET_CONTAINER
-              value: 'nginx' 
+            - name: TOTAL_CHAOS_DURATION
+              value: '60' # in seconds
 
             - name: LIB_IMAGE
               value: 'gaiaadm/pumba:0.6.5'
@@ -202,13 +202,14 @@ spec:
             - name: NETWORK_INTERFACE
               value: 'eth0'    
 
-            - name: NETWORK_PACKET_LOSS_PERCENTAGE
+            - name: NETWORK_PACKET_DUPLICATION_PERCENTAGE
               value: '100'
-
-            - name: TOTAL_CHAOS_DURATION
-              value: '60' # in seconds
             
+            #If not provided it will take the first container of the target pod
+            - name: TARGET_CONTAINER
+              value: ''
 ```
+
 
 ### Create the ChaosEngine Resource
 
@@ -227,11 +228,11 @@ spec:
 
 ### Check Chaos Experiment Result
 
-- Check whether the application is resilient to the Pod Network Loss, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
+- Check whether the application is resilient to the Pod Network Duplication, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
   `kubectl describe chaosresult <ChaosEngine-Name>-<ChaosExperiment-Name> -n <application-namespace>`
 
 
-## Application Pod Network Loss Demo 
+## Application Pod Network Duplication Demo 
 
-- A sample recording of this experiment execution is provided [here](https://youtu.be/jqvYy-nWc_I).
+- A sample recording of this experiment execution will be provided very soon.
