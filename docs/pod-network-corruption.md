@@ -40,7 +40,7 @@ sidebar_label: Pod Network Corruption
 
 ## Details
 
-- The application pod should be healthy once chaos is stopped. Service-requests should be         served despite chaos.
+- The application pod should be healthy once chaos is stopped. Service-requests should be served despite chaos.
 - Injects packet corruption on the specified container by starting a traffic control (tc) process with netem rules to add egress packet corruption
 - Corruption is injected via pumba library with command pumba netem corruption by passing the relevant network interface, packet-corruption-percentage, chaos duration and regex filter for container name
 - Can test the application's resilience to lossy/flaky network
@@ -120,7 +120,7 @@ subjects:
   </tr>
   <tr>
     <td> TARGET_CONTAINER  </td>
-    <td> Name of container which is subjected to network latency </td>
+    <td> Name of container which is subjected to network corruption </td>
     <td> Mandatory </td>
     <td> </td>
   </tr>
@@ -150,7 +150,7 @@ subjects:
   </tr>
   <tr>
     <td> RAMP_TIME </td>
-    <td> Period to wait before injection of chaos in sec </td>
+    <td> Period to wait before and after injection of chaos in sec </td>
     <td> Optional  </td>
     <td> </td>
   </tr>

@@ -136,7 +136,7 @@ subjects:
   </tr>
   <tr>
     <td> RAMP_TIME </td>
-    <td> Period to wait before injection of chaos in sec </td>
+    <td> Period to wait before and after injection of chaos in sec </td>
     <td> Optional  </td>
     <td> </td>
   </tr>

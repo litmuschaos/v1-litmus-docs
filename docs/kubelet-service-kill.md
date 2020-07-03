@@ -63,17 +63,17 @@ Test application resiliency upon replica getting unreachable caused due to kubel
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: kubelet-service-kill
+  name: kubelet-service-kill-sa
   namespace: default
   labels:
-    name: kubelet-service-kill
+    name: kubelet-service-kill-sa
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
-  name: kubelet-service-kill
+  name: kubelet-service-kill-sa
   labels:
-    name: kubelet-service-kill
+    name: kubelet-service-kill-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps"]
   resources: ["pods","jobs","pods/log","events","chaosengines","chaosexperiments","chaosresults"]
@@ -85,16 +85,16 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
-  name: kubelet-service-kill
+  name: kubelet-service-kill-sa
   labels:
-    name: kubelet-service-kill
+    name: kubelet-service-kill-sa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: kubelet-service-kill
+  name: kubelet-service-kill-sa
 subjects:
 - kind: ServiceAccount
-  name: kubelet-service-kill
+  name: kubelet-service-kill-sa
   namespace: default
 ```
 

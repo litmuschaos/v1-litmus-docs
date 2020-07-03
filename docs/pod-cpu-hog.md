@@ -132,15 +132,15 @@ subjects:
     <td> Optional </td>
     <td> Defaults to 60s </td>
   </tr>
-  <tr>
-    <td> LIB_IMAGE </td>
-    <td> The image used by the litmus (only supported) lib </td>
+    <tr>
+    <td> PODS_AFFECTED_PERC </td>
+    <td> The Percentage of total pods to target  </td>
     <td> Optional </td>
-    <td> Defaults to `litmuschaos/app-cpu-stress:latest`  </td>
-  </tr>
+    <td> Defaults to 0% (corresponds to 1 replica) </td>
+  </tr> 
   <tr>
     <td> RAMP_TIME </td>
-    <td> Period to wait before injection of chaos in sec </td>
+    <td> Period to wait before and after injection of chaos in sec </td>
     <td> Optional  </td>
     <td> </td>
   </tr>
