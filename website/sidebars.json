@@ -86,8 +86,11 @@
         ]
       }
     ],
-    "Scheduler (alpha)": [
+    "Scheduler": [
       "scheduling"
+    ],
+    "Chaos Workflow": [
+      "chaos-workflows"
     ],
     "Litmus FAQs": [
       "faq-general",
