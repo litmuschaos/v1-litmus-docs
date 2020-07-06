@@ -216,6 +216,6 @@ spec:
 
   `kubectl describe chaosresult nginx-chaos-node-cpu-hog -n <application-namespace>`
 
-## Node Cpu Hog Demo [TODO]
+## Node Cpu Hog Experiment Demo
 
-- A sample recording of this experiment execution is provided here.
+- A sample recording of this experiment execution is provided [here](https://www.youtube.com/watch?v=jpJttftsZqA).

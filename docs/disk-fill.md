@@ -269,6 +269,6 @@ spec:
 
   `kubectl describe chaosresult nginx-chaos-disk-fill -n <application-namespace>`
 
-### Disk Fill Experiment Demo [TODO]
+### Disk Fill Experiment Demo
 
-- A sample recording of this experiment execution is provided here.
+- A sample recording of this experiment execution is provided [here](https://www.youtube.com/watch?v=pbok737rUPQ).

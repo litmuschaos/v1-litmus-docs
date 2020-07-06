@@ -218,6 +218,6 @@ spec:
 
   `kubectl describe chaosresult nginx-chaos-node-memory-hog -n <application-namespace>`
 
-## Node Memory Hog Demo [TODO]
+## Node Memory Hog Experiment Demo
 
-- A sample recording of this experiment execution is provided here.
+- A sample recording of this experiment execution is provided [here](https://www.youtube.com/watch?v=ECxlWgQ8F5w).
