@@ -40,10 +40,10 @@ sidebar_label: Pod Network Latency
 
 ## Details
 
-- The application pod should be healthy once chaos is stopped. Service-requests should be         served despite chaos.
+- The application pod should be healthy once chaos is stopped. Service-requests should be served despite chaos.
 - Causes flaky access to application replica by injecting network delay using pumba.
-- Injects latency on the specified container by starting a traffic control (tc) process with      netem rules to add egress delays
-- Latency is injected via pumba library with command pumba netem delay by passing the relevant    network interface, latency, chaos duration and regex filter for container name
+- Injects latency on the specified container by starting a traffic control (tc) process with netem rules to add egress delays
+- Latency is injected via pumba library with command pumba netem delay by passing the relevant network interface, latency, chaos duration and regex filter for container name
 - Can test the application's resilience to lossy/flaky network
 
 ## Steps to Execute the Chaos Experiment
@@ -151,7 +151,7 @@ subjects:
   </tr>
   <tr>
     <td> RAMP_TIME </td>
-    <td> Period to wait before injection of chaos in sec </td>
+    <td> Period to wait before and after injection of chaos in sec </td>
     <td> Optional  </td>
     <td> </td>
   </tr>

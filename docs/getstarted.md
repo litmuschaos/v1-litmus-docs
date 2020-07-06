@@ -288,11 +288,21 @@ kubectl describe chaosresult nginx-chaos-container-kill -n nginx
 
 ## Uninstallation
 
-Firstly, delete any active ChaosEngines on the cluster, followed by the deletion of the Operator manifest. 
+Firstly, delete any active ChaosEngines on the cluster, followed by the deletion of the Operator manifest.
+
+```console
+kubectl delete chaosengine --all -n <namespace>
+```
 
 ```console
 kubectl delete -f https://litmuschaos.github.io/pages/litmus-operator-v1.5.0.yaml
 ```
+
+**NOTE** 
+
+- Ensure that the chaosengine resources are deleted before removal of the chaos-operator deployment via operator manifest. 
+  Failure to do so can cause the uninstall operation to be "stuck". Refer to the these [steps](https://docs.litmuschaos.io/docs/faq-troubleshooting/#litmus-uninstallation-is-not-successful-and-namespace-is-stuck-in-terminating-state) to resolve this condition and 
+  complete the uninstall. 
 
 ## Troubleshooting 
 

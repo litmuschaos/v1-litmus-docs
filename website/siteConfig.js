@@ -38,25 +38,25 @@ const siteConfig = {
 
   // Algolia for searchbar
   algolia: {
-    apiKey: "7af78d639b7342f7da38c5c5c51993b0",
-    indexName: "litmuschaos",
-    debug: true
+    apiKey: '7af78d639b7342f7da38c5c5c51993b0',
+    indexName: 'litmuschaos',
+    debug: true,
   },
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    {href: "https://github.com/litmuschaos/litmus", label: "GitHub"},
-    {href: "https://kubernetes.slack.com/messages/CNXNB0ZTN", label: "Slack"},
-    {href: 'https://hub.litmuschaos.io/', label: 'Chaos Hub'},
-    {search: true}
+    { href: 'https://github.com/litmuschaos/litmus', label: 'GitHub' },
+    { href: 'https://kubernetes.slack.com/messages/CNXNB0ZTN', label: 'Slack' },
+    { href: 'https://hub.litmuschaos.io/', label: 'Chaos Hub' },
+    { search: true },
   ],
 
   // If you have users set above, you add it here:
   users,
 
   /* path to images for header/footer */
-  headerIcon: 'img/litmus-logo-dark-bg-icon.svg',
-  footerIcon: 'img/litmus-logo-dark-bg-stacked.svg',
+  footerIcon: 'img/litmus-logo-dark-bg-icon.svg',
+  headerIcon: 'img/litmus-icon.svg',
   favicon: 'img/favicon.ico',
 
   /* Colors for website */
@@ -80,7 +80,8 @@ const siteConfig = {
   */
 
   // This copyright info is used in /core/Footer.js and blog RSS/Atom feeds.
-  copyright: `Copyright © ${new Date().getFullYear()} MayaData Inc.`,
+  copyright1: `Copyright © ${new Date().getFullYear()} LitmusChaos Authors. All rights reserved.`,
+  copyright2: `Copyright © ${new Date().getFullYear()} The Linux Foundation. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page.`,
 
   highlight: {
     // Highlight.js theme to use for syntax highlighting in code blocks.
@@ -91,12 +92,10 @@ const siteConfig = {
   scripts: [
     'https://buttons.github.io/buttons.js',
     'https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js',
-    '/js/code-blocks-buttons.js'
+    '/js/code-blocks-buttons.js',
   ],
 
-  stylesheets: [
-    '/css/code-blocks-buttons.css'
-  ],
+  stylesheets: ['/css/code-blocks-buttons.css'],
 
   // On page navigation for the current documentation page.
   onPageNav: 'separate',
@@ -130,6 +129,9 @@ const siteConfig = {
     diameter: 35,
     backgroundColor: 'gray',
   },
+
+  gaTrackingId: 'UA-155028077-2',
+  gaGtag: true,
 };
 
 module.exports = siteConfig;

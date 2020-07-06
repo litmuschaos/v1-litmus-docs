@@ -123,12 +123,22 @@ Try to create a chaosengine with the same engineSpec.
 
 ### Litmus uninstallation is not successful and namespace is stuck in terminating state?
 
-The Chaos Operator makes use of finalizers to ensure that the ChaosEngine is deleted only after chaos resources are removed. 
-It is possible, under some circumstances, that the ChaosEngine CRD deletion is unable to proceed due to the above reason which
-may manifest as namespace being stuck in terminating state. In such cases, ensure that the ChaosEngine is deleted successfully 
-(may necessitate removal of finalizer entry in the engine spec via a `kubectl edit` operation), which should complete 
-the uninstallation process. 
+Under typical operating conditions, the Chaos Operator makes use of finalizers to ensure that the ChaosEngine is deleted 
+only after chaos resources (chaos-runner, experiment pod, any other helper pods) are removed. 
 
-If the namespace deletion remains stuck despite the above actions, follow the procedure described [here](https://medium.com/@clouddev.guru/how-to-fix-kubernetes-namespace-deleting-stuck-in-terminating-state-5ed75792647e) to complete the uninstallation. 
+When uninstalling Litmus via the operator manifest (which contains the namespace, operator, crd specifictions in a single YAML) 
+without deleting the existing chaosengine resources first, the chaos operator deployment may get deleted before the CRD removal 
+is attempted. Since the stale chaosengines have the finalizer present on them, their deletion (triggered by the CRD delete) and 
+by consequence, the deletion of the chaosengine CRD itself is "stuck". 
+
+In such cases, manually remove the finalizer entries on the stale chaosengines to facilitate their successful delete. To do this, 
+run:
+
+ `kubectl edit chaosengine <chaosengine-name> -n <namespace>` and remove the finalizer entry `chaosengine.litmuschaos.io/finalizer`
+
+Repeat this on all the stale chaosengine CRs to remove the CRDs successfully & complete uninstallation process.
+
+If however, the "litmus"namespace deletion remains stuck despite the above actions, follow the procedure described 
+[here](https://success.docker.com/article/kubernetes-namespace-stuck-in-terminating) to complete the uninstallation. 
 
  

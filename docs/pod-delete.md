@@ -37,7 +37,7 @@ sidebar_label: Pod Delete
 
 - Causes (forced/graceful) pod failure of specific/random replicas of an application resources
 - Tests deployment sanity (replica availability & uninterrupted service) and recovery workflow of the application
-- The pod delete by `Powerfulseal` is only supporting single pod failure (kill_count = 1) 
+- The pod delete by `Powerfulseal` is only supporting single pod failure (kill_count = 1).
 
 ## Integrations
 
@@ -173,7 +173,7 @@ subjects:
     <td> LIB </td>
     <td> The chaos lib used to inject the chaos </td>
     <td> Optional  </td>
-    <td> Defaults to `litmus`. Supported: `litmus`, `powerfulseal` </td>
+    <td> Defaults to `litmus`. Supported: `litmus`, `powerfulseal`. In case of powerfulseal use the <a href="https://github.com/litmuschaos/chaos-charts/blob/master/charts/generic/pod-delete/powerfulseal_experiment.yaml">powerfulseal </a>experiment CR. </td>
   </tr>
   <tr>
     <td> FORCE  </td>
@@ -195,7 +195,7 @@ subjects:
   </tr>
   <tr>
     <td> RAMP_TIME </td>
-    <td> Period to wait before injection of chaos in sec </td>
+    <td> Period to wait before and after injection of chaos in sec </td>
     <td> Optional  </td>
     <td> </td>
   </tr>
