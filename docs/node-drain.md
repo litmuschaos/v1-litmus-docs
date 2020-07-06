@@ -204,6 +204,6 @@ spec:
 
   `kubectl describe chaosresult nginx-chaos-node-drain -n <application-namespace>`
 
-## Node Drain Experiment Demo [TODO]
+## Node Drain Experiment Demo
 
-- A sample recording of this experiment execution is provided here.   
+- A sample recording of this experiment execution is provided [here](https://www.youtube.com/watch?v=LQVCZUQ4-ok).
