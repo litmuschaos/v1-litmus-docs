@@ -42,7 +42,8 @@
           "node-memory-hog",
           "node-drain",
           "kubelet-service-kill",
-          "pod-network-duplication"
+          "pod-network-duplication",
+          "node-taint"
         ]
       },
       {
