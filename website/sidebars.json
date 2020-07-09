@@ -23,6 +23,12 @@
       "ids" : [
         "openshift-litmus"
       ]
+    },{
+      "type": "subcategory",
+      "label": "Rancher",
+      "ids" : [
+        "rancher-litmus"
+      ]
     }],
     "Experiments": [
       {
