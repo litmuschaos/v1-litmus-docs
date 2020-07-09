@@ -17,13 +17,22 @@
       "chaosengine",
       "chaosschedule"
     ],
-    "Platforms": [{
-      "type": "subcategory",
-      "label": "OpenShift",
-      "ids" : [
-        "openshift-litmus"
-      ]
-    }],
+    "Platforms": [
+      {
+        "type": "subcategory",
+        "label": "OpenShift",
+        "ids" : [
+          "openshift-litmus"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "Rancher",
+        "ids" : [
+          "rancher-litmus"
+        ]
+      }
+    ],
     "Experiments": [
       {
         "type": "subcategory",
