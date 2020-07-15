@@ -23,7 +23,7 @@ sidebar_label: Container Kill
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `container-kill` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.5.0?file=charts/generic/container-kill/experiment.yaml)
+- Ensure that the `container-kill` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.6.0?file=charts/generic/container-kill/experiment.yaml)
 - Cluster should have docker runtime, if the chaos_lib is `pumba`. It should have containerd runtime in cluster, if the chaos_lib is `containerd`.
 
 ## Entry Criteria
