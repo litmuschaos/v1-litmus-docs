@@ -42,6 +42,7 @@ sidebar_label: Node Taint
 
 - This experiment taint the node where application pod is running and verifies if it is scheduled on another available node.
 - In the end of experiment it remove the taints from the specified node so that it can be utilised in future.
+- After experiment ends, you may manually uncordon the specified node so that it can be utilised in future.
 
 ## Integrations
 
@@ -214,6 +215,13 @@ spec:
 - Check whether the application is resilient to the node taint, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
   `kubectl describe chaosresult nginx-chaos-node-taint -n <application-namespace>`
+
+## Post Chaos Steps
+
+- In the beginning of experiment, we cordon the node so that chaos-pod won't schedule on the same node to which we are going to taint because for some taint with `NoExecute` effect the pods may get scheduled to other nodes(restarted). 
+After experiment ends you can manually uncordon the application node so that it can be utilised in future.
+
+  `kubectl uncordon <node-name>`
 
 ## Node Taint Experiment Demo [TODO]
 

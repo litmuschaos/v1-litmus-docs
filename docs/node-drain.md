@@ -40,7 +40,7 @@ sidebar_label: Node Drain
 ## Details
 
 - This experiment drains the node where application pod is running and verifies if it is scheduled on another available node.
-- In the end of experiment it uncordons the specified node so that it can be utilised in future.
+- In the end of experiment it does an uncordon of the specified node so that it can be utilised in future.
 
 ## Integrations
 
@@ -203,6 +203,12 @@ spec:
 - Check whether the application is resilient to the node drain, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
   `kubectl describe chaosresult nginx-chaos-node-drain -n <application-namespace>`
+
+## Post Chaos Steps
+
+- In the beginning of experiment, we cordon the node so that chaos-pod won't schedule on the same node to which we are going to drained. The experiment itself uncordon the node in it's remedy/cleanup section. In case, experiment fails you can manually uncordon the application node using following commands:
+
+  `kubectl uncordon <node-name>`
 
 ## Node Drain Experiment Demo
 
