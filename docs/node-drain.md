@@ -40,7 +40,7 @@ sidebar_label: Node Drain
 ## Details
 
 - This experiment drains the node where application pod is running and verifies if it is scheduled on another available node.
-- In the end of experiment it uncordon the specified node so that it can be utilised in future.
+- In the end of experiment it does an uncordon of the specified node so that it can be utilised in future.
 
 ## Integrations
 
