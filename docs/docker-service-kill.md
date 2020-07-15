@@ -24,6 +24,10 @@ sidebar_label: Docker Service Kill
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `docker-service-kill` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.6.0?file=charts/generic/docker-service-kill/experiment.yaml)
+- Ensure that the node on which application pod is running should be cordoned before execution of the chaos experiment (before applying the chaosengine manifest) to ensure that the litmus experiment runner pods are not scheduled on it / subjected to eviction. This can be achieved with the following steps: 
+
+  - Get node names against the applications pods: `kubectl get pods -o wide`
+  - Cordon the node `kubectl cordon <nodename>`
 
 ## Entry Criteria
 
@@ -39,6 +43,7 @@ sidebar_label: Docker Service Kill
 - The docker service has been stopped/killed on a node to make it unschedulable for a certain duration i.e `TOTAL_CHAOS_DURATION`. The application node should be healthy after the chaos injection and the services should be reaccessable.
 - The application implies services. Can be reframed as:
 Test application resiliency upon replica getting unreachable caused due to docker service down.
+- After experiment ends, you may manually uncordon the specified node so that it can be utilised in future use `kubectl uncordon <node-name>`.
 
 ## Integrations
 
@@ -192,6 +197,13 @@ spec:
 - Check whether the application is resilient after the docker service kill, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
   `kubectl describe chaosresult nginx-chaos-docker-service-kill -n <application-namespace>`
+
+## Post Chaos Steps
+
+- In the beginning of experiment, we cordon the node so that chaos-pod won't schedule on the same node (to which we are going kill the docker service) to ensure that the chaos pod will not scheduled on it / subjected to eviction
+After experiment ends you can manually uncordon the application node so that it can be utilised in future.
+
+  `kubectl uncordon <node-name>`
 
 ## Docker Service Kill Demo [TODO]
 

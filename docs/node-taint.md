@@ -84,7 +84,7 @@ rules:
   verbs: ["create","list","get","patch","update","delete"]
 - apiGroups: [""]
   resources: ["nodes"]
-  verbs: ["patch","get","list"]
+  verbs: ["patch","get","list","update"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
@@ -218,7 +218,7 @@ spec:
 
 ## Post Chaos Steps
 
-- In the beginning of experiment, we cordon the node so that chaos-pod won't schedule on the same node to which we are going to taint because for some taint with `NoExecute` effect the pods may get scheduled to other nodes(restarted). 
+- In the beginning of experiment, we cordon the node so that chaos-pod won't schedule on the same node (to which we are going to taint) because for some taint with `NoExecute` effect the pods may get scheduled to other nodes(restarted). 
 After experiment ends you can manually uncordon the application node so that it can be utilised in future.
 
   `kubectl uncordon <node-name>`
