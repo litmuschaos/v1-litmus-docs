@@ -28,7 +28,7 @@ sidebar_label: Pool Network Loss
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 
-- Ensure that the `openebs-pool-network-loss` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the specificed namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.5.0?file=charts/openebs/openebs-pool-network-loss/experiment.yaml)
+- Ensure that the `openebs-pool-network-loss` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the specificed namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.6.0?file=charts/openebs/openebs-pool-network-loss/experiment.yaml)
 
 - The DATA_PERSISTENCE can be enabled by provide the application's info in a configmap volume so that the experiment can perform necessary checks. Currently, LitmusChaos supports data consistency checks only for `MySQL` and `Busybox`.
 
