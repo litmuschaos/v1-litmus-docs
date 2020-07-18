@@ -16,7 +16,7 @@ sidebar_label: Node Drain
   <tr>
     <td> Generic </td>
     <td> Drain the node where application pod is scheduled. </td>
-    <td> GKE, AWS, Packet(Kubeadm), Konvoy(AWS), EKS </td>
+    <td> GKE, AWS, Packet(Kubeadm), Konvoy(AWS), EKS, AKS </td>
   </tr>
 </table>
 

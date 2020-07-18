@@ -16,7 +16,7 @@ sidebar_label: Pod Memory Hog
   <tr>
      <td> Generic </td>
     <td> Consume memory resources on the application container</td>
-    <td> GKE, Packet(Kubeadm), Minikube, EKS  </td>
+    <td> GKE, Packet(Kubeadm), Minikube, EKS, AKS  </td>
   </tr>
 </table>
 

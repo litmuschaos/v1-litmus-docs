@@ -16,7 +16,7 @@ sidebar_label: Docker Service Kill
   <tr>
     <td> Generic </td>
     <td> Kills the docker service on the application node to check the resiliency. </td>
-    <td> GKE </td>
+    <td> GKE, AKS </td>
   </tr>
 </table>
 
