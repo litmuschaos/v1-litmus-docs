@@ -16,7 +16,7 @@ sidebar_label: Node Taint
   <tr>
     <td> Generic </td>
     <td> Taint the node where application pod is scheduled. </td>
-    <td> GKE, AWS, Packet(Kubeadm), Konvoy(AWS), EKS </td>
+    <td> GKE, AWS, Packet(Kubeadm), Konvoy(AWS), EKS, AKS </td>
   </tr>
 </table>
 

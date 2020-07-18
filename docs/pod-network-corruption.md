@@ -16,7 +16,7 @@ sidebar_label: Pod Network Corruption
   <tr>
     <td> Generic </td>
     <td> Inject Network Packet Corruption Into Application Pod </td>
-    <td> GKE, Packet(Kubeadm), EKS, Minikube > v1.6.0 </td>
+    <td> GKE, Packet(Kubeadm), EKS, Minikube > v1.6.0, AKS </td>
   </tr>
 </table>
 

@@ -16,7 +16,7 @@ sidebar_label: Node CPU Hog
   <tr>
     <td> Generic </td>
     <td> Exhaust CPU resources on the Kubernetes Node </td>
-    <td> GKE, EKS </td>
+    <td> GKE, EKS, AKS </td>
   </tr>
 </table>
 
