@@ -162,6 +162,12 @@ subjects:
     <td> PVC can use OpenEBS cStor storage class </td>
   </tr>
   <tr>
+    <td> TC_IMAGE </td>
+    <td> Image used for traffic control in linux </td>
+    <td> Optional  </td>
+    <td> default value is `gaiadocker/iproute2` </td>
+  </tr>
+  <tr>
     <td> LIB_IMAGE </td>
     <td> The chaos library image used to inject the latency </td>
     <td> Optional  </td>

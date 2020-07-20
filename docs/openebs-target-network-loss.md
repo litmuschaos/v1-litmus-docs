@@ -161,6 +161,12 @@ subjects:
     <td> PVC may use either OpenEBS Jiva/cStor storage class </td>
   </tr>
   <tr>
+    <td> TC_IMAGE </td>
+    <td> Image used for traffic control in linux </td>
+    <td> Optional  </td>
+    <td> default value is `gaiadocker/iproute2` </td>
+  </tr>
+  <tr>
     <td> LIB_IMAGE </td>
     <td> chaos library image used to inject the network loss </td>
     <td> Optional  </td>
