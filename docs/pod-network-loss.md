@@ -140,6 +140,12 @@ subjects:
     <td> only `pumba` supported currently </td>
   </tr>
   <tr>
+    <td> TC_IMAGE </td>
+    <td> Image used for traffic control in linux </td>
+    <td> Optional  </td>
+    <td> default value is `gaiadocker/iproute2` </td>
+  </tr>
+  <tr>
     <td> LIB_IMAGE  </td>
     <td> The pumba image used to run the kill command </td>
     <td> Optional  </td>

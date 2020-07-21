@@ -191,6 +191,12 @@ subjects:
     <td> Defaults to `deployment`. Supported: `deployment`, `statefulset` </td>
   </tr>
   <tr>
+    <td> TC_IMAGE </td>
+    <td> Image used for traffic control in linux </td>
+    <td> Optional  </td>
+    <td> default value is `gaiadocker/iproute2` </td>
+  </tr>
+  <tr>
     <td> NETWORK_DELAY </td>
     <td> Egress delay injected into the target container </td>
     <td> Optional  </td>
