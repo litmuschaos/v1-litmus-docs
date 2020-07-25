@@ -6,16 +6,16 @@ original_id: admin-mode
 ---
 ------
 
-###  What is Adminstator Mode? 
+###  What is Adminstator Mode?
 
-Admin mode is one of the ways the chaos orchestration is set up in Litmus, wherein all chaos resources (i.e., install time resources like the operator, chaosexperiment CRs, chaosServiceAccount/rbac and runtime resources like chaosengine, chaos-runner, experiment jobs & chaosresults) are setup in a single admin namespace (typically, litmus). In other words, centralized administration of chaos. 
+Admin mode is one of the ways the chaos orchestration is set up in Litmus, wherein all chaos resources (i.e., install time resources like the operator, chaosexperiment CRs, chaosServiceAccount/rbac and runtime resources like chaosengine, chaos-runner, experiment jobs & chaosresults) are setup in a single admin namespace (typically, litmus). In other words, centralized administration of chaos.
 This feature is aimed at making the SRE/Cluster Admins life easier by doing away with setting up chaos pre-requisites on a per namespace basis (which may be more relevant in an autonomous/self-service cluster sharing model in dev environments).
-This mode typically needs a "wider" & "stronger" ClusterRole, albeit one that is still just a superset of the individual experiment permissions. In this mode, the applications in their respective namespaces are subjected to chaos while the chaos job runs elsewhere, i.e., admin namespace. 
+This mode typically needs a "wider" & "stronger" ClusterRole, albeit one that is still just a superset of the individual experiment permissions. In this mode, the applications in their respective namespaces are subjected to chaos while the chaos job runs elsewhere, i.e., admin namespace.
 
 ### How to use Adminstator Mode?
 
 In order to use Admin Mode, you just have to create a ServiceAccount in the *admin* or so called *chaos* namespace (`litmus` itself can be used), which is tied to a ClusterRole that has the permissions to perform operations on Kubernetes resources involved in the selected experiments across namespaces.
-Provide this ServiceAccount in ChaosEngine's .spec.chaosServiceAccount. 
+Provide this ServiceAccount in ChaosEngine's .spec.chaosServiceAccount.
 
 ### Example
 
@@ -27,11 +27,11 @@ Provide this ServiceAccount in ChaosEngine's .spec.chaosServiceAccount.
 kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.6.0?file=charts/generic/pod-delete/experiment.yaml -n litmus
 ```
 
-#### Prepare RBAC Manifest 
+#### Prepare RBAC Manifest
 
 Here is an RBAC definition, which in essence is a superset of individual experiments RBAC that has the permissions to run all chaos experiments across different namespaces.
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-admin-rbac.yaml)
+[embedmd]:# (https://litmuschaos.github.io/litmus/litmus-admin-rbac.yaml)
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
@@ -73,7 +73,7 @@ subjects:
 ```
 
 
-#### Prepare ChaosEngine 
+#### Prepare ChaosEngine
 
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
@@ -108,7 +108,7 @@ spec:
             # set chaos interval (in sec) as desired
             - name: CHAOS_INTERVAL
               value: '10'
-              
+
             # pod failures without '--force' & default terminationGracePeriodSeconds
             - name: FORCE
               value: 'false'
@@ -120,7 +120,7 @@ spec:
 
   `kubectl apply -f chaosengine.yml`
 
-### Watch Chaos Engine 
+### Watch Chaos Engine
 
 - Describe Chaos Engine for chaos steps.
 

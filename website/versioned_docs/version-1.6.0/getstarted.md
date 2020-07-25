@@ -37,14 +37,14 @@ Running chaos on your application involves the following steps:
 Apply the LitmusChaos Operator manifest:
 
 ```
-kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-v1.6.0.yaml
+kubectl apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.6.0.yaml
 ```
 
 The above command install all the CRDs, required service account configuration, and chaos-operator. Before you start running a chaos experiment, verify if Litmus is installed correctly.
 
 **Verify your installation**
 
-- Verify if the chaos operator is running 
+- Verify if the chaos operator is running
 
 ```
 kubectl get pods -n litmus
@@ -74,14 +74,14 @@ Expected output:
 > chaosresults.litmuschaos.io             2019-10-02T08:45:26Z
 
 - Verify if the chaos api resources are successfully created in the desired (application) namespace.
- 
+
   *Note*: Sometimes, it can take a few seconds for the resources to be available post the CRD installation
 
 ```
 kubectl api-resources | grep chaos
 ```
 
-Expected output: 
+Expected output:
 
 > chaosengines							    litmuschaos.io 			     true	  ChaosEngine
 >
@@ -89,31 +89,31 @@ Expected output:
 >
 > chaosresults                                                      litmuschaos.io                           true         ChaosResult
 
- 
 
-**NOTE**: 
 
-- In this guide, we shall describe the steps to inject container-kill chaos on an nginx application already deployed in the 
-nginx namespace. It is a mandatory requirement to ensure that the chaos custom resources (chaosexperiment and chaosengine) 
-and the experiment specific serviceaccount are created in the same namespace (typically, the same as the namespace of the 
-application under test (AUT), in this case nginx). This is done to ensure that the developers/users of the experiment isolate 
-the chaos to their respective work-namespaces in shared environments. 
+**NOTE**:
 
-- In all subsequent steps, please follow these instructions by replacing the nginx namespace and labels with that of your 
+- In this guide, we shall describe the steps to inject container-kill chaos on an nginx application already deployed in the
+nginx namespace. It is a mandatory requirement to ensure that the chaos custom resources (chaosexperiment and chaosengine)
+and the experiment specific serviceaccount are created in the same namespace (typically, the same as the namespace of the
+application under test (AUT), in this case nginx). This is done to ensure that the developers/users of the experiment isolate
+the chaos to their respective work-namespaces in shared environments.
+
+- In all subsequent steps, please follow these instructions by replacing the nginx namespace and labels with that of your
 application.
 
-- The chaos operator collects some usage metrics (operator installation count & experiment run count) via a google analytics 
+- The chaos operator collects some usage metrics (operator installation count & experiment run count) via a google analytics
   hook. This is done in order to gather chaos trends that will help us to improve the project. However, if you would like to
-  prevent the collection of the same or are operating in an airgapped environment, you can disable it using the procedure 
+  prevent the collection of the same or are operating in an airgapped environment, you can disable it using the procedure
   suggested [here](https://docs.litmuschaos.io/docs/faq-general/#does-litmus-track-any-usage-metrics-on-the-test-clusters).
 
 ### Install Chaos Experiments
 
-Chaos experiments contain the actual chaos details. These experiments are installed on your cluster as Kubernetes CRs. 
-The Chaos Experiments are grouped as Chaos Charts and are published on <a href=" https://hub.litmuschaos.io" target="_blank">Chaos Hub</a>. 
+Chaos experiments contain the actual chaos details. These experiments are installed on your cluster as Kubernetes CRs.
+The Chaos Experiments are grouped as Chaos Charts and are published on <a href=" https://hub.litmuschaos.io" target="_blank">Chaos Hub</a>.
 
-The generic chaos experiments such as `pod-delete`,  `container-kill`,` pod-network-latency` are available under Generic Chaos Chart. 
-This is the first chart you are recommended to install. 
+The generic chaos experiments such as `pod-delete`,  `container-kill`,` pod-network-latency` are available under Generic Chaos Chart.
+This is the first chart you are recommended to install.
 
 ```
 kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.6.0?file=charts/generic/experiments.yaml -n nginx
@@ -127,14 +127,14 @@ kubectl get chaosexperiments -n nginx
 
 ### Setup Service Account
 
-A service account should be created to allow chaosengine to run experiments in your application namespace. Copy the following 
-into a `rbac.yaml` manifest and run `kubectl apply -f rbac.yaml` to create one such account on the nginx namespace. This serviceaccount 
+A service account should be created to allow chaosengine to run experiments in your application namespace. Copy the following
+into a `rbac.yaml` manifest and run `kubectl apply -f rbac.yaml` to create one such account on the nginx namespace. This serviceaccount
 has just enough permissions needed to run the container-kill chaos experiment.
 
-**NOTE**: 
+**NOTE**:
 
-- For rbac samples corresponding to other experiments such as, say, pod-delete, please refer the respective experiment folder in 
-the [chaos-charts](https://github.com/litmuschaos/chaos-charts/tree/master/charts/generic/pod-delete) repository.  
+- For rbac samples corresponding to other experiments such as, say, pod-delete, please refer the respective experiment folder in
+the [chaos-charts](https://github.com/litmuschaos/chaos-charts/tree/master/charts/generic/pod-delete) repository.
 
 
 [embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/container-kill/rbac_nginx_getstarted.yaml yaml)
@@ -180,24 +180,24 @@ subjects:
 
 ### Annotate your application
 
-Your application has to be annotated with `litmuschaos.io/chaos="true"`. As a security measure, and also as a means 
-to reduce blast radius the chaos operator checks for this annotation before invoking chaos experiment(s) on the application. 
+Your application has to be annotated with `litmuschaos.io/chaos="true"`. As a security measure, and also as a means
+to reduce blast radius the chaos operator checks for this annotation before invoking chaos experiment(s) on the application.
 Replace `nginx` with the name of your deployment.
 
 <div class="danger">
-<strong>NOTE</strong>: 
+<strong>NOTE</strong>:
 Litmus supports chaos on deployments, statefulsets & daemonsets. This example refers to a nginx deploymemt. In case
-of other types, please use the appropriate resource/resource-name convention (say, `sts/kafka` or `ds/node-device-manager`, for example).  
+of other types, please use the appropriate resource/resource-name convention (say, `sts/kafka` or `ds/node-device-manager`, for example).
 </div>
 
 ```console
 kubectl annotate deploy/nginx litmuschaos.io/chaos="true" -n nginx
 ```
 
-### Prepare ChaosEngine 
+### Prepare ChaosEngine
 
-ChaosEngine connects the application instance to a Chaos Experiment. Copy the following YAML snippet into a file called 
-`chaosengine.yaml` and update the values of `applabel` , `appns`, `appkind` and `experiments` as per your choice. 
+ChaosEngine connects the application instance to a Chaos Experiment. Copy the following YAML snippet into a file called
+`chaosengine.yaml` and update the values of `applabel` , `appns`, `appkind` and `experiments` as per your choice.
 Change the `chaosServiceAccount` to the name of service account created in above previous steps.
 
 <strong> NOTE:</strong> To learn more about the various fields in the ChaosEngine spec and their supported values, refer to [Constructing ChaosEngine](https://docs.litmuschaos.io/docs/chaosengine/)
@@ -214,7 +214,7 @@ spec:
   annotationCheck: 'true'
   # It can be active/stop
   engineState: 'active'
-  #ex. values: ns1:name=percona,ns2:run=nginx 
+  #ex. values: ns1:name=percona,ns2:run=nginx
   auxiliaryAppInfo: ''
   appinfo:
     appns: 'nginx'
@@ -223,7 +223,7 @@ spec:
   chaosServiceAccount: container-kill-sa
   monitoring: false
   # It can be delete/retain
-  jobCleanUpPolicy: 'delete' 
+  jobCleanUpPolicy: 'delete'
   experiments:
     - name: container-kill
       spec:
@@ -242,10 +242,10 @@ spec:
               value: '20'
 
             # For containerd image use: litmuschaos/container-kill-helper:latest
-            - name: LIB_IMAGE  
-              value: 'gaiaadm/pumba:0.6.5' 
+            - name: LIB_IMAGE
+              value: 'gaiaadm/pumba:0.6.5'
 
-            # It supports pumba and containerd 
+            # It supports pumba and containerd
             - name: LIB
               value: 'pumba'
 ```
@@ -254,7 +254,7 @@ spec:
 
 From LitmusChaos v1.1.0, the default environment variable values in chaosexperiments can be overridden by specifying
 them in the chaosengine under `experiments.<experiment_name>.spec.components.env` with the desired value. In the
-example below, the TARGET_CONTAINER is being set to a desired value based on the application instance. 
+example below, the TARGET_CONTAINER is being set to a desired value based on the application instance.
 
 ```console
 ...
@@ -271,7 +271,7 @@ experiments:
 
 ### Run Chaos
 
-Apply the ChaosEngine manifest to trigger the experiment. 
+Apply the ChaosEngine manifest to trigger the experiment.
 
 ```console
 kubectl apply -f chaosengine.yaml
@@ -296,16 +296,16 @@ kubectl delete chaosengine --all -n <namespace>
 ```
 
 ```console
-kubectl delete -f https://litmuschaos.github.io/pages/litmus-operator-v1.6.0.yaml
+kubectl delete -f https://litmuschaos.github.io/litmus/litmus-operator-v1.6.0.yaml
 ```
 
-**NOTE** 
+**NOTE**
 
-- Ensure that the chaosengine resources are deleted before removal of the chaos-operator deployment via operator manifest. 
-  Failure to do so can cause the uninstall operation to be "stuck". Refer to the these [steps](https://docs.litmuschaos.io/docs/faq-troubleshooting/#litmus-uninstallation-is-not-successful-and-namespace-is-stuck-in-terminating-state) to resolve this condition and 
-  complete the uninstall. 
+- Ensure that the chaosengine resources are deleted before removal of the chaos-operator deployment via operator manifest.
+  Failure to do so can cause the uninstall operation to be "stuck". Refer to the these [steps](https://docs.litmuschaos.io/docs/faq-troubleshooting/#litmus-uninstallation-is-not-successful-and-namespace-is-stuck-in-terminating-state) to resolve this condition and
+  complete the uninstall.
 
-## Troubleshooting 
+## Troubleshooting
 
 For any issues experienced in running through the the aforementioned steps, refer to the [Troubleshooting](https://docs.litmuschaos.io/docs/faq-troubleshooting/) section.
 

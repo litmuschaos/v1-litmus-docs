@@ -34,14 +34,14 @@ Running chaos on your application involves the following steps:
 ###  Install Litmus
 
 ```
-oc apply -f https://litmuschaos.github.io/pages/litmus-operator-v1.6.0.yaml
+oc apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.6.0.yaml
 ```
 
 The above command install all the CRDs, required service account configuration, and chaos-operator. Before you start running a chaos experiment, verify if Litmus is installed correctly.
 
 **Verify your installation**
 
-- Verify if the chaos operator is running 
+- Verify if the chaos operator is running
 
 ```
 oc get pods -n litmus
@@ -71,14 +71,14 @@ Expected output:
 > chaosresults.litmuschaos.io             2020-05-14T011:22:46Z
 
 - Verify if the chaos api resources are successfully created in the desired (application) namespace.
- 
+
   *Note*: Sometimes, it can take a few seconds for the resources to be available post the CRD installation
 
 ```
 oc api-resources | grep chaos
 ```
 
-Expected output: 
+Expected output:
 
 > chaosengines							    litmuschaos.io 			     true	  ChaosEngine
 >
@@ -86,26 +86,26 @@ Expected output:
 >
 > chaosresults                                                      litmuschaos.io                           true         ChaosResult
 
- 
 
-**NOTE**: 
 
-- In this guide, we shall describe the steps to inject container-kill chaos on an nginx application already deployed in the 
-nginx namespace. It is a mandatory requirement to ensure that the chaos custom resources (chaosexperiment and chaosengine) 
-and the experiment specific serviceaccount are created in the same namespace (typically, the same as the namespace of the 
-application under test (AUT), in this case nginx). This is done to ensure that the developers/users of the experiment isolate 
-the chaos to their respective work-namespaces in shared environments. 
+**NOTE**:
 
-- In all subsequent steps, please follow these instructions by replacing the nginx namespace and labels with that of your 
+- In this guide, we shall describe the steps to inject container-kill chaos on an nginx application already deployed in the
+nginx namespace. It is a mandatory requirement to ensure that the chaos custom resources (chaosexperiment and chaosengine)
+and the experiment specific serviceaccount are created in the same namespace (typically, the same as the namespace of the
+application under test (AUT), in this case nginx). This is done to ensure that the developers/users of the experiment isolate
+the chaos to their respective work-namespaces in shared environments.
+
+- In all subsequent steps, please follow these instructions by replacing the nginx namespace and labels with that of your
 application.
 
 ### Install Chaos Experiments
 
-Chaos experiments contain the actual chaos details. These experiments are installed on your cluster as OpenShift CRs. 
-The Chaos Experiments are grouped as Chaos Charts and are published on <a href=" https://hub.litmuschaos.io" target="_blank">Chaos Hub</a>. 
+Chaos experiments contain the actual chaos details. These experiments are installed on your cluster as OpenShift CRs.
+The Chaos Experiments are grouped as Chaos Charts and are published on <a href=" https://hub.litmuschaos.io" target="_blank">Chaos Hub</a>.
 
-The generic chaos experiments such as `pod-delete`,  `container-kill`,` pod-network-latency` are available under Generic Chaos Chart. 
-This is the first chart you are recommended to install. 
+The generic chaos experiments such as `pod-delete`,  `container-kill`,` pod-network-latency` are available under Generic Chaos Chart.
+This is the first chart you are recommended to install.
 
 ```
 oc apply -f https://hub.litmuschaos.io/api/chaos/1.6.0?file=charts/generic/experiments.yaml -n nginx
@@ -119,14 +119,13 @@ oc get chaosexperiments -n nginx
 
 ### Setup Service Account
 
-A service account should be created to allow chaosengine to run experiments in your application namespace. Copy the following 
-into a `rbac.yaml` manifest and run `oc apply -f rbac.yaml` to create one such account on the nginx namespace. This serviceaccount 
+A service account should be created to allow chaosengine to run experiments in your application namespace. Copy the following
+into a `rbac.yaml` manifest and run `oc apply -f rbac.yaml` to create one such account on the nginx namespace. This serviceaccount
 has just enough permissions needed to run the container-kill chaos experiment.
 
-**NOTE**: 
+**NOTE**:
 
-- For rbac samples corresponding to other experiments such as, say, pod-delete, please refer the respective experiment folder in 
-the [chaos-charts](https://github.com/litmuschaos/chaos-charts/tree/master/charts/generic/pod-delete) repository.  
+- For rbac samples corresponding to other experiments such as, say, pod-delete, please refer the respective experiment folder in the [chaos-charts](https://github.com/litmuschaos/chaos-charts/tree/master/charts/generic/pod-delete) repository.
 
 
 [embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/container-kill/rbac_nginx_getstarted.yaml)
@@ -172,24 +171,24 @@ subjects:
 
 ### Annotate your application
 
-Your application has to be annotated with `litmuschaos.io/chaos="true"`. As a security measure, and also as a means 
-to reduce blast radius the chaos operator checks for this annotation before invoking chaos experiment(s) on the application. 
+Your application has to be annotated with `litmuschaos.io/chaos="true"`. As a security measure, and also as a means
+to reduce blast radius the chaos operator checks for this annotation before invoking chaos experiment(s) on the application.
 Replace `nginx` with the name of your deployment.
 
 <div class="danger">
-<strong>NOTE</strong>: 
+<strong>NOTE</strong>:
 Litmus supports chaos on deployments, statefulsets & daemonsets. This example refers to a nginx deploymemt. In case
-of other types, please use the appropriate resource/resource-name convention (say, `sts/kafka` or `ds/node-device-manager`, for example).  
+of other types, please use the appropriate resource/resource-name convention (say, `sts/kafka` or `ds/node-device-manager`, for example).
 </div>
 
 ```console
 oc annotate deploy/nginx litmuschaos.io/chaos="true" -n nginx
 ```
 
-### Prepare ChaosEngine 
+### Prepare ChaosEngine
 
-ChaosEngine connects the application instance to a Chaos Experiment. Copy the following YAML snippet into a file called 
-`chaosengine.yaml` and update the values of `applabel` , `appns`, `appkind` and `experiments` as per your choice. 
+ChaosEngine connects the application instance to a Chaos Experiment. Copy the following YAML snippet into a file called
+`chaosengine.yaml` and update the values of `applabel` , `appns`, `appkind` and `experiments` as per your choice.
 Change the `chaosServiceAccount` to the name of service account created in above previous steps.
 
 
@@ -208,7 +207,7 @@ spec:
     appkind: 'deploymentconfig'
   chaosServiceAccount: container-kill-sa
   # use retain to keep the job for debug
-  jobCleanUpPolicy: 'delete' 
+  jobCleanUpPolicy: 'delete'
   experiments:
     - name: container-kill
       spec:
@@ -260,7 +259,7 @@ oc describe chaosresult nginx-chaos-container-kill -n nginx
 You can uninstall Litmus by deleting the namespace.
 
 ```console
-oc delete -f https://litmuschaos.github.io/pages/litmus-operator-v1.6.0.yaml
+oc delete -f https://litmuschaos.github.io/litmus/litmus-operator-v1.6.0.yaml
 ```
 
 ## More Chaos Experiments

@@ -66,14 +66,14 @@ namespaces. Ensure that you have the right permission to be able to create the s
 - Apply the LitmusChaos Operator manifest:
 
   ```
-  kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-v1.6.0.yaml
+  kubectl apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.6.0.yaml
   ```
 
 - Install the litmus-admin service account to be used by the chaos-operator while executing the experiment (this example
   uses the [admin-mode](https://docs.litmuschaos.io/docs/next/admin-mode/) of chaos execution)
 
   ```
-  kubectl apply -f https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-admin-rbac.yaml
+  kubectl apply -f https://litmuschaos.github.io/litmus/litmus-admin-rbac.yaml
   ```
 
 - Install the pod-delete chaos experiment
@@ -82,9 +82,9 @@ namespaces. Ensure that you have the right permission to be able to create the s
   kubectl apply -f https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/pod-delete/experiment.yaml -n litmus
   ```
 
-- Create the service account and associated RBAC, which will be used by the Argo workflow controller to execute the 
-  actions specified in the workflow. In our case, this corresponds to the launch of the Nginx benchmark job and creating 
-  the chaosengine to trigger the pod-delete chaos action. In our example, we place it in the namespace where the litmus 
+- Create the service account and associated RBAC, which will be used by the Argo workflow controller to execute the
+  actions specified in the workflow. In our case, this corresponds to the launch of the Nginx benchmark job and creating
+  the chaosengine to trigger the pod-delete chaos action. In our example, we place it in the namespace where the litmus
   chaos resources reside, i.e., litmus.
 
   ```
@@ -96,7 +96,7 @@ namespaces. Ensure that you have the right permission to be able to create the s
 - Applying the workflow manifest performs the following actions in parallel:
 
   - Starts an Nginx benchmark job for the specified duration (300s)
-  - Triggers a random pod-kill of the Nginx replica by creating the chaosengine CR. 
+  - Triggers a random pod-kill of the Nginx replica by creating the chaosengine CR.
   - Cleans up after chaos.
 
   ```
@@ -105,10 +105,8 @@ namespaces. Ensure that you have the right permission to be able to create the s
 
 ### Visualize the Chaos Workflow
 
-You can visualize the progress of the chaos workflow via the Argo UI. Convert the argo-server service to type NodePort & 
-view the dashboard at `https://<node-ip>:<nodeport>`
+You can visualize the progress of the chaos workflow via the Argo UI. Convert the argo-server service to type NodePort & view the dashboard at `https://<node-ip>:<nodeport>`
 
 ```
 kubectl patch svc argo-server -n argo -p '{"spec": {"type": "NodePort"}}'
 ```
-
