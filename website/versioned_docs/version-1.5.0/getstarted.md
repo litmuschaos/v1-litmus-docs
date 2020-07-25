@@ -37,7 +37,7 @@ Running chaos on your application involves the following steps:
 Apply the LitmusChaos Operator manifest:
 
 ```
-kubectl apply -f https://litmuschaos.github.io/pages/litmus-operator-v1.5.0.yaml
+kubectl apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.5.0.yaml
 ```
 
 The above command install all the CRDs, required service account configuration, and chaos-operator. Before you start running a chaos experiment, verify if Litmus is installed correctly.
@@ -292,7 +292,7 @@ kubectl describe chaosresult nginx-chaos-container-kill -n nginx
 Firstly, delete any active ChaosEngines on the cluster, followed by the deletion of the Operator manifest. 
 
 ```console
-kubectl delete -f https://litmuschaos.github.io/pages/litmus-operator-v1.5.0.yaml
+kubectl delete -f https://litmuschaos.github.io/litmus/litmus-operator-v1.5.0.yaml
 ```
 
 ## Troubleshooting 

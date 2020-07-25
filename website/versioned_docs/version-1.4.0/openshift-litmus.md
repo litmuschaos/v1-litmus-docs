@@ -35,7 +35,7 @@ Running chaos on your application involves the following steps:
 ###  Install Litmus
 
 ```
-oc apply -f https://litmuschaos.github.io/pages/litmus-operator-v1.4.0.yaml
+oc apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.4.0.yaml
 ```
 
 The above command install all the CRDs, required service account configuration, and chaos-operator. Before you start running a chaos experiment, verify if Litmus is installed correctly.
@@ -261,7 +261,7 @@ oc describe chaosresult nginx-chaos-container-kill -n nginx
 You can uninstall Litmus by deleting the namespace.
 
 ```console
-oc delete -f https://litmuschaos.github.io/pages/litmus-operator-v1.4.0.yaml
+oc delete -f https://litmuschaos.github.io/litmus/litmus-operator-v1.4.0.yaml
 ```
 
 ## More Chaos Experiments
