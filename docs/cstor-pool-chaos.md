@@ -22,7 +22,7 @@ sidebar_label: cStor Pool Chaos
 
 ## Prerequisites
 
-- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`).If not, install from [here](https://raw.githubusercontent.com/litmuschaos/pages/master/docs/litmus-operator-latest.yaml)
+- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`).If not, install from [here](https://litmuschaos.github.io/litmus/litmus-operator-latest.yaml)
 - Ensure that the `openebs-pool-pod-failure` experiment resource is available in the cluster by executing `kubectl get chaosexperiments -n openebs` in the openebs namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.6.0?file=charts/openebs/openebs-pool-pod-failure/experiment.yaml)
 
 ## Entry Criteria
@@ -150,7 +150,7 @@ spec:
   chaosServiceAccount: cStor-pool-chaos-sa
   monitoring: false
   # It can be delete/retain
-  jobCleanUpPolicy: 'delete' 
+  jobCleanUpPolicy: 'delete'
   experiments:
     - name: openebs-pool-pod-failure
       spec:
@@ -182,9 +182,9 @@ spec:
 
   `kubectl describe chaosresult cStor-pool-chaos-openebs-pool-pod-failure -n openebs`
 
-## Recovery 
+## Recovery
 
-- If the verdict of the ChaosResult is `Fail`, and/or the OpenEBS components do not return to healthy state post the chaos experiment, then please refer the [OpenEBS troubleshooting guide](https://docs.openebs.io/docs/next/troubleshooting.html#ndm-related) for more info on how to recover the same. 
+- If the verdict of the ChaosResult is `Fail`, and/or the OpenEBS components do not return to healthy state post the chaos experiment, then please refer the [OpenEBS troubleshooting guide](https://docs.openebs.io/docs/next/troubleshooting.html#ndm-related) for more info on how to recover the same.
 
 ## cStor Pool Pod Chaos Demo
 
