@@ -173,6 +173,12 @@ subjects:
     <td> Defaults to `litmus` </td>
   </tr>
   <tr>
+    <td> LIB_IMAGE  </td>
+    <td> The image used to fill the disk </td>
+    <td> Optional </td>
+    <td> Defaults to `litmuschaos/litmus-go:latest` </td>
+  </tr>
+  <tr>
     <td> RAMP_TIME </td>
     <td> Period to wait before injection of chaos in sec </td>
     <td> Optional  </td>

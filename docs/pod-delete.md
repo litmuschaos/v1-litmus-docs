@@ -182,12 +182,6 @@ subjects:
     <td> Default to `true`, With `terminationGracePeriodSeconds=0`  </td>
   </tr>
   <tr>
-    <td> LIB_IMAGE </td>
-    <td> Image of the helper pod </td>
-    <td> Optional  </td>
-    <td> Default to `litmuschaos/pod-delete-helper:latest` </td>
-  </tr>
-  <tr>
     <td> KILL_COUNT </td>
     <td> No. of application pods to be deleted </td>
     <td> Optional  </td>
