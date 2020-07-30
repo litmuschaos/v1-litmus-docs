@@ -140,15 +140,15 @@ subjects:
   </tr>    
   <tr>
     <td> LIB_IMAGE  </td>
-    <td> The pumba/containerd image used to run the kill command </td>
+    <td> LIB Image used to kill the container </td>
     <td> Optional </td>
-    <td> Defaults to `gaiaadm/pumba:0.6.5`, for containerd runtime use `litmuschaos/container-kill-helper:latest`</td>
+    <td> Defaults to `litmuschaos/go-runner:latest`</td>
   </tr>
   <tr>
     <td> LIB  </td>
     <td> The category of lib use to inject chaos </td>
     <td> Optional  </td>
-    <td> It can be pumba or containerd </td>
+    <td> It can be pumba or litmus, pumba: docker runtime and litmus: containerd/crio runtime </td>
   </tr>
   <tr>
     <td> RAMP_TIME </td>

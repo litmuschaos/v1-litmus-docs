@@ -126,6 +126,12 @@ subjects:
     <td> Optional </td>
     <td> Defaults to `litmus` </td>
   </tr>
+   <tr>
+    <td> LIB_IMAGE  </td>
+    <td> Image used to run the stress command </td>
+    <td> Optional  </td>
+    <td> Defaults to `litmuschaos/litmus-go:latest` </td>
+  </tr>
   <tr>
     <td> RAMP_TIME </td>
     <td> Period to wait before & after injection of chaos in sec </td>
