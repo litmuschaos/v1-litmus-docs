@@ -1,7 +1,7 @@
 ---
-id: Kubernetes-Chaostoolkit-Application
-title: ChaosToolKit Pod Delete Experiment Details
-sidebar_label: Kubernetes Application Pod 
+id: Kubernetes-Chaostoolkit-Cluster-Kiam
+title: ChaosToolKit Cluster Level Pod Delete Experiment Details in kube-system
+sidebar_label: Kubernetes Cluster Level Pod - kiam
 ---
 ------
 
@@ -15,7 +15,7 @@ sidebar_label: Kubernetes Application Pod
   </tr>
   <tr>
     <td> ChaosToolKit </td>
-    <td> ChaosToolKit pod delete experiment </td>
+    <td> ChaosToolKit Cluster Level Pod delete experiment </td>
     <td> Kubeadm, Minikube </td>
   </tr>
 </table>
@@ -23,12 +23,13 @@ sidebar_label: Kubernetes Application Pod
 ## Prerequisites
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `k8-pod-delete` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.6.1?file=charts/chaostoolkit/k8-pod-delete/experiment.yaml)
-- Ensure you have nginx default application setup on default namespac ( if you are using specific namespace please execute beloe on that namespace)
+- Ensure you have nginx default application setup on default namespace ( if you are using specific namespace please execute beloe on that namespace)
 
 ## Entry Criteria
 
 - Application replicas are healthy before chaos injection
 - Service resolution works successfully as determined by deploying a sample nginx application and a custom liveness app querying the nginx application health end point
+- This application we are executing against kube-system type namespace 
 
 ## Exit Criteria
 
@@ -106,44 +107,40 @@ sidebar_label: Kubernetes Application Pod
 
 [embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/chaostoolkit/chaostoolkit-pod-delete/rbac.yaml yaml)
 ```yaml
----
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: k8-pod-delete-sa
-  namespace: default
+  name: chaos-admin
   labels:
-    name: k8-pod-delete-sa
+    name: chaos-admin
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: Role
+kind: ClusterRole
 metadata:
-  name: k8-pod-delete-sa
-  namespace: default
+  name: chaos-admin
   labels:
-    name: k8-pod-delete-sa
+    name: chaos-admin
 rules:
-- apiGroups: ["","litmuschaos.io","batch","apps"]
-  resources: ["pods","deployments","jobs","configmaps","chaosengines","chaosexperiments","chaosresults"]
-  verbs: ["create","list","get","patch","update","delete"]
+- apiGroups: ["","apps","batch","extensions","litmuschaos.io","openebs.io","storage.k8s.io"]
+  resources: ["chaosengines","chaosexperiments","chaosresults","configmaps","cstorpools","cstorvolumereplicas","events","jobs","persistentvolumeclaims","persistentvolumes","pods","pods/exec","pods/log","secrets","storageclasses","chaosengines","chaosexperiments","chaosresults","configmaps","cstorpools","cstorvolumereplicas","daemonsets","deployments","events","jobs","persistentvolumeclaims","persistentvolumes","pods","pods/eviction","pods/exec","pods/log","replicasets","secrets","services","statefulsets","storageclasses"]
+  verbs: ["create","delete","get","list","patch","update"]
 - apiGroups: [""]
   resources: ["nodes"]
-  verbs : ["get","list"]
+  verbs: ["get","list","patch"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: RoleBinding
+kind: ClusterRoleBinding
 metadata:
-  name: k8-pod-delete-sa
-  namespace: default
+  name: chaos-admin
   labels:
-    name: k8-pod-delete-sa
+    name: chaos-admin
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: k8-pod-delete-sa
+  kind: ClusterRole
+  name: chaos-admin
 subjects:
 - kind: ServiceAccount
-  name: k8-pod-delete-sa
+  name: chaos-admin
   namespace: default
 ```
 
@@ -154,7 +151,7 @@ subjects:
     ```
       appinfo:
         appns: default
-        applabel: 'app=nginx'
+        applabel: 'app=kiam'
         appkind: deployment
     ```
 
@@ -174,13 +171,13 @@ subjects:
     <td> NAME_SPACE </td>
     <td> This is chaos namespace which will create all infra chaos resources in that namespace </td>
     <td> Mandatory </td>
-    <td> Default to default </td>
+    <td> Default to kube-system </td>
   </tr>
   <tr>
     <td> LABEL_NAME </td>
     <td> The default name of the label </td>
     <td> Mandatory </td>
-    <td> Defaults to nginx </td>
+    <td> Defaults to kiam </td>
   </tr>
   <tr>
     <td> APP_ENDPOINT </td>
@@ -213,33 +210,34 @@ subjects:
 
 [embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/chaostoolkit/chaostoolkit-pod-delete/engine.yaml yaml)
 ```yaml
+# chaosengine.yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
-  name: nginx-chaos-app-health
+  name: k8-kiam-health
   namespace: default
 spec:
+  #ex. values: ns1:name=percona,ns2:run=nginx
   appinfo:
-    appns: 'default'
-    applabel: 'app=nginx'
-    appkind: 'deployment'
-  annotationCheck: 'true'
-  engineState: 'active'
-  chaosServiceAccount: k8-pod-delete-sa
+    appns: kube-system
+    # FYI, To see app label, apply kubectl get pods --show-labels
+    #applabel: "app=nginx"
+    applabel: "app=kiam"
+    appkind: deployment
+  jobCleanUpPolicy: retain
   monitoring: false
-  jobCleanUpPolicy: 'retain'
+  annotationCheck: 'false'
+  engineState: 'active'
+  chaosServiceAccount: chaos-admin
   experiments:
     - name: k8-pod-delete
       spec:
         components:
           env:
-            # set chaos namespace
             - name: NAME_SPACE
-              value: 'default'
-            # set chaos label name
+              value: kube-system
             - name: LABEL_NAME
-              value: 'nginx'
-            # pod endpoint
+              value: kiam
             - name: APP_ENDPOINT
               value: 'localhost'
             - name: FILE
@@ -260,7 +258,7 @@ spec:
 
 - View chaostoolkit pod terminations & recovery by setting up a watch on the chaostoolkit pods in the application namespace
 
-  `watch kubectl get pods`
+  `watch kubectl get pods -n kube-system`
 
 ### Check Chaos Experiment Result
 

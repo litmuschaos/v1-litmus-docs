@@ -1,7 +1,7 @@
 ---
-id: Kubernetes-Chaostoolkit-Application
-title: ChaosToolKit Pod Delete Experiment Details
-sidebar_label: Kubernetes Application Pod 
+id: Kubernetes-Chaostoolkit-Service
+title: ChaosToolKit Service Delete Experiment Details
+sidebar_label: Kubernetes Application Service
 ---
 ------
 
@@ -15,7 +15,7 @@ sidebar_label: Kubernetes Application Pod
   </tr>
   <tr>
     <td> ChaosToolKit </td>
-    <td> ChaosToolKit pod delete experiment </td>
+    <td> ChaosToolKit Service delete experiment </td>
     <td> Kubeadm, Minikube </td>
   </tr>
 </table>
@@ -51,39 +51,15 @@ sidebar_label: Kubernetes Application Pod
   </tr>
   <tr>
     <td> ChaosToolKit </td>
-    <td> ChaosToolKit single, random pod delete experiment with count </td>
-    <td> Executing via label name app=<> </td>
-    <td> pod-app-kill-count.json</td>
-  </tr>
-  <tr>
-    <td> ChaosToolKit </td>
-    <td> ChaosToolKit single, random pod delete experiment </td>
-    <td> Executing via label name app=<> </td>
-    <td> pod-app-kill-health.json </td>
-  </tr>
-  <tr>
-    <td> ChaosToolKit </td>
-    <td> ChaosToolKit single, random pod delete experiment with count </td>
-    <td> Executing via Custom label name <custom>=<> </td>
-    <td> pod-app-kill-count.json</td>
-  </tr>
-  <tr>
-    <td> ChaosToolKit </td>
-    <td> ChaosToolKit single, random pod delete experiment </td>
-    <td> Executing via Custom label name <custom>=<> </td>
-    <td> pod-app-kill-health.json </td>
-  </tr>
-  <tr>
-    <td> ChaosToolKit </td>
-    <td> ChaosToolKit All pod delete experiment with health validation </td>
+    <td> ChaosToolKit Micro Service delete with count validation </td>
     <td> Executing via Custom label name app=<> </td>
-    <td> pod-app-kill-all.json </td>
+    <td> service-app-kill-count.json </td>
   </tr>
   <tr>
     <td> ChaosToolKit </td>
-    <td> ChaosToolKit All pod delete experiment with health validation</td>
+    <td> ChaosToolKit Micro Service delete with health validation</td>
     <td> Executing via Custom label name <custom>=<> </td>
-    <td> pod-custom-kill-all.json </td>
+    <td> service-app-kill-health.json </td>
   </tr>
 </table>
 
@@ -243,7 +219,7 @@ spec:
             - name: APP_ENDPOINT
               value: 'localhost'
             - name: FILE
-              value: 'pod-app-kill-health.json'
+              value: 'service-app-kill-health.json'
             - name: REPORT
               value: 'true'
             - name: REPORT_ENDPOINT

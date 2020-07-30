@@ -101,7 +101,7 @@ namespaces. Ensure that you have the right permission to be able to create the s
   - Cleans up after chaos.
 
   ```
-  argo submit https://raw.githubusercontent.com/litmuschaos/chaos-workflows/master/Argo/argowf-chaos-admin.yaml 
+  argo submit https://raw.githubusercontent.com/litmuschaos/chaos-workflows/master/Argo/argowf-chaos-admin.yaml
   ```
 
 ### Watch the Argo Workflow
