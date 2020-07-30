@@ -144,7 +144,7 @@ subjects:
   </tr>
   <tr>
     <td> FILE </td>
-    <td> Type of chaos experiments we want to execute </td>
+    <td> Type of pod-delete chaos (in terms of steady state checks performed) we want to execute, represented by the chaostoolkit json file</td>
     <td> Mandatory  </td>
     <td> Default to `pod-app-kill-health.json` </td>
   </tr>
