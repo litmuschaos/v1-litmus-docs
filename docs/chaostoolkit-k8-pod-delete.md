@@ -37,9 +37,9 @@ sidebar_label: Kubernetes Application Pod
 
 ## Details
 
-- Causes graceful pod failure of an ChaosToolKit replicas bases on provided namespace and Label with endpoint
-- Tests deployment sanity check with Steady state hypothesis pre and post pod failures
-- Service resolution will failed if Application replicas are not present.
+- Causes graceful pod failure of application replicas using chaostoolkit based on provided namespace and Label while doing health checks against the endpoint
+- Tests deployment sanity with steady state hypothesis executed pre and post pod failures
+- Service resolution will fail if application replicas are not present.
 
 ### Use Cases for executing the experiment
 <table>
@@ -184,13 +184,13 @@ subjects:
   </tr>
   <tr>
     <td> APP_ENDPOINT </td>
-    <td> Endpoint where chaostoolkit will make a call and ensure the application endpoint is healthy </td>
+    <td> Endpoint where chaostoolkit will make a call and ensure the application is healthy </td>
     <td> Mandatory </td>
     <td> Defaults to localhost </td>
   </tr>
   <tr>
     <td> FILE </td>
-    <td> Type of chaos experiments we want to execute </td>
+    <td> Type of pod-delete chaos (in terms of steady state checks performed) we want to execute, represented by the chaostoolkit json file</td>
     <td> Mandatory  </td>
     <td> Default to `pod-app-kill-health.json` </td>
   </tr>
@@ -258,7 +258,7 @@ spec:
 
 ### Watch Chaos progress
 
-- View chaostoolkit pod terminations & recovery by setting up a watch on the chaostoolkit pods in the application namespace
+- View application pod termination & recovery by setting up a watch on the pods in the application namespace
 
   `watch kubectl get pods`
 
@@ -273,4 +273,3 @@ spec:
 - Check the log and result for existing experiment
 
     `kubectl log -f k8-pod-delete-<> -n <chaos-namespace>`
-
