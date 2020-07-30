@@ -37,7 +37,7 @@ sidebar_label: ChaosToolKit Pod Delete
 
 ## Details
 
-- Causes graceful pod failure of an ChaosToolKit replicas bases on provided namespace and Label with endpoint
+- Causes graceful pod failure of application replicas using chaostoolkit based on provided namespace and Label while doing health checks against the endpoint
 - Tests deployment sanity check with Steady state hypothesis pre and post pod failures
 - Service resolution will failed if Application replicas are not present.
 
@@ -227,4 +227,3 @@ spec:
 - Check the log and result for existing experiment
 
     `kubectl log -f k8-pod-delete-<> -n <chaos-namespace>`
-
