@@ -147,9 +147,9 @@ subjects:
   </tr>
   <tr>
     <td> LIB_IMAGE  </td>
-    <td> The pumba image used to run the kill command </td>
+    <td> Image used to run the netem command </td>
     <td> Optional  </td>
-    <td> Defaults to `gaiaadm/pumba:0.6.5` </td>
+    <td> Defaults to `litmuschaos/litmus-go:latest` </td>
   </tr>
   <tr>
     <td> RAMP_TIME </td>
@@ -202,7 +202,7 @@ spec:
               value: 'nginx' 
 
             - name: LIB_IMAGE
-              value: 'gaiaadm/pumba:0.6.5'
+              value: 'litmuschaos/go-runner:latest'
 
             #Network interface inside target container
             - name: NETWORK_INTERFACE
