@@ -212,7 +212,7 @@ spec:
 
 ### Watch Chaos progress
 
-- View chaostoolkit pod terminations & recovery by setting up a watch on the chaostoolkit pods in the application namespace
+- View application pod termination & recovery by setting up a watch on the pods in the application namespace
 
   `watch kubectl get pods`
 
