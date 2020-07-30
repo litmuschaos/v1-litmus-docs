@@ -101,11 +101,11 @@ sidebar_label: Kubernetes Cluster Level Pod - kiam
 ## Prepare chaosServiceAccount
 - Based on your use case pick one of the choice from here `https://github.com/sumitnagal/chaos-charts/tree/testing/charts/chaostoolkit/k8-pod-delete`
     * Service owner use case
-        * Install the rbac for cluster in namespace from where you are executing the experiments `kubectl apply Service/rbac.yaml`
+        * Install the rbac for cluster in namespace from where you are executing the experiments `kubectl apply Cluster/rbac-admin.yaml`
 
 ### Sample Rbac Manifest for Service Owner use case
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/chaostoolkit/chaostoolkit-pod-delete/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/chaostoolkit/chaostoolkit-pod-delete/Cluster/rbac.yaml yaml)
 ```yaml
 apiVersion: v1
 kind: ServiceAccount

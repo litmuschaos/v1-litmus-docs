@@ -104,7 +104,7 @@ sidebar_label: Kubernetes Application Pod
 
 ### Sample Rbac Manifest for Service Owner use case
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/chaostoolkit/chaostoolkit-pod-delete/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/chaostoolkit/chaostoolkit-pod-delete/Service/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1

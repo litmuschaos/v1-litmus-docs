@@ -80,7 +80,7 @@ sidebar_label: Kubernetes Application Service
 
 ### Sample Rbac Manifest for Service Owner use case
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/chaostoolkit/chaostoolkit-pod-delete/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/chaostoolkit/chaostoolkit-pod-delete/Service/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
@@ -187,7 +187,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/chaostoolkit/chaostoolkit-pod-delete/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/chaostoolkit/chaostoolkit-pod-delete/Service/engine-custom-health.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
