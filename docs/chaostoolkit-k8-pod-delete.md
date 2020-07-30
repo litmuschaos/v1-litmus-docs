@@ -38,7 +38,7 @@ sidebar_label: ChaosToolKit Pod Delete
 ## Details
 
 - Causes graceful pod failure of application replicas using chaostoolkit based on provided namespace and Label while doing health checks against the endpoint
-- Tests deployment sanity check with Steady state hypothesis pre and post pod failures
+- Tests deployment sanity with steady state hypothesis executed pre and post pod failures
 - Service resolution will failed if Application replicas are not present.
 
 ## Integrations
