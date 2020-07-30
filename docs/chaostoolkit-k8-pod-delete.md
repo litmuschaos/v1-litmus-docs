@@ -138,7 +138,7 @@ subjects:
   </tr>
   <tr>
     <td> APP_ENDPOINT </td>
-    <td> Endpoint where chaostoolkit will make a call and ensure the application endpoint is healthy </td>
+    <td> Endpoint where chaostoolkit will make a call and ensure the application is healthy </td>
     <td> Mandatory </td>
     <td> Defaults to localhost </td>
   </tr>
