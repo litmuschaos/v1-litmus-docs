@@ -217,7 +217,7 @@ subjects:
   </tr>
   <tr>
     <td> FORCE  </td>
-    <td> Application Pod failures type </td>
+    <td> Application Pod deletion mode. `False` indicates graceful deletion with default termination period of 30s. 'True' indicates an immediate forceful deletion with 0s grace period </td>
     <td> Optional  </td>
     <td> Default to `true`, With `terminationGracePeriodSeconds=0`  </td>
   </tr>

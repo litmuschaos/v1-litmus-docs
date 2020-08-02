@@ -34,12 +34,17 @@ Running chaos on your application involves the following steps:
 ###  Install Litmus
 
 Apply the LitmusChaos Operator manifest:
-
+ 
 ```
 kubectl apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.6.0.yaml
 ```
 
-The above command install all the CRDs, required service account configuration, and chaos-operator. Before you start running a chaos experiment, verify if Litmus is installed correctly.
+The above command installs all the CRDs, required service account configuration, and chaos-operator. 
+
+**Note**: Ensure that you have the right privileges to install the CRDs & setup cluster-wide RBAC policies (by default, the 
+chaos operator watches for Chaos CRs across namespaces)
+
+Before you start running a chaos experiment, verify if Litmus is installed correctly.
 
 **Verify your installation**
 
