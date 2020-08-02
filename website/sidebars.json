@@ -58,6 +58,15 @@
       },
       {
         "type": "subcategory",
+        "label": "Kubernetes",
+        "ids": [
+          "Kubernetes-Chaostoolkit-Application",
+          "Kubernetes-Chaostoolkit-Service",
+          "Kubernetes-Chaostoolkit-Cluster-Kiam"
+        ]
+      },
+      {
+        "type": "subcategory",
         "label": "OpenEBS",
         "ids": [
           "openebs-target-container-failure",
