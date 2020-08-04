@@ -132,7 +132,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Description</th>
-  <td>Flag to specify one or more app namespace-label pairs whose health is also monitored as part of the chaos experiment, in addition to a primary application specified in the <code>.spec.appInfo</code>.</td>
+  <td>Flag to specify one or more app namespace-label pairs whose health is also monitored as part of the chaos experiment, in addition to a primary application specified in the <code>.spec.appInfo</code>. NOTE: If any of the auxiliary application is present inside different namespace other than where our AUT is running. In that case we have to create the ClusterRole(applicable for the namespaced experiments only) as we are accessing multiple namespaces</td>
 </tr>
 <tr>
   <th>Type</th>
@@ -322,6 +322,33 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 </table>
 
+<table>
+<tr>
+  <th>Field</th>
+  <td><code>.spec.components.runner.runnerannotation</code></td>
+</tr>
+<tr>
+  <th>Description</th>
+  <td>Annotations that needs to be provided in the pod which will be created (runner-pod)</td>
+</tr>
+<tr>
+  <th>Type</th>
+  <td>Optional</td>
+</tr>
+<tr>
+  <th>Range</th>
+<td> <i>user-defined</i> (type: map[string]string) </td>
+</tr>
+<tr>
+  <th>Default</th>
+  <td> n/a </td>
+</tr>
+<tr>
+  <th>Notes</th>
+  <td>The <code>.components.runner.runnerannotation</code> allows developers to specify the custom annotations for the runner pod.</td>
+</tr>
+</table>
+
 ## Experiment Specification
 
 <table>
@@ -429,6 +456,114 @@ This section describes the fields in the ChaosEngine spec and the possible value
 <tr>
   <th>Notes</th>
   <td>The <code>experiment[].spec.components.secrets</code> provides for a means to push secrets (typically project ids, access credentials etc.,) into the experiment pods. These are especially useful in case of platform-level/infra-level chaos experiments. The secrets definition is validated for correctness and those specified are checked for availability (in the cluster/namespace) before being mounted into the experiment pods.</td>
+</tr>
+</table>
+
+<table>
+<tr>
+  <th>Field</th>
+  <td><code>.spec.experiments[].spec.components.experimentImage</code></td>
+</tr>
+<tr>
+  <th>Description</th>
+  <td>Override the image of the chaos experiment</td>
+</tr>
+<tr>
+  <th>Type</th>
+  <td>Optional</td>
+</tr>
+<tr>
+  <th>Range</th>
+<td><i> string </i></td>
+</tr>
+<tr>
+  <th>Default</th>
+  <td><i>n/a</i></td>
+</tr>
+<tr>
+  <th>Notes</th>
+  <td>The <code>experiment[].spec.components.experimentImage</code> Override the experiment image for the chaoexperiment. It can be used to test the new changes via overriding custom/new image from chaosengine</td>
+</tr>
+</table>
+
+<table>
+<tr>
+  <th>Field</th>
+  <td><code>.spec.experiments[].spec.components.nodeSelector</code></td>
+</tr>
+<tr>
+  <th>Description</th>
+  <td>Provide the node selector for the experiment pod</td>
+</tr>
+<tr>
+  <th>Type</th>
+  <td>Optional</td>
+</tr>
+<tr>
+  <th>Range</th>
+<td><i> Lebels in the from of  map[string]string </i></td>
+</tr>
+<tr>
+  <th>Default</th>
+  <td><i>n/a</i></td>
+</tr>
+<tr>
+  <th>Notes</th>
+  <td>The <code>experiment[].spec.components.nodeSelector</code> The nodeselector contains labels of the node on which experiment pod should be scheduled. It can be used in case of infra/node level chaos.</td>
+</tr>
+</table>
+
+<table>
+<tr>
+  <th>Field</th>
+  <td><code>.spec.experiments[].spec.components.statusCheckTimeouts</code></td>
+</tr>
+<tr>
+  <th>Description</th>
+  <td>Override the timeout and retry for the status check</td>
+</tr>
+<tr>
+  <th>Type</th>
+  <td>Optional</td>
+</tr>
+<tr>
+  <th>Range</th>
+<td><i> It contains values in the form {delay: int, timeout: int} </i></td>
+</tr>
+<tr>
+  <th>Default</th>
+  <td><i>delay: 2s and timeout: 180s</i></td>
+</tr>
+<tr>
+  <th>Notes</th>
+  <td>The <code>experiment[].spec.components.statusCheckTimeouts</code> The statusCheckTimeouts override the status timeouts inside chaosexperiments. It contains timeout & delay in seconds.</td>
+</tr>
+</table>
+
+<table>
+<tr>
+  <th>Field</th>
+  <td><code>.spec.components.runner.experimentannotation</code></td>
+</tr>
+<tr>
+  <th>Description</th>
+  <td>Annotations that needs to be provided in the pod which will be created (experiment-pod)</td>
+</tr>
+<tr>
+  <th>Type</th>
+  <td>Optional</td>
+</tr>
+<tr>
+  <th>Range</th>
+<td> <i>user-defined</i> (type: map[string]string) </td>
+</tr>
+<tr>
+  <th>Default</th>
+  <td> n/a </td>
+</tr>
+<tr>
+  <th>Notes</th>
+  <td>The <code>.components.runner.experimentannotation</code> allows developers to specify the custom annotations for the experiment pod.</td>
 </tr>
 </table>
 
