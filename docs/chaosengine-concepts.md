@@ -132,7 +132,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Description</th>
-  <td>Flag to specify one or more app namespace-label pairs whose health is also monitored as part of the chaos experiment, in addition to a primary application specified in the <code>.spec.appInfo</code>. NOTE: If any of the auxiliary application is present inside different namespace other than where our AUT is running. In that case we have to create the ClusterRole(applicable for the namespaced experiments only) as we are accessing multiple namespaces</td>
+  <td>Flag to specify one or more app namespace-label pairs whose health is also monitored as part of the chaos experiment, in addition to a primary application specified in the <code>.spec.appInfo</code>. <b>NOTE</b>: If the auxiliary applications are deployed in namespaces other than the AUT, ensure that the chaosServiceAccount is bound to a cluster role and has adequate permissions to list pods on other namespaces. </td>
 </tr>
 <tr>
   <th>Type</th>
@@ -482,7 +482,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>experiment[].spec.components.experimentImage</code> Override the experiment image for the chaoexperiment. It can be used to test the new changes via overriding custom/new image from chaosengine</td>
+  <td>The <code>experiment[].spec.components.experimentImage</code> overrides the experiment image for the chaoexperiment.</td>
 </tr>
 </table>
 
@@ -501,7 +501,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Range</th>
-<td><i> Lebels in the from of  map[string]string </i></td>
+<td><i> Labels in the from of label key=value</i></td>
 </tr>
 <tr>
   <th>Default</th>
@@ -509,7 +509,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>experiment[].spec.components.nodeSelector</code> The nodeselector contains labels of the node on which experiment pod should be scheduled. It can be used in case of infra/node level chaos.</td>
+  <td>The <code>experiment[].spec.components.nodeSelector</code> The nodeselector contains labels of the node on which experiment pod should be scheduled. Typically used in case of infra/node level chaos.</td>
 </tr>
 </table>
 
@@ -520,7 +520,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Description</th>
-  <td>Override the timeout and retry for the status check</td>
+  <td>Provides the timeout and retry values for the status checks. Defaults to 180s & 90 retries (2s per retry)</td>
 </tr>
 <tr>
   <th>Type</th>
@@ -555,7 +555,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Range</th>
-<td> <i>user-defined</i> (type: map[string]string) </td>
+<td> <i>user-defined</i> (type: label key=value) </td>
 </tr>
 <tr>
   <th>Default</th>
