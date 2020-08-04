@@ -117,7 +117,8 @@
       "faq-troubleshooting"
     ],
     "Advanced": [
-      "admin-mode"
+      "admin-mode",
+      "namespaced-mode"
     ]
   }
 }

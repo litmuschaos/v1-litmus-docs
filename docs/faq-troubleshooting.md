@@ -37,15 +37,31 @@ If not created, install it from [here](https://github.com/litmuschaos/chaos-oper
 
 ### Nothing happens (no pods created) when the chaosengine resource is created?
 
-If the ChaosEngine creation results in no action at all, check the logs of the chaos-operator pod using 
-the following command to get more details (on failed creation of chaos resources). The below example uses litmus namespace, 
-which is the default mode of installation. Please provide the namespace into which the operator has been deployed: 
+If the ChaosEngine creation results in no action at all, perform the following checks: 
 
-```console
-kubectl logs -f <chaos-operator-(hash)-(hash)>-runner -n litmus
-```
+- Check the Kubernetes events generated against the chaosengine resource. 
 
-Some of the possible reasons include:
+
+  ```
+  kubectl describe chaosengine <chaosengine-name> -n <namespace>
+  ```
+
+  Specifically look for the event reason *ChaosResourcesOperationFailed*. Typically, these events consist of messages pointing to the 
+  problem. Some of the common messages include: 
+
+   - *Unable to filter app by specified info*
+   - *Unable to get chaos resources*
+   - *Unable to update chaosengine*
+
+- Check the logs of the chaos-operator pod using the following command to get more details (on failed creation of chaos resources). 
+  The below example uses litmus namespace, which is the default mode of installation. Please provide the namespace into which the 
+  operator has been deployed: 
+
+  ```console
+  kubectl logs -f <chaos-operator-(hash)-(hash)>-runner -n litmus
+  ```
+
+Some of the possible reasons for these errors include:
 
 - The annotationCheck is set to `true` in the ChaosEngine spec, but the application deployment (AUT) has not 
   been annotated for chaos. If so, please add it using the following command: 
@@ -72,11 +88,21 @@ Some of the possible reasons include:
 ### The chaos-runner pod enters completed state seconds after getting created. No experiment jobs are created?
  
 If the chaos-runner enters completed state immediately post creation, i.e., the creation of experiment resources is 
-unsuccessful, check the logs of the chaos-runner pod logs.  
+unsuccessful, perform the following checks: 
 
-```console
-kubectl logs -f <chaosengine_name>-runner -n <application_namespace>
-```
+- Check the Kubernetes events generated against the chaosengine resource. 
+
+  ```
+  kubectl describe chaosengine <chaosengine-name> -n <namespace>
+  ```
+
+  Look for one of these events: *ExperimentNotFound*, *ExperimentDependencyCheck*, *EnvParseError* 
+
+- Check the logs of the chaos-runner pod logs.  
+
+  ```console
+  kubectl logs -f <chaosengine_name>-runner -n <namespace>
+  ```
 
 Some of the possible reasons may include: 
 
@@ -87,18 +113,29 @@ Some of the possible reasons may include:
   or the ChaosEngine CR) may not be present in the cluster (or in the desired namespace). The runner pod doesn’t proceed 
   with creation of experiment resources if the dependencies are unavailable.  
 
+- The values provided for the ENV variables in the ChaosExperiment or the ChaosEngines might be invalid
+
 - The chaosServiceAccount specified in the ChaosEngine CR doesn’t have sufficient permissions to create the experiment 
   resources (For existing experiments, appropriate rbac manifests are already provided in chaos-charts/docs).
-
 
 ### The experiment pod enters completed state w/o the desired chaos being injected? 
 
 If the experiment pod enters completed state immediately (or in a few seconds) after creation w/o injecting the desired chaos, 
-check the logs of the chaos-experiment pod. 
+perform the following checks: 
 
-```console
-kubectl logs -f <experiment_name_(hash)_(hash)> -n <application_namespace>
-```
+- Check the Kubernetes events generated against the chaosengine resource
+
+  ```
+  kubectl describe chaosengine <chaosengine-name> -n <namespace>
+  ```
+
+  Look for the event with reason *Summary* with message *<experiment-name> experiment has been failed*
+
+- Check the logs of the chaos-experiment pod. 
+
+  ```console
+  kubectl logs -f <experiment_name_(hash)_(hash)> -n <namespace>
+  ```
 
 Some of the possible reasons may include: 
 
@@ -114,6 +151,8 @@ Some of the possible reasons may include:
   propagated to the pod template spec. Note that the Operator uses this label to filter chaos candidates at the parent 
   resource level (deployment/statefulset/daemonset) but the experiment pod uses this to pick application **pods** into 
   which the chaos is injected. 
+
+- The experiment pre-chaos checks have failed on account of application (AUT) or auxiliary application unavailability
 
 ### Scheduler not forming chaosengines for type=repeat?
 
