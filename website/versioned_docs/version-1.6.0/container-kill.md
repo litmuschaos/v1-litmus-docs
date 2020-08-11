@@ -17,7 +17,7 @@ original_id: container-kill
   <tr>
     <td> Generic </td>
     <td> Kill one container in the application pod </td>
-    <td> GKE, Packet(Kubeadm), Minikube, EKS </td>
+    <td> GKE, Packet(Kubeadm), Minikube, EKS, AKS </td>
   </tr>
 </table>
 

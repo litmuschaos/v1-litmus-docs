@@ -17,7 +17,7 @@ original_id: kubelet-service-kill
   <tr>
     <td> Generic </td>
     <td> Kills the kubelet service on the application node to check the resiliency. </td>
-    <td> GKE, EKS, Packet(Kubeadm) </td>
+    <td> GKE, EKS, Packet(Kubeadm), AKS </td>
   </tr>
 </table>
 

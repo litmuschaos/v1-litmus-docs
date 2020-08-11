@@ -17,7 +17,7 @@ original_id: pod-cpu-hog
   <tr>
      <td> Generic </td>
     <td> Consume CPU resources on the application container</td>
-    <td> GKE, Packet(Kubeadm), Minikube, EKS  </td>
+    <td> GKE, Packet(Kubeadm), Minikube, EKS, AKS  </td>
   </tr>
 </table>
 

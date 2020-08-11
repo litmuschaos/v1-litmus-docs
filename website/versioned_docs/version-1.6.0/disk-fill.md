@@ -17,7 +17,7 @@ original_id: disk-fill
   <tr>
     <td> Chaos </td>
     <td> Fill up Ephemeral Storage of a Pod </td>
-    <td> GKE, EKS </td>
+    <td> GKE, EKS, AKS </td>
   </tr>
 </table>
 
