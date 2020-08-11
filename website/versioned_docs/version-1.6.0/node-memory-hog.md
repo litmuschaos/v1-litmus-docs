@@ -17,7 +17,7 @@ original_id: node-memory-hog
   <tr>
     <td> Generic </td>
     <td> Exhaust Memory resources on the Kubernetes Node </td>
-    <td> GKE, EKS </td>
+    <td> GKE, EKS, AKS </td>
   </tr>
 </table>
 
