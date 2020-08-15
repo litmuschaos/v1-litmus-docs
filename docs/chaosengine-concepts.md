@@ -574,7 +574,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Description</th>
-  <td>We can specify the httpProbe details which will run inside chaos experiment and probe result will be patched inside chaosresult.</td>
+  <td>An experiment probe that accesses a service endpoint </td>
 </tr>
 <tr>
   <th>Type</th>
