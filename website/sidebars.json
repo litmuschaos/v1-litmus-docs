@@ -53,7 +53,8 @@
           "kubelet-service-kill",
           "pod-network-duplication",
           "node-taint",
-	  "docker-service-kill"
+          "docker-service-kill",
+          "pod-autoscaler"
         ]
       },
       {
