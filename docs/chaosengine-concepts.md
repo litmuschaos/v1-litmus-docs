@@ -590,7 +590,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>.httpProbe</code> allows developers to specify the custom http probe and it will match the response code with the expected status code.</td>
+  <td>The <code>.httpProbe</code> allows developers to specify a URL which the experiment uses to gauge health/service availability (or other custom conditions) as part of the entry/exit criteria. The received status code is mapped against an expectedStatus</td>
 </tr>
 </table>
 
@@ -601,7 +601,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Description</th>
-  <td>We can specify the k8sProbe details which will run inside chaos experiment and probe result will be patched inside chaosresult.</td>
+  <td>An experiment probe that accesses a Kubernetes resource on the cluster.</td>
 </tr>
 <tr>
   <th>Type</th>
@@ -617,7 +617,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>.k8sProbe</code> allows developers to specify the custom k8s probe. It will use gvr(group, version, resource), namespace and fieldselector to check for kubernetes native resources.</td>
+  <td>The <code>.k8sProbe</code> allows developers to list K8s resources (native or custom) as as part of the entry/exit criteria. It accepts the gvr (group, version, resource), namespace and fieldselector as inputs filter the desired resources.</td>
 </tr>
 </table>
 
@@ -628,7 +628,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Description</th>
-  <td>We can specify the cmdProbe details which will run inside chaos experiment and probe result will be patched inside chaosresult.</td>
+  <td>An experiment probe that executes a shell command</td>
 </tr>
 <tr>
   <th>Type</th>
@@ -644,6 +644,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>.cmdProbe</code> allows developers to specify the custom cmd probe. It can use inline command(which can be run using go-runner image only) OR it can use any source image and run the command inside the pod w/ the source image and match the expected output.</td>
+  <td>The <code>.cmdProbe</code> allows developers to run shell commands and match the resulting output as part of the entry/exit criteria. The probe supports an <code>inline</code> mode in which the command is run from within the experiment image as well as <code>source</code> mode, where the command execution is carried out from with a new pod whose image can be specified.</td>
 </tr>
 </table>
