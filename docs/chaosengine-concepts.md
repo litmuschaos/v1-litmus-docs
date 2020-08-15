@@ -567,4 +567,83 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 </table>
 
+<table>
+<tr>
+  <th>Field</th>
+  <td><code>.spec.experiments[].spec.httpProbe</code></td>
+</tr>
+<tr>
+  <th>Description</th>
+  <td>We can specify the httpProbe details which will run inside chaos experiment and probe result will be patched inside chaosresult.</td>
+</tr>
+<tr>
+  <th>Type</th>
+  <td>Optional</td>
+</tr>
+<tr>
+  <th>Range</th>
+<td> <i>user-defined</i> </td>
+</tr>
+<tr>
+  <th>Default</th>
+  <td> n/a </td>
+</tr>
+<tr>
+  <th>Notes</th>
+  <td>The <code>.httpProbe</code> allows developers to specify the custom http probe and it will match the response code with the expected status code.</td>
+</tr>
+</table>
 
+<table>
+<tr>
+  <th>Field</th>
+  <td><code>.spec.experiments[].spec.k8sProbe</code></td>
+</tr>
+<tr>
+  <th>Description</th>
+  <td>We can specify the k8sProbe details which will run inside chaos experiment and probe result will be patched inside chaosresult.</td>
+</tr>
+<tr>
+  <th>Type</th>
+  <td>Optional</td>
+</tr>
+<tr>
+  <th>Range</th>
+<td> <i>user-defined</i> </td>
+</tr>
+<tr>
+  <th>Default</th>
+  <td> n/a </td>
+</tr>
+<tr>
+  <th>Notes</th>
+  <td>The <code>.k8sProbe</code> allows developers to specify the custom k8s probe. It will use gvr(group, version, resource), namespace and fieldselector to check for kubernetes native resources.</td>
+</tr>
+</table>
+
+<table>
+<tr>
+  <th>Field</th>
+  <td><code>.spec.experiments[].spec.cmdProbe</code></td>
+</tr>
+<tr>
+  <th>Description</th>
+  <td>We can specify the cmdProbe details which will run inside chaos experiment and probe result will be patched inside chaosresult.</td>
+</tr>
+<tr>
+  <th>Type</th>
+  <td>Optional</td>
+</tr>
+<tr>
+  <th>Range</th>
+<td> <i>user-defined</i> </td>
+</tr>
+<tr>
+  <th>Default</th>
+  <td> n/a </td>
+</tr>
+<tr>
+  <th>Notes</th>
+  <td>The <code>.cmdProbe</code> allows developers to specify the custom cmd probe. It can use inline command(which can be run using go-runner image only) OR it can use any source image and run the command inside the pod w/ the source image and match the expected output.</td>
+</tr>
+</table>
