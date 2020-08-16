@@ -7,8 +7,8 @@ sidebar_label: Install and Troubleshoot Litmus
 
 ## Pre-requisites
 
-Rancher 2.4.3 or later
-Kubernetes 1.11 or later 
+- Rancher 2.4.3 or later
+- Kubernetes 1.11 or later 
 
 ## Getting Started
 
@@ -38,7 +38,7 @@ Running chaos on your application involves the following steps:
 - This guide describes the steps to inject container-kill chaos on an nginx application already deployed in the 
 nginx namespace. It is a mandatory requirement to ensure that the chaos custom resources (chaosexperiment and chaosengine) 
 and the experiment specific serviceaccount are created in the same namespace (typically, the same as the namespace of the 
-application under test (AUT), in this case nginx). This is done to ensure that the developers/users of the experiment isolate 
+Application Under Test (AUT), in this case nginx). This is done to ensure that the developers/users of the experiment isolate 
 the chaos to their respective work-namespaces in shared environments. 
 
 - In all subsequent steps, please follow these instructions by replacing the nginx namespace and labels with that of your 
@@ -69,7 +69,7 @@ Followed the steps in the [Getting Started Guide](https://docs.litmuschaos.io/do
 
 Download `litmus-operator-v1.7.0.yaml` from https://litmuschaos.github.io/litmus/litmus-operator-v1.7.0.yaml.
 Modify it to use the `nginx` namespace in three places (at lines 10, 41, and 47 approximately).
-Installed the litmus-operator in `nginx` application namespace using Kubectl.
+Install the litmus-operator in `nginx` application namespace using kubectl.
 ``` console
 $ kubectl apply -f litmus-operator.yaml -n nginx
 ```
@@ -120,9 +120,9 @@ chaosexperiments.litmuschaos.io               2020-06-24T17:37:01Z
 chaosresults.litmuschaos.io                   2020-06-24T17:37:01Z
 ```
 
-- Verify if the chaos api resources are successfully created in the desired (application) namespace.
+- Verify if the chaos API resources are successfully created in the desired (application) namespace.
  
-  *Note*: Sometimes, it can take a few seconds for the resources to be available post the CRD installation
+  *Note*: Sometimes, it may take few seconds for the resources to be available post the CRD installation
 
 ```
 $ kubectl api-resources | grep chaos
@@ -138,7 +138,7 @@ chaosresults                                   litmuschaos.io                 tr
 
 ### Install Chaos Experiments
 
-Chaos experiments contain the actual chaos details. These experiments are installed on your cluster as Kubernetes custom resources (CRs). 
+Chaos experiments contain the actual chaos details. These experiments are installed on your cluster as Kubernetes Custom Resources (CRs). 
 The Chaos Experiments are grouped as Chaos Charts and are published on <a href=" https://hub.litmuschaos.io" target="_blank">Chaos Hub</a>. 
 
 The generic chaos experiments such as `pod-delete`,  `container-kill`,` pod-network-latency` are available under Generic Chaos Chart. 
@@ -194,7 +194,7 @@ pod-network-loss         2s
 ### Setup Service Account
 
 A service account should be created to allow chaosengine to run experiments in your application namespace. Copy the following 
-into a `rbac.yaml` manifest and run `kubectl apply -f rbac.yaml` to create one such account on the `nginx` namespace. This serviceaccount 
+into a `rbac.yaml` manifest and run `kubectl apply -f rbac.yaml` to create one such account on the `nginx` namespace. This service account 
 has just enough permissions needed to run the container-kill chaos experiment.
 
 **NOTE**: 
@@ -438,7 +438,7 @@ job.batch/container-kill-sfeyq0   0/1           54s        54s
 ```
 Everything looks good at this point. You can also look at the Rancher UI to drill down into the Workloads of `nginx` namespace and see the pods.
 
-The first time took take a while to run but the Verdict was `Fail`.
+The first time took a while to run but the Verdict was `Fail`.
  
 ``` console
 $ kubectl describe chaosresult nginx-chaos-container-kill -n nginx
@@ -476,7 +476,7 @@ nginx-chaos-runner                   1/1     Running   0          113s
 pumba-sig-kill-uc7rlt                0/1     Error     0          52s
 ```
 
-The Error status of the `pumba` pod gives us place to focus our attention as we start trouble shooting. Checking the logs on the `pumba` pod:
+The Error status of the `pumba` pod gives us place to focus our attention as we start troubleshooting. Checking the logs on the `pumba` pod:
 ```console
 $ kubectl logs pumba-sig-kill-uc7rlt -n nginx
 time="2020-06-24T17:44:58Z" level=error msg="failed to list containers" app=pumba error="Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/containers/json?limit=0: dial unix /var/run/docker.sock: connect: permission denied" function=github.com/sirupsen/logrus.WithError source="container/client.go:90"
@@ -523,7 +523,7 @@ Now we need to get into the Selinux access controls on `/var/run/docker.sock`
 
 **NOTE:** The logs for Selinux auditing are in `/var/log/audit/audit.log` and require superuser privileges to review. To set Selinux policies also require superuser privileges. The rest of the steps in this section are run as root.
 
-With elevated privileges, check onitored the audit log on both worker nodes for the file we having issues with `docker.sock`:  
+With elevated privileges, check monitored the audit log on both worker nodes for the file we having issues with `docker.sock`:  
 ```console
 $ grep docker.sock /var/log/audit/audit.log
 ```
@@ -533,10 +533,10 @@ type=AVC msg=audit(1594053128.110:14301): avc:  denied  { connectto } for  pid=1
 ```
 This tells us that we really do have an Selinux access control issue to correct. 
 
-###Selinux Troubleshooting process:
+### Selinux Troubleshooting process:
 
 Note: The sample Litmus experiment is set-up with the exception of applying `chaosengine.yaml.` 
-1. We need to log into all worker node the cluster where the `pumba` pod will try to run. This is required since we don't know which on worker node the pod will be created. Elevate privileges with sudo.
+1. We need to log into all worker node the cluster where the `pumba` pod will try to run. This is required since we don't know on which worker node the pod will be created. Elevate privileges with sudo.
 2. Checked the permissions on /var/run/docker.sock and /run/docker.sock: 
 ```console
 $ ls -lZ /run/docker.sock /var/run/docker.sock
