@@ -1,7 +1,7 @@
 ---
-id: Kubernetes-Chaostoolkit-Application
-title: ChaosToolKit Pod Delete Experiment Details
-sidebar_label: Service Pod - Application
+id: Kubernetes-Chaostoolkit-AWS
+title: ChaosToolKit AWS EC2 Experiment Details
+sidebar_label: EC2 Terminate 
 ---
 ------
 
@@ -15,31 +15,33 @@ sidebar_label: Service Pod - Application
   </tr>
   <tr>
     <td> ChaosToolKit </td>
-    <td> ChaosToolKit pod delete experiment </td>
+    <td> ChaosToolKit AWS EC2 terminate experiment </td>
     <td> Kubeadm, Minikube </td>
   </tr>
 </table>
 
 ## Prerequisites
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `k8-pod-delete` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.7.0?file=charts/chaostoolkit/k8-pod-delete/experiment.yaml)
+- Ensure that the `aws-ec2-terminate` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.7.0?file=charts/chaostoolkit/aws-ec2-terminate/experiment.yaml)
 - Ensure you have nginx default application setup on default namespac ( if you are using specific namespace please execute beloe on that namespace)
 
 ## Entry Criteria
 
 - Application replicas are healthy before chaos injection
+- EC2 Intsaces are running on this namespace
 - Service resolution works successfully as determined by deploying a sample nginx application and a custom liveness app querying the nginx application health end point
 
 ## Exit Criteria
 
 - Application replicas are healthy after chaos injection
+- EC2 Intsaces are running on this namespace
 - Service resolution works successfully as determined by deploying a sample nginx application and a custom liveness app querying the nginx application health end point
 
 ## Details
 
-- Causes graceful pod failure of application replicas using chaostoolkit based on provided namespace and Label while doing health checks against the endpoint
-- Tests deployment sanity with steady state hypothesis executed pre and post pod failures
-- Service resolution will fail if application replicas are not present.
+- Causes EC2 Terminate instance failure of application replicas using chaostoolkit based on provided namespace and Label while doing health checks against the endpoint
+- Tests deployment sanity with steady state hypothesis executed pre and post pod failures, which is running on AWS EC2 instance
+- Service resolution will fail if application is not able to lauch on new EC2 instance.
 
 ### Use Cases for executing the experiment
 <table>
@@ -51,45 +53,15 @@ sidebar_label: Service Pod - Application
   </tr>
   <tr>
     <td> ChaosToolKit </td>
-    <td> ChaosToolKit single, random pod delete experiment with count </td>
+    <td> ChaosToolKit single, random EC2 terminate experiment with Application uptime </td>
     <td> Executing via label name app=<> </td>
-    <td> pod-app-kill-count.json</td>
-  </tr>
-  <tr>
-    <td> ChaosToolKit </td>
-    <td> ChaosToolKit single, random pod delete experiment </td>
-    <td> Executing via label name app=<> </td>
-    <td> pod-app-kill-health.json </td>
-  </tr>
-  <tr>
-    <td> ChaosToolKit </td>
-    <td> ChaosToolKit single, random pod delete experiment with count </td>
-    <td> Executing via Custom label name <custom>=<> </td>
-    <td> pod-app-kill-count.json</td>
-  </tr>
-  <tr>
-    <td> ChaosToolKit </td>
-    <td> ChaosToolKit single, random pod delete experiment </td>
-    <td> Executing via Custom label name <custom>=<> </td>
-    <td> pod-app-kill-health.json </td>
-  </tr>
-  <tr>
-    <td> ChaosToolKit </td>
-    <td> ChaosToolKit All pod delete experiment with health validation </td>
-    <td> Executing via Custom label name app=<> </td>
-    <td> pod-app-kill-all.json </td>
-  </tr>
-  <tr>
-    <td> ChaosToolKit </td>
-    <td> ChaosToolKit All pod delete experiment with health validation</td>
-    <td> Executing via Custom label name <custom>=<> </td>
-    <td> pod-custom-kill-all.json </td>
+    <td> ec2-delete.json</td>
   </tr>
 </table>
 
 ## Integrations
 
-- Pod failures can be effected using one of these chaos libraries: `litmus`
+- AWS EC2 failures can be effected using one of these chaos libraries: `litmus`
 
 ## Steps to Execute the Chaos Experiment
 
@@ -98,52 +70,46 @@ sidebar_label: Service Pod - Application
 - Follow the steps in the sections below to create the chaosServiceAccount, prepare the ChaosEngine & execute the experiment.
 
 ## Prepare chaosServiceAccount
-- Based on your use case pick one of the choice from here `https://github.com/sumitnagal/chaos-charts/tree/testing/charts/chaostoolkit/k8-pod-delete`
-    * Service owner use case
-        * Install the rbac for cluster in namespace from where you are executing the experiments `kubectl apply Service/rbac.yaml`
-
+- Based on your use case pick one of the choice from here `https://github.com/litmuschaos/chaos-charts/tree/master/charts/generic/aws-ec2-terminate`
+   
 ### Sample Rbac Manifest for Service Owner use case
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/chaostoolkit/chaostoolkit-pod-delete/Service/rbac.yaml yaml)
+[embedmd]:# (https://github.com/litmuschaos/chaos-charts/tree/master/charts/generic/aws-ec2-terminate/rbac.yaml yaml)
 ```yaml
----
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: k8-pod-delete-sa
-  namespace: default
+  name: chaos-admin
   labels:
-    name: k8-pod-delete-sa
+    name: chaos-admin
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: Role
+kind: ClusterRole
 metadata:
-  name: k8-pod-delete-sa
-  namespace: default
+  name: chaos-admin
   labels:
-    name: k8-pod-delete-sa
+    name: chaos-admin
 rules:
-- apiGroups: ["","litmuschaos.io","batch","apps"]
-  resources: ["pods","deployments","jobs","configmaps","chaosengines","chaosexperiments","chaosresults"]
-  verbs: ["create","list","get","patch","update","delete"]
+- apiGroups: ["","apps","batch","extensions","litmuschaos.io","openebs.io","storage.k8s.io"]
+  resources: ["chaosengines","chaosexperiments","chaosresults","configmaps","cstorpools","cstorvolumereplicas","events","jobs","persistentvolumeclaims","persistentvolumes","pods","pods/exec","pods/log","secrets","storageclasses","chaosengines","chaosexperiments","chaosresults","configmaps","cstorpools","cstorvolumereplicas","daemonsets","deployments","events","jobs","persistentvolumeclaims","persistentvolumes","pods","pods/eviction","pods/exec","pods/log","replicasets","secrets","services","statefulsets","storageclasses"]
+  verbs: ["create","delete","get","list","patch","update"]
 - apiGroups: [""]
   resources: ["nodes"]
-  verbs : ["get","list"]
+  verbs: ["get","list","patch"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: RoleBinding
+kind: ClusterRoleBinding
 metadata:
-  name: k8-pod-delete-sa
-  namespace: default
+  name: chaos-admin
   labels:
-    name: k8-pod-delete-sa
+    name: chaos-admin
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: k8-pod-delete-sa
+  kind: ClusterRole
+  name: chaos-admin
 subjects:
 - kind: ServiceAccount
-  name: k8-pod-delete-sa
+  name: chaos-admin
   namespace: default
 ```
 
@@ -192,7 +158,43 @@ subjects:
     <td> FILE </td>
     <td> Type of pod-delete chaos (in terms of steady state checks performed) we want to execute, represented by the chaostoolkit json file</td>
     <td> Mandatory  </td>
-    <td> Default to `pod-app-kill-health.json` </td>
+    <td> Default to `ec2-delete.json` </td>
+  </tr>
+  <tr>
+    <td> AWS_ROLE </td>
+    <td> AWS role which will be use from this namespace</td>
+    <td> Mandatory  </td>
+    <td> Default to `chaosec2access` </td>
+  </tr>
+  <tr>
+    <td> AWS_ACCOUNT </td>
+    <td> Which AWS account the AWS role will be used</td>
+    <td> Mandatory  </td>
+    <td> Default to `000000000000` </td>
+  </tr>
+  <tr>
+    <td> AWS_REGION </td>
+    <td> AWS region where we want to terminate the ec2</td>
+    <td> Mandatory  </td>
+    <td> Default to `us-west-2` </td>
+  </tr>
+  <tr>
+    <td> AWS_AZ </td>
+    <td> AWS Availiblity Zone  where we want to terminate the ec2</td>
+    <td> Mandatory  </td>
+    <td> Default to `us-west-2c` </td>
+  </tr>
+  <tr>
+    <td> AWS_RESOURCE </td>
+    <td> AWS Resource we want to terminate, this time used for aws kubernetes cluster</td>
+    <td> Mandatory  </td>
+    <td> Default to `ec2-iks` </td>
+  </tr>
+  <tr>
+    <td> AWS_SSL </td>
+     <td> AWS end point for making call, has SSL enbaledor not</td>
+    <td> Mandatory  </td>
+    <td> Default to `false` </td>
   </tr>
   <tr>
     <td> REPORT  </td>
@@ -212,6 +214,7 @@ subjects:
     <td> Optional  </td>
     <td> Defaults to is `default` </td>
   </tr>
+
 </table>
 
 #### Sample ChaosEngine Manifest
