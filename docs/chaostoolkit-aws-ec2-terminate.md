@@ -22,7 +22,7 @@ sidebar_label: EC2 Terminate
 
 ## Prerequisites
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `aws-ec2-terminate` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.7.0?file=charts/chaostoolkit/aws-ec2-terminate/experiment.yaml)
+- Ensure that the `aws-ec2-terminate` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.7.0?file=charts/chaostoolkit/k8-aws-ec2-terminate/experiment.yaml)
 - Ensure you have nginx default application setup on default namespac ( if you are using specific namespace please execute beloe on that namespace)
 
 ## Entry Criteria
@@ -70,11 +70,11 @@ sidebar_label: EC2 Terminate
 - Follow the steps in the sections below to create the chaosServiceAccount, prepare the ChaosEngine & execute the experiment.
 
 ## Prepare chaosServiceAccount
-- Based on your use case pick one of the choice from here `https://github.com/litmuschaos/chaos-charts/tree/master/charts/generic/aws-ec2-terminate`
+- Based on your use case pick one of the choice from here `https://github.com/litmuschaos/chaos-charts/tree/master/charts/generic/k8-aws-ec2-terminate`
    
 ### Sample Rbac Manifest for Service Owner use case
 
-[embedmd]:# (https://github.com/litmuschaos/chaos-charts/tree/master/charts/generic/aws-ec2-terminate/rbac.yaml yaml)
+[embedmd]:# (https://github.com/litmuschaos/chaos-charts/tree/master/charts/generic/k8-aws-ec2-terminate/rbac.yaml yaml)
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
@@ -219,43 +219,61 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/chaostoolkit/chaostoolkit-pod-delete/engine.yaml yaml)
+[embedmd]:# (https://github.com/litmuschaos/chaos-charts/tree/master/charts/generic/k8-aws-ec2-terminate/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
-  name: nginx-chaos-app-health
+  name: aws-ec2-terminate
   namespace: default
 spec:
   appinfo:
     appns: 'default'
     applabel: 'app=nginx'
     appkind: 'deployment'
-  annotationCheck: 'true'
+  annotationCheck: 'false'
   engineState: 'active'
-  chaosServiceAccount: k8-pod-delete-sa
   monitoring: false
   jobCleanUpPolicy: 'retain'
+  chaosServiceAccount: chaos-admin
+  components:
+    runner:
+      runnerannotation:
+        iam.amazonaws.com/role: "k8s-chaosec2access"
   experiments:
-    - name: k8-pod-delete
+    - name: aws-ec2-terminate
       spec:
         components:
-          env:
-            # set chaos namespace
+          experimentannotation:
+            iam.amazonaws.com/role: "k8s-chaosec2access"
+          env: 
             - name: NAME_SPACE
-              value: 'default'
-            # set chaos label name
+              value: default
             - name: LABEL_NAME
-              value: 'nginx'
-            # pod endpoint
+              value: app=nginx
             - name: APP_ENDPOINT
-              value: 'localhost'
+              value: localhost
             - name: FILE
-              value: 'pod-app-kill-health.json'
+              value: 'ec2-delete.json'
+            - name: AWS_ROLE
+              value: 'chaosec2access'
+            - name: AWS_ACCOUNT
+              value: '0000000000'
+            - name: AWS_REGION
+              value: 'us-west-2'
+            - name: AWS_AZ
+              value: 'us-west-2c'
+            - name: AWS_RESOURCE
+              value: 'ec2-iks'  
+            - name: AWS_SSL
+              value: 'false'
             - name: REPORT
               value: 'true'
             - name: REPORT_ENDPOINT
               value: 'none'
+            - name: TEST_NAMESPACE
+              value: 'default'
+
 ```
 
 ### Create the ChaosEngine Resource
