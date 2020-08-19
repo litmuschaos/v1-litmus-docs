@@ -112,8 +112,7 @@
       "scheduling"
     ],
     "Chaos Workflow": [
-      "chaos-workflows",
-      "chaostoolkit-argo-workflows"
+      "chaos-workflows"
     ],
     "Litmus FAQs": [
       "faq-general",

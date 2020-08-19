@@ -111,8 +111,7 @@
       "version-1.7.0-scheduling"
     ],
     "Chaos Workflow": [
-      "version-1.7.0-chaos-workflows",
-      "version-1.7.0-chaostoolkit-argo-workflows"
+      "version-1.7.0-chaos-workflows"
     ],
     "Litmus FAQs": [
       "version-1.7.0-faq-general",
