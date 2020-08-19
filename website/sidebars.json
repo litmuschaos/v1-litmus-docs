@@ -63,7 +63,8 @@
         "ids": [
           "Kubernetes-Chaostoolkit-Application",
           "Kubernetes-Chaostoolkit-Service",
-          "Kubernetes-Chaostoolkit-Cluster-Kiam"
+          "Kubernetes-Chaostoolkit-Cluster-Kiam",
+          "Kubernetes-Chaostoolkit-AWS"
         ]
       },
       {
@@ -111,7 +112,8 @@
       "scheduling"
     ],
     "Chaos Workflow": [
-      "chaos-workflows"
+      "chaos-workflows",
+      "chaostoolkit-argo-workflows"
     ],
     "Litmus FAQs": [
       "faq-general",

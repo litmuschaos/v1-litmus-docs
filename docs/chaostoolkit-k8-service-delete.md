@@ -1,7 +1,7 @@
 ---
 id: Kubernetes-Chaostoolkit-Service
 title: ChaosToolKit Service Delete Experiment Details
-sidebar_label: Kubernetes Application Service
+sidebar_label: Application Service
 ---
 ------
 
@@ -18,6 +18,7 @@ sidebar_label: Kubernetes Application Service
     <td> ChaosToolKit Service delete experiment </td>
     <td> Kubeadm, Minikube </td>
   </tr>
+  
 </table>
 
 ## Prerequisites
@@ -182,7 +183,12 @@ subjects:
     <td> Optional  </td>
     <td> Default to setup for Kafka topic for chaos, but can support any reporting database </td>
   </tr>
-
+  <tr>
+    <td> TEST_NAMESPACE </td>
+    <td> Place holder from where the chaos experiment is executed</td>
+    <td> Optional  </td>
+    <td> Defaults to is `default` </td>
+  </tr>
 </table>
 
 #### Sample ChaosEngine Manifest
