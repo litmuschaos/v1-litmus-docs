@@ -1,7 +1,7 @@
 ---
 id: Kubernetes-Chaostoolkit-Cluster-Kiam
 title: ChaosToolKit Cluster Level Pod Delete Experiment Details in kube-system
-sidebar_label: Kubernetes Cluster Level Pod - kiam
+sidebar_label: Cluster Pod - kiam
 ---
 ------
 
@@ -85,6 +85,12 @@ sidebar_label: Kubernetes Cluster Level Pod - kiam
     <td> ChaosToolKit All pod delete experiment with health validation</td>
     <td> Executing via Custom label name <custom>=<> </td>
     <td> pod-custom-kill-all.json </td>
+  </tr>
+  <tr>
+    <td> TEST_NAMESPACE </td>
+    <td> Place holder from where the chaos experiment is executed</td>
+    <td> Optional  </td>
+    <td> Defaults to is `default` </td>
   </tr>
 </table>
 
