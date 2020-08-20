@@ -24,7 +24,7 @@ sidebar_label: Container Kill
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `container-kill` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.7.0?file=charts/generic/container-kill/experiment.yaml)
-- Cluster should have docker runtime, if the chaos_lib is `pumba`. It should have containerd runtime in cluster, if the chaos_lib is `containerd`.
+- Cluster should have docker runtime, if the chaos_lib is `pumba`. It should have containerd runtime in cluster, if the chaos_lib is `litmus`.
 
 ## Entry Criteria
 
@@ -40,17 +40,17 @@ sidebar_label: Container Kill
     - It can kill the multiple containers (can be tuned by KILL_COUNT env) in the specified application pod by sending SIGKILL termination signal to its docker socket (hence docker runtime is required)
     - Containers are killed using the `kill` command provided by [pumba](https://github.com/alexei-led/pumba)
     - Pumba is run as a pod on the application node. It have ability to kill the application containers multiple times. Which can be varied by `TOTAL_CHAOS_DURATION` and `CHAOS_INTERVAL`.
-- Containerd chaoslib details
-    - It can kill the multiple containers in the specified application pod by `crictl-chaos` Lib.
+- litmus chaoslib details
+    - It can kill the multiple containers in the specified application pod by `litmus` Lib.
     - Containers are killed using the `crictl stop` command.
-    - containerd-chaos is run as a pod on the application node. It have ability to kill the application containers multiple times. Which can be varied by `TOTAL_CHAOS_DURATION` and `CHAOS_INTERVAL`.
+    - container-kill is run as a pod on the application node. It have ability to kill the application containers multiple times. Which can be varied by `TOTAL_CHAOS_DURATION` and `CHAOS_INTERVAL`.
 - Tests deployment sanity (replica availability & uninterrupted service) and recovery workflow of the application
 - Good for testing recovery of pods having side-car containers
 
 ## Integrations
 
-- Container kill is achieved using the `pumba` or `containerd_chaos` chaos library
-- The desired pumba and containerd image can be configured in the env variable `LIB_IMAGE`. 
+- Container kill is achieved using the `pumba` or `litmus` chaos library
+- The desired pumba and litmus image can be configured in the env variable `LIB_IMAGE`. 
 
 ## Steps to Execute the Chaos Experiment
 
