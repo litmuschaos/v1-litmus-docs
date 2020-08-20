@@ -96,7 +96,7 @@ namespaces. Ensure that you have the right permission to be able to create the s
 
   ```
   kubectl apply -f https://raw.githubusercontent.com/litmuschaos/chaos-workflows/master/Argo/argo-access.yaml -n litmus
-` ```
+  ```
 
 ## Create the Chaos Workflow
 
@@ -106,15 +106,12 @@ namespaces. Ensure that you have the right permission to be able to create the s
   - Triggers a random pod-kill of the Nginx replica by creating the chaosengine CR.
   - Cleans up after chaos.
 
-  ### For litmus pod-delete
   ```
   argo submit https://raw.githubusercontent.com/litmuschaos/chaos-workflows/master/Argo/argowf-native-pod-delete.yaml -n litmus
   ```
 
-  ### For chaostoolkit pod-delete
-  ```
-  argo submit https://raw.githubusercontent.com/litmuschaos/chaos-workflows/master/Argo/argowf-native-pod-delete.yaml -n litmus
-  ```
+  - **Note**: If you are using the chaostoolkit experiment, submit [this](https://raw.githubusercontent.com/litmuschaos/chaos-workflows/master/Argo/argowf-chaos-admin.yaml) workflow manifest instead.
+
 
 ### Visualize the Chaos Workflow
 
