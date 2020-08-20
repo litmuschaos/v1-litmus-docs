@@ -73,15 +73,22 @@ namespaces. Ensure that you have the right permission to be able to create the s
 - Install the litmus-admin service account to be used by the chaos-operator while executing the experiment (this example
   uses the [admin-mode](https://docs.litmuschaos.io/docs/next/admin-mode/) of chaos execution)
 
+### Install the RBAC & experiment CR for litmus
+
   ```
   kubectl apply -f https://litmuschaos.github.io/litmus/litmus-admin-rbac.yaml
   ```
 
-- Install the pod-delete chaos experiment
+  - Install the pod-delete chaos experiment
 
   ```
   kubectl apply -f https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/pod-delete/experiment.yaml -n litmus
   ```
+
+  - **Note**: If you are interested in using chaostoolkit to perform the pod-delete, instead of the native litmus lib, you can apply 
+  this [rbac](https://github.com/litmuschaos/chaos-charts/tree/testing/charts/chaostoolkit/k8-pod-delete/Cluster/rbac-admin.yaml) 
+  & [experiment](https://hub.litmuschaos.io/api/chaos/1.7.0?file=charts/chaostoolkit/k8-pod-delete/experiment.yaml) manifests instead 
+  of the ones described above.
 
 - Create the service account and associated RBAC, which will be used by the Argo workflow controller to execute the
   actions specified in the workflow. In our case, this corresponds to the launch of the Nginx benchmark job and creating
@@ -90,7 +97,7 @@ namespaces. Ensure that you have the right permission to be able to create the s
 
   ```
   kubectl apply -f https://raw.githubusercontent.com/litmuschaos/chaos-workflows/master/Argo/argo-access.yaml -n litmus
-` ```
+  ```
 
 ## Create the Chaos Workflow
 
@@ -103,6 +110,9 @@ namespaces. Ensure that you have the right permission to be able to create the s
   ```
   argo submit https://raw.githubusercontent.com/litmuschaos/chaos-workflows/master/Argo/argowf-native-pod-delete.yaml -n litmus
   ```
+
+  - **Note**: If you are using the chaostoolkit experiment, submit [this](https://raw.githubusercontent.com/litmuschaos/chaos-workflows/master/Argo/argowf-chaos-admin.yaml) workflow manifest instead.
+
 
 ### Visualize the Chaos Workflow
 
