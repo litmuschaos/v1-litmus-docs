@@ -15,7 +15,8 @@
     ],
     "Concepts": [
       "chaosengine",
-      "chaosschedule"
+      "chaosschedule",
+      "litmus-probe"
     ],
     "Platforms": [
       {
