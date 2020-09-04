@@ -170,8 +170,12 @@ without deleting the existing chaosengine resources first, the chaos operator de
 is attempted. Since the stale chaosengines have the finalizer present on them, their deletion (triggered by the CRD delete) and 
 by consequence, the deletion of the chaosengine CRD itself is "stuck". 
 
-In such cases, manually remove the finalizer entries on the stale chaosengines to facilitate their successful delete. To do this, 
-run:
+In such cases, manually remove the finalizer entries on the stale chaosengines to facilitate their successful delete. 
+To get the chaosengine, run:
+ 
+ `kubectl get chaosengine -n <namespace>`
+
+followed by:
 
  `kubectl edit chaosengine <chaosengine-name> -n <namespace>` and remove the finalizer entry `chaosengine.litmuschaos.io/finalizer`
 
