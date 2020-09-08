@@ -137,7 +137,13 @@ subjects:
     <td> The time duration for chaos injection (seconds) </td>
     <td> Optional </td>
     <td> Defaults to 20s </td>
-  </tr>    
+  </tr>
+    <tr>
+    <td> PODS_AFFECTED_PERC </td>
+    <td> The Percentage of total pods to target  </td>
+    <td> Optional </td>
+    <td> Defaults to 0% (corresponds to 1 replica) </td>
+  </tr>  
   <tr>
     <td> LIB_IMAGE  </td>
     <td> LIB Image used to kill the container </td>

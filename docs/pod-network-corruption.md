@@ -137,6 +137,12 @@ subjects:
     <td> Default (60000ms) </td>
   </tr>
   <tr>
+    <td> PODS_AFFECTED_PERC </td>
+    <td> The Percentage of total pods to target  </td>
+    <td> Optional </td>
+    <td> Defaults to 0% (corresponds to 1 replica) </td>
+  </tr> 
+  <tr>
     <td> LIB </td>
     <td> The chaos lib used to inject the chaos </td>
     <td> Optional  </td>
