@@ -14,7 +14,8 @@
     ],
     "Concepts": [
       "version-1.7.0-chaosengine",
-      "version-1.7.0-chaosschedule"
+      "version-1.7.0-chaosschedule",
+      "version-1.7.0-litmus-probe"
     ],
     "Platforms": [
       {
