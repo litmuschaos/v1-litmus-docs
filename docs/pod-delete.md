@@ -182,11 +182,11 @@ subjects:
     <td> Default to `true`, With `terminationGracePeriodSeconds=0`  </td>
   </tr>
   <tr>
-    <td> KILL_COUNT </td>
-    <td> No. of application pods to be deleted </td>
-    <td> Optional  </td>
-    <td> Default to `1`, kill_count > 1 is only supported by litmus lib , not by the powerfulseal </td>
-  </tr>
+    <td> PODS_AFFECTED_PERC </td>
+    <td> The Percentage of total pods to target  </td>
+    <td> Optional </td>
+    <td> Defaults to 0% (corresponds to 1 replica) </td>
+  </tr> 
   <tr>
     <td> RAMP_TIME </td>
     <td> Period to wait before and after injection of chaos in sec </td>

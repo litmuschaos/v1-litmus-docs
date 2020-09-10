@@ -198,16 +198,16 @@ subjects:
     <td> Defaults to 15s </td>
   </tr>
   <tr>
+    <td> PODS_AFFECTED_PERC </td>
+    <td> The Percentage of total pods to target  </td>
+    <td> Optional </td>
+    <td> Defaults to 0% (corresponds to 1 replica) </td>
+  </tr> 
+  <tr>
     <td> CHAOS_INTERVAL </td>
     <td> Time interval b/w two successive pod failures (sec) </td>
     <td> Optional </td>
     <td> Defaults to 5s </td>
-  </tr>
-  <tr>
-    <td> KILL_COUNT </td>
-    <td> No. of cassandra pods to be deleted </td>
-    <td> Optional  </td>
-    <td> Default to `1`, kill_count > 1 is only supported by litmus lib , not by the powerfulseal </td>
   </tr>
   <tr>
     <td> LIB </td>
