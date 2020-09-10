@@ -8,7 +8,7 @@ original_id: litmus-probe
 
 ## Litmus Probes
 
-Litmus probes can be defined as “pluggable” checks you can define within the ChaosEngine for any chaos experiment. The experiment pods execute these checks based on the mode they are defined in & factor their success as necessary conditions in determining the verdict of the experiment (along with the standard “in-built” checks). 
+Litmus probes are pluggable checks that can be defined within the ChaosEngine for any chaos experiment. The experiment pods execute these checks based on the mode they are defined in & factor their success as necessary conditions in determining the verdict of the experiment (along with the standard “in-built” checks). 
 
 Litmus currently supports three types of probes: 
 
@@ -16,7 +16,7 @@ Litmus currently supports three types of probes:
 - **cmdProbe:** To execute any user-desired health-check function implemented as a shell command
 - **k8sProbe:** To perform CRUD operations against native & custom Kubernetes resources
 
-These probes can be used in isolation or in several combinations to achieve the desired checks. While the httpProbe & k8sProbe are fully declarative in the way they are conceived, the cmdProbe expects the user to provide a shell command to implement checks that are highly specific to the application use case.
+These probes can be used in isolation or in several combinations to achieve the desired checks. While the `httpProbe` & `k8sProbe` are fully declarative in the way they are conceived, the `cmdProbe` expects the user to provide a shell command to implement checks that are highly specific to the application use case.
 
 The probes can be set up to run in different modes: 
 
@@ -28,7 +28,7 @@ The probes can be set up to run in different modes:
 All probes share some common attributes:
 
 - **probeTimeout:** Represents the time limit for the probe to execute the check specified and return the expected data. 
-- **retry:** The number of times a check is re-run upon failure in the first attempt, before declaring the probe status as failed. 
+- **retry:** The number of times a check is re-run upon failure in the first attempt before declaring the probe status as failed. 
 - **interval:** The period between subsequent retries 
 
 
@@ -36,7 +36,7 @@ All probes share some common attributes:
 
 ### httpProbe
 
-The httpProbe allows developers to specify a URL which the experiment uses to gauge health/service availability (or other custom conditions) as part of the entry/exit criteria. The received status code is mapped against an expected status. It can be defined at `.spec.experiments[].spec.httpProbe` the path inside chaosengine.
+The `httpProbe` allows developers to specify a URL which the experiment uses to gauge health/service availability (or other custom conditions) as part of the entry/exit criteria. The received status code is mapped against an expected status. It can be defined at `.spec.experiments[].spec.httpProbe` the path inside ChaosEngine.
 
 ```yaml
 httpProbe:
@@ -51,13 +51,13 @@ httpProbe:
     retry: 1
     probePollingInterval: 2
 ```
-The httpProbe is better used in the Continuous mode of operation as a parallel liveness indicator of a target or downstream application. It uses the `probePollingInterval` property to specify the polling interval for the access checks. 
+The `httpProbe` is better used in the Continuous mode of operation as a parallel liveness indicator of a target or downstream application. It uses the `probePollingInterval` property to specify the polling interval for the access checks. 
 
 ### cmdProbe
 
-The cmdProbe allows developers to run shell commands and match the resulting output as part of the entry/exit criteria. The intent behind this probe is to allow users to implement a non-standard, imperative way to express their hypothesis. Say, you are looking for specific data within a database, parse the value out of a JSON blob being dumped into a certain path, or check for the existence of a particular string in a service log - the cmdProbe can enable you to check this. 
+The `cmdProbe` allows developers to run shell commands and match the resulting output as part of the entry/exit criteria. The intent behind this probe was to allow users to implement a non-standard & imperative way for expressing their hypothesis. For example, the cmdProbe enables you to check for specific data within a database, parse the value out of a JSON blob being dumped into a certain path or check for the existence of a particular string in the service logs. 
 
-And precisely in order to support this behavior, the probe supports an inline mode in which the command is run from within the experiment image as well as a  source mode, where the command execution is carried out from within a new pod whose image can be specified. While inline is preferred for simple shell commands (the litmus go-runner image today is alpine-based), source mode can be used when application-specific binaries are required. The cmdProbe can be defined at `.spec.experiments[].spec.cmdProbe` the path inside the chaosengine.
+In order to enable this behaviour, the probe supports an inline mode in which the command is run from within the experiment image as well as a source mode, where the command execution is carried out from within a new pod whose image can be specified. While inline is preferred for simple shell commands (the litmus go-runner image today is alpine-based), source mode can be used when application-specific binaries are required. The `cmdProbe` can be defined at `.spec.experiments[].spec.cmdProbe` the path inside the ChaosEngine.
 
 ```yaml
 cmdProbe:
@@ -77,7 +77,7 @@ cmdProbe:
 
 ### k8sProbe
 
-With the proliferation of custom resources & operators, especially in the case of stateful applications, the steady-state is manifested as status parameters/flags within Kubernetes resources. k8sProbe addresses verification of the desired resource state by allowing users to define the Kubernetes GVR (group-version-resource) with appropriate filters (field selectors/label selectors). The experiment makes use of the Kubernetes Dynamic Client to achieve this.the k8sProbe can be defined at `.spec.experiments[].spec.k8sProbe` the path inside chaosengine.
+With the proliferation of custom resources & operators, especially in the case of stateful applications, the steady-state is manifested as status parameters/flags within Kubernetes resources. k8sProbe addresses verification of the desired resource state by allowing users to define the Kubernetes GVR (group-version-resource) with appropriate filters (field selectors/label selectors). The experiment makes use of the Kubernetes Dynamic Client to achieve this.The `k8sProbe` can be defined at `.spec.experiments[].spec.k8sProbe` the path inside ChaosEngine.
 
 ```yaml
 k8sProbe:
@@ -97,11 +97,11 @@ k8sProbe:
 ```
 ## Probe Status & Deriving Inferences 
 
-The litmus chaos experiments run the probes defined in the ChaosEngine and update their stage-wise success in the ChaosResult custom resource, with details including the overall probeSuccessPercentage (a ratio of successful checks v/s total probes) and failure step, where applicable. The success of a probe is dependent on whether the expected status/results are met and also on whether it is successful in all the experiment phases defined by the probe’s execution mode. For example, probes that are executed in “Edge” mode, need the checks to be successful both during the pre-chaos & post-chaos phases to be declared as successful. 
+The litmus chaos experiments run the probes defined in the ChaosEngine and update their stage-wise success in the ChaosResult custom resource, with details including the overall `probeSuccessPercentage` (a ratio of successful checks v/s total probes) and failure step, where applicable. The success of a probe is dependent on whether the expected status/results are met and also on whether it is successful in all the experiment phases defined by the probe’s execution mode. For example, probes that are executed in “Edge” mode, need the checks to be successful both during the pre-chaos & post-chaos phases to be declared as successful. 
 
-The pass criteria for the experiment is a logical AND function of all the probes defined in the ChaosEngine as well as inbuilt entry/exit criteria. Failure of either indicates a failed hypothesis and is deemed experiment failure.
+The pass criteria for an experiment is the logical conjunction of all probes defined in the ChaosEngine and an inbuilt entry/exit criteria. Failure of either indicates a failed hypothesis and is deemed experiment failure.
 
-Provided below is a chaosresult snippet containing the probe status for a mixed-probe chaosengine. 
+Provided below is a ChaosResult snippet containing the probe status for a mixed-probe ChaosEngine. 
 
 ```yaml
 Name:         app-pod-delete
@@ -114,7 +114,7 @@ Metadata:
   Creation Timestamp:  2020-08-29T08:28:26Z
   Generation:          36
   Resource Version:    50239
-  Self Link:           /apis/litmuschaos.io/v1alpha1/namespaces/test/chaosresults/app-pod-delete
+  Self Link:           /apis/litmuschaos.io/v1alpha1/namespaces/test/ChaosResults/app-pod-delete
   UID:                 b9e3638a-b7a4-4b93-bfea-bd143d91a5e8
 Spec:
   Engine:      probe
