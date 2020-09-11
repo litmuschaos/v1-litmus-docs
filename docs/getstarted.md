@@ -97,7 +97,7 @@ Expected output:
 
 **NOTE**:
 
-- In this guide, we shall describe the steps to inject container-kill chaos on an nginx application already deployed in the
+- In this guide, we shall describe the steps to inject pod-delete chaos on an nginx application already deployed in the
 nginx namespace. It is a mandatory requirement to ensure that the chaos custom resources (chaosexperiment and chaosengine)
 and the experiment specific serviceaccount are created in the same namespace (typically, the same as the namespace of the
 application under test (AUT), in this case nginx). This is done to ensure that the developers/users of the experiment isolate
@@ -132,55 +132,54 @@ kubectl get chaosexperiments -n nginx
 ### Setup Service Account
 
 A service account should be created to allow chaosengine to run experiments in your application namespace. Copy the following
-into a `rbac.yaml` manifest and run `kubectl apply -f rbac.yaml` to create one such account on the nginx namespace. This serviceaccount
-has just enough permissions needed to run the container-kill chaos experiment.
+into a `rbac.yaml` manifest and run `kubectl apply -f rbac.yaml` to create one such account on the nginx namespace. This serviceaccount has just enough permissions needed to run the pod-delete chaos experiment.
 
 **NOTE**:
 
-- For rbac samples corresponding to other experiments such as, say, pod-delete, please refer the respective experiment folder in
-the [chaos-charts](https://github.com/litmuschaos/chaos-charts/tree/master/charts/generic/pod-delete) repository.
+- For rbac samples corresponding to other experiments such as, say, container-kill, please refer the respective experiment folder in
+the [chaos-charts](https://github.com/litmuschaos/chaos-charts/tree/master/charts/generic/container-kill) repository.
 
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/container-kill/rbac_nginx_getstarted.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-delete/rbac_nginx_getstarted.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: container-kill-sa
+  name: pod-delete-sa
   namespace: nginx
   labels:
-    name: container-kill-sa
+    name: pod-delete-sa
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: Role
 metadata:
-  name: container-kill-sa
+  name: pod-delete-sa
   namespace: nginx
   labels:
-    name: container-kill-sa
+    name: pod-delete-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps"]
-  resources: ["pods","jobs","pods/exec","pods/log","events","chaosengines","chaosexperiments","chaosresults"]
+  resources: ["pods","deployments","pods/log","events","jobs","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
 metadata:
-  name: container-kill-sa
+  name: pod-delete-sa
   namespace: nginx
   labels:
-    name: container-kill-sa
+    name: pod-delete-sa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: container-kill-sa
+  name: pod-delete-sa
 subjects:
 - kind: ServiceAccount
-  name: container-kill-sa
+  name: pod-delete-sa
   namespace: nginx
-
 ```
+
 
 ### Annotate your application
 
@@ -206,7 +205,7 @@ Change the `chaosServiceAccount` to the name of service account created in above
 
 <strong> NOTE:</strong> To learn more about the various fields in the ChaosEngine spec and their supported values, refer to [Constructing ChaosEngine](https://docs.litmuschaos.io/docs/chaosengine/)
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/container-kill/engine_nginx_getstarted.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-delete/engine_nginx_getstarted.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -214,61 +213,55 @@ metadata:
   name: nginx-chaos
   namespace: nginx
 spec:
+  appinfo:
+    appns: 'nginx'
+    applabel: 'app=nginx'
+    appkind: 'deployment'
   # It can be true/false
   annotationCheck: 'true'
   # It can be active/stop
   engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx
   auxiliaryAppInfo: ''
-  appinfo:
-    appns: 'nginx'
-    applabel: 'app=nginx'
-    appkind: 'deployment'
-  chaosServiceAccount: container-kill-sa
+  chaosServiceAccount: pod-delete-sa
   monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:
-    - name: container-kill
+    - name: pod-delete
       spec:
         components:
           env:
-            # specify the name of the container to be killed
-            - name: TARGET_CONTAINER
-              value: 'nginx'
+            # set chaos duration (in sec) as desired
+            - name: TOTAL_CHAOS_DURATION
+              value: '30'
 
-            # provide the chaos interval
+            # set chaos interval (in sec) as desired
             - name: CHAOS_INTERVAL
               value: '10'
-
-            # provide the total chaos duration
-            - name: TOTAL_CHAOS_DURATION
-              value: '20'
-
-            # For containerd image use: litmuschaos/container-kill-helper:latest
-            - name: LIB_IMAGE
-              value: 'gaiaadm/pumba:0.6.5'
-
-            # It supports pumba and containerd
-            - name: LIB
-              value: 'pumba'
+              
+            # pod failures without '--force' & default terminationGracePeriodSeconds
+            - name: FORCE
+              value: 'false'
 ```
+
 
 ### Override Default Chaos Experiments Variables
 
 From LitmusChaos v1.1.0, the default environment variable values in chaosexperiments can be overridden by specifying
 them in the chaosengine under `experiments.<experiment_name>.spec.components.env` with the desired value. In the
-example below, the TARGET_CONTAINER is being set to a desired value based on the application instance.
+example below, the `TOTAL_CHAOS_DURATION` is being set to a desired value based on use-case.
 
 ```console
 ...
 experiments:
-    - name: container-kill
+    - name: pod-delete
       spec:
         components:
           env:
-            - name: TARGET_CONTAINER
-              value: nginx
+            - name: TOTAL_CHAOS_DURATION
+              value: '30'
+
 ```
 
 
@@ -288,7 +281,7 @@ Describe the ChaosResult CR to know the status of each experiment. The ```status
 <strong> NOTE:</strong>  ChaosResult CR name will be `<chaos-engine-name>-<chaos-experiment-name>`
 
 ```console
-kubectl describe chaosresult nginx-chaos-container-kill -n nginx
+kubectl describe chaosresult nginx-chaos-pod-delete -n nginx
 ```
 
 ## Uninstallation
