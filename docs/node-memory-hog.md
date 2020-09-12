@@ -116,6 +116,12 @@ subjects:
     <th> Notes </th>
   </tr>
   <tr>
+    <td> APP_NODE </td>
+    <td> Name of the node subjected to memory hog  </td>
+    <td> Mandatory  </td>
+    <td> </td>
+  </tr>
+  <tr>
     <td> TOTAL_CHAOS_DURATION </td>
     <td> The time duration for chaos insertion (seconds) </td>
     <td> Optional </td>
@@ -187,10 +193,14 @@ spec:
             - name: TOTAL_CHAOS_DURATION
               value: '120'
 
-            ## specify the size as percent of total available memory (in percentage %)
-            ## default value 90%
+            ## specify the size as percent of total available memory (in percentage)
+            ## default value 90
             - name: MEMORY_PERCENTAGE
               value: '90'
+            
+             # ENTER THE NAME OF THE APPLICATION NODE
+            - name: APP_NODE
+              value: ''
 ```
 
 ### Create the ChaosEngine Resource
