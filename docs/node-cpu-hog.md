@@ -116,7 +116,7 @@ subjects:
   </tr>
   <tr>
     <td> APP_NODE </td>
-    <td> Name of the node to drain  </td>
+    <td> Name of the node subjected to cpu-hog  </td>
     <td> Mandatory  </td>
     <td> </td>
   </tr>
