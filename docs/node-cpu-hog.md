@@ -195,6 +195,10 @@ spec:
             
             - name: NODE_CPU_CORE
               value: ''
+            
+             # ENTER THE NAME OF THE APPLICATION NODE
+            - name: APP_NODE
+              value: ''
 ```
 
 ### Create the ChaosEngine Resource
