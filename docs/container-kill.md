@@ -169,6 +169,12 @@ subjects:
     <td> Defaults to `/run/containerd/containerd.sock` </td>
   </tr>
   <tr>
+    <td> CONTAINER_RUNTIME  </td>
+    <td> container runtime interface for the cluster</td>
+    <td> Optional </td>
+    <td>  Defaults to docker, supported values: docker, containerd, crio </td>
+  </tr>
+  <tr>
     <td> INSTANCE_ID </td>
     <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
     <td> Optional  </td>
@@ -216,6 +222,17 @@ spec:
             # provide the total chaos duration
             - name: TOTAL_CHAOS_DURATION
               value: '20'
+
+            # provide the name of container runtime
+            # it supports docker, containerd, crio
+            # default to docker
+            - name: CONTAINER_RUNTIME
+              value: 'docker'
+
+            # provide the container runtime path for containerd
+            # applicable only for containerd runtime
+            - name: CONTAINER_PATH
+              value: '/run/containerd/containerd.sock'
               
 ```
 
