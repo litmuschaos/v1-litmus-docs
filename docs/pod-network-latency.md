@@ -144,6 +144,18 @@ subjects:
     <td> Defaults to 0% (corresponds to 1 replica) </td>
   </tr> 
   <tr>
+    <td> CONTAINER_RUNTIME  </td>
+    <td> container runtime interface for the cluster</td>
+    <td> Optional </td>
+    <td>  Defaults to docker, supported values: docker, containerd, crio </td>
+  </tr>
+  <tr>
+    <td> CONTAINER_PATH </td>
+    <td> Path of the containerd/crio socket file </td>
+    <td> Optional  </td>
+    <td> Defaults to `/run/containerd/containerd.sock` </td>
+  </tr>
+  <tr>
     <td> LIB </td>
     <td> The chaos lib used to inject the chaos </td>
     <td> Optional  </td>
@@ -222,6 +234,17 @@ spec:
 
             - name: TOTAL_CHAOS_DURATION
               value: '60' # in seconds
+
+            # provide the name of container runtime
+            # it supports docker, containerd, crio
+            # default to docker
+            - name: CONTAINER_RUNTIME
+              value: 'docker'
+
+            # provide the container runtime path
+            # applicable only for containerd and crio runtime
+            - name: CONTAINER_PATH
+              value: '/run/containerd/containerd.sock'
 ```
 
 ### Create the ChaosEngine Resource

@@ -139,6 +139,18 @@ subjects:
     <td> The Percentage of total pods to target  </td>
     <td> Optional </td>
     <td> Defaults to 0% (corresponds to 1 replica) </td>
+  </tr>
+  <tr>
+    <td> CONTAINER_RUNTIME  </td>
+    <td> container runtime interface for the cluster</td>
+    <td> Optional </td>
+    <td>  Defaults to docker, supported values: docker, containerd, crio </td>
+  </tr>
+  <tr>
+    <td> CONTAINER_PATH </td>
+    <td> Path of the containerd/crio socket file </td>
+    <td> Optional  </td>
+    <td> Defaults to `/run/containerd/containerd.sock` </td>
   </tr> 
   <tr>
     <td> LIB </td>
@@ -220,6 +232,17 @@ spec:
             #If not provided it will take the first container of the target pod
             - name: TARGET_CONTAINER
               value: ''
+
+            # provide the name of container runtime
+            # it supports docker, containerd, crio
+            # default to docker
+            - name: CONTAINER_RUNTIME
+              value: 'docker'
+
+            # provide the container runtime path
+            # applicable only for containerd and crio runtime
+            - name: CONTAINER_PATH
+              value: '/run/containerd/containerd.sock'
 ```
 
 
