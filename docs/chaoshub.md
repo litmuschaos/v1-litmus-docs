@@ -45,6 +45,8 @@ Chaos actions that apply to generic Kubernetes resources are classified into thi
 | Node Taint| Taints the node where application pod is scheduled | [node-taint](node-taint.md) |
 | Pod Autoscaler| Scales the application replicas and test the node autoscaling on cluster | [pod-autoscaler](pod-autoscaler.md) |
 | Pod Network Duplication | Injects Network Packet Duplication into Application Pod |[pod-network-duplication](pod-network-duplication.md) |
+| Pod IO Stress | Injects IO stress resources on the application container | [pod-io-stress](pod-io-stress.md) |
+| Node IO stress| Injects IO stress resources on the application node |[node-io-stress](node-io-stress.md) |
 
 ### Application Chaos
 

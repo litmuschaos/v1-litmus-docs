@@ -131,6 +131,17 @@ subjects:
     <td> Optional </td>
     <td> Defaults to 60s </td>
   </tr>
+    <td> LIB  </td>
+    <td> The chaos lib used to inject the chaos. Available libs are <code>litmus</code> and <code>pumba</code> </td>
+    <td> Optional </td>
+    <td> Defaults to <code>litmus</code> </td>
+  </tr>
+   <tr>
+    <td> LIB_IMAGE  </td>
+    <td> Image used to run the stress command. Only used in LIB <code>pumba</code></td>
+    <td> Optional  </td>
+    <td> Defaults to <code>gaiaadm/pumba<code> </td>
+  </tr>      
   <tr>
     <td> PODS_AFFECTED_PERC </td>
     <td> The Percentage of total pods to target  </td>

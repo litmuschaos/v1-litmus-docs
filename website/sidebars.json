@@ -58,7 +58,9 @@
           "pod-autoscaler",
           "Kubernetes-Chaostoolkit-Application",
           "Kubernetes-Chaostoolkit-Service",
-          "Kubernetes-Chaostoolkit-Cluster-Kiam"
+          "Kubernetes-Chaostoolkit-Cluster-Kiam",
+          "pod-io-stress",
+          "node-io-stress"
         ]
       },
       {
