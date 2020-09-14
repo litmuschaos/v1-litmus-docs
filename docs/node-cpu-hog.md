@@ -115,6 +115,12 @@ subjects:
     <th> Notes </th>
   </tr>
   <tr>
+    <td> APP_NODE </td>
+    <td> Name of the node subjected to cpu-hog  </td>
+    <td> Mandatory  </td>
+    <td> </td>
+  </tr>
+  <tr>
     <td> TOTAL_CHAOS_DURATION </td>
     <td> The time duration for chaos insertion (seconds) </td>
     <td> Optional </td>
@@ -188,6 +194,10 @@ spec:
               value: '60'
             
             - name: NODE_CPU_CORE
+              value: ''
+            
+             # ENTER THE NAME OF THE APPLICATION NODE
+            - name: APP_NODE
               value: ''
 ```
 
