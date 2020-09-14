@@ -1,7 +1,7 @@
 ---
-id: pod-cpu-hog
-title: Pod CPU Hog Details
-sidebar_label: Pod CPU Hog
+id: pod-io-stress
+title: Pod IO Stress Details
+sidebar_label: Pod IO Stress
 ---
 ------
 
@@ -15,15 +15,15 @@ sidebar_label: Pod CPU Hog
   </tr>
   <tr>
      <td> Generic </td>
-    <td> Consume CPU resources on the application container</td>
-    <td> GKE, Packet(Kubeadm), Minikube, EKS, AKS  </td>
+    <td> Inject IO stress on the application container</td>
+    <td> GKE, Packet(Kubeadm), Minikube </td>
   </tr>
 </table>
 
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `pod-cpu-hog` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.7.0?file=charts/generic/pod-cpu-hog/experiment.yaml)
+- Ensure that the `pod-io-stress` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.8.0?file=charts/generic/pod-io-stress/experiment.yaml)
 - Cluster must run docker container runtime
 
 ## Entry Criteria
@@ -36,64 +36,61 @@ sidebar_label: Pod CPU Hog
 
 ## Details
 
-- This experiment consumes the CPU resources on the application container (upward of 80%) on specified number of cores
-- It simulates conditions where app pods experience CPU spikes either due to expected/undesired processes thereby testing how the
-  overall application stack behaves when this occurs.
-
+- This experiment causes disk stress on the application pod. The experiment aims to verify the resiliency of applications that share this disk resource for ephemeral or persistent storage purposes
 
 ## Integrations
 
-- Pod CPU can be effected using the chaos library: `litmus`
+- Pod IO Stress can be effected using the chaos library: `pumba`
 
 ## Steps to Execute the Chaos Experiment
 
 - This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to provide in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
 
-- Follow the steps in the sections below to create the chaosServiceAccount, prepare the ChaosEngine & execute the experiment.
+- Follow the steps in the sections below to create the <code>chaosServiceAccount</code>, prepare the ChaosEngine & execute the experiment.
 
 ### Prepare chaosServiceAccount
 
-Use this sample RBAC manifest to create a chaosServiceAccount in the desired (app) namespace. This example consists of the minimum necessary role permissions to execute the experiment.
+Use this sample RBAC manifest to create a <code>chaosServiceAccount</code> in the desired (app) namespace. This example consists of the minimum necessary role permissions to execute the experiment.
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-cpu-hog/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-io-stress/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: pod-cpu-hog-sa
+  name: pod-io-stress-sa
   namespace: default
   labels:
-    name: pod-cpu-hog-sa
+    name: pod-io-stress-sa
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: Role
 metadata:
-  name: pod-cpu-hog-sa
+  name: pod-io-stress-sa
   namespace: default
   labels:
-    name: pod-cpu-hog-sa
+    name: pod-io-stress-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch"]
   resources: ["pods","jobs","events","pods/log","pods/exec","chaosengines","chaosexperiments","chaosresults"]
-  verbs: ["create","list","get","patch","update","delete"]
+  verbs: ["create","list","get","patch","update","delete","deletecollection"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
 metadata:
-  name: pod-cpu-hog-sa
+  name: pod-io-stress-sa
   namespace: default
   labels:
-    name: pod-cpu-hog-sa
+    name: pod-io-stress-sa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: pod-cpu-hog-sa
+  name: pod-io-stress-sa
 subjects:
 - kind: ServiceAccount
-  name: pod-cpu-hog-sa
+  name: pod-io-stress-sa
   namespace: default
 ```
 
@@ -108,43 +105,54 @@ subjects:
 
 <table>
   <tr>
-    <th>  Variables </th>
-    <th>  Description </th>
+    <th> Variables </th>
+    <th> Description </th>
     <th> Type  </th>
     <th> Notes </th>
   </tr>
   <tr>
-    <td> TARGET_CONTAINER </td>
-    <td> Name of the container subjected to CPU stress  </td>
-    <td> Mandatory  </td>
-    <td> </td>
+    <td> FILESYSTEM_UTILIZATION_PERCENTAGE </td>
+    <td> Specify the size as percentage of free space on the file system  </td>
+    <td> Optional  </td>
+    <td> Default to 10%</td>
   </tr>
   <tr>
-    <td> CPU_CORES </td>
-    <td> Number of the cpu cores subjected to CPU stress  </td>
+    <td> FILESYSTEM_UTILIZATION_BYTES </td>
+    <td> Specify the size in GigaBytes(GB).  <code>FILESYSTEM_UTILIZATION_PERCENTAGE</code> & <code>FILESYSTEM_UTILIZATION_BYTES</code> are mutually exclusive. If both are provided, <code>FILESYSTEM_UTILIZATION_PERCENTAGE</code> is prioritized. </td>
     <td> Optional  </td>
-    <td> Default to 1 </td>
-    <td> </td>
+    <td>  </td>
   </tr>
+  <tr>
+    <td> NUMBER_OF_WORKERS </td>
+    <td> It is the number of IO workers involved in IO disk stress </td>
+    <td> Optional  </td>
+    <td> Default to 4 </td>
+  </tr> 
+  <tr>
+    <td> TARGET_POD </td>
+    <td> Name of the application pod subjected to IO stress chaos<td>
+    <td> Optional </td>
+    <td> If not provided it will select from the app label provided</td>
+  </tr>   
   <tr>
     <td> TOTAL_CHAOS_DURATION </td>
-    <td> The time duration for chaos insertion (seconds)  </td>
+    <td> The time duration for chaos (seconds)  </td>
     <td> Optional </td>
-    <td> Default to 60s </td>
+    <td> Default to 120s </td>
   </tr>
   <tr>
     <td> LIB  </td>
-    <td> The chaos lib used to inject the chaos. Available libs are <code>litmus</code> and <code>pumba</code> </td>
+    <td> The chaos lib used to inject the chaos </td>
     <td> Optional </td>
-    <td> Default to <code>litmus</code> </td>
+    <td> Default to </code>pumba<code> </td>
   </tr>
    <tr>
     <td> LIB_IMAGE  </td>
-    <td> Image used to run the stress command. Only used in LIB <code>pumba</code></td>
+    <td> Image used to run the stress command </td>
     <td> Optional  </td>
     <td> Default to <code>gaiaadm/pumba<code> </td>
-  </tr>    
-    <tr>
+  </tr>  
+  <tr>
     <td> PODS_AFFECTED_PERC </td>
     <td> The Percentage of total pods to target  </td>
     <td> Optional </td>
@@ -167,7 +175,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-cpu-hog/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-io-stress/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -185,28 +193,25 @@ spec:
     appns: 'default'
     applabel: 'app=nginx'
     appkind: 'deployment'
-  chaosServiceAccount: pod-cpu-hog-sa
+  chaosServiceAccount: pod-io-stress-sa
   monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:
-    - name: pod-cpu-hog
+    - name: pod-io-stress
       spec:
         components:
           env:
-            # Provide name of target container
-            # where chaos has to be injected
-            - name: TARGET_CONTAINER
-              value: 'nginx'
-
-            #number of cpu cores to be consumed
-            #verify the resources the app has been launched with
-            - name: CPU_CORES
-              value: '1'
-
+            # set chaos duration (in sec) as desired
             - name: TOTAL_CHAOS_DURATION
-              value: '60' # in seconds
-            
+              value: '120'
+
+            ## specify the size as percentage of free space on the file system
+            - name: FILESYSTEM_UTILIZATION_PERCENTAGE
+              value: '10'
+
+            - name: TARGET_POD
+              value: ''
 ```
 
 ### Create the ChaosEngine Resource
@@ -220,16 +225,21 @@ spec:
 
 ### Watch Chaos progress
 
-- Set up a watch on the applications interacting/dependent on the affected pods and verify whether they are running
+- View the status of the pods as they are subjected to IO disk stress. 
 
-  `watch kubectl get pods -n <application-namespace>`
+  `watch -n 1 kubectl get pods -n <application-namespace>`
+
+- Monitor the capacity filled up on the host filesystem
+
+  `watch du -h`
+
 
 ### Check Chaos Experiment Result
 
-- Check whether the application stack is resilient to CPU spikes on the app replica, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
+- Check whether the application stack is resilient to IO stress on the app replica, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult nginx-chaos-pod-cpu-hog -n <application-namespace>`
+  `kubectl describe chaosresult nginx-chaos-pod-io-stress -n <application-namespace>`
 
-## Pod CPU Hog Experiment Demo
+## Pod IO Stress Experiment Demo
 
-- A sample recording of this experiment execution is provided [here](https://youtu.be/MBGSPmZKb2I).
+- The Demo Video will be Added soon.

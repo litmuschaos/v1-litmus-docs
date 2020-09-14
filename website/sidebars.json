@@ -55,7 +55,9 @@
           "pod-network-duplication",
           "node-taint",
           "docker-service-kill",
-          "pod-autoscaler"
+          "pod-autoscaler",
+          "pod-io-stress",
+          "node-io-stress"
         ]
       },
       {
