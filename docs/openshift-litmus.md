@@ -121,52 +121,51 @@ oc get chaosexperiments -n nginx
 
 A service account should be created to allow chaosengine to run experiments in your application namespace. Copy the following
 into a `rbac.yaml` manifest and run `oc apply -f rbac.yaml` to create one such account on the nginx namespace. This serviceaccount
-has just enough permissions needed to run the container-kill chaos experiment.
+has just enough permissions needed to run the pod-delete chaos experiment.
 
 **NOTE**:
 
-- For rbac samples corresponding to other experiments such as, say, pod-delete, please refer the respective experiment folder in the [chaos-charts](https://github.com/litmuschaos/chaos-charts/tree/master/charts/generic/pod-delete) repository.
+- For rbac samples corresponding to other experiments such as, say, container-kill, please refer the respective experiment folder in the [chaos-charts](https://github.com/litmuschaos/chaos-charts/tree/master/charts/generic/container-kill) repository.
 
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/container-kill/rbac_nginx_getstarted.yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-delete/rbac_nginx_getstarted.yaml)
 ```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: container-kill-sa
+  name: pod-delete-sa
   namespace: nginx
   labels:
-    name: container-kill-sa
+    name: pod-delete-sa
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: Role
 metadata:
-  name: container-kill-sa
+  name: pod-delete-sa
   namespace: nginx
   labels:
-    name: container-kill-sa
+    name: pod-delete-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps"]
-  resources: ["pods","jobs","daemonsets","pods/exec","pods/log","events","chaosengines","chaosexperiments","chaosresults"]
-  verbs: ["create","list","get","patch","update","delete"]
+  resources: ["pods","deployments","pods/log","events","jobs","chaosengines","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","update","delete","deletecollection"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
 metadata:
-  name: container-kill-sa
+  name: pod-delete-sa
   namespace: nginx
   labels:
-    name: container-kill-sa
+    name: pod-delete-sa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: container-kill-sa
+  name: pod-delete-sa
 subjects:
 - kind: ServiceAccount
-  name: container-kill-sa
+  name: pod-delete-sa
   namespace: nginx
-
 ```
 
 ### Annotate your application
@@ -205,24 +204,23 @@ spec:
     appns: 'nginx'
     applabel: 'run=nginx'
     appkind: 'deploymentconfig'
-  chaosServiceAccount: container-kill-sa
+  chaosServiceAccount: pod-delete-sa
   # use retain to keep the job for debug
   jobCleanUpPolicy: 'delete'
   experiments:
-    - name: container-kill
+    - name: pod-delete
       spec:
         components:
           env:
-            # specify the name of the container to be killed
-            - name: TARGET_CONTAINER
-              value: 'nginx'
+            - name: TOTAL_CHAOS_DURATION
+              value: '30'
 ```
 
 ### Override Default Chaos Experiments Variables
 
 From LitmusChaos v1.1.0, the default environment variable values in chaosexperiments can be overridden by specifying
 them in the chaosengine under `experiments.<experiment_name>.spec.components.env` with the desired value. In the
-example below, the TARGET_CONTAINER is being set to a desired value based on the application instance. 
+example below, the  TOTAL_CHAOS_DURATION is being set to a desired value based on the application instance. 
 
 ```console
 ...
@@ -231,8 +229,8 @@ experiments:
       spec:
         components:
           env:
-            - name: TARGET_CONTAINER
-              value: nginx
+            - name: TOTAL_CHAOS_DURATION
+              value: '30'
 ```
 
 

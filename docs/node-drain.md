@@ -177,10 +177,13 @@ spec:
     - name: node-drain
       spec:
         components:
+          nodeSelector: 
+            # provide the node labels
+            kubernetes.io/hostname: 'node02'        
           env:
             # set node name
             - name: APP_NODE
-              value: 'node-1'
+              value: 'node-01'
 ```
 
 ### Create the ChaosEngine Resource

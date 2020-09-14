@@ -76,8 +76,8 @@ metadata:
     name: pod-memory-hog-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch"]
-  resources: ["pods","jobs","events","pods/log", "pods/exec", "chaosengines","chaosexperiments","chaosresults"]
-  verbs: ["create","list","get","patch","update","delete"]
+  resources: ["pods","jobs","events","pods/log","pods/exec","chaosengines","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","update","delete","deletecollection"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
@@ -154,6 +154,12 @@ subjects:
     <td> Optional  </td>
     <td> </td>
   </tr>
+   <tr>
+    <td> LIB </td>
+    <td> The chaos lib used to inject the chaos </td>
+    <td> Optional  </td>
+    <td> Defaults to litmus, only litmus supported </td>
+  </tr>
   <tr>
     <td> INSTANCE_ID </td>
     <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
@@ -177,7 +183,7 @@ spec:
   annotationCheck: 'true'
   # It can be active/stop
   engineState: 'active'
-  #ex. values: ns1:name=percona,ns2:run=nginx
+  #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ''
   appinfo:
     appns: 'default'
@@ -198,13 +204,12 @@ spec:
               value: 'nginx'
 
             # Enter the amount of memory in megabytes to be consumed by the application pod
-            # default: 500 (Megabytes)
             - name: MEMORY_CONSUMPTION
-              value: ''
+              value: '500'
 
             - name: TOTAL_CHAOS_DURATION
               value: '60' # in seconds
-
+            
 ```
 
 ### Create the ChaosEngine Resource

@@ -56,17 +56,17 @@
           "node-taint",
           "docker-service-kill",
           "pod-autoscaler",
+          "Kubernetes-Chaostoolkit-Application",
+          "Kubernetes-Chaostoolkit-Service",
+          "Kubernetes-Chaostoolkit-Cluster-Kiam",
           "pod-io-stress",
           "node-io-stress"
         ]
       },
       {
         "type": "subcategory",
-        "label": "Kubernetes",
+        "label": "Kube-AWS",
         "ids": [
-          "Kubernetes-Chaostoolkit-Application",
-          "Kubernetes-Chaostoolkit-Service",
-          "Kubernetes-Chaostoolkit-Cluster-Kiam",
           "Kubernetes-Chaostoolkit-AWS"
         ]
       },

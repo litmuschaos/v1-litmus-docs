@@ -223,8 +223,8 @@ metadata:
     name: container-kill-sa
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps"]
-  resources: ["pods","jobs","daemonsets","pods/exec","pods/log","events","chaosengines","chaosexperiments","chaosresults"]
-  verbs: ["create","list","get","patch","update","delete"]
+  resources: ["pods","jobs","pods/exec","pods/log","events","chaosengines","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","update","delete","deletecollection"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
@@ -273,7 +273,7 @@ ChaosEngine connects the application instance to a Chaos Experiment. Copy the fo
 **NOTE:** You may update the values of `applabel` , `appns`, `appkind` and `experiments` as per your deployment and choices. 
 Change the `chaosServiceAccount` to the name of service account created in above previous steps if you modified the `rbac.yaml`.
 
-
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/container-kill/engine_nginx_getstarted.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -312,13 +312,19 @@ spec:
             - name: TOTAL_CHAOS_DURATION
               value: '20'
 
-            # For containerd image use: litmuschaos/container-kill-helper:latest
             - name: LIB_IMAGE  
-              value: 'gaiaadm/pumba:0.7.2' 
+              value: 'litmuschaos/go-runner:latest' 
 
-            # It supports pumba and containerd 
-            - name: LIB
-              value: 'pumba'
+            # provide the name of container runtime
+            # it supports docker, containerd, crio
+            # default to docker
+            - name: CONTAINER_RUNTIME
+              value: 'docker'
+
+            # provide the container runtime path for containerd
+            # applicable only for containerd runtime
+            - name: CONTAINER_PATH
+              value: '/run/containerd/containerd.sock'
 ```
 
 ### Override Default Chaos Experiments Variables

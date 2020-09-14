@@ -113,6 +113,12 @@ subjects:
     <th> Specify In ChaosEngine </th>
     <th> Notes </th>
   </tr>
+    <tr>
+    <td> REPLICA_COUNT  </td>
+    <td> Number of replicas upto which we want to scale </td>
+    <td> Mandatory  </td>
+    <td> <code>nil</code> </td>
+  </tr>
   <tr>
     <td> TOTAL_CHAOS_DURATION </td>
     <td> The timeout for the chaos experiment (in seconds) </td>
@@ -125,12 +131,6 @@ subjects:
     <td> Optional </td>
     <td> Defaults to `litmus` </td>
   </tr>
-   <tr>
-    <td> REPLICA_COUNT  </td>
-    <td> Number of replicas upto which we want to scale </td>
-    <td> Mandatory  </td>
-    <td> <code>nil</code> </td>
-  <tr>
     <td> RAMP_TIME </td>
     <td> Period to wait before and after injection of chaos in sec </td>
     <td> Optional  </td>
