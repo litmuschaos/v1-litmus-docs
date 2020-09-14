@@ -107,7 +107,7 @@ spec:
 ### Sample ChaosSchedule Manifest for Repeat
 
 There are various ways we can trigger this type of schedule by varying the the fields inside <code>spec.repeat</code>. <br><br>
-**Note** - We have just one field i.e. <code>minChaosInterval</code> to be specified as mandatory one. All other fields are optional and totally depend on how we want to change the behavious of schedules.
+**Note** - We have just one field i.e. <code>minChaosInterval</code> to be specified as mandatory one. All other fields are optional and totally depend on how we want to change the behaviour of the schedule.
 
 #### Basic schema to execute repeat strategy
 
