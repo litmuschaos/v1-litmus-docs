@@ -71,7 +71,7 @@ This section describes the fields in the ChaosSchedule spec and the possible val
 <table>
 <tr>
   <th>Field</th>
-  <td><code>.spec.schedule.repeat.startTime</code></td>
+  <td><code>.spec.schedule.repeat.timeRange.startTime</code></td>
 </tr>
 <tr>
   <th>Description</th>
@@ -98,7 +98,7 @@ This section describes the fields in the ChaosSchedule spec and the possible val
 <table>
 <tr>
   <th>Field</th>
-  <td><code>.spec.schedule.repeat.endTime</code></td>
+  <td><code>.spec.schedule.repeat.timeRange.endTime</code></td>
 </tr>
 <tr>
   <th>Description</th>
@@ -125,7 +125,7 @@ This section describes the fields in the ChaosSchedule spec and the possible val
 <table>
 <tr>
   <th>Field</th>
-  <td><code>.spec.schedule.repeat.minChaosInterval</code></td>
+  <td><code>.spec.schedule.repeat.properties.minChaosInterval</code></td>
 </tr>
 <tr>
   <th>Description</th>
@@ -152,7 +152,7 @@ This section describes the fields in the ChaosSchedule spec and the possible val
 <table>
 <tr>
   <th>Field</th>
-  <td><code>.spec.schedule.repeat.includedDays</code></td>
+  <td><code>.spec.schedule.repeat.workDays.includedDays</code></td>
 </tr>
 <tr>
   <th>Description</th>
@@ -173,6 +173,33 @@ This section describes the fields in the ChaosSchedule spec and the possible val
 <tr>
   <th>Notes</th>
   <td>The <code>includedDays</code> in the spec specifies a (comma-separated) list of days of the week at which chaos is allowed to take place. {day_name} is to be specified with the first 3 letters of the name of day such as <code>Mon</code>, <code>Tue</code> etc.</td>
+</tr>
+</table>
+
+<table>
+<tr>
+  <th>Field</th>
+  <td><code>.spec.schedule.repeat.workHours.includedHours</code></td>
+</tr>
+<tr>
+  <th>Description</th>
+  <td>Flag to specify the hours at which chaos is allowed to take place</td>
+</tr>
+<tr>
+  <th>Type</th>
+  <td>Mandatory</td>
+</tr>
+<tr>
+  <th>Range</th>
+  <td><i>{hour_number} will range from 0 to 23</i> (type: string)(pattern: {hour_number}-{hour_number}).</td>
+</tr>
+<tr>
+  <th>Default</th>
+  <td><i>n/a</i></td>
+</tr>
+<tr>
+  <th>Notes</th>
+  <td>The <code>includedHours</code> in the spec specifies a range of hours of the day at which chaos is allowed to take place. 24 hour format is followed
 </tr>
 </table>
 
