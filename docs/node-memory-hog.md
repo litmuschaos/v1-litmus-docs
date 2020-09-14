@@ -137,7 +137,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> Image used to run the stress command </td>
     <td> Optional  </td>
-    <td> Defaults to `litmuschaos/litmus-go:latest` </td>
+    <td> Defaults to `litmuschaos/go-runner:latest` </td>
   </tr>
     <tr>
     <td> MEMORY_PERCENTAGE </td>

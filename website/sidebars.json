@@ -55,16 +55,16 @@
           "pod-network-duplication",
           "node-taint",
           "docker-service-kill",
-          "pod-autoscaler"
+          "pod-autoscaler",
+          "Kubernetes-Chaostoolkit-Application",
+          "Kubernetes-Chaostoolkit-Service",
+          "Kubernetes-Chaostoolkit-Cluster-Kiam"
         ]
       },
       {
         "type": "subcategory",
-        "label": "Kubernetes",
+        "label": "Kube-AWS",
         "ids": [
-          "Kubernetes-Chaostoolkit-Application",
-          "Kubernetes-Chaostoolkit-Service",
-          "Kubernetes-Chaostoolkit-Cluster-Kiam",
           "Kubernetes-Chaostoolkit-AWS"
         ]
       },

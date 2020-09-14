@@ -108,7 +108,7 @@ metadata:
 rules:
 - apiGroups: ["","apps","litmuschaos.io","batch"]
   resources: ["pods","jobs","pods/exec","events","pods/log","chaosengines","chaosexperiments","chaosresults"]
-  verbs: ["create","list","get","patch","update","delete"]
+  verbs: ["create","list","get","patch","update","delete","deletecollection"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
@@ -182,7 +182,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> The image used to fill the disk </td>
     <td> Optional </td>
-    <td> Defaults to `litmuschaos/litmus-go:latest` </td>
+    <td> Defaults to `litmuschaos/go-runner:latest` </td>
   </tr>
   <tr>
     <td> RAMP_TIME </td>

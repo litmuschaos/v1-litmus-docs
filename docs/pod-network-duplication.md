@@ -75,7 +75,7 @@ metadata:
 rules:
 - apiGroups: ["","litmuschaos.io","batch"]
   resources: ["pods","jobs","events","pods/log","chaosengines","chaosexperiments","chaosresults"]
-  verbs: ["create","list","get","patch","update","delete"]
+  verbs: ["create","list","get","patch","update","delete","deletecollection"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
@@ -156,7 +156,7 @@ subjects:
     <td> LIB </td>
     <td> The chaos lib used to inject the chaos </td>
     <td> Optional  </td>
-    <td> only `pumba` supported currently </td>
+    <td> Defaults to litmus, only litmus supported </td>
   </tr>
   <tr>
     <td> TC_IMAGE </td>
@@ -168,7 +168,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> Image used to run the netem command </td>
     <td> Optional  </td>
-    <td> Defaults to `litmuschaos/litmus-go:latest` </td>
+    <td> Defaults to `litmuschaos/go-runner:latest` </td>
   </tr>
   <tr>
     <td> RAMP_TIME </td>

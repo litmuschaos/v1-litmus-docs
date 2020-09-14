@@ -41,12 +41,10 @@ sidebar_label: Cassandra Pod Delete
 
 - Causes (forced/graceful) pod failure of specific/random replicas of an cassandra statefulset
 - Tests cassandra sanity (replica availability & uninterrupted service) and recovery workflow of the cassandra statefulset.
-- The pod delete by `Powerfulseal` is only supporting single pod failure (kill_count = 1)
 
 ## Integrations
 
-- Pod failures can be effected using one of these chaos libraries: `litmus`, `powerfulseal`
-- The desired chaos library can be selected by setting one of the above options as value for the env variable `LIB`
+- Pod failures can be effected by setting `LIB` env as `litmus`
 
 ## Steps to Execute the Chaos Experiment
 
@@ -57,9 +55,8 @@ sidebar_label: Cassandra Pod Delete
 ### Prepare chaosServiceAccount
 
 - Use this sample RBAC manifest to create a chaosServiceAccount in the desired (app) namespace. This example consists of the minimum necessary role permissions to execute the experiment.
-- The RBAC sample manifest is different for both LIB (litmus, powerseal). Use the respective rbac sample manifest on the basis of LIB ENV.
 
-#### Sample Rbac Manifest for litmus LIB
+#### Sample Rbac Manifest
 
 [embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/cassandra/cassandra-pod-delete/rbac.yaml yaml)
 ```yaml
@@ -82,7 +79,7 @@ metadata:
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps"]
   resources: ["pods","deployments","statefulsets","services","pods/log","pods/exec","events","jobs","chaosengines","chaosexperiments","chaosresults"]
-  verbs: ["create","list","get","patch","update","delete"]
+  verbs: ["create","list","get","patch","update","delete", "deletecollection"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
@@ -94,50 +91,6 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: cassandra-pod-delete-sa
-subjects:
-- kind: ServiceAccount
-  name: cassandra-pod-delete-sa
-  namespace: default
-
-```
-
-#### Sample Rbac Manifest for powerfulseal LIB
-
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/cassandra/cassandra-pod-delete/powerfulseal_rbac.yaml yaml)
-```yaml
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: cassandra-pod-delete-sa
-  namespace: default
-  labels:
-    name: cassandra-pod-delete-sa
----
-apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: ClusterRole
-metadata:
-  name: cassandra-pod-delete-sa
-  labels:
-    name: cassandra-pod-delete-sa
-rules:
-- apiGroups: ["","litmuschaos.io","batch","apps"]
-  resources: ["pods","deployments","statefulsets","pods/log","pods/exec","services","events","jobs","configmaps","chaosengines","chaosexperiments","chaosresults"]
-  verbs: ["create","list","get","patch","update","delete"]
-- apiGroups: [""]
-  resources: ["nodes"]
-  verbs: ["get","list"]
----
-apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: ClusterRoleBinding
-metadata:
-  name: cassandra-pod-delete-sa
-  labels:
-    name: cassandra-pod-delete-sa
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
   name: cassandra-pod-delete-sa
 subjects:
 - kind: ServiceAccount
@@ -213,7 +166,7 @@ subjects:
     <td> LIB </td>
     <td> The chaos lib used to inject the chaos </td>
     <td> Optional  </td>
-    <td> Defaults to `litmus`. Supported: `litmus`, `powerfulseal` </td>
+    <td> Defaults to <code>litmus</code>. Supported <code>litmus</code> only </td>
   </tr>
   <tr>
     <td> FORCE  </td>

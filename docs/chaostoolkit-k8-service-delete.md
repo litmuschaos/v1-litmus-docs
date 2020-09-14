@@ -81,7 +81,7 @@ sidebar_label: Application Service
 
 ### Sample Rbac Manifest for Service Owner use case
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/chaostoolkit/chaostoolkit-pod-delete/Service/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/k8-pod-delete/Service/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
@@ -122,6 +122,7 @@ subjects:
 - kind: ServiceAccount
   name: k8-pod-delete-sa
   namespace: default
+
 ```
 
 ### Prepare ChaosEngine
@@ -193,12 +194,12 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/chaostoolkit/chaostoolkit-pod-delete/Service/engine-custom-health.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/k8-pod-delete/Service/engine-custom-health.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
-  name: nginx-chaos-app-health
+  name: nginx-chaos-custom-health
   namespace: default
 spec:
   appinfo:
@@ -220,16 +221,20 @@ spec:
               value: 'default'
             # set chaos label name
             - name: LABEL_NAME
-              value: 'nginx'
+              value: 'app=nginx'
             # pod endpoint
             - name: APP_ENDPOINT
               value: 'localhost'
             - name: FILE
-              value: 'service-app-kill-health.json'
+              value: 'pod-custom-kill-health.json'
             - name: REPORT
               value: 'true'
             - name: REPORT_ENDPOINT
               value: 'none'
+            - name: TEST_NAMESPACE
+              value: 'default'
+
+
 ```
 
 ### Create the ChaosEngine Resource

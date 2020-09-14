@@ -74,21 +74,21 @@ sidebar_label: EC2 Terminate
    
 ### Sample Rbac Manifest for Service Owner use case
 
-[embedmd]:# (https://github.com/litmuschaos/chaos-charts/tree/master/charts/generic/k8-aws-ec2-terminate/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kube-aws/k8-aws-ec2-terminate/rbac.yaml yaml)
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: chaos-admin
+  name: k8-aws-ec2-terminate-sa
   labels:
-    name: chaos-admin
+    name: k8-aws-ec2-terminate-sa
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
-  name: chaos-admin
+  name: k8-aws-ec2-terminate-sa
   labels:
-    name: chaos-admin
+    name: k8-aws-ec2-terminate-sa
 rules:
 - apiGroups: ["","apps","batch","extensions","litmuschaos.io","openebs.io","storage.k8s.io"]
   resources: ["chaosengines","chaosexperiments","chaosresults","configmaps","cstorpools","cstorvolumereplicas","events","jobs","persistentvolumeclaims","persistentvolumes","pods","pods/exec","pods/log","secrets","storageclasses","chaosengines","chaosexperiments","chaosresults","configmaps","cstorpools","cstorvolumereplicas","daemonsets","deployments","events","jobs","persistentvolumeclaims","persistentvolumes","pods","pods/eviction","pods/exec","pods/log","replicasets","secrets","services","statefulsets","storageclasses"]
@@ -100,16 +100,16 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
-  name: chaos-admin
+  name: k8-aws-ec2-terminate-sa
   labels:
-    name: chaos-admin
+    name: k8-aws-ec2-terminate-sa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: chaos-admin
+  name: k8-aws-ec2-terminate-sa
 subjects:
 - kind: ServiceAccount
-  name: chaos-admin
+  name: k8-aws-ec2-terminate-sa
   namespace: default
 ```
 
@@ -219,12 +219,12 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://github.com/litmuschaos/chaos-charts/tree/master/charts/generic/k8-aws-ec2-terminate/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kube-aws/k8-aws-ec2-terminate/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
-  name: aws-ec2-terminate
+  name: k8-aws-ec2-terminate
   namespace: default
 spec:
   appinfo:
@@ -241,7 +241,7 @@ spec:
       runnerannotation:
         iam.amazonaws.com/role: "k8s-chaosec2access"
   experiments:
-    - name: aws-ec2-terminate
+    - name: k8-aws-ec2-terminate
       spec:
         components:
           experimentannotation:
@@ -273,7 +273,6 @@ spec:
               value: 'none'
             - name: TEST_NAMESPACE
               value: 'default'
-
 ```
 
 ### Create the ChaosEngine Resource

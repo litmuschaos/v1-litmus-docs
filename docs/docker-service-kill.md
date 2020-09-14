@@ -172,10 +172,17 @@ spec:
     - name: docker-service-kill
       spec:
         components:
+          nodeSelector: 
+            # provide the node labels
+            kubernetes.io/hostname: 'node02'
           env:
             # set chaos duration (in sec) as desired
             - name: TOTAL_CHAOS_DURATION
               value: '90'
+
+             # provide the actual name of node under test
+            - name: APP_NODE
+              value: 'node-01'
 ```
 
 ### Create the ChaosEngine Resource
