@@ -23,7 +23,7 @@ sidebar_label: Pod Network Duplication
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `pod-network-duplication` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.7.0?file=charts/generic/pod-network-duplication/experiment.yaml)
+- Ensure that the `pod-network-duplication` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.8.0?file=charts/generic/pod-network-duplication/experiment.yaml)
   <div class="danger">
     <strong>NOTE</strong>: 
         Experiment is supported only on Docker Runtime. Support for containerd/CRIO runtimes will be added in subsequent releases.
