@@ -64,7 +64,7 @@ cmdProbe:
   inputs:
     command: "<command>"
     expectedResult: "<expected-result>"
-  source: "<repo>/<tag>" # it can be “inline” or any image
+    source: "<repo>/<tag>" # it can be “inline” or any image
   mode: "Edge"
   runProperties:
     probeTimeout: 5
