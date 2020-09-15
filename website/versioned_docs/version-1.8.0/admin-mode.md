@@ -1,7 +1,8 @@
 ---
-id: admin-mode
+id: version-1.8.0-admin-mode
 title: Administrator Mode
 sidebar_label: Administrator Mode
+original_id: admin-mode
 ---
 ------
 
