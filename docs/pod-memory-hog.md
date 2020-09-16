@@ -141,7 +141,19 @@ subjects:
     <td> Image used to run the stress command. Only used in LIB <code>pumba</code></td>
     <td> Optional  </td>
     <td> Defaults to <code>gaiaadm/pumba<code> </td>
-  </tr>      
+  </tr>
+  <tr>
+    <td> TARGET_POD </td>
+    <td> Name of the application pod subjected to pod memory hog chaos<td>
+    <td> Optional </td>
+    <td> If not provided it will select from the app label provided</td>
+  </tr>
+  <tr>
+    <td> CHAOS_KILL_COMMAND </td>
+    <td> The command to kill the chaos process</td>
+    <td> Optional </td>
+    <td> Default to <code>kill $(find /proc -name exe -lname '*/dd' 2>&1 | grep -v 'Permission denied' | awk -F/ '{print $(NF-1)}' |  head -n 1</code> </td>
+  </tr>            
   <tr>
     <td> PODS_AFFECTED_PERC </td>
     <td> The Percentage of total pods to target  </td>

@@ -141,6 +141,16 @@ respective microservices/pods as the experiment executes to get an idea of the f
 Get more details about the flags used to configure and run the chaos tests please refer to the paramrter tables in the 
 [test](https://github.com/litmuschaos/litmus-demo#test) section. 
 
+## Generate PDF of the experiment result summary
+
+We can also generate the pdf report of the experiment result summary using <code>--report</code> flag as follow:
+
+```bash
+./manage.py test --report=yes
+``` 
+It will generate a pdf report of name `chaos-report.pdf` in the current location containing chaos result summary.
+
+
 ## Deleting Cluster / Cluster Clean Up 
 
 - To shut down and destroy the cluster when you're finished, run the following commands: 
