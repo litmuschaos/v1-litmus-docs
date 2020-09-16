@@ -117,7 +117,7 @@ subjects:
   </tr>
   <tr>
     <td> APP_NODE </td>
-    <td> Name of the node subjected to cpu-hog  </td>
+    <td> Name of the node subjected to node cpu hog chaos</td>
     <td> Mandatory  </td>
     <td> </td>
   </tr>
@@ -131,13 +131,13 @@ subjects:
     <td> LIB  </td>
     <td> The chaos lib used to inject the chaos </td>
     <td> Optional </td>
-    <td> Defaults to `litmus` </td>
+    <td> Defaults to <code>litmus</code> </td>
   </tr>
    <tr>
     <td> LIB_IMAGE  </td>
     <td> Image used to run the stress command </td>
     <td> Optional  </td>
-    <td> Defaults to `litmuschaos/go-runner:latest` </td>
+    <td> Defaults to <code>litmuschaos/go-runner:latest</code> </td>
   </tr>
   <tr>
     <td> RAMP_TIME </td>
@@ -148,7 +148,7 @@ subjects:
   <tr>
     <td> NODE_CPU_CORE </td>
     <td> Number of cores of node CPU to be consumed  </td>
-    <td> Defaults to `2` </td>
+    <td> Defaults to <code>2</code> </td>
     <td> Optional  </td>
     <td> </td>
   </tr>  

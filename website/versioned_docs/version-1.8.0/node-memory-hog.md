@@ -124,7 +124,7 @@ subjects:
   </tr>
   <tr>
     <td> TOTAL_CHAOS_DURATION </td>
-    <td> The time duration for chaos insertion (seconds) </td>
+    <td> The time duration for chaos insertion (in seconds) </td>
     <td> Optional </td>
     <td> Defaults to 120 </td>
   </tr>
@@ -138,7 +138,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> Image used to run the stress command </td>
     <td> Optional  </td>
-    <td> Defaults to `litmuschaos/go-runner:latest` </td>
+    <td> Defaults to <code>litmuschaos/go-runner:latest</code> </td>
   </tr>
     <tr>
     <td> MEMORY_PERCENTAGE </td>

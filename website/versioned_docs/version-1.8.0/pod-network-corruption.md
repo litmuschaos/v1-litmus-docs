@@ -138,6 +138,12 @@ subjects:
     <td>  Defaults to docker, supported values: docker, containerd, crio </td>
   </tr>
   <tr>
+    <td> TARGET_POD </td>
+    <td> Name of the application pod subjected to pod network corruption chaos<td>
+    <td> Optional </td>
+    <td> If not provided it will select from the app label provided</td>
+  </tr>    
+  <tr>
     <td> CONTAINER_PATH </td>
     <td> Path of the containerd/crio socket file </td>
     <td> Optional  </td>
