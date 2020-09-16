@@ -149,6 +149,12 @@ subjects:
     <td> Default (60s) </td>
   </tr>
   <tr>
+    <td> TARGET_POD </td>
+    <td> Name of the application pod subjected to pod network corruption chaos<td>
+    <td> Optional </td>
+    <td> If not provided it will select from the app label provided</td>
+  </tr>  
+  <tr>
     <td> PODS_AFFECTED_PERC </td>
     <td> The Percentage of total pods to target  </td>
     <td> Optional </td>

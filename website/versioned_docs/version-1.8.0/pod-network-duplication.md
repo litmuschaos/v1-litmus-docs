@@ -130,6 +130,11 @@ subjects:
     <td> Default to 100 percentage </td>
   </tr>
   <tr>
+    <td> TARGET_POD </td>
+    <td> Name of the application pod subjected to pod network duplication chaos<td>
+    <td> Optional </td>
+    <td> If not provided it will select from the app label provided</td>  
+  <tr>
     <td> TOTAL_CHAOS_DURATION </td>
     <td> The time duration for chaos insertion (seconds) </td>
     <td> Optional </td>

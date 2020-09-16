@@ -133,7 +133,7 @@ subjects:
     <td> LIB  </td>
     <td> The chaos lib used to inject the chaos </td>
     <td> Optional </td>
-    <td> Defaults to `litmus` </td>
+    <td> Defaults to <code>litmus<code> </td>
   </tr>
   <tr>
     <td> RAMP_TIME </td>

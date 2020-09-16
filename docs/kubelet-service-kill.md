@@ -131,12 +131,18 @@ subjects:
     <td> Optional </td>
     <td> Defaults to 90 </td>
   </tr>
-   <tr>
+  <tr>
     <td> LIB  </td>
     <td> The chaos lib used to inject the chaos </td>
     <td> Optional </td>
-    <td> Defaults to `litmus` </td>
+    <td> Defaults to <code>litmus</code> </td>
   </tr>
+  <tr>
+    <td> LIB_IMAGE  </td>
+    <td> The lib image used to inject kubelet kill chaos the image should have systemd installed in it. </td>
+    <td> Optional </td>
+    <td> Defaults to <code>ubuntu:16.04</code> </td>
+  </tr>  
   <tr>
     <td> RAMP_TIME </td>
     <td> Period to wait before & after injection of chaos in sec </td>

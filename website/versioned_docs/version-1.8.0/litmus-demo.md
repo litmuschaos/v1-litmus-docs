@@ -1,8 +1,10 @@
 ---
-id: litmus-demo
+id: version-1.8.0-litmus-demo
 title: Chaos Engineering in a Microservices Environment
 sidebar_label: Litmus Demo
+original_id: litmus-demo
 ---
+
 ------
 
 The Litmus Demo is a quick way to introduce yourself to the world of Cloud Native Chaos Engineering. It helps familiarize 

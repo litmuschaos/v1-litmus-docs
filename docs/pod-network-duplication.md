@@ -153,6 +153,12 @@ subjects:
     <td> Defaults to `/run/containerd/containerd.sock` </td>
   </tr> 
   <tr>
+    <td> TARGET_POD </td>
+    <td> Name of the application pod subjected to pod network duplication chaos<td>
+    <td> Optional </td>
+    <td> If not provided it will select from the app label provided</td>
+  </tr>    
+  <tr>
     <td> LIB </td>
     <td> The chaos lib used to inject the chaos </td>
     <td> Optional  </td>

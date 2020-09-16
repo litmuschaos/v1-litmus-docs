@@ -145,6 +145,12 @@ subjects:
     <td> Defaults to 0% (corresponds to 1 replica) </td>
   </tr>  
   <tr>
+    <td> TARGET_POD </td>
+    <td> Name of the application pod subjected to container kill chaos<td>
+    <td> Optional </td>
+    <td> If not provided it will select from the app label provided</td>
+  </tr>  
+  <tr>
     <td> LIB_IMAGE  </td>
     <td> LIB Image used to kill the container </td>
     <td> Optional </td>

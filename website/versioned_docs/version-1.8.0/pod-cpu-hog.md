@@ -143,24 +143,36 @@ subjects:
     <td> Image used to run the stress command. Only used in LIB <code>pumba</code></td>
     <td> Optional  </td>
     <td> Default to <code>gaiaadm/pumba<code> </td>
-  </tr>    
-    <tr>
+  </tr>
+  <tr>
+    <td> TARGET_POD </td>
+    <td> Name of the application pod subjected to pod cpu hog chaos<td>
+    <td> Optional </td>
+    <td> If not provided it will select from the app label provided</td>
+  </tr>
+  <tr>
     <td> PODS_AFFECTED_PERC </td>
     <td> The Percentage of total pods to target  </td>
     <td> Optional </td>
     <td> Default to 0% (corresponds to 1 replica) </td>
-  </tr> 
+  </tr>
+  <tr>
+    <td> CHAOS_INJECT_COMMAND </td>
+    <td> The command to inject the cpu chaos </td>
+    <td> Optional </td>
+    <td> Default to <code>md5sum /dev/zero</code> </td>
+  </tr>  
+  <tr>
+    <td> CHAOS_KILL_COMMAND </td>
+    <td> The command to kill the chaos process</td>
+    <td> Optional </td>
+    <td> Default to <code>kill $(find /proc -name exe -lname '*/md5sum' 2>&1 | grep -v 'Permission denied' | awk -F/ '{print $(NF-1)}' |  head -n 1</code> </td>
+  </tr>  
   <tr>
     <td> RAMP_TIME </td>
     <td> Period to wait before and after injection of chaos in sec </td>
     <td> Optional  </td>
     <td> </td>
-  </tr>
-   <tr>
-    <td> LIB </td>
-    <td> The chaos lib used to inject the chaos </td>
-    <td> Optional  </td>
-    <td> Defaults to litmus, only litmus supported </td>
   </tr>
   <tr>
     <td> INSTANCE_ID </td>
