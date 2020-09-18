@@ -152,7 +152,7 @@ subjects:
     <td> Defaults to docker, supported values: docker, containerd, crio </td>
   </tr>
   <tr>
-    <td> CONTAINER_PATH </td>
+    <td> SOCKET_PATH </td>
     <td> Path of the containerd/crio socket file </td>
     <td> Optional  </td>
     <td> Defaults to `/run/containerd/containerd.sock` </td>
@@ -244,9 +244,9 @@ spec:
             - name: CONTAINER_RUNTIME
               value: 'docker'
 
-            # provide the container runtime path
+            # provide the socket file path
             # applicable only for containerd and crio runtime
-            - name: CONTAINER_PATH
+            - name: SOCKET_PATH
               value: '/run/containerd/containerd.sock'
             
 ```
