@@ -19,11 +19,25 @@ The website server can be setup manually or through docker and docker compose
 
 The embedded code will be extracted from the file at `URL`, which can either be a relative path to a file in the local file system (using always forward slashes as directory separator) or a URL starting with `http://` or `https://.`
 
- Flags (needs to be done before commiting the changes): 
+_Installation:_
 
--w: Executing `embedmd -w docs.md` will modify docs.md and add the corresponding code snippets, as shown in sample/result.md.
+- We can install embedmd with golang, make sure we have [golang](https://github.com/golang/go) installed in our system. We just need to run the following command to install embedmd.
 
--d: Executing `embedmd -d docs.md` will display the difference between the contents of docs.md and the output of embedmd docs.md.
+```bash
+go get github.com/campoy/embedmd
+```
+
+_Run embedmd (needs to be done before commiting the changes):_
+
+- Follow the steps (from root directory) to run embedmd:
+
+```bash
+cd docs
+embedmd -w $(find *.md)
+```
+_Check the difference:_
+
+- Executing `embedmd -d docs-name.md` will display the difference between the contents of docs-name.md and the output of embedmd docs-name.md.
 
 
 ## Manual Setup
