@@ -30,6 +30,15 @@ Litmus documentation currently runs using [Docusaurus](https://docusaurus.io/) s
 
 A sample PR flow is outlined [here](https://guides.github.com/introduction/flow/). More detailed one is [here](https://gist.github.com/Chaser324/ce0505fbed06b947d962).
 
+## Use embedmd command before commiting changes
+
+- Once you're done with the changes don't forget to run `embedmd` which will extract the embedded code from different files. For this you need do:
+
+```bash
+cd docs
+embedmd -w $(find *.md)
+```
+
 ## Pull Request Checklist
 
 * Rebase to the current master branch before submitting your pull request.

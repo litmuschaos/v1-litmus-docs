@@ -1,0 +1,38 @@
+name: LitmusDocs-CI
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  embedmd:
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{steps.getcommit.outputs.sha}}
+
+      - uses: actions/setup-go@v2
+        with:
+          stable: 'false'
+          go-version: '1.14.0'
+
+      - name: Installing and Running embedmed
+        run: |
+          go get github.com/campoy/embedmd
+          cd docs
+          embedmd -w $(find *.md)
+        continue-on-error: true  
+
+      - name: Commit files
+        run: |
+          git config --local user.email "litmuschaosbot@github.com"
+          git config --local user.name "LitmusChaos"
+          git commit -s -m "Add embedmd changes" -a
+        continue-on-error: true
+        
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
