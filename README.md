@@ -13,15 +13,15 @@ git clone https://github.com/litmuschaos/litmus-docs.git
 cd litmus-docs
 ```
 
-The website server can be setup manually or through docker and docker compose
+The docs website server can be setup manually or through docker compose
 
 ## Use embedmd command before commiting changes
 
-The embedded code will be extracted from the file at `URL`, which can either be a relative path to a file in the local file system (using always forward slashes as directory separator) or a URL starting with `http://` or `https://.`
+The embedded code will be extracted from the file at `URL`, which can either be a relative path to a file in the local file system (using forward slashes as directory separator) or a URL starting with `http://` or `https://.`
 
 _Installation:_
 
-- We can install embedmd with golang, make sure we have [golang](https://github.com/golang/go) installed in our system. We just need to run the following command to install embedmd.
+- Make sure you have [golang](https://github.com/golang/go) installed. We just need to run the following command to install embedmd.
 
 ```bash
 go get github.com/campoy/embedmd
