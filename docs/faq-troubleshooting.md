@@ -17,6 +17,7 @@ sidebar_label: Troubleshooting
 
 [Litmus uninstallation is not successful and namespace is stuck in terminating state?](#litmus-uninstallation-is-not-successful-and-namespace-is-stuck-in-terminating-state)
 
+[Observing chaos results using describe chaosresult is showing NotFound error?](#observing-chaos-results-using-describe-chaosresult-is-showing-NotFound-error)
 <hr>
 
 
@@ -184,4 +185,16 @@ Repeat this on all the stale chaosengine CRs to remove the CRDs successfully & c
 If however, the "litmus"namespace deletion remains stuck despite the above actions, follow the procedure described 
 [here](https://success.docker.com/article/kubernetes-namespace-stuck-in-terminating) to complete the uninstallation. 
 
- 
+ ### Observing chaos results using describe chaosresult is showing NotFound error?
+
+ Upon observing the chaosresults by executing the first command given below, it may give a NotFound error or the second command given below might execute successfully but does not show any output. 
+
+ ```
+ kubectl describe chaosresult <chaos-engine-name>-<chaos-experiment-name>  -n <namespace>
+ ```
+
+ ```
+ kubectl describe chaosresult  -n <namespace>`
+ ```
+This may happen due to the time taken in pulling the image and deployment of the experiment pod. For the above commands to execute successfully you should simply wait for the creation of the pod to complete. The waiting time will be based upon the capability of your resources for example it may take more time for minikube (around 1-5 minutes) and less for eks cluster (within a minute).
+
