@@ -121,7 +121,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>appkind</code> in the spec specifies the Kubernetes resource type of the app deployment. The Litmus chaos operator supports chaos on deployments, statefulsets and daemonsets. Application health check routines are dependent on the resource types, in case of some experiments.</td>
+  <td>The <code>appkind</code> in the spec specifies the Kubernetes resource type of the app deployment. The Litmus ChaosOperator supports chaos on deployments, statefulsets and daemonsets. Application health check routines are dependent on the resource types, in case of some experiments.</td>
 </tr>
 </table>
 
@@ -192,7 +192,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Description</th>
-  <td>Flag to control annotation checks on applications as prerequisites for chaos</td>
+  <td>Flag to control annotationChecks on applications as prerequisites for chaos</td>
 </tr>
 <tr>
   <th>Type</th>
@@ -275,7 +275,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Description</th>
-  <td>Flag to specify image of chaos runner pod</td>
+  <td>Flag to specify image of ChaosRunner pod</td>
 </tr>
 <tr>
   <th>Type</th>
@@ -302,7 +302,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Description</th>
-  <td>Flag to specify image pull policy for the chaos runner</td>
+  <td>Flag to specify imagePullPolicy for the ChaosRunner</td>
 </tr>
 <tr>
   <th>Type</th>
@@ -374,7 +374,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>experiment[].name</code> specifies the chaos experiment to be executed by the chaos operator.</td>
+  <td>The <code>experiment[].name</code> specifies the chaos experiment to be executed by the ChaosOperator.</td>
 </tr>
 </table>
 

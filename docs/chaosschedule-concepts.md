@@ -6,7 +6,7 @@ sidebar_label: ChaosSchedule (alpha)
 ------
 
 The ChaosSchedule is the user-facing chaos custom resource with a namespace scope and is designed to hold information 
-around how the chaos engines are to be scheduled according to the specified template. It schedules a chaosengine instance . 
+around how the ChaosEngines are to be scheduled according to the specified template. It schedules a chaosengine instance . 
 
 This section describes the fields in the ChaosSchedule spec and the possible values that can be set against the same.
 

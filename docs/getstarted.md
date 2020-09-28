@@ -25,7 +25,7 @@ Running chaos on your application involves the following steps:
 
 [Run Chaos](#run-chaos)
 
-[Observe chaos results](#observe-chaos-results)
+[Observe ChaosResults](#observe-chaos-results)
 
 <hr>
 
@@ -42,13 +42,13 @@ kubectl apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.8.1.yam
 The above command installs all the CRDs, required service account configuration, and chaos-operator. 
 
 **Note**: Ensure that you have the right privileges to install the CRDs & setup cluster-wide RBAC policies (by default, the 
-chaos operator watches for Chaos CRs across namespaces)
+ChaosOperator watches for Chaos CRs across namespaces)
 
 Before you start running a chaos experiment, verify if Litmus is installed correctly.
 
 **Verify your installation**
 
-- Verify if the chaos operator is running
+- Verify if the ChaosOperator is running
 
 ```
 kubectl get pods -n litmus
@@ -106,7 +106,7 @@ the chaos to their respective work-namespaces in shared environments.
 - In all subsequent steps, please follow these instructions by replacing the nginx namespace and labels with that of your
 application.
 
-- The chaos operator collects some usage metrics (operator installation count & experiment run count) via a google analytics
+- The ChaosOperator collects some usage metrics (operator installation count & experiment run count) via a google analytics
   hook. This is done in order to gather chaos trends that will help us to improve the project. However, if you would like to
   prevent the collection of the same or are operating in an airgapped environment, you can disable it using the procedure
   suggested [here](https://docs.litmuschaos.io/docs/faq-general/#does-litmus-track-any-usage-metrics-on-the-test-clusters).
@@ -184,7 +184,7 @@ subjects:
 ### Annotate your application
 
 Your application has to be annotated with `litmuschaos.io/chaos="true"`. As a security measure, and also as a means
-to reduce blast radius the chaos operator checks for this annotation before invoking chaos experiment(s) on the application.
+to reduce blast radius the ChaosOperator checks for this annotation before invoking chaos experiment(s) on the application.
 Replace `nginx` with the name of your deployment.
 
 <div class="danger">
