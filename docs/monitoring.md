@@ -78,15 +78,15 @@ LitmusChaos facilitates real-time monitoring for events using litmus event route
 
 - Add the prometheus datasource from monitoring namespace as DS_PROMETHEUS for Grafana via the Grafana Settings menu
 
-  ![image](https://github.com/litmuschaos/litmus/blob/master/demo/sample-applications/sock-shop/screenshots/data-source-config.png?raw=true)
+  ![image](https://github.com/litmuschaos/litmus/blob/master/monitoring/screenshots/data-source-config.png?raw=true)
 
 - Import the grafana dashboards
 
-  ![image](https://github.com/litmuschaos/litmus/blob/master/demo/sample-applications/sock-shop/screenshots/import-dashboard.png?raw=true)
+  ![image](https://github.com/litmuschaos/litmus/blob/master/monitoring/screenshots/import-dashboard.png?raw=true)
 
-- Import the grafana dashboard "Sock-Shop Performance" provided [here](https://raw.githubusercontent.com/litmuschaos/litmus/master/demo/sample-applications/sock-shop/grafana-dashboards/sock-shop/sock-shop-performance-under-chaos.json)
+- Import the grafana dashboard "Sock-Shop Performance" provided [here](https://raw.githubusercontent.com/litmuschaos/litmus/master/monitoring/grafana-dashboards/sock-shop/Sock-Shop-Performance-Under-Chaos.json)
 
-- Import the grafana dashboard "Node and Pod Chaos Demo" provided [here](https://raw.githubusercontent.com/litmuschaos/litmus/master/demo/sample-applications/sock-shop/grafana-dashboards/kubernetes/Node-and-pod-metrics-dashboard.json)
+- Import the grafana dashboard "Node and Pod Chaos Demo" provided [here](https://raw.githubusercontent.com/litmuschaos/litmus/master/monitoring/grafana-dashboards/kubernetes/Node-and-pod-metrics-dashboard.json)
 
 ### How to interleave chaos events with existing application metric graphs?
 
