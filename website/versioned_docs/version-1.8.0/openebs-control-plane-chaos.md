@@ -25,7 +25,7 @@ original_id: openebs-control-plane-chaos
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 
-- Ensure that the `openebs-control-plane-chaos` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the `openebs` namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.8.1?file=charts/openebs/openebs-control-plane-chaos/experiment.yaml)
+- Ensure that the `openebs-control-plane-chaos` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the `openebs` namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/$1.8.2?file=charts/openebs/openebs-control-plane-chaos/experiment.yaml)
 
 ## Entry Criteria
 
