@@ -68,7 +68,7 @@ The nginx default web site should be available now.
 ###  Install Litmus
 Followed the steps in the [Getting Started Guide](https://docs.litmuschaos.io/docs/getstarted/)* to install litmus in a `nginx` namespace with an nginx application.
 
-Download `litmus-operator-v1.8.2.yaml` from https://litmuschaos.github.io/litmus/litmus-operator-v1.8.2.yaml.
+Download `litmus-operator-v1.8.1.yaml` from https://litmuschaos.github.io/litmus/litmus-operator-v1.8.1.yaml.
 Modify it to use the `nginx` namespace in three places (at lines 10, 41, and 47 approximately).
 Install the litmus-operator in `nginx` application namespace using kubectl.
 ``` console
@@ -146,7 +146,7 @@ The generic chaos experiments such as `pod-delete`,  `container-kill`,` pod-netw
 This is the first chart you are recommended to install. 
 
 ```
-$ kubectl apply -f https://hub.litmuschaos.io/api/chaos/$1.8.2?file=charts/generic/experiments.yaml -n nginx
+$ kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.8.2?file=charts/generic/experiments.yaml -n nginx
 ```
 
 Expected output: 
@@ -403,7 +403,7 @@ You can uninstall Litmus by deleting the namespace.
 ```console
 kubectl delete -f chaosengine.yaml -n nginx
 kubectl delete -f rbac.yaml -n nginx
-kubectl delete -f https://hub.litmuschaos.io/api/chaos/$1.8.2?file=charts/generic/experiments.yaml -n nginx
+kubectl delete -f https://hub.litmuschaos.io/api/chaos/1.8.2?file=charts/generic/experiments.yaml -n nginx
 kubectl delete -f litmus-operator.yaml -n nginx
 
 ```
