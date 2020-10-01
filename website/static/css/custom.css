@@ -4,26 +4,73 @@
     padding-right: 32px;
     padding-left: 0;
   }
+  .docsSliderActive .toc section .navGroups{
+    background: #23232a;
+  }
 }
 
 @media only screen and (min-width: 735px) {
   .nav-footer .sitemap > div {
     padding: 0 32px;
   }
+  .docsSliderActive .toc section .navGroups{
+    background: #23232a;
+  }
+}
+
+/* Modified CSS For Dark Mode */
+
+.docMainWrapper{
+  background: #23232a;
+  color: #ffffff;
+}
+
+span a{
+  color:#2E86C1;
+}
+
+.hljs{
+  color: #0079AD ;
+}
+
+blockquote{
+  background-color:#212F3C;
+  color: white;
 }
 
 .fixedHeaderContainer {
   background: #23232a;
 }
 
-/* .fixedHeaderContainer header .headerTitleWithLogo { */
-/* font-size: 2em; */
-/* font-weight: 100; */
-/* } */
+table td, table th{
+  background: #23232a;
+}
 
+.nav-footer{
+  background:#1B2631;
+}
+.toc .toggleNav .navGroup .navGroupCategoryTitle{
+  color: #ffffff;
+}
+
+.toc .toggleNav ul li.navListItemActive a{
+  color:#2E86C1;
+}
+
+.toc .toggleNav .navGroup .navGroupSubcategoryTitle{
+  color: #515A5A;
+}
+
+.toc .toggleNav ul li a{
+  color: #7F8C8D;
+}
+
+.onPageNav a{
+  color: #7F8C8D;
+}
 .footerText {
   text-align: left;
-  color: white;
+  color:#D0D3D4 ;
 }
 
 .nav-footer .sitemap div:first-child {
