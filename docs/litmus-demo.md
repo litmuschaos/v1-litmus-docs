@@ -148,7 +148,7 @@ We can also generate the pdf report of the experiment result summary using <code
 ```bash
 ./manage.py test --report=yes
 ``` 
-It will generate a pdf report of name `chaos-report.pdf` in the current location containing chaos result summary.
+It will generate a pdf report of name `chaos-report.pdf` in the current location containing ChaosResult summary.
 
 
 ## Deleting Cluster / Cluster Clean Up 

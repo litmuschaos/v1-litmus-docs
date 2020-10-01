@@ -146,7 +146,7 @@ subjects:
     <td> TARGET_POD </td>
     <td> Name of the application pod subjected to pod memory hog chaos<td>
     <td> Optional </td>
-    <td> If not provided it will select from the app label provided</td>
+    <td> If not provided it will select from the appLabel provided</td>
   </tr>
   <tr>
     <td> CHAOS_KILL_COMMAND </td>
