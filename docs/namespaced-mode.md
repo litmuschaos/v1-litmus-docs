@@ -7,7 +7,7 @@ sidebar_label: Namespaced Mode
 
 ###  What is Namespaced Mode?
 
-Namespaced mode is the other end of the orchestration spectrum & is an antithesis of the admin-mode of operation. Here, the chaos operator
+Namespaced mode is the other end of the orchestration spectrum & is an antithesis of the admin-mode of operation. Here, the ChaosOperator
 as well as the chaos resources (chaosexperiment, chaosengine, chaosresult CRs and the experiment pods) are run in the same namespace where
 the application under test (AUT) resides. This mode serves the usecases where the developers/users don't typically have much autonomy
 over cluster usage and operate strictly within a specific allotted namespace. However, in this case too, the cluster-admin or an equivalent 
@@ -19,7 +19,7 @@ need cluster-wide access.
 ### How to use Namespaced Mode?
 
 In order to use Namespaced Mode, you just have to install the namespace-scoped litmus operator manifest in the desired (app) namespace.
-This installs the chaos operator, configured to watch for ChaosEngine resources in the same namespace while also setting up the 
+This installs the ChaosOperator, configured to watch for ChaosEngine resources in the same namespace while also setting up the 
 RBAC that can be used for execution of the standard (generic suite) of chaos experiments.  
 
 #### Setup the Namespace-Scoped Chaos Operator

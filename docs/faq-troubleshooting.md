@@ -5,7 +5,7 @@ sidebar_label: Troubleshooting
 ---
 ------
 
-[The Litmus chaos operator is seen to be in CrashLoopBackOff state immediately after installation?](#the-litmus-chaos-operator-is-seen-to-be-in-crashloopbackOff-state-immediately-after-installation)
+[The Litmus ChaosOperator is seen to be in CrashLoopBackOff state immediately after installation?](#the-litmus-chaos-operator-is-seen-to-be-in-crashloopbackOff-state-immediately-after-installation)
 
 [Nothing happens (no pods created) when the chaosengine resource is created?](#nothing-happens-no-pods-created-when-the-chaosengine-resource-is-created)
 
@@ -21,7 +21,7 @@ sidebar_label: Troubleshooting
 
 
 
-### The Litmus chaos operator is seen to be in CrashLoopBackOff state immediately after installation?
+### The Litmus ChaosOperator is seen to be in CrashLoopBackOff state immediately after installation?
 
 Verify if the ChaosEngine custom resource definition (CRD) has been installed in the cluster. This can be 
 verified with the following commands: 
@@ -82,7 +82,7 @@ Some of the possible reasons for these errors include:
 - The ChaosEngine has the `.spec.engineState` set to `stop`, which causes the operator to refrain from creating chaos 
   resources. While it is an unlikely scenario, it is possible to reuse a previously modified ChaosEngine manifest.
 
-- Verify if the service account used by the Litmus chaos operator has enough permissions to launch pods/services 
+- Verify if the service account used by the Litmus ChaosOperator has enough permissions to launch pods/services 
   (this is available by default if the manifests suggested by the docs have been used).
 
 ### The chaos-runner pod enters completed state seconds after getting created. No experiment jobs are created?
@@ -166,7 +166,7 @@ Under typical operating conditions, the Chaos Operator makes use of finalizers t
 only after chaos resources (chaos-runner, experiment pod, any other helper pods) are removed. 
 
 When uninstalling Litmus via the operator manifest (which contains the namespace, operator, crd specifictions in a single YAML) 
-without deleting the existing chaosengine resources first, the chaos operator deployment may get deleted before the CRD removal 
+without deleting the existing chaosengine resources first, the ChaosOperator deployment may get deleted before the CRD removal 
 is attempted. Since the stale chaosengines have the finalizer present on them, their deletion (triggered by the CRD delete) and 
 by consequence, the deletion of the chaosengine CRD itself is "stuck". 
 

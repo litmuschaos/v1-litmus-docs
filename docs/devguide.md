@@ -27,9 +27,9 @@ if you are writing an experiment in Go, use this [clientset](https://github.com/
 
 A group of Choas Experiments put together in a YAML file. Each group or chart has a metadata manifest called `ChartServiceVersion` 
 that holds data such as `ChartVersion`, `Contributors`, `Description`, `links` etc.., This metadata is rendered on the ChartHub. 
-A chaos chart also consists of a `package` manifest that is an index of available experiments in the chart.
+A ChaosChart also consists of a `package` manifest that is an index of available experiments in the chart.
 
-Here is an example of the [ChartServiceVersion](https://github.com/litmuschaos/chaos-charts/blob/master/charts/generic/generic.chartserviceversion.yaml) & [package](https://github.com/litmuschaos/chaos-charts/blob/master/charts/generic/generic.package.yaml) manifests of the generic chaos chart.
+Here is an example of the [ChartServiceVersion](https://github.com/litmuschaos/chaos-charts/blob/master/charts/generic/generic.chartserviceversion.yaml) & [package](https://github.com/litmuschaos/chaos-charts/blob/master/charts/generic/generic.package.yaml) manifests of the generic ChaosChart.
 
 
 ### Chaos Experiment
