@@ -22,7 +22,7 @@ sidebar_label: Pod Network Latency
 
 ## Prerequisites
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `pod-network-latency` experiment resource is available in the cluster by executing kubectl `get chaosexperiments` in the desired namespace. . If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.8.1?file=charts/generic/pod-network-latency/experiment.yaml)
+- Ensure that the `pod-network-latency` experiment resource is available in the cluster by executing kubectl `get chaosexperiments` in the desired namespace. . If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.8.2?file=charts/generic/pod-network-latency/experiment.yaml)
 
 
 <div class="danger">
@@ -143,6 +143,20 @@ subjects:
     <td> Optional </td>
     <td> If not provided it will select from the appLabel provided</td>
   </tr>      
+    <td> If not provided it will select from the app label provided</td>
+  </tr>   
+  <tr>
+    <td> TARGET_IPs </td>
+    <td> Destination ips for network chaos <td>
+    <td> Optional </td>
+    <td> if not provided, it will induce network chaos for all ips/destinations</td>
+  </tr>  
+  <tr>
+    <td> TARGET_HOSTS </td>
+    <td> Destination hosts for network chaos <td>
+    <td> Optional </td>
+    <td> if not provided, it will induce network chaos for all ips/destinations or TARGET_IPs if already defined</td>
+  </tr>     
   <tr>
     <td> PODS_AFFECTED_PERC </td>
     <td> The Percentage of total pods to target  </td>

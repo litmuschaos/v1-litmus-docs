@@ -23,7 +23,7 @@ original_id: pod-network-corruption
 
 ## Prerequisites
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `pod-network-corruption` experiment resource is available in the cluster by `kubectl get chaosexperiments` command. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.8.1?file=charts/generic/pod-network-corruption/experiment.yaml)
+- Ensure that the `pod-network-corruption` experiment resource is available in the cluster by `kubectl get chaosexperiments` command. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.8.2?file=charts/generic/pod-network-corruption/experiment.yaml)
 -  Cluster must run docker container runtime
 
 <div class="danger">
@@ -142,7 +142,19 @@ subjects:
     <td> Name of the application pod subjected to pod network corruption chaos<td>
     <td> Optional </td>
     <td> If not provided it will select from the app label provided</td>
-  </tr>    
+  </tr>
+  <tr>
+    <td> TARGET_IPs </td>
+    <td> Destination ips for network chaos <td>
+    <td> Optional </td>
+    <td> if not provided, it will induce network chaos for all ips/destinations</td>
+  </tr>  
+  <tr>
+    <td> TARGET_HOSTS </td>
+    <td> Destination hosts for network chaos <td>
+    <td> Optional </td>
+    <td> if not provided, it will induce network chaos for all ips/destinations or TARGET_IPs if already defined</td>
+  </tr>      
    <tr>
     <td> SOCKET_PATH </td>
     <td> Path of the containerd/crio socket file </td>
