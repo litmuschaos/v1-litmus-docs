@@ -67,7 +67,7 @@ sidebar_label: General
 
 ###  Why should I use Litmus? What is its distinctive feature? 
 
-Litmus is a toolset to do cloud-native chaos engineering. Litmus provides tools to orchestrate chaos 
+Litmus is a toolset to do cloud-native Chaos Engineering. Litmus provides tools to orchestrate chaos 
 on Kubernetes to help developers and SREs find weaknesses in their application deployments. Litmus can 
 be used to run chaos experiments initially in the staging environment and eventually in production to 
 find bugs, vulnerabilities. Fixing the weaknesses leads to increased resilience of the system. 
@@ -148,10 +148,10 @@ Kubectl describe chaosengine <chaosengne-name> -n <namespace>
 
 ### Do chaos experiments run as a standard set of pods? 
 
-The chaos experiment (triggered after creation of the chaosEngine resource) workflow consists of launching the “chaos-runner” 
+The chaos experiment (triggered after creation of the ChaosEngine resource) workflow consists of launching the “chaos-runner” 
 pod, which is an umbrella executor of different chaos experiments listed in the engine. The chaos-runner creates one pod (job) 
 per each experiment to run the actual experiment business logic, and also manages the lifecycle of these experiment pods 
-(performs functions such as experiment dependencies validation, job cleanup, patching of status back into chaosEngine etc.,). 
+(performs functions such as experiment dependencies validation, job cleanup, patching of status back into ChaosEngine etc.,). 
 Optionally, a monitor pod is created to export the chaos metrics. Together, these 3 pods are a standard set created upon execution 
 of the experiment. The experiment job, in turn may spawn dependent (helper) resources if 
 necessary to run the experiments, but this depends on the experiment selected, chaos libraries chosen etc., 
@@ -163,12 +163,12 @@ This is in order to support selection of the right applications with similar lab
 the application under test (AUT) & reduce the blast radius. It is also helpful for supporting automated execution 
 (say, via cron) as a background service. However, in cases where the app deployment specifications are sacrosanct and 
 not expected to be modified, or in cases where annotating a single application for chaos when the experiment itself is 
-known to have a higher blast radius doesn’t make sense (ex: infra chaos), the annotation check can be disabled via the
-chaosEngine tunable `annotationCheck` (`.spec.annotationCheck: false`).
+known to have a higher blast radius doesn’t make sense (ex: infra chaos), the annotationCheck can be disabled via the
+ChaosEngine tunable `annotationCheck` (`.spec.annotationCheck: false`).
 
 ### How to add Custom Annotations as chaos filters?
 
-Currently Litmus allows you to set your own/custom keys for Annotation filters, the value being `true`/`false`. To use your custom annotation, add this key under an ENV named as `CUSTOM_ANNOTATION` in chaos operator deployment. A sample chaos-operator deployment spec is provided here for reference: 
+Currently Litmus allows you to set your own/custom keys for Annotation filters, the value being `true`/`false`. To use your custom annotation, add this key under an ENV named as `CUSTOM_ANNOTATION` in ChaosOperator deployment. A sample chaos-operator deployment spec is provided here for reference: 
 
 ```yaml
 ---
@@ -263,7 +263,7 @@ The same effect will be caused by deleting the respective chaosengine resource.
 
 ### Can a chaos experiment be resumed once stopped or aborted? 
 
-Once stopped/aborted, patching the chaosengine `.spec.engineState` with `active` causes the experiment to be re-executed. Another way is to re-apply the chaos engine YAML, this will delete all stale chaos resources, and restart chaos engine lifecycle.
+Once stopped/aborted, patching the chaosengine `.spec.engineState` with `active` causes the experiment to be re-executed. Another way is to re-apply the ChaosEngine YAML, this will delete all stale chaos resources, and restart ChaosEngine lifecycle.
 However, support is yet to be added for saving state and resuming an in-flight experiment (i.e., execute 
 pending iterations etc.,)
 

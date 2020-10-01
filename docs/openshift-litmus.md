@@ -25,7 +25,7 @@ Running chaos on your application involves the following steps:
 
 [Run Chaos](#run-chaos)
 
-[Observe chaos results](#observe-chaos-results)
+[Observe ChaosResults](#observe-chaos-results)
 
 <hr>
 
@@ -41,7 +41,7 @@ The above command install all the CRDs, required service account configuration, 
 
 **Verify your installation**
 
-- Verify if the chaos operator is running
+- Verify if the ChaosOperator is running
 
 ```
 oc get pods -n litmus
@@ -171,7 +171,7 @@ subjects:
 ### Annotate your application
 
 Your application has to be annotated with `litmuschaos.io/chaos="true"`. As a security measure, and also as a means
-to reduce blast radius the chaos operator checks for this annotation before invoking chaos experiment(s) on the application.
+to reduce blast radius the ChaosOperator checks for this annotation before invoking chaos experiment(s) on the application.
 Replace `nginx` with the name of your deployment.
 
 <div class="danger">

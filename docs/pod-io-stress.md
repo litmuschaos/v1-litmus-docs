@@ -132,7 +132,7 @@ subjects:
     <td> TARGET_POD </td>
     <td> Name of the application pod subjected to IO stress chaos<td>
     <td> Optional </td>
-    <td> If not provided it will select from the app label provided</td>
+    <td> If not provided it will select from the appLabel provided</td>
   </tr>   
   <tr>
     <td> TOTAL_CHAOS_DURATION </td>
@@ -156,7 +156,7 @@ subjects:
     <td> TARGET_POD </td>
     <td> Name of the application pod subjected to pod io stress chaos<td>
     <td> Optional </td>
-    <td> If not provided it will select from the app label provided</td>
+    <td> If not provided it will select from the appLabel provided</td>
   </tr>  
   <tr>
     <td> PODS_AFFECTED_PERC </td>

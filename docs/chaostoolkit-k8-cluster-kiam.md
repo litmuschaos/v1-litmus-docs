@@ -226,7 +226,7 @@ spec:
   #ex. values: ns1:name=percona,ns2:run=nginx
   appinfo:
     appns: kube-system
-    # FYI, To see app label, apply kubectl get pods --show-labels
+    # FYI, To see appLabel, apply kubectl get pods --show-labels
     #applabel: "app=nginx"
     applabel: "app=kiam"
     appkind: deployment

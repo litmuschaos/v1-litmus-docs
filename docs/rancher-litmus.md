@@ -26,7 +26,7 @@ Running chaos on your application involves the following steps:
 
 [Run Chaos](#run-chaos)
 
-[Observe chaos results](#observe-chaos-results)
+[Observe ChaosResults](#observe-chaos-results)
 
 [Troubleshooting](#troubleshooting)
 
@@ -93,7 +93,7 @@ The above command install all the CRDs, required service account configuration, 
 Before you start running a chaos experiment, verify if Litmus is installed correctly.
 
 
-- Verify if the chaos operator is running 
+- Verify if the ChaosOperator is running 
 
 ```console
 $ kubectl get pods -n nginx
@@ -247,7 +247,7 @@ subjects:
 ### Annotate your application
 
 Your application has to be annotated with `litmuschaos.io/chaos="true"`. As a security measure, and also as a means 
-to reduce blast radius the chaos operator checks for this annotation before invoking chaos experiment(s) on the application. 
+to reduce blast radius the ChaosOperator checks for this annotation before invoking chaos experiment(s) on the application. 
 Replace `nginx` with the name of your deployment.
 
 <div class="danger">
@@ -411,7 +411,7 @@ kubectl delete -f litmus-operator.yaml -n nginx
 
 Following  the steps in the *Getting Started Guide* to install litmus in a `nginx` namespace with an nginx deployment, you may do everything correctly and not get the `container-kill` experiment to work. The tips below are to assist you in troubleshooting the issue.
 
-The environment used below is Rancher running on AWS.When I ran the chaos engine using the content provide in the *Getting Started Guide*: 
+The environment used below is Rancher running on AWS.When I ran the ChaosEngine using the content provide in the *Getting Started Guide*: 
 ``` console
 $ kubectl apply -f chaosengine.yaml -n nginx
 chaosengine.litmuschaos.io/nginx-chaos created
