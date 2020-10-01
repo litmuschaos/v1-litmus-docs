@@ -27,7 +27,7 @@ jobs:
 
       - name: Commit files
         run: |
-          git config --local user.email "litmuschaosbot@github.com"
+          git config --local user.email "litmuschaos@gmail.com"
           git config --local user.name "LitmusChaos"
           git commit -s -m "Add embedmd changes" -a
         continue-on-error: true
