@@ -1,6 +1,6 @@
-## Documentation for the Litmus Project
-
 <img src="https://avatars0.githubusercontent.com/u/49853472?s=200&v=4">
+
+## Documentation for the Litmus Project
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Flitmuschaos%2Flitmus-docs.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Flitmuschaos%2Flitmus-docs?ref=badge_shield)
 
