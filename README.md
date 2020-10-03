@@ -39,7 +39,7 @@ _Check the difference:_
 
 - Executing `embedmd -d docs-name.md` will display the difference between the contents of docs-name.md and the output of embedmd docs-name.md.
 
-
+embedmd(embedmd is no more mandatory)
 ## Manual Setup
 
 ### Install Node.js
