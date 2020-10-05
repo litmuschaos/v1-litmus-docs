@@ -9,7 +9,7 @@ sidebar_label: Monitoring
 
 Chaos Engineering is the discipline of experimenting on a system to build confidence in the system’s capability to withstand turbulent conditions in production. Monitoring system's resilience and its performance under chaos are one of the fundamental principles of chaos engineering.
 
-Building a hypothesis around steady-state behaviour, varying real-world events, running experiments in production and automating them to run as a workflow in CI pipelines and minimizing the blast radius are some advanced chaos practices which are all backed by an extensive monitoring infrastructure managed by SREs heading IT operations. Monitoring chaos and performance metrics is an observability paradigm providing real-time insights into the four golden signals for monitoring distributed systems namely, latency, traffic, errors, and saturation.
+Building a hypothesis around steady-state behaviour, varying real-world events, running experiments in production, automating them to run as a workflow in CI pipelines, and minimizing the blast radius are some advanced chaos practices. These are all backed by extensive monitoring infrastructure managed by SREs heading IT operations. Monitoring chaos and performance metrics is an observability paradigm providing real-time insights into the four golden signals for monitoring distributed systems namely, latency, traffic, errors, and saturation.
 
 ### LitmusChaos plugins for monitoring
 
