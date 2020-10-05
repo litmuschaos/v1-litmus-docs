@@ -21,7 +21,7 @@ sidebar_label: EC2 Terminate
 </table>
 
 ## Prerequisites
-- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
+- Ensure that the Litmus ChaosOperator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `aws-ec2-terminate` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/kube-aws/k8-aws-ec2-terminate/experiment.yaml)
 - Ensure you have nginx default application setup on default namespace ( if you are using specific namespace please execute below on that namespace)
 
@@ -39,7 +39,7 @@ sidebar_label: EC2 Terminate
 
 ## Details
 
-- Causes EC2 Terminate instance failure of application replicas using chaostoolkit based on provided namespace and Label while doing health checks against the endpoint
+- Causes EC2 Terminate instance failure of application replicas using ChaosToolKit based on provided namespace and Label while doing health checks against the endpoint
 - Tests deployment sanity with steady state hypothesis executed pre and post pod failures, which is running on AWS EC2 instance
 - Service resolution will fail if application is not able to launch on new EC2 instance.
 
@@ -63,9 +63,9 @@ sidebar_label: EC2 Terminate
 
 - AWS EC2 failures can be effected using one of these chaos libraries: `litmus`
 
-## Steps to Execute the Chaos Experiment
+## Steps to Execute the ChaosExperiment
 
-- This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to provide in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
+- This ChaosExperiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to provide in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
 
 - Follow the steps in the sections below to create the chaosServiceAccount, prepare the ChaosEngine & execute the experiment.
 
@@ -150,13 +150,13 @@ subjects:
   </tr>
   <tr>
     <td> APP_ENDPOINT </td>
-    <td> Endpoint where chaostoolkit will make a call and ensure the application is healthy </td>
+    <td> Endpoint where ChaosToolKit will make a call and ensure the application is healthy </td>
     <td> Mandatory </td>
     <td> Defaults to localhost </td>
   </tr>
   <tr>
     <td> FILE </td>
-    <td> Type of pod-delete chaos (in terms of steady state checks performed) we want to execute, represented by the chaostoolkit json file</td>
+    <td> Type of pod-delete chaos (in terms of steady state checks performed) we want to execute, represented by the ChaosToolKit json file</td>
     <td> Mandatory  </td>
     <td> Default to `ec2-delete.json` </td>
   </tr>
@@ -210,7 +210,7 @@ subjects:
   </tr>
   <tr>
     <td> TEST_NAMESPACE </td>
-    <td> Place holder from where the chaos experiment is executed</td>
+    <td> Place holder from where the ChaosExperiment is executed</td>
     <td> Optional  </td>
     <td> Defaults to is `default` </td>
   </tr>
@@ -287,13 +287,13 @@ spec:
 
   `watch kubectl get pods`
 
-### Check Chaos Experiment Result
+### Check ChaosExperiment Result
 
-- Check whether the application is resilient to the chaostoolkit pod failure, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
+- Check whether the application is resilient to the ChaosToolKit pod failure, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
   `kubectl describe chaosresult k8-pod-delete -n <chaos-namespace>`
 
-### Check Chaos Experiment logs
+### Check ChaosExperiment logs
 
 - Check the log and result for existing experiment
 
