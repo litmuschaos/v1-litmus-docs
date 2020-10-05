@@ -325,6 +325,33 @@ This section describes the fields in the ChaosEngine spec and the possible value
 <table>
 <tr>
   <th>Field</th>
+  <td><code>.spec.components.runner.imagePullSecrets</code></td>
+</tr>
+<tr>
+  <th>Description</th>
+  <td>Flag to specify imagePullSecrets for the ChaosRunner</td>
+</tr>
+<tr>
+  <th>Type</th>
+  <td>Optional</td>
+</tr>
+<tr>
+  <th>Range</th>
+<td><i>user-defined</i> (type: []corev1.LocalObjectReference)</td>
+</tr>
+<tr>
+  <th>Default</th>
+  <td><i>n/a</i></td>
+</tr>
+<tr>
+  <th>Notes</th>
+  <td>The <code>.components.runner.imagePullSecrets</code> allows developers to specify the <code>imagePullSecret</code> name for ChaosRunner. </td>
+</tr>
+</table>
+
+<table>
+<tr>
+  <th>Field</th>
   <td><code>.spec.components.runner.runnerannotation</code></td>
 </tr>
 <tr>
@@ -346,6 +373,60 @@ This section describes the fields in the ChaosEngine spec and the possible value
 <tr>
   <th>Notes</th>
   <td>The <code>.components.runner.runnerannotation</code> allows developers to specify the custom annotations for the runner pod.</td>
+</tr>
+</table>
+
+<table>
+<tr>
+  <th>Field</th>
+  <td><code>.spec.components.runner.args</code></td>
+</tr>
+<tr>
+  <th>Description</th>
+  <td>Specify the args for the ChaosRunner Pod</td>
+</tr>
+<tr>
+  <th>Type</th>
+  <td>Optional</td>
+</tr>
+<tr>
+  <th>Range</th>
+  <td><i>user-defined</i> (type: []string)</td>
+</tr>
+<tr>
+  <th>Default</th>
+  <td><i>n/a</i></td>
+</tr>
+<tr>
+  <th>Notes</th>
+  <td>The <code>.components.runner.args</code> allows developers to specify their own debug runner args.</td>
+</tr>
+</table>
+
+<table>
+<tr>
+  <th>Field</th>
+  <td><code>.spec.components.runner.command</code></td>
+</tr>
+<tr>
+  <th>Description</th>
+  <td>Specify the commands for the ChaosRunner Pod</td>
+</tr>
+<tr>
+  <th>Type</th>
+  <td>Optional</td>
+</tr>
+<tr>
+  <th>Range</th>
+  <td><i>user-defined</i> (type: []string)</td>
+</tr>
+<tr>
+  <th>Default</th>
+  <td><i>n/a</i></td>
+</tr>
+<tr>
+  <th>Notes</th>
+  <td>The <code>.components.runner.command</code> allows developers to specify their own debug runner commands.</td>
 </tr>
 </table>
 
@@ -489,6 +570,33 @@ This section describes the fields in the ChaosEngine spec and the possible value
 <table>
 <tr>
   <th>Field</th>
+  <td><code>.spec.experiments[].spec.components.experimentImagePullSecrets</code></td>
+</tr>
+<tr>
+  <th>Description</th>
+  <td>Flag to specify imagePullSecrets for the ChaosExperiment</td>
+</tr>
+<tr>
+  <th>Type</th>
+  <td>Optional</td>
+</tr>
+<tr>
+  <th>Range</th>
+<td><i>user-defined</i> (type: []corev1.LocalObjectReference)</td>
+</tr>
+<tr>
+  <th>Default</th>
+  <td><i>n/a</i></td>
+</tr>
+<tr>
+  <th>Notes</th>
+  <td>The <code>.components.runner.experimentImagePullSecrets</code> allows developers to specify the <code>imagePullSecret</code> name for ChaosExperiment. </td>
+</tr>
+</table>
+
+<table>
+<tr>
+  <th>Field</th>
   <td><code>.spec.experiments[].spec.components.nodeSelector</code></td>
 </tr>
 <tr>
@@ -537,6 +645,33 @@ This section describes the fields in the ChaosEngine spec and the possible value
 <tr>
   <th>Notes</th>
   <td>The <code>experiment[].spec.components.statusCheckTimeouts</code> The statusCheckTimeouts override the status timeouts inside chaosexperiments. It contains timeout & delay in seconds.</td>
+</tr>
+</table>
+
+<table>
+<tr>
+  <th>Field</th>
+  <td><code>.spec.experiments[].spec.components.resources</code></td>
+</tr>
+<tr>
+  <th>Description</th>
+  <td>Specify the resource requirements for the ChaosExperiment pod</td>
+</tr>
+<tr>
+  <th>Type</th>
+  <td>Optional</td>
+</tr>
+<tr>
+  <th>Range</th>
+<td><i>user-defined</i> (type: corev1.ResourceRequirements)</td>
+</tr>
+<tr>
+  <th>Default</th>
+  <td><i>n/a</i></td>
+</tr>
+<tr>
+  <th>Notes</th>
+  <td>The <code>experiment[].spec.components.resources</code> contains the resource requirements for the ChaosExperiment Pod, where we can provide resource requests and limits for the pod.</td>
 </tr>
 </table>
 
