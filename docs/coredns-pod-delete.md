@@ -38,7 +38,7 @@ sidebar_label: CoreDNS Pod Delete
 
 - Causes graceful pod failure of an coreDNS replicas
 - Tests deployment sanity (replica availability & uninterrupted service) and recovery workflow of the service
-- Service resolution will failed if coredns replicas are not present.
+- Service resolution will failed if coreDNS replicas are not present.
 
 ## Integrations
 

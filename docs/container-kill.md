@@ -36,11 +36,11 @@ sidebar_label: Container Kill
 ## Details
 
 - litmus lib in docker runtime details
-    - It can kill the container of multiple pods in parellel (can be tuned by `PODS_AFFECTED_PERC` env). It kill the container by sending SIGKILL termination signal to its docker socket (hence docker runtime is required)
+    - It can kill the container of multiple pods in parallel (can be tuned by `PODS_AFFECTED_PERC` env). It kill the container by sending SIGKILL termination signal to its docker socket (hence docker runtime is required)
     - Containers are killed using the `kill` command provided by [pumba](https://github.com/alexei-led/pumba)
     - Pumba is run as a pod on the application node. It have ability to kill the application containers multiple times. Which can be varied by `TOTAL_CHAOS_DURATION` and `CHAOS_INTERVAL`.
 - litmus chaoslib in containerd and crio runtime codetails
-    - It can kill the container of multiple pods in parellel (can be tuned by `PODS_AFFECTED_PERC` env).
+    - It can kill the container of multiple pods in parallel (can be tuned by `PODS_AFFECTED_PERC` env).
     - Containers are killed using the `crictl stop` command.
     - container-kill is run as a pod on the application node. It have ability to kill the application containers multiple times. Which can be varied by `TOTAL_CHAOS_DURATION` and `CHAOS_INTERVAL`.
 - Tests deployment sanity (replica availability & uninterrupted service) and recovery workflow of the application

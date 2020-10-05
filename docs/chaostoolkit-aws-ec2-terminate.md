@@ -23,25 +23,25 @@ sidebar_label: EC2 Terminate
 ## Prerequisites
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `aws-ec2-terminate` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/kube-aws/k8-aws-ec2-terminate/experiment.yaml)
-- Ensure you have nginx default application setup on default namespac ( if you are using specific namespace please execute beloe on that namespace)
+- Ensure you have nginx default application setup on default namespace ( if you are using specific namespace please execute below on that namespace)
 
 ## Entry Criteria
 
 - Application replicas are healthy before chaos injection
-- EC2 Intsaces are running on this namespace
+- EC2 Instances are running on this namespace
 - Service resolution works successfully as determined by deploying a sample nginx application and a custom liveness app querying the nginx application health end point
 
 ## Exit Criteria
 
 - Application replicas are healthy after chaos injection
-- EC2 Intsaces are running on this namespace
+- EC2 Instances are running on this namespace
 - Service resolution works successfully as determined by deploying a sample nginx application and a custom liveness app querying the nginx application health end point
 
 ## Details
 
 - Causes EC2 Terminate instance failure of application replicas using chaostoolkit based on provided namespace and Label while doing health checks against the endpoint
 - Tests deployment sanity with steady state hypothesis executed pre and post pod failures, which is running on AWS EC2 instance
-- Service resolution will fail if application is not able to lauch on new EC2 instance.
+- Service resolution will fail if application is not able to launch on new EC2 instance.
 
 ### Use Cases for executing the experiment
 <table>
@@ -180,13 +180,13 @@ subjects:
   </tr>
   <tr>
     <td> AWS_AZ </td>
-    <td> AWS Availiblity Zone  where we want to terminate the ec2</td>
+    <td> AWS Availability Zone  where we want to terminate the ec2</td>
     <td> Mandatory  </td>
     <td> Default to `us-west-2c` </td>
   </tr>
   <tr>
     <td> AWS_RESOURCE </td>
-    <td> AWS Resource we want to terminate, this time used for aws kubernetes cluster</td>
+    <td> AWS Resource we want to terminate, this time used for AWS Kubernetes cluster</td>
     <td> Mandatory  </td>
     <td> Default to `ec2-iks` </td>
   </tr>

@@ -23,7 +23,7 @@ sidebar_label: Cluster Pod - kiam
 ## Prerequisites
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `k8-pod-delete` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.8.2?file=charts/generic/k8-pod-delete/experiment.yaml)
-- Ensure you have nginx default application setup on default namespace ( if you are using specific namespace please execute beloe on that namespace)
+- Ensure you have nginx default application setup on default namespace ( if you are using specific namespace please execute below on that namespace)
 
 ## Entry Criteria
 
