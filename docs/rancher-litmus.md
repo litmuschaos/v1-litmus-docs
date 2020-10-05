@@ -26,7 +26,7 @@ Running chaos on your application involves the following steps:
 
 [Run Chaos](#run-chaos)
 
-[Observe chaos results](#observe-chaos-results)
+[Observe ChaosResults](#observe-chaos-results)
 
 [Troubleshooting](#troubleshooting)
 
@@ -67,7 +67,7 @@ The nginx default web site should be available now.
 ###  Install Litmus
 Followed the steps in the [Getting Started Guide](https://docs.litmuschaos.io/docs/getstarted/)* to install litmus in a `nginx` namespace with an nginx application.
 
-Download `litmus-operator-v1.8.1.yaml` from https://litmuschaos.github.io/litmus/litmus-operator-v1.8.1.yaml.
+Download `litmus-operator-v1.8.2.yaml` from https://litmuschaos.github.io/litmus/litmus-operator-v1.8.2.yaml.
 Modify it to use the `nginx` namespace in three places (at lines 10, 41, and 47 approximately).
 Install the litmus-operator in `nginx` application namespace using kubectl.
 ``` console
@@ -93,7 +93,7 @@ The above command install all the CRDs, required service account configuration, 
 Before you start running a chaos experiment, verify if Litmus is installed correctly.
 
 
-- Verify if the chaos operator is running 
+- Verify if the ChaosOperator is running 
 
 ```console
 $ kubectl get pods -n nginx
@@ -145,7 +145,7 @@ The generic chaos experiments such as `pod-delete`,  `container-kill`,` pod-netw
 This is the first chart you are recommended to install. 
 
 ```
-$ kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.8.1?file=charts/generic/experiments.yaml -n nginx
+$ kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.8.2?file=charts/generic/experiments.yaml -n nginx
 ```
 
 Expected output: 
@@ -247,7 +247,7 @@ subjects:
 ### Annotate your application
 
 Your application has to be annotated with `litmuschaos.io/chaos="true"`. As a security measure, and also as a means 
-to reduce blast radius the chaos operator checks for this annotation before invoking chaos experiment(s) on the application. 
+to reduce blast radius the ChaosOperator checks for this annotation before invoking chaos experiment(s) on the application. 
 Replace `nginx` with the name of your deployment.
 
 <div class="danger">
@@ -402,7 +402,7 @@ You can uninstall Litmus by deleting the namespace.
 ```console
 kubectl delete -f chaosengine.yaml -n nginx
 kubectl delete -f rbac.yaml -n nginx
-kubectl delete -f https://hub.litmuschaos.io/api/chaos/1.8.1?file=charts/generic/experiments.yaml -n nginx
+kubectl delete -f https://hub.litmuschaos.io/api/chaos/1.8.2?file=charts/generic/experiments.yaml -n nginx
 kubectl delete -f litmus-operator.yaml -n nginx
 
 ```
@@ -411,7 +411,7 @@ kubectl delete -f litmus-operator.yaml -n nginx
 
 Following  the steps in the *Getting Started Guide* to install litmus in a `nginx` namespace with an nginx deployment, you may do everything correctly and not get the `container-kill` experiment to work. The tips below are to assist you in troubleshooting the issue.
 
-The environment used below is Rancher running on AWS.When I ran the chaos engine using the content provide in the *Getting Started Guide*: 
+The environment used below is Rancher running on AWS.When I ran the ChaosEngine using the content provide in the *Getting Started Guide*: 
 ``` console
 $ kubectl apply -f chaosengine.yaml -n nginx
 chaosengine.litmuschaos.io/nginx-chaos created

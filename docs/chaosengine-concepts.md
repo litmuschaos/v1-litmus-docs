@@ -121,7 +121,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>appkind</code> in the spec specifies the Kubernetes resource type of the app deployment. The Litmus chaos operator supports chaos on deployments, statefulsets and daemonsets. Application health check routines are dependent on the resource types, in case of some experiments.</td>
+  <td>The <code>appkind</code> in the spec specifies the Kubernetes resource type of the app deployment. The Litmus ChaosOperator supports chaos on deployments, statefulsets and daemonsets. Application health check routines are dependent on the resource types, in case of some experiments.</td>
 </tr>
 </table>
 
@@ -192,7 +192,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Description</th>
-  <td>Flag to control annotation checks on applications as prerequisites for chaos</td>
+  <td>Flag to control annotationChecks on applications as prerequisites for chaos</td>
 </tr>
 <tr>
   <th>Type</th>
@@ -275,7 +275,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Description</th>
-  <td>Flag to specify image of chaos runner pod</td>
+  <td>Flag to specify image of ChaosRunner pod</td>
 </tr>
 <tr>
   <th>Type</th>
@@ -302,7 +302,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Description</th>
-  <td>Flag to specify image pull policy for the chaos runner</td>
+  <td>Flag to specify imagePullPolicy for the ChaosRunner</td>
 </tr>
 <tr>
   <th>Type</th>
@@ -319,6 +319,33 @@ This section describes the fields in the ChaosEngine spec and the possible value
 <tr>
   <th>Notes</th>
   <td>The <code>.components.runner.imagePullPolicy</code> allows developers to specify the pull policy for chaos-runner. Set to <code>Always</code> during debug/test.</td>
+</tr>
+</table>
+
+<table>
+<tr>
+  <th>Field</th>
+  <td><code>.spec.components.runner.imagePullSecrets</code></td>
+</tr>
+<tr>
+  <th>Description</th>
+  <td>Flag to specify imagePullSecrets for the ChaosRunner</td>
+</tr>
+<tr>
+  <th>Type</th>
+  <td>Optional</td>
+</tr>
+<tr>
+  <th>Range</th>
+<td><i>user-defined</i> (type: []corev1.LocalObjectReference)</td>
+</tr>
+<tr>
+  <th>Default</th>
+  <td><i>n/a</i></td>
+</tr>
+<tr>
+  <th>Notes</th>
+  <td>The <code>.components.runner.imagePullSecrets</code> allows developers to specify the <code>imagePullSecret</code> name for ChaosRunner. </td>
 </tr>
 </table>
 
@@ -349,6 +376,60 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 </table>
 
+<table>
+<tr>
+  <th>Field</th>
+  <td><code>.spec.components.runner.args</code></td>
+</tr>
+<tr>
+  <th>Description</th>
+  <td>Specify the args for the ChaosRunner Pod</td>
+</tr>
+<tr>
+  <th>Type</th>
+  <td>Optional</td>
+</tr>
+<tr>
+  <th>Range</th>
+  <td><i>user-defined</i> (type: []string)</td>
+</tr>
+<tr>
+  <th>Default</th>
+  <td><i>n/a</i></td>
+</tr>
+<tr>
+  <th>Notes</th>
+  <td>The <code>.components.runner.args</code> allows developers to specify their own debug runner args.</td>
+</tr>
+</table>
+
+<table>
+<tr>
+  <th>Field</th>
+  <td><code>.spec.components.runner.command</code></td>
+</tr>
+<tr>
+  <th>Description</th>
+  <td>Specify the commands for the ChaosRunner Pod</td>
+</tr>
+<tr>
+  <th>Type</th>
+  <td>Optional</td>
+</tr>
+<tr>
+  <th>Range</th>
+  <td><i>user-defined</i> (type: []string)</td>
+</tr>
+<tr>
+  <th>Default</th>
+  <td><i>n/a</i></td>
+</tr>
+<tr>
+  <th>Notes</th>
+  <td>The <code>.components.runner.command</code> allows developers to specify their own debug runner commands.</td>
+</tr>
+</table>
+
 ## Experiment Specification
 
 <table>
@@ -374,7 +455,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>experiment[].name</code> specifies the chaos experiment to be executed by the chaos operator.</td>
+  <td>The <code>experiment[].name</code> specifies the chaos experiment to be executed by the ChaosOperator.</td>
 </tr>
 </table>
 
@@ -489,6 +570,33 @@ This section describes the fields in the ChaosEngine spec and the possible value
 <table>
 <tr>
   <th>Field</th>
+  <td><code>.spec.experiments[].spec.components.experimentImagePullSecrets</code></td>
+</tr>
+<tr>
+  <th>Description</th>
+  <td>Flag to specify imagePullSecrets for the ChaosExperiment</td>
+</tr>
+<tr>
+  <th>Type</th>
+  <td>Optional</td>
+</tr>
+<tr>
+  <th>Range</th>
+<td><i>user-defined</i> (type: []corev1.LocalObjectReference)</td>
+</tr>
+<tr>
+  <th>Default</th>
+  <td><i>n/a</i></td>
+</tr>
+<tr>
+  <th>Notes</th>
+  <td>The <code>.components.runner.experimentImagePullSecrets</code> allows developers to specify the <code>imagePullSecret</code> name for ChaosExperiment. </td>
+</tr>
+</table>
+
+<table>
+<tr>
+  <th>Field</th>
   <td><code>.spec.experiments[].spec.components.nodeSelector</code></td>
 </tr>
 <tr>
@@ -537,6 +645,33 @@ This section describes the fields in the ChaosEngine spec and the possible value
 <tr>
   <th>Notes</th>
   <td>The <code>experiment[].spec.components.statusCheckTimeouts</code> The statusCheckTimeouts override the status timeouts inside chaosexperiments. It contains timeout & delay in seconds.</td>
+</tr>
+</table>
+
+<table>
+<tr>
+  <th>Field</th>
+  <td><code>.spec.experiments[].spec.components.resources</code></td>
+</tr>
+<tr>
+  <th>Description</th>
+  <td>Specify the resource requirements for the ChaosExperiment pod</td>
+</tr>
+<tr>
+  <th>Type</th>
+  <td>Optional</td>
+</tr>
+<tr>
+  <th>Range</th>
+<td><i>user-defined</i> (type: corev1.ResourceRequirements)</td>
+</tr>
+<tr>
+  <th>Default</th>
+  <td><i>n/a</i></td>
+</tr>
+<tr>
+  <th>Notes</th>
+  <td>The <code>experiment[].spec.components.resources</code> contains the resource requirements for the ChaosExperiment Pod, where we can provide resource requests and limits for the pod.</td>
 </tr>
 </table>
 

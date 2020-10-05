@@ -1,6 +1,16 @@
-Documentation for the Litmus Project
+# Documentation for the Litmus Project
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Flitmuschaos%2Flitmus-docs.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Flitmuschaos%2Flitmus-docs?ref=badge_shield)
+[![Slack Channel](https://img.shields.io/badge/Slack-Join-purple)](https://slack.litmuschaos.io)
+[![Docker Pulls](https://img.shields.io/docker/pulls/litmuschaos/ansible-runner.svg)](https://hub.docker.com/r/litmuschaos/ansible-runner)
+[![GitHub stars](https://img.shields.io/github/stars/litmuschaos/litmus-docs?style=social)](https://github.com/litmuschaos/litmus-docs/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/litmuschaos/litmus-docs)](https://github.com/litmuschaos/litmus-docs/issues)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/litmuschaos/litmus-docs?logo=git)](https://github.com/litmuschaos/litmus-docs/pulls)
+[![Twitter Follow](https://img.shields.io/twitter/follow/litmuschaos?style=social)](https://twitter.com/LitmusChaos)
+[![YouTube Channel](https://img.shields.io/badge/YouTube-Subscribe-red)](https://www.youtube.com/channel/UCa57PMqmz_j0wnteRa9nCaw)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat&logo=github)](https://github.com/litmuschaos/litmus-docs/pulls) 
+[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/litmuschaos/litmus-docs)
+![GitHub top language](https://img.shields.io/github/languages/top/litmuschaos/litmus-docs)
 
 Additional details on the Docusaurus project can be found [here](https://docusaurus.io/docs/en/installation.html).
 
