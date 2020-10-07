@@ -3,6 +3,7 @@ id: monitoring
 title: Monitoring
 sidebar_label: Monitoring
 ---
+
 ---
 
 ### Monitoring Chaos
@@ -19,14 +20,14 @@ LitmusChaos facilitates real-time monitoring for events using litmus event route
 
 - Clone the litmus repo
 
-  ```
+  ```bash
   git clone https://github.com/litmuschaos/litmus.git
   cd litmus/monitoring
   ```
 
 - Switch to Utilities
 
-  ```
+  ```bash
   cd utils
   ```
 
@@ -92,17 +93,17 @@ LitmusChaos facilitates real-time monitoring for events using litmus event route
 
 - Write queries for Prometheus or other TSDBs using Chaos Engine Name as label selector.
 
-  ```
-  heptio_eventrouter_normal_total{reason="ChaosEngineInitialized", involved_object_namespace="litmus",involved_object_name="orders-pod-memory-hog", involved_object_kind="ChaosEngine"} - on () (heptio_eventrouter_normal_total{reason="ChaosEngineCompleted", involved_object_namespace="litmus",involved_object_name="orders-pod-memory-hog", involved_object_kind="ChaosEngine"} OR on() vector(0)) 
+  ```json
+  heptio_eventrouter_normal_total{reason="ChaosEngineInitialized",involved_object_namespace="litmus",involved_object_name="orders-pod-memory-hog",involved_object_kind="ChaosEngine"} - on () (heptio_eventrouter_normal_total{reason="ChaosEngineCompleted",involved_object_namespace="litmus",involved_object_name="orders-pod-memory-hog",involved_object_kind="ChaosEngine"} OR on() vector(0))
   ```
 
-- Add the queries as Grafana annotations. 
+- Add the queries as Grafana annotations.
 
-  ```
+  ```json
     {
       "datasource": "${DS_DS_PROMETHEUS}",
       "enable": true,
-      "expr": "heptio_eventrouter_normal_total{reason="ChaosEngineInitialized", involved_object_namespace="litmus",involved_object_name="orders-pod-memory-hog", involved_object_kind="ChaosEngine"} - on () (heptio_eventrouter_normal_total{reason="ChaosEngineCompleted", involved_object_namespace="litmus",involved_object_name="orders-pod-memory-hog", involved_object_kind="ChaosEngine"} OR on() vector(0))",
+      "expr": "heptio_eventrouter_normal_total{reason="ChaosEngineInitialized", involved_object_namespace="litmus", involved_object_name="orders-pod-memory-hog", involved_object_kind="ChaosEngine"} - on () (heptio_eventrouter_normal_total{reason="ChaosEngineCompleted", involved_object_namespace="litmus", involved_object_name="orders-pod-memory-hog", involved_object_kind="ChaosEngine"} OR on() vector(0))",
       "hide": false,
       "iconColor": "#F2CC0C",
       "limit": 100,
@@ -119,9 +120,9 @@ LitmusChaos facilitates real-time monitoring for events using litmus event route
 
   or on each graph as a second Y-axis value with a label.
 
-  ```
+  ```json
     {
-      "expr": "heptio_eventrouter_normal_total{reason="ChaosInject",involved_object_name="orders-pod-memory-hog", involved_object_namespace="litmus", involved_object_kind="ChaosEngine"} - on () (heptio_eventrouter_normal_total{reason="ChaosEngineCompleted",involved_object_name="orders-pod-memory-hog", involved_object_namespace="litmus", involved_object_kind="ChaosEngine"} OR on() vector(0))",
+      "expr": "heptio_eventrouter_normal_total{reason="ChaosInject", involved_object_name="orders-pod-memory-hog", involved_object_namespace="litmus", involved_object_kind="ChaosEngine"} - on () (heptio_eventrouter_normal_total{reason="ChaosEngineCompleted", involved_object_name="orders-pod-memory-hog", involved_object_namespace="litmus", involved_object_kind="ChaosEngine"} OR on() vector(0))",
       "interval": "",
       "legendFormat": "orders-pod-memory-hog",
       "refId": "E"
@@ -132,7 +133,7 @@ LitmusChaos facilitates real-time monitoring for events using litmus event route
 
 - Write queries for Prometheus or other TSDBs using job name as label selector.
 
-  ```
+  ```json
   sum(chaosengine_experiments_count{engine_namespace="litmus",job="chaos-monitor"})
   ```
 
