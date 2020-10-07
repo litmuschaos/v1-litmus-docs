@@ -1,3 +1,5 @@
+<img src="https://camo.githubusercontent.com/953211f24c1c246f7017703f67b9779e4589bf76/68747470733a2f2f6c616e6473636170652e636e63662e696f2f6c6f676f732f6c69746d75732e737667" height=200>
+
 # Documentation for the Litmus Project
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Flitmuschaos%2Flitmus-docs.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Flitmuschaos%2Flitmus-docs?ref=badge_shield)
