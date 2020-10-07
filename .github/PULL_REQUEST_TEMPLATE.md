@@ -8,4 +8,5 @@
 
 **Checklist:**
 -   [ ] Fixes #<issue number>
+-   [ ] Signed the commit for DCO to be passed
 -   [ ] Labelled this PR & related issue with `documentation` tag
