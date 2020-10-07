@@ -169,6 +169,12 @@ subjects:
     <td> </td>
   </tr>
   <tr>
+    <td> SEQUENCE </td>
+    <td> It defines sequence of chaos execution for multiple target pods </td>
+    <td> Optional </td>
+    <td> Default value: parallel. Supported: serial, parallel </td>
+  </tr>
+  <tr>
     <td> SOCKET_PATH </td>
     <td> Path of the containerd/crio socket file </td>
     <td> Optional  </td>
