@@ -35,12 +35,13 @@ All probes share some common attributes:
 
 ### httpProbe
 
-The `httpProbe` allows developers to specify a URL which the experiment uses to gauge health/service availability (or other custom conditions) as part of the entry/exit criteria. The received status code is mapped against an expected status. It can be defined at `.spec.experiments[].spec.httpProbe` the path inside ChaosEngine.
+The `httpProbe` allows developers to specify a URL which the experiment uses to gauge health/service availability (or other custom conditions) as part of the entry/exit criteria. The received status code is mapped against an expected status. It can be defined at `.spec.experiments[].spec.probe` the path inside ChaosEngine.
 
 ```yaml
-httpProbe:
+probe:
 - name: "check-frontend-access-url"
-  inputs:
+  type: "httpProbe"
+  httpProbe/inputs:
     url: "<url>"
     expectedResponseCode: "200"
   mode: "Continuous"
@@ -56,12 +57,13 @@ The `httpProbe` is better used in the Continuous mode of operation as a parallel
 
 The `cmdProbe` allows developers to run shell commands and match the resulting output as part of the entry/exit criteria. The intent behind this probe was to allow users to implement a non-standard & imperative way for expressing their hypothesis. For example, the cmdProbe enables you to check for specific data within a database, parse the value out of a JSON blob being dumped into a certain path or check for the existence of a particular string in the service logs. 
 
-In order to enable this behaviour, the probe supports an inline mode in which the command is run from within the experiment image as well as a source mode, where the command execution is carried out from within a new pod whose image can be specified. While inline is preferred for simple shell commands (the litmus go-runner image today is alpine-based), source mode can be used when application-specific binaries are required. The `cmdProbe` can be defined at `.spec.experiments[].spec.cmdProbe` the path inside the ChaosEngine.
+In order to enable this behaviour, the probe supports an inline mode in which the command is run from within the experiment image as well as a source mode, where the command execution is carried out from within a new pod whose image can be specified. While inline is preferred for simple shell commands (the litmus go-runner image today is alpine-based), source mode can be used when application-specific binaries are required. The `cmdProbe` can be defined at `.spec.experiments[].spec.probe` the path inside the ChaosEngine.
 
 ```yaml
-cmdProbe:
+probe:
 - name: "check-database-integrity"
-  inputs:
+  type: "cmdProbe"
+  cmdProbe/inputs:
     command: "<command>"
     expectedResult: "<expected-result>"
     source: "<repo>/<tag>" # it can be “inline” or any image
@@ -76,18 +78,20 @@ cmdProbe:
 
 ### k8sProbe
 
-With the proliferation of custom resources & operators, especially in the case of stateful applications, the steady-state is manifested as status parameters/flags within Kubernetes resources. k8sProbe addresses verification of the desired resource state by allowing users to define the Kubernetes GVR (group-version-resource) with appropriate filters (field selectors/label selectors). The experiment makes use of the Kubernetes Dynamic Client to achieve this.The `k8sProbe` can be defined at `.spec.experiments[].spec.k8sProbe` the path inside ChaosEngine.
+With the proliferation of custom resources & operators, especially in the case of stateful applications, the steady-state is manifested as status parameters/flags within Kubernetes resources. k8sProbe addresses verification of the desired resource state by allowing users to define the Kubernetes GVR (group-version-resource) with appropriate filters (field selectors/label selectors). The experiment makes use of the Kubernetes Dynamic Client to achieve this.The `k8sProbe` can be defined at `.spec.experiments[].spec.probe` the path inside ChaosEngine.
 
 ```yaml
-k8sProbe:
+probe:
 - name: "check-app-cluster-cr-status"
-  inputs:
-  command:
-  group: "<appGroup>"
-  version: "<appVersion>"
-  resource: "<appResource>"
-  namespace: "default"
-  fieldSelector: "metadata.name=<appResourceName>,status.phase=Running"
+  type: "k8sProbe"
+  k8sProbe/inputs:
+    command:
+      group: "<appGroup>"
+      version: "<appVersion>"
+      resource: "<appResource>"
+      namespace: "default"
+      fieldSelector: "metadata.name=<appResourceName>,status.phase=Running"
+      labelSelector: "metadata.name=<appResourceName>,status.phase=Running"
   mode: "EoT"
   runProperties:
     probeTimeout: 5
@@ -145,4 +149,34 @@ Events:
   Type    Reason   Age   From                     Message
   ----    ------   ----  ----                     -------
   Normal  Summary  7s    pod-delete-0s2jt6-s4rdx  pod-delete experiment has been Passed
+```
+
+## Probe Chaining
+
+Probe chaining enable the probes to use the output of previous probe as input. It is supported for cmdProbe only. It allows cmdProbe to pass templated command as input. The format of template is `{{ <previous-probe-name>.ProbeArtifacts.Register }}`. It will rendered this template and replace this value by actual value(output of corresponding probe).
+
+```yaml
+probe:
+  - name: "probe1"
+    type: "cmdProbe"
+    cmdProbe/inputs:
+      command: "<command>"
+      expectedResult: "<expected-result>"
+      source: "inline"
+    mode: "SOT"
+    runProperties:
+      probeTimeout: 5
+      interval: 5
+      retry: 1
+  - name: "probe2"
+    type: "cmdProbe"
+    cmdProbe/inputs:
+      command: "<prefix-commmand> {{ .probe1.ProbeArtifacts.Register }} <suffix-command>"
+      expectedResult: "<expected-result>"
+      source: "inline"
+    mode: "SOT"
+    runProperties:
+      probeTimeout: 5
+      interval: 5
+      retry: 1
 ```
