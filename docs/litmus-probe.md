@@ -153,8 +153,11 @@ Events:
 
 ## Probe Chaining
 
-Probe chaining enable the probes to use the output of previous probe as input. It is supported for cmdProbe only. It allows cmdProbe to pass templated command as input. The format of template is `{{ <previous-probe-name>.ProbeArtifacts.Register }}`. It will rendered this template and replace this value by actual value(output of corresponding probe).
+Probe chaining enables reuse of probe a result (represented by the template function `{{ .<probeName>.probeArtifact.Register}}`) in subsequent "downstream" probes defined 
+in the ChaosEngine. Note that the order of execution of probes in the experiment depends purely on the order in which they are defined in the ChaosEngine. 
 
+Probe chaining is currently supported only for `cmdProbes`. 
+  
 ```yaml
 probe:
   - name: "probe1"
@@ -171,7 +174,8 @@ probe:
   - name: "probe2"
     type: "cmdProbe"
     cmdProbe/inputs:
-      command: "<prefix-commmand> {{ .probe1.ProbeArtifacts.Register }} <suffix-command>"
+      ## probe1's result being used as one of the args in probe2
+      command: "<commmand> {{ .probe1.ProbeArtifacts.Register }} <arg2>"
       expectedResult: "<expected-result>"
       source: "inline"
     mode: "SOT"
