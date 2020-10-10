@@ -705,11 +705,11 @@ This section describes the fields in the ChaosEngine spec and the possible value
 <table>
 <tr>
   <th>Field</th>
-  <td><code>.spec.experiments[].spec.httpProbe</code></td>
+  <td><code>.spec.experiments[].spec.probe</code></td>
 </tr>
 <tr>
   <th>Description</th>
-  <td>An experiment probe that accesses a service endpoint </td>
+  <td> Declarative way to define the chaos hypothesis</td>
 </tr>
 <tr>
   <th>Type</th>
@@ -725,60 +725,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>.httpProbe</code> allows developers to specify a URL which the experiment uses to gauge health/service availability (or other custom conditions) as part of the entry/exit criteria. The received status code is mapped against an expectedStatus</td>
-</tr>
-</table>
-
-<table>
-<tr>
-  <th>Field</th>
-  <td><code>.spec.experiments[].spec.k8sProbe</code></td>
-</tr>
-<tr>
-  <th>Description</th>
-  <td>An experiment probe that accesses a Kubernetes resource on the cluster.</td>
-</tr>
-<tr>
-  <th>Type</th>
-  <td>Optional</td>
-</tr>
-<tr>
-  <th>Range</th>
-<td> <i>user-defined</i> </td>
-</tr>
-<tr>
-  <th>Default</th>
-  <td> n/a </td>
-</tr>
-<tr>
-  <th>Notes</th>
-  <td>The <code>.k8sProbe</code> allows developers to list K8s resources (native or custom) as as part of the entry/exit criteria. It accepts the gvr (group, version, resource), namespace and fieldselector as inputs filter the desired resources.</td>
-</tr>
-</table>
-
-<table>
-<tr>
-  <th>Field</th>
-  <td><code>.spec.experiments[].spec.cmdProbe</code></td>
-</tr>
-<tr>
-  <th>Description</th>
-  <td>An experiment probe that executes a shell command</td>
-</tr>
-<tr>
-  <th>Type</th>
-  <td>Optional</td>
-</tr>
-<tr>
-  <th>Range</th>
-<td> <i>user-defined</i> </td>
-</tr>
-<tr>
-  <th>Default</th>
-  <td> n/a </td>
-</tr>
-<tr>
-  <th>Notes</th>
-  <td>The <code>.cmdProbe</code> allows developers to run shell commands and match the resulting output as part of the entry/exit criteria. The probe supports an <code>inline</code> mode in which the command is run from within the experiment image as well as <code>source</code> mode, where the command execution is carried out from with a new pod whose image can be specified.</td>
+  <td>The <code>.probe</code> allows developers to specify the chaos hypothesis. It supports three types: <code>cmdProbe</code>, <code>k8sProbe</code>, <code>httpProbe</code></td>
 </tr>
 </table>
