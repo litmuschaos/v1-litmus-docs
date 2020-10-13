@@ -25,10 +25,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
   <td>Flag to control the state of the chaosengine</td>
 </tr>
 <tr>
-  <th>Type</th>
-  <td>Mandatory</td>
-</tr>
-<tr>
   <th>Range</th>
   <td><code>active</code>, <code>stop</code></td>
 </tr>
@@ -54,10 +50,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
   <td>Flag to specify namespace of application under test</td>
 </tr>
 <tr>
-  <th>Type</th>
-  <td>Mandatory</td>
-</tr>
-<tr>
   <th>Range</th>
   <td><i>user-defined</i> (type: string)</td>
 </tr>
@@ -79,10 +71,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
 <tr>
   <th>Description</th>
   <td>Flag to specify unique label of application under test</td>
-</tr>
-<tr>
-  <th>Type</th>
-  <td>Mandatory</td>
 </tr>
 <tr>
   <th>Range</th>
@@ -108,10 +96,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
   <td>Flag to specify resource kind of application under test</td>
 </tr>
 <tr>
-  <th>Type</th>
-  <td>Mandatory</td>
-</tr>
-<tr>
   <th>Range</th>
   <td><code>deployment</code>, <code>statefulset</code>, <code>daemonset</code></td>
 </tr>
@@ -133,10 +117,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
 <tr>
   <th>Description</th>
   <td>Flag to specify one or more app namespace-label pairs whose health is also monitored as part of the chaos experiment, in addition to a primary application specified in the <code>.spec.appInfo</code>. <b>NOTE</b>: If the auxiliary applications are deployed in namespaces other than the AUT, ensure that the chaosServiceAccount is bound to a cluster role and has adequate permissions to list pods on other namespaces. </td>
-</tr>
-<tr>
-  <th>Type</th>
-  <td>Optional</td>
 </tr>
 <tr>
   <th>Range</th>
@@ -166,10 +146,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
   <td>Flag to specify serviceaccount used for chaos experiment</td>
 </tr>
 <tr>
-  <th>Type</th>
-  <td>Mandatory</td>
-</tr>
-<tr>
   <th>Range</th>
   <td><i>user-defined</i> (type: string)</td>
 </tr>
@@ -195,10 +171,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
   <td>Flag to control annotationChecks on applications as prerequisites for chaos</td>
 </tr>
 <tr>
-  <th>Type</th>
-  <td>Optional</td>
-</tr>
-<tr>
   <th>Range</th>
   <td><code>true</code>, <code>false</code></td>
 </tr>
@@ -222,10 +194,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
   <td>Flag to enable collection of simple chaos metrics</td>
 </tr>
 <tr>
-  <th>Type</th>
-  <td>Optional</td>
-</tr>
-<tr>
   <th>Range</th>
   <td><code>true</code>, <code>false</code></td>
 </tr>
@@ -247,10 +215,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
 <tr>
   <th>Description</th>
   <td>Flag to control cleanup of chaos experiment job post execution of chaos</td>
-</tr>
-<tr>
-  <th>Type</th>
-  <td>Optional</td>
 </tr>
 <tr>
   <th>Range</th>
@@ -278,10 +242,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
   <td>Flag to specify image of ChaosRunner pod</td>
 </tr>
 <tr>
-  <th>Type</th>
-  <td>Optional</td>
-</tr>
-<tr>
   <th>Range</th>
   <td><i>user-defined</i> (type: string)</td>
 </tr>
@@ -303,10 +263,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
 <tr>
   <th>Description</th>
   <td>Flag to specify imagePullPolicy for the ChaosRunner</td>
-</tr>
-<tr>
-  <th>Type</th>
-  <td>Optional</td>
 </tr>
 <tr>
   <th>Range</th>
@@ -332,10 +288,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
   <td>Flag to specify imagePullSecrets for the ChaosRunner</td>
 </tr>
 <tr>
-  <th>Type</th>
-  <td>Optional</td>
-</tr>
-<tr>
   <th>Range</th>
 <td><i>user-defined</i> (type: []corev1.LocalObjectReference)</td>
 </tr>
@@ -357,10 +309,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
 <tr>
   <th>Description</th>
   <td>Annotations that needs to be provided in the pod which will be created (runner-pod)</td>
-</tr>
-<tr>
-  <th>Type</th>
-  <td>Optional</td>
 </tr>
 <tr>
   <th>Range</th>
@@ -386,10 +334,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
   <td>Specify the args for the ChaosRunner Pod</td>
 </tr>
 <tr>
-  <th>Type</th>
-  <td>Optional</td>
-</tr>
-<tr>
   <th>Range</th>
   <td><i>user-defined</i> (type: []string)</td>
 </tr>
@@ -411,10 +355,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
 <tr>
   <th>Description</th>
   <td>Specify the commands for the ChaosRunner Pod</td>
-</tr>
-<tr>
-  <th>Type</th>
-  <td>Optional</td>
 </tr>
 <tr>
   <th>Range</th>
@@ -442,10 +382,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
   <td>Name of the chaos experiment CR</td>
 </tr>
 <tr>
-  <th>Type</th>
-  <td>Mandatory</td>
-</tr>
-<tr>
   <th>Range</th>
 <td><i>user-defined</i> (type: string)</td>
 </tr>
@@ -467,10 +403,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
 <tr>
   <th>Description</th>
   <td>Environment variables passed to the chaos experiment</td>
-</tr>
-<tr>
-  <th>Type</th>
-  <td>Optional</td>
 </tr>
 <tr>
   <th>Range</th>
@@ -496,10 +428,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
   <td>Configmaps passed to the chaos experiment</td>
 </tr>
 <tr>
-  <th>Type</th>
-  <td>Optional</td>
-</tr>
-<tr>
   <th>Range</th>
 <td><i>user-defined</i> (type: {name: string, mountPath: string})</td>
 </tr>
@@ -521,10 +449,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
 <tr>
   <th>Description</th>
   <td>Kubernetes secrets passed to the chaos experiment</td>
-</tr>
-<tr>
-  <th>Type</th>
-  <td>Optional</td>
 </tr>
 <tr>
   <th>Range</th>
@@ -550,10 +474,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
   <td>Override the image of the chaos experiment</td>
 </tr>
 <tr>
-  <th>Type</th>
-  <td>Optional</td>
-</tr>
-<tr>
   <th>Range</th>
 <td><i> string </i></td>
 </tr>
@@ -575,10 +495,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
 <tr>
   <th>Description</th>
   <td>Flag to specify imagePullSecrets for the ChaosExperiment</td>
-</tr>
-<tr>
-  <th>Type</th>
-  <td>Optional</td>
 </tr>
 <tr>
   <th>Range</th>
@@ -604,10 +520,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
   <td>Provide the node selector for the experiment pod</td>
 </tr>
 <tr>
-  <th>Type</th>
-  <td>Optional</td>
-</tr>
-<tr>
   <th>Range</th>
 <td><i> Labels in the from of label key=value</i></td>
 </tr>
@@ -629,10 +541,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
 <tr>
   <th>Description</th>
   <td>Provides the timeout and retry values for the status checks. Defaults to 180s & 90 retries (2s per retry)</td>
-</tr>
-<tr>
-  <th>Type</th>
-  <td>Optional</td>
 </tr>
 <tr>
   <th>Range</th>
@@ -658,10 +566,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
   <td>Specify the resource requirements for the ChaosExperiment pod</td>
 </tr>
 <tr>
-  <th>Type</th>
-  <td>Optional</td>
-</tr>
-<tr>
   <th>Range</th>
 <td><i>user-defined</i> (type: corev1.ResourceRequirements)</td>
 </tr>
@@ -685,10 +589,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
   <td>Annotations that needs to be provided in the pod which will be created (experiment-pod)</td>
 </tr>
 <tr>
-  <th>Type</th>
-  <td>Optional</td>
-</tr>
-<tr>
   <th>Range</th>
 <td> <i>user-defined</i> (type: label key=value) </td>
 </tr>
@@ -710,10 +610,6 @@ This section describes the fields in the ChaosEngine spec and the possible value
 <tr>
   <th>Description</th>
   <td> Declarative way to define the chaos hypothesis</td>
-</tr>
-<tr>
-  <th>Type</th>
-  <td>Optional</td>
 </tr>
 <tr>
   <th>Range</th>

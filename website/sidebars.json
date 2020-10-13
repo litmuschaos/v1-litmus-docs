@@ -15,7 +15,9 @@
     ],
     "Concepts": [
       "chaosengine",
+      "chaosexperiment",
       "chaosschedule",
+      "chaosresult-concepts",
       "litmus-probe"
     ],
     "Platforms": [
