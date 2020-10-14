@@ -430,6 +430,60 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 </table>
 
+<table>
+<tr>
+  <th>Field</th>
+  <td><code>.spec.components.runner.configMaps</code></td>
+</tr>
+<tr>
+  <th>Description</th>
+  <td>Configmaps passed to the chaos runner pod</td>
+</tr>
+<tr>
+  <th>Type</th>
+  <td>Optional</td>
+</tr>
+<tr>
+  <th>Range</th>
+<td><i>user-defined</i> (type: {name: string, mountPath: string})</td>
+</tr>
+<tr>
+  <th>Default</th>
+  <td><i>n/a</i></td>
+</tr>
+<tr>
+  <th>Notes</th>
+  <td>The <code>.spec.components.runner.configMaps</code> provides for a means to insert config information into the runner pod. The configmaps definition is validated for correctness and those specified are checked for availability (in the cluster/namespace) before being mounted into the runner pod.</td>
+</tr>
+</table>
+
+<table>
+<tr>
+  <th>Field</th>
+  <td><code>.spec.components.runner.secrets</code></td>
+</tr>
+<tr>
+  <th>Description</th>
+  <td>Kubernetes secrets passed to the chaos runner pod.</td>
+</tr>
+<tr>
+  <th>Type</th>
+  <td>Optional</td>
+</tr>
+<tr>
+  <th>Range</th>
+<td><i>user-defined</i> (type: {name: string, mountPath: string})</td>
+</tr>
+<tr>
+  <th>Default</th>
+  <td><i>n/a</i></td>
+</tr>
+<tr>
+  <th>Notes</th>
+  <td>The <code>.spec.components.runner.secrets</code> provides for a means to push secrets (typically project ids, access credentials etc.,) into the chaos runner pod. These are especially useful in case of platform-level/infra-level chaos experiments. The secrets definition is validated for correctness and those specified are checked for availability (in the cluster/namespace) before being mounted into the chaos runner pod.</td>
+</tr>
+</table>
+
 ## Experiment Specification
 
 <table>
