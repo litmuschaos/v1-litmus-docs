@@ -13,11 +13,11 @@ sidebar_label: Troubleshooting
 
 [The experiment pod enters completed state w/o the desired chaos being injected?](#the-experiment-pod-enters-completed-state-wo-the-desired-chaos-being-injected)
   
-[Scheduler not forming chaosengines for type-repeat?](##scheduler-not-forming-chaosengines-for-typerepeat)
+[Scheduler not forming chaosengines for type-repeat?](#scheduler-not-forming-chaosengines-for-typerepeat)
 
 [Litmus uninstallation is not successful and namespace is stuck in terminating state?](#litmus-uninstallation-is-not-successful-and-namespace-is-stuck-in-terminating-state)
 
-[Observing experiment results using describe chaosresult is showing NotFound error?](#observing-experiment-results-using-describe-chaosresult-is-showing-NotFound-error)
+[Observing experiment results using describe chaosresult is showing NotFound error?](#observing-experiment-results-using-describe-chaosresult-is-showing-notfound-error)
 <hr>
 
 
