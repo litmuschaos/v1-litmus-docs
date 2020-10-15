@@ -110,7 +110,7 @@ Some of the possible reasons may include:
 - The ChaosExperiment CR for the experiment (name) specified in the ChaosEngine .spec.experiments list is not installed. 
   If so, please install the desired experiment from the [chaoshub](https://hub.litmuschaos.io)
 
-- The dependent resources for the ChaosExperiment, such as configmap & secret volumes (as specified in the ChaosExperiment CR 
+- The dependent resources for the ChaosExperiment, such as ConfigMap & secret volumes (as specified in the ChaosExperiment CR 
   or the ChaosEngine CR) may not be present in the cluster (or in the desired namespace). The runner pod doesn’t proceed 
   with creation of experiment resources if the dependencies are unavailable.  
 
@@ -124,7 +124,7 @@ Some of the possible reasons may include:
 If the experiment pod enters completed state immediately (or in a few seconds) after creation w/o injecting the desired chaos, 
 perform the following checks: 
 
-- Check the Kubernetes events generated against the chaosengine resource
+- Check the Kubernetes events generated against the ChaosEngine resource
 
   ```
   kubectl describe chaosengine <chaosengine-name> -n <namespace>
@@ -145,7 +145,7 @@ Some of the possible reasons may include:
   optional ones, which are necessary for successful execution of the experiment. 
 
 - The chaosServiceAccount specified in the ChaosEngine CR doesn’t have sufficient permissions to create the experiment 
-  helper-resources (i.e., some experiments in turn create other K8s resources like jobs/daemonsets/deployments etc..,
+  helper-resources (i.e., some experiments in turn create other K8s resources like Jobs/Daemonsets/Deployments etc..,
   For existing experiments, appropriate rbac manifests are already provided in chaos-charts/docs).  
 
 - The application's (AUT) unique label provided in the ChaosEngine is set only at the parent resource metadata but not 
@@ -157,13 +157,14 @@ Some of the possible reasons may include:
 
 ### Scheduler not forming chaosengines for type=repeat?
 
-If the chaosschedule has been created successfully created in the cluster and chaosengine is not being formed. The most common problem is that either start or end time has been wrongly specified. We should verify the times.
-We can identify that if this is the problem or not by changing type=now. If the chaosengine is formed successfully then the problem is with the specified time ranges, if chaosengine is still not formed, then the problem is with engineSpec. 
-Try to create a chaosengine with the same engineSpec.
+If the ChaosSchedule has been created successfully created in the cluster and ChaosEngine is not being formed, the most common problem is that either start or 
+end time has been wrongly specified. We should verify the times. We can identify if this is the problem or not by changing to `type=now`. If the ChaosEngine is 
+formed successfully then the problem is with the specified time ranges, if ChaosEngine is still not formed, then the problem is with `engineSpec`. 
+
 
 ### Litmus uninstallation is not successful and namespace is stuck in terminating state?
 
-Under typical operating conditions, the Chaos Operator makes use of finalizers to ensure that the ChaosEngine is deleted 
+Under typical operating conditions, the ChaosOperator makes use of finalizers to ensure that the ChaosEngine is deleted 
 only after chaos resources (chaos-runner, experiment pod, any other helper pods) are removed. 
 
 When uninstalling Litmus via the operator manifest (which contains the namespace, operator, crd specifictions in a single YAML) 
@@ -182,19 +183,23 @@ followed by:
 
 Repeat this on all the stale chaosengine CRs to remove the CRDs successfully & complete uninstallation process.
 
-If however, the "litmus"namespace deletion remains stuck despite the above actions, follow the procedure described 
+If however, the `litmus` namespace deletion remains stuck despite the above actions, follow the procedure described 
 [here](https://success.docker.com/article/kubernetes-namespace-stuck-in-terminating) to complete the uninstallation. 
 
- ### Observing chaos results using describe chaosresult is showing NotFound error?
+ ### Observing experiment results using `describe chaosresult` is showing `NotFound` error?
 
- Upon observing the chaosresults by executing the first command given below, it may give a NotFound error or the second command given below might execute successfully but does not show any output. 
+ Upon observing the ChaosResults by executing the describe command given below, it may give a `NotFound` error. 
 
  ```
  kubectl describe chaosresult <chaos-engine-name>-<chaos-experiment-name>  -n <namespace>
  ```
 
+Alternatively, running the describe command without specifying the expected ChaosResult name might execute successfully, but does may not show any output. 
+
  ```
  kubectl describe chaosresult  -n <namespace>`
  ```
-This may happen due to the time taken in pulling the image and deployment of the experiment pod. For the above commands to execute successfully you should simply wait for the creation of the pod to complete. The waiting time will be based upon the capability of your resources for example it may take more time for minikube (around 1-5 minutes) and less for eks cluster (within a minute).
-
+ 
+This can occur sometimes due to the time taken in pulling the image starting the experiment pod (note that the ChaosResult resource is generated by the experiment). 
+For the above commands to execute successfully, you should simply wait for the experiment pod to be created. The waiting time will be based upon resource available
+(network bandwidth, space availability on the node filesystem etc.,). 
