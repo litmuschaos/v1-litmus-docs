@@ -57,7 +57,7 @@ The `httpProbe` is better used in the Continuous mode of operation as a parallel
 
 The `cmdProbe` allows developers to run shell commands and match the resulting output as part of the entry/exit criteria. The intent behind this probe was to allow users to implement a non-standard & imperative way for expressing their hypothesis. For example, the cmdProbe enables you to check for specific data within a database, parse the value out of a JSON blob being dumped into a certain path or check for the existence of a particular string in the service logs. 
 
-In order to enable this behaviour, the probe supports an inline mode in which the command is run from within the experiment image as well as a source mode, where the command execution is carried out from within a new pod whose image can be specified. While inline is preferred for simple shell commands, source mode can be used when application-specific binaries are required. The `cmdProbe` can be defined at `.spec.experiments[].spec.probe` the path inside the ChaosEngine.
+In order to enable this behaviour, the probe supports an inline mode in which the command is run from within the experiment image as well as a source mode, where the command execution is carried out from within a new pod whose image can be specified. While inline is preferred for simple shell commands , source mode can be used when application-specific binaries are required. The `cmdProbe` can be defined at `.spec.experiments[].spec.probe` the path inside the ChaosEngine.
 
 ```yaml
 probe:

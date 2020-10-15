@@ -106,7 +106,7 @@ metadata:
     name: pool-pod-failure-sa
 ---
 # Source: openebs/templates/clusterrole.yaml
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: pool-pod-failure-sa
@@ -120,7 +120,7 @@ rules:
   resources: ["nodes"]
   verbs: ["get","list"]
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: pool-pod-failure-sa

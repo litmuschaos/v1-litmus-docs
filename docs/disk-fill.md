@@ -65,7 +65,7 @@ spec:
 
 ## Details
 
--   Causes Disk Stress by filling up the ephemeral storage of the pod (in the /var/lib/docker/container/{{container_id}}) on any given node.
+-   Causes Disk Stress by filling up the ephemeral storage of the pod on any given node.
 -   Causes the application pod to get evicted if the capacity filled exceeds the pod's ephemeral storage limit.
 -   Tests the Ephemeral Storage Limits, to ensure those parameters are sufficient.
 -   Tests the application's resiliency to disk stress/replica evictions.
@@ -98,24 +98,27 @@ metadata:
   namespace: default
   labels:
     name: disk-fill-sa
+    app.kubernetes.io/part-of: litmus
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: disk-fill-sa
   labels:
     name: disk-fill-sa
+    app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: ["","apps","litmuschaos.io","batch"]
   resources: ["pods","jobs","pods/exec","events","pods/log","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete","deletecollection"]
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: disk-fill-sa
   labels:
     name: disk-fill-sa
+    app.kubernetes.io/part-of: litmus
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -182,7 +185,7 @@ subjects:
     <td> LIB  </td>
     <td> The chaos lib used to inject the chaos </td>
     <td> Optional </td>
-    <td> Defaults to `litmus` </td>
+    <td> Defaults to `litmus` supported litmus only </td>
   </tr>
   <tr>
     <td> LIB_IMAGE  </td>

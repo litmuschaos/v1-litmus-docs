@@ -68,26 +68,29 @@ metadata:
   namespace: default
   labels:
     name: pod-network-latency-sa
+    app.kubernetes.io/part-of: litmus
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: pod-network-latency-sa
   namespace: default
   labels:
     name: pod-network-latency-sa
+    app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: ["","litmuschaos.io","batch"]
   resources: ["pods","jobs","pods/log","events","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete","deletecollection"]
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: pod-network-latency-sa
   namespace: default
   labels:
     name: pod-network-latency-sa
+    app.kubernetes.io/part-of: litmus
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -139,7 +142,7 @@ subjects:
   </tr>
   <tr>
     <td> TARGET_POD </td>
-    <td> Name of the application pod subjected to pod network latency chaos<td>
+    <td> Name of the application pod subjected to pod network latency chaos</td>
     <td> Optional </td>
     <td> If not provided it will select from the appLabel provided</td>
   </tr>      
@@ -147,7 +150,7 @@ subjects:
   </tr>   
   <tr>
     <td> TARGET_IPs </td>
-    <td> Destination ips for network chaos <td>
+    <td> Destination ips for network chaos </td>
     <td> Optional </td>
     <td> if not provided, it will induce network chaos for all ips/destinations</td>
   </tr>  
@@ -235,7 +238,7 @@ spec:
   monitoring: false
   appinfo: 
     appns: 'default'
-    # FYI, To see appLabel, apply kubectl get pods --show-labels
+    # FYI, To see app label, apply kubectl get pods --show-labels
     applabel: 'app=nginx'
     appkind: 'deployment'
   chaosServiceAccount: pod-network-latency-sa
@@ -287,6 +290,16 @@ spec:
 - View network latency by setting up a ping on the affected pod from the cluster nodes 
 
   `ping <pod_ip_address>`
+
+### Abort/Restart the Chaos Experiment
+
+- To stop the pod-network-latency experiment immediately, either delete the ChaosEngine resource or execute the following command: 
+
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"stop"}}'` 
+
+- To restart the experiment, either re-apply the ChaosEngine YAML or execute the following command: 
+
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"active"}'`  
 
 ### Check Chaos Experiment Result
 
