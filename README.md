@@ -1,4 +1,4 @@
-<img src="https://camo.githubusercontent.com/953211f24c1c246f7017703f67b9779e4589bf76/68747470733a2f2f6c616e6473636170652e636e63662e696f2f6c6f676f732f6c69746d75732e737667" height=200>
+<img src="https://camo.githubusercontent.com/953211f24c1c246f7017703f67b9779e4589bf76/68747470733a2f2f6c616e6473636170652e636e63662e696f2f6c6f676f732f6c69746d75732e737667"  width="150" align="left">
 
 # Documentation for the Litmus Project
 
@@ -15,7 +15,7 @@
 ![GitHub top language](https://img.shields.io/github/languages/top/litmuschaos/litmus-docs)
 
 Additional details on the Docusaurus project can be found [here](https://docusaurus.io/docs/en/installation.html).
-
+#
 ## For Developers
 
 ### Clone litmus-docs repository
