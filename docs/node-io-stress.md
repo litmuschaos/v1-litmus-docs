@@ -35,8 +35,8 @@ sidebar_label: Node IO Stress
 
 ## Details
 
-- This experiment causes disk stress on the Kubernetes node. The experiment aims to verify the resiliency of applications that share this disk resource for ephemeral or persistent storage purposes.
-- The amount of disk stress can be either specifed as the size in percentage of the total free space on the file system or simply in Gigabytes(GB). When provided both it will execute with the utilization percentage specified and non of them are provided it will execute with default value of 10%.
+- This experiment causes io stress on the Kubernetes node. The experiment aims to verify the resiliency of applications that share this disk resource for ephemeral or persistent storage purposes.
+- The amount of io stress can be either specifed as the size in percentage of the total free space on the file system or simply in Gigabytes(GB). When provided both it will execute with the utilization percentage specified and non of them are provided it will execute with default value of 10%.
 - Tests application resiliency upon replica evictions caused due IO stress on the available Disk space.
 
 ## Integrations
@@ -66,13 +66,15 @@ metadata:
   namespace: default
   labels:
     name: node-io-stress-sa
+    app.kubernetes.io/part-of: litmus
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: node-io-stress-sa
   labels:
     name: node-io-stress-sa
+    app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps"]
   resources: ["pods","jobs","pods/log","events","chaosengines","chaosexperiments","chaosresults"]
@@ -81,12 +83,13 @@ rules:
   resources: ["nodes"]
   verbs: ["get","list"]
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: node-io-stress-sa
   labels:
     name: node-io-stress-sa
+    app.kubernetes.io/part-of: litmus
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole

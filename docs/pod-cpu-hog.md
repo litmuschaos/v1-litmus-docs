@@ -66,26 +66,29 @@ metadata:
   namespace: default
   labels:
     name: pod-cpu-hog-sa
+    app.kubernetes.io/part-of: litmus
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: pod-cpu-hog-sa
   namespace: default
   labels:
     name: pod-cpu-hog-sa
+    app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: ["","litmuschaos.io","batch"]
   resources: ["pods","jobs","events","pods/log","pods/exec","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete","deletecollection"]
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: pod-cpu-hog-sa
   namespace: default
   labels:
     name: pod-cpu-hog-sa
+    app.kubernetes.io/part-of: litmus
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -123,7 +126,6 @@ subjects:
     <td> Number of the cpu cores subjected to CPU stress  </td>
     <td> Optional  </td>
     <td> Default to 1 </td>
-    <td> </td>
   </tr>
   <tr>
     <td> TOTAL_CHAOS_DURATION </td>
@@ -145,7 +147,7 @@ subjects:
   </tr>
   <tr>
     <td> TARGET_POD </td>
-    <td> Name of the application pod subjected to pod cpu hog chaos<td>
+    <td> Name of the application pod subjected to pod cpu hog chaos</td>
     <td> Optional </td>
     <td> If not provided it will select from the appLabel provided</td>
   </tr>    
@@ -246,6 +248,16 @@ spec:
 - Set up a watch on the applications interacting/dependent on the affected pods and verify whether they are running
 
   `watch kubectl get pods -n <application-namespace>`
+
+### Abort/Restart the Chaos Experiment
+
+- To stop the pod-cpu-hog experiment immediately, either delete the ChaosEngine resource or execute the following command: 
+
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"stop"}}'` 
+
+- To restart the experiment, either re-apply the ChaosEngine YAML or execute the following command: 
+
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"active"}'`  
 
 ### Check Chaos Experiment Result
 

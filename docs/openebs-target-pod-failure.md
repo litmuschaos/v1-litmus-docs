@@ -105,14 +105,16 @@ metadata:
   namespace: default
   labels:
     name: target-pod-failure-sa
+    app.kubernetes.io/part-of: litmus
 ---
 # Source: openebs/templates/clusterrole.yaml
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: target-pod-failure-sa
   labels:
     name: target-pod-failure-sa
+    app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: ["","apps","litmuschaos.io","batch","extensions","storage.k8s.io"]
   resources: ["pods","jobs","pods/log","deployments","pods/exec","events","chaosexperiments","chaosresults","chaosengines","configmaps","secrets","services","persistentvolumeclaims","storageclasses","persistentvolumes"]
@@ -121,12 +123,13 @@ rules:
   resources: ["nodes"]
   verbs: ["get","list"]
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: target-pod-failure-sa
   labels:
     name: target-pod-failure-sa
+    app.kubernetes.io/part-of: litmus
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole

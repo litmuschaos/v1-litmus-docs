@@ -67,13 +67,15 @@ metadata:
   namespace: default
   labels:
     name: node-cpu-hog-sa
+    app.kubernetes.io/part-of: litmus
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: node-cpu-hog-sa
   labels:
     name: node-cpu-hog-sa
+    app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps"]
   resources: ["pods","jobs","events","chaosengines","pods/log","chaosexperiments","chaosresults"]
@@ -82,12 +84,13 @@ rules:
   resources: ["nodes"]
   verbs: ["get","list"]
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: node-cpu-hog-sa
   labels:
     name: node-cpu-hog-sa
+    app.kubernetes.io/part-of: litmus
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole

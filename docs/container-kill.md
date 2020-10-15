@@ -74,26 +74,29 @@ metadata:
   namespace: default
   labels:
     name: container-kill-sa
+    app.kubernetes.io/part-of: litmus
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: container-kill-sa
   namespace: default
   labels:
     name: container-kill-sa
+    app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps"]
   resources: ["pods","jobs","pods/exec","pods/log","events","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete","deletecollection"]
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: container-kill-sa
   namespace: default
   labels:
     name: container-kill-sa
+    app.kubernetes.io/part-of: litmus
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -110,6 +113,8 @@ subjects:
 - Provide the application info in `spec.appinfo`
 - Override the experiment tunables if desired in `experiments.spec.components.env`
 - To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
+
+***Note:*** *Ensure that the CHAOS_INTERVAL used in the experiment is fairly high (i.e., enough time is provided for app recovery). Else, it can cause an exponential increase in the backOff delay, causing the app to stay in CrashLoopBackOff state for much longer*
 
 #### Supported Experiment Tunables
 
@@ -146,7 +151,7 @@ subjects:
   </tr>  
   <tr>
     <td> TARGET_POD </td>
-    <td> Name of the application pod subjected to container kill chaos<td>
+    <td> Name of the application pod subjected to container kill chaos</td>
     <td> Optional </td>
     <td> If not provided it will select from the appLabel provided</td>
   </tr>  

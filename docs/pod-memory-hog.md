@@ -66,26 +66,29 @@ metadata:
   namespace: default
   labels:
     name: pod-memory-hog-sa
+    app.kubernetes.io/part-of: litmus
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: pod-memory-hog-sa
   namespace: default
   labels:
     name: pod-memory-hog-sa
+    app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: ["","litmuschaos.io","batch"]
   resources: ["pods","jobs","events","pods/log","pods/exec","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete","deletecollection"]
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: pod-memory-hog-sa
   namespace: default
   labels:
     name: pod-memory-hog-sa
+    app.kubernetes.io/part-of: litmus
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -123,7 +126,6 @@ subjects:
     <td>  The amount of memory used of hogging a Kubernetes pod (megabytes)</td>
     <td> Optional  </td>
     <td> Defaults to 500MB (Up to 2000MB)</td>
-    <td> </td>
   </tr>
   <tr>
     <td> TOTAL_CHAOS_DURATION </td>
@@ -171,12 +173,6 @@ subjects:
     <td> It defines sequence of chaos execution for multiple target pods </td>
     <td> Optional </td>
     <td> Default value: parallel </td>
-  </tr>
-   <tr>
-    <td> LIB </td>
-    <td> The chaos lib used to inject the chaos </td>
-    <td> Optional  </td>
-    <td> Default value: parallel. Supported: serial, parallel </td>
   </tr>
   <tr>
     <td> INSTANCE_ID </td>
@@ -244,6 +240,16 @@ spec:
 - Set up a watch on the applications interacting/dependent on the affected pods and verify whether they are running
 
   `watch kubectl get pods -n <application-namespace>`
+
+### Abort/Restart the Chaos Experiment
+
+- To stop the pod-memory-hog experiment immediately, either delete the ChaosEngine resource or execute the following command: 
+
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"stop"}}'` 
+
+- To restart the experiment, either re-apply the ChaosEngine YAML or execute the following command: 
+
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"active"}}'` 
 
 ### Check Chaos Experiment Result
 

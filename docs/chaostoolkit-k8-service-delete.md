@@ -92,7 +92,7 @@ metadata:
   labels:
     name: k8-pod-delete-sa
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: k8-pod-delete-sa
@@ -107,7 +107,7 @@ rules:
   resources: ["nodes"]
   verbs : ["get","list"]
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: k8-pod-delete-sa
