@@ -5,7 +5,7 @@ sidebar_label: Troubleshooting
 ---
 ------
 
-[The Litmus chaos operator is seen to be in CrashLoopBackOff state immediately after installation?](#the-litmus-chaos-operator-is-seen-to-be-in-crashloopbackOff-state-immediately-after-installation)
+[The Litmus chaos operator is seen to be in CrashLoopBackOff state immediately after installation?](#the-litmus-chaosoperator-is-seen-to-be-in-crashloopbackoff-state-immediately-after-installation)
 
 [Nothing happens (no pods created) when the chaosengine resource is created?](#nothing-happens-no-pods-created-when-the-chaosengine-resource-is-created)
 
@@ -13,11 +13,11 @@ sidebar_label: Troubleshooting
 
 [The experiment pod enters completed state w/o the desired chaos being injected?](#the-experiment-pod-enters-completed-state-wo-the-desired-chaos-being-injected)
   
-[Scheduler not forming chaosengines for type=repeat?](#scheduler-not-forming-chaosengines-for-type=repeat)
+[Scheduler not forming chaosengines for type-repeat?](##scheduler-not-forming-chaosengines-for-typerepeat)
 
 [Litmus uninstallation is not successful and namespace is stuck in terminating state?](#litmus-uninstallation-is-not-successful-and-namespace-is-stuck-in-terminating-state)
 
-[Observing chaos results using describe chaosresult is showing NotFound error?](#observing-chaos-results-using-describe-chaosresult-is-showing-NotFound-error)
+[Observing experiment results using describe chaosresult is showing NotFound error?](#observing-experiment-results-using-describe-chaosresult-is-showing-NotFound-error)
 <hr>
 
 
