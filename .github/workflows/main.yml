@@ -32,7 +32,7 @@ jobs:
           if [ "$count" -ne "0" ]
           then
             tput setaf 1; echo "Error: embedmd check failed"
-            tput setaf 4; echo "Please check these files need an embedmd run:"
+            tput setaf 4; echo "Please check the following files need an embedmd run:"
             output=$(git status -s)
             echo "$output" | boxes -d stone -p a2v1
             tput setaf 3; echo "Please follow the instructions to run embedmd:"
