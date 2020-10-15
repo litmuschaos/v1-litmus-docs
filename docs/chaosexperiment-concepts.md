@@ -5,7 +5,9 @@ sidebar_label: ChaosExperiment
 ---
 ------
 
-ChaosExperiment is the heart of litmus that contains the actual chaos details. The experiments are installed on your cluster as Kubernetes custom resource with a namespace scope and are designed to hold information of the actual ChaosExperiment that is to be executed which is specified via image, library, necessary permissions, low-level chaos parameters (default values). It allows us to provide the custom experiment image to run a ChaosExperiment and the image can also be patched from ChaosEngine.
+ChaosExperiment CR is the heart of litmus and contains the low-level execution information. They serve as off-the-shelf templates that one needs to "pull" 
+(install on the cluster) before including them as part of a chaos run against any target applications (the binding being defined in the [ChaosEngine](https://docs.litmuschaos.io/docs/chaosengine/)). The experiments are installed on the cluster as Kubernetes custom resources and are designed to hold granular 
+details of the experiment such as image, library, necessary permissions, chaos parameters (set to their default values). Most of the ChaosExperiment parameters, are essentially tunables that can be overridden from the ChaosEngine resource. The ChaosExperiment CRs are the primary artifacts hosted on the [ChaosHub](https://hub.litmuschaos.io)
 
 This section describes the fields in the ChaosExperiment spec and the possible values that can be set against the same.
 
@@ -34,7 +36,7 @@ This section describes the fields in the ChaosExperiment spec and the possible v
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>.spec.definition.scope</code> specifies the scope of the experiment. It can be Namespaced scope for pod level experiments and Cluster for the experiments having a cluster wide impact.</td>
+  <td>The <code>.spec.definition.scope</code> specifies the scope of the experiment. It can be <code>Namespaced</code> scope for pod level experiments and <code>Cluster</code> for the experiments having a cluster wide impact.</td>
 </tr>
 </table>
 
@@ -90,7 +92,7 @@ This section describes the fields in the ChaosExperiment spec and the possible v
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>.spec.definition.image</code> allows the developers to specify their experiment images which can be used for debugging purposes or creating a new experiment out of it.You can also override this image from ChaosEngine by providing the image name in <code>.spec.experiments[].spec.components.experimentImage</code></td>
+  <td>The <code>.spec.definition.image</code> allows the developers to specify their experiment images. Typically set to the Litmus <code>go-runner</code> or the <code>ansible-runner</code>. This feature of the experiment enables BYOC (BringYourOwnChaos), where developers can implement their own variants of a standard chaos experiment</td>
 </tr>
 </table>
 
@@ -144,7 +146,7 @@ This section describes the fields in the ChaosExperiment spec and the possible v
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>.spec.definition.args</code> specify the entrypoint for the ChaosExperiment. It depends on the language used in the experiment. For litmus-go the <code>.spec.definition.args</code> contains a single binary of all experiments and managed via <code>-name</code> flag which contains the name of the experiment to run(<code>-name (exp-name)</code>).</td>
+  <td>The <code>.spec.definition.args</code> specifies the entrypoint for the ChaosExperiment. It depends on the language used in the experiment. For litmus-go the <code>.spec.definition.args</code> contains a single binary of all experiments and managed via <code>-name</code> flag to indicate experiment to run(<code>-name (exp-name)</code>).</td>
 </tr>
 </table>
 
@@ -200,7 +202,7 @@ This section describes the fields in the ChaosExperiment spec and the possible v
 </tr>
 <tr>
   <th>Notes</th>
-  <td> The <code>.spec.definition.env</code> specifies the array of tunable passed to the experiment pods. It is used to manage the experiment execution. We can set the default values for all the variables (tunable) here which can be overridden by ChaosEngine from <code>.spec.experiments[].spec.components.env</code> if required. To know about the variables that need to be overridden check the  list of "mandatory" & "optional" env for an experiment, refer to the respective experiment documentation.</td>
+  <td> The <code>.spec.definition.env</code> specifies the array of tunables passed to the experiment pods as environment variables. It is used to manage the experiment execution. We can set the default values for all the variables (tunable) here which can be overridden by ChaosEngine from <code>.spec.experiments[].spec.components.env</code> if required. To know about the variables that need to be overridden check the list of "mandatory" & "optional" env for an experiment as provided within the respective experiment documentation.</td>
 </tr>
 </table>
 
@@ -229,7 +231,7 @@ This section describes the fields in the ChaosExperiment spec and the possible v
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>.spec.definition.securityContext.containerSecurityContext.privileged</code> specify the privileged mode to the chaos pod.</td>
+  <td>The <code>.spec.definition.securityContext.containerSecurityContext.privileged</code> specify the securityContext params to the experiment container.</td>
 </tr>
 </table>
 
@@ -310,7 +312,7 @@ This section describes the fields in the ChaosExperiment spec and the possible v
 </tr>
 <tr>
   <th>Notes</th>
-  <td> The <code>.spec.definition.configmaps</code> allows the developers to configure the container(s) in that ChaosPod based on the data in the ConfigMap.</td>
+  <td> The <code>.spec.definition.configmaps</code> allows the developers to mount the ConfigMap volume into the experiment pod.</td>
 </tr>
 </table>
 
@@ -337,7 +339,7 @@ This section describes the fields in the ChaosExperiment spec and the possible v
 </tr>
 <tr>
   <th>Notes</th>
-  <td> The <code>.spec.definition.secrets</code> specify the secret data to be passed for the ChaosPod. The secrets should contain confidential information like credentials.</td>
+  <td> The <code>.spec.definition.secrets</code> specify the secret data to be passed for the ChaosPod. The secrets typically contains confidential information like credentials.</td>
 </tr>
 </table>
 
