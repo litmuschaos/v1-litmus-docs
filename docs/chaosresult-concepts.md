@@ -5,7 +5,7 @@ sidebar_label: ChaosResult
 ---
 ------
 
-ChaosResult resource holds the results of a ChaosExperiment with a namespace scope. It is created or updated at runtime by the experiment itself. It holds important information like the ChaosEngine reference, Experiment State, Verdict of the experiment (on completion), salient application/result attributes. It is also a source for metrics collection. It is updated/patched with the status of the ChaosExperiments. It is not removed with the experiment cleanup to provide the experiment details. 
+ChaosResult resource holds the results of a ChaosExperiment with a namespace scope. It is created or updated at runtime by the experiment itself. It holds important information like the ChaosEngine reference, Experiment State, Verdict of the experiment (on completion), salient application/result attributes. It is also a source for metrics collection. It is updated/patched with the status of the experiment run. It is not removed as part of the default cleanup procedures to allow for extended reference.
 
 This section describes the fields/details provided by the ChaosResult spec.
 
@@ -78,7 +78,7 @@ This section describes the fields/details provided by the ChaosResult spec.
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>.status.experimentstatus.failstep</code> Show the step at which the experiment got failed. It helps in faster debugging of failures in the experiment execution.</td>
+  <td>The <code>.status.experimentstatus.failstep</code> Show the step at which the experiment failed. It helps in faster debugging of failures in the experiment execution.</td>
 </tr>
 </table>
 
