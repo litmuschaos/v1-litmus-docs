@@ -114,7 +114,7 @@ subjects:
 - Override the experiment tunables if desired in `experiments.spec.components.env`
 - To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
 
-***Note: ***Ensure that the CHAOS_INTERVAL used in the experiment is fairly high (i.e., enough time is provided for app recovery). Else, it can cause an exponential increase in the backOff delay, causing the app to stay in CrashLoopBackOff state for much longer***
+***Note:*** *Ensure that the CHAOS_INTERVAL used in the experiment is fairly high (i.e., enough time is provided for app recovery). Else, it can cause an exponential increase in the backOff delay, causing the app to stay in CrashLoopBackOff state for much longer*
 
 #### Supported Experiment Tunables
 
