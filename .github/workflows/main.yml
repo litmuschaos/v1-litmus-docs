@@ -1,8 +1,7 @@
 name: LitmusDocs-CI
 on:
-  push:
-    branches:
-      - master
+  pull_request:
+    types: [ opened, synchronize, reopened ]
 
 jobs:
   embedmd:
@@ -11,7 +10,7 @@ jobs:
 
       - uses: actions/checkout@v2
         with:
-          ref: ${{steps.getcommit.outputs.sha}}
+          ref: ${{steps.getcommit.outputs.sha}} 
 
       - uses: actions/setup-go@v2
         with:
@@ -20,19 +19,28 @@ jobs:
 
       - name: Installing and Running embedmed
         run: |
+          sudo apt install boxes
           go get github.com/campoy/embedmd
           cd docs
           embedmd -w $(find *.md)
         continue-on-error: true  
-
-      - name: Commit files
-        run: |
-          git config --local user.email "litmuschaosbot@github.com"
-          git config --local user.name "LitmusChaos"
-          git commit -s -m "Add embedmd changes" -a
-        continue-on-error: true
         
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: embedmd check
+        run: | 
+          export TERM=xterm-256color
+          count=$(git status -s| wc -l)
+          if [ "$count" -ne "0" ]
+          then
+            tput setaf 1; echo "Error: embedmd check failed"
+            tput setaf 4; echo "Please check these files need a embedmd run:"
+            output=$(git status -s)
+            echo "$output" | boxes -d stone -p a2v1
+            tput setaf 3; echo "Please follow the instructions to run embedmd:"
+            tput setaf 3; echo "cd docs"
+            tput setaf 3; echo "embedmd -w $(find *.md)"
+            tput setaf 6; echo "For more info visit https://github.com/litmuschaos/litmus-docs/blob/master/CONTRIBUTING.md"
+            exit 1
+          else
+            tput setaf 2; echo "Nothing to embed"
+          fi
+        shell: sh

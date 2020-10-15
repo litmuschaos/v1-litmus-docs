@@ -23,7 +23,7 @@ sidebar_label: Cassandra Pod Delete
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`).If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `cassandra-pod-delete` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.8.1?file=charts/cassandra/cassandra-pod-delete/experiment.yaml)
+- Ensure that the `cassandra-pod-delete` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.8.2?file=charts/cassandra/cassandra-pod-delete/experiment.yaml)
 
 ## Entry Criteria
 
@@ -143,6 +143,12 @@ subjects:
     <td> Image of the cassandra liveness deployment </td>
     <td> Optional </td>
     <td> Default value: litmuschaos/cassandra-client:latest </td>
+  </tr>
+  <tr>
+    <td> SEQUENCE </td>
+    <td> It defines sequence of chaos execution for multiple target pods </td>
+    <td> Optional </td>
+    <td> Default value: parallel. Supported: serial, parallel </td>
   </tr>
   <tr>
     <td> TOTAL_CHAOS_DURATION </td>

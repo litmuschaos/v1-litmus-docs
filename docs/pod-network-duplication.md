@@ -23,7 +23,7 @@ sidebar_label: Pod Network Duplication
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `pod-network-duplication` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.8.1?file=charts/generic/pod-network-duplication/experiment.yaml)
+- Ensure that the `pod-network-duplication` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.8.2?file=charts/generic/pod-network-duplication/experiment.yaml)
   <div class="danger">
     <strong>NOTE</strong>: 
         Experiment is supported only on Docker Runtime. Support for containerd/CRIO runtimes will be added in subsequent releases.
@@ -156,8 +156,22 @@ subjects:
     <td> TARGET_POD </td>
     <td> Name of the application pod subjected to pod network duplication chaos<td>
     <td> Optional </td>
-    <td> If not provided it will select from the app label provided</td>
+    <td> If not provided it will select from the appLabel provided</td>
   </tr>    
+    <td> If not provided it will select from the app label provided</td>
+  </tr> 
+  <tr>
+    <td> TARGET_IPs </td>
+    <td> Destination ips for network chaos <td>
+    <td> Optional </td>
+    <td> if not provided, it will induce network chaos for all ips/destinations</td>
+  </tr>  
+  <tr>
+    <td> TARGET_HOSTS </td>
+    <td> Destination hosts for network chaos <td>
+    <td> Optional </td>
+    <td> if not provided, it will induce network chaos for all ips/destinations or TARGET_IPs if already defined</td>
+  </tr>     
   <tr>
     <td> LIB </td>
     <td> The chaos lib used to inject the chaos </td>
@@ -181,6 +195,12 @@ subjects:
     <td> Period to wait before and after injection of chaos in sec </td>
     <td> Optional  </td>
     <td> </td>
+  </tr>
+  <tr>
+    <td> SEQUENCE </td>
+    <td> It defines sequence of chaos execution for multiple target pods </td>
+    <td> Optional </td>
+    <td> Default value: parallel. Supported: serial, parallel </td>
   </tr>
   <tr>
     <td> INSTANCE_ID </td>
@@ -213,7 +233,7 @@ spec:
   monitoring: false
   appinfo: 
     appns: 'default'
-    # FYI, To see app label, apply kubectl get pods --show-labels
+    # FYI, To see appLabel, apply kubectl get pods --show-labels
     applabel: 'app=nginx'
     appkind: 'deployment'
   chaosServiceAccount: pod-network-duplication-sa 

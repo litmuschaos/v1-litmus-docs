@@ -23,7 +23,7 @@ sidebar_label: Pod CPU Hog
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `pod-cpu-hog` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.8.1?file=charts/generic/pod-cpu-hog/experiment.yaml)
+- Ensure that the `pod-cpu-hog` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.8.2?file=charts/generic/pod-cpu-hog/experiment.yaml)
 
 ## Entry Criteria
 
@@ -147,7 +147,7 @@ subjects:
     <td> TARGET_POD </td>
     <td> Name of the application pod subjected to pod cpu hog chaos<td>
     <td> Optional </td>
-    <td> If not provided it will select from the app label provided</td>
+    <td> If not provided it will select from the appLabel provided</td>
   </tr>    
   <tr>
     <td> PODS_AFFECTED_PERC </td>
@@ -172,6 +172,12 @@ subjects:
     <td> Period to wait before and after injection of chaos in sec </td>
     <td> Optional  </td>
     <td> </td>
+  </tr>
+  <tr>
+    <td> SEQUENCE </td>
+    <td> It defines sequence of chaos execution for multiple target pods </td>
+    <td> Optional </td>
+    <td> Default value: parallel. Supported: serial, parallel </td>
   </tr>
   <tr>
     <td> INSTANCE_ID </td>

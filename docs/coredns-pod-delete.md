@@ -21,8 +21,8 @@ sidebar_label: CoreDNS Pod Delete
 </table>
 
 ## Prerequisites
-- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `coredns-pod-delete` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.8.1?file=charts/coredns/coredns-pod-delete/experiment.yaml)
+- Ensure that the Litmus ChaosOperator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
+- Ensure that the `coredns-pod-delete` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.8.2?file=charts/coredns/coredns-pod-delete/experiment.yaml)
 
 ## Entry Criteria
 
@@ -38,15 +38,15 @@ sidebar_label: CoreDNS Pod Delete
 
 - Causes graceful pod failure of an coreDNS replicas
 - Tests deployment sanity (replica availability & uninterrupted service) and recovery workflow of the service
-- Service resolution will failed if coredns replicas are not present.
+- Service resolution will failed if coreDNS replicas are not present.
 
 ## Integrations
 
 - Pod failures can be effected using one of these chaos libraries: `litmus`
 
-## Steps to Execute the Chaos Experiment
+## Steps to Execute the ChaosExperiment
 
-- This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to provide in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
+- This ChaosExperiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to provide in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
 
 - Follow the steps in the sections below to create the chaosServiceAccount, prepare the ChaosEngine & execute the experiment.
 
@@ -210,7 +210,7 @@ spec:
 
   `watch kubectl get pods -n kube-system` 
 
-### Check Chaos Experiment Result
+### Check ChaosExperiment Result
 
 - Check whether the application is resilient to the coredns pod failure, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 

@@ -22,8 +22,8 @@ sidebar_label: Container Kill
 
 ## Prerequisites
 
-- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `container-kill` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.8.1?file=charts/generic/container-kill/experiment.yaml)
+- Ensure that the Litmus ChaosOperator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
+- Ensure that the `container-kill` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.8.2?file=charts/generic/container-kill/experiment.yaml)
 
 ## Entry Criteria
 
@@ -36,11 +36,11 @@ sidebar_label: Container Kill
 ## Details
 
 - litmus lib in docker runtime details
-    - It can kill the container of multiple pods in parellel (can be tuned by `PODS_AFFECTED_PERC` env). It kill the container by sending SIGKILL termination signal to its docker socket (hence docker runtime is required)
+    - It can kill the container of multiple pods in parallel (can be tuned by `PODS_AFFECTED_PERC` env). It kill the container by sending SIGKILL termination signal to its docker socket (hence docker runtime is required)
     - Containers are killed using the `kill` command provided by [pumba](https://github.com/alexei-led/pumba)
     - Pumba is run as a pod on the application node. It have ability to kill the application containers multiple times. Which can be varied by `TOTAL_CHAOS_DURATION` and `CHAOS_INTERVAL`.
 - litmus chaoslib in containerd and crio runtime codetails
-    - It can kill the container of multiple pods in parellel (can be tuned by `PODS_AFFECTED_PERC` env).
+    - It can kill the container of multiple pods in parallel (can be tuned by `PODS_AFFECTED_PERC` env).
     - Containers are killed using the `crictl stop` command.
     - container-kill is run as a pod on the application node. It have ability to kill the application containers multiple times. Which can be varied by `TOTAL_CHAOS_DURATION` and `CHAOS_INTERVAL`.
 - Tests deployment sanity (replica availability & uninterrupted service) and recovery workflow of the application
@@ -52,9 +52,9 @@ sidebar_label: Container Kill
 - The container runtime can be choose via setting `CONTAINER_RUNTIME` env. supported values: `docker`, `containerd`, `crio`
 - The desired pumba and litmus image can be configured in the env variable `LIB_IMAGE`. 
 
-## Steps to Execute the Chaos Experiment
+## Steps to Execute the ChaosExperiment
 
-- This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to provide in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
+- This ChaosExperiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to provide in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
 
 - Follow the steps in the sections below to create the chaosServiceAccount, prepare the ChaosEngine & execute the experiment.
 
@@ -148,7 +148,7 @@ subjects:
     <td> TARGET_POD </td>
     <td> Name of the application pod subjected to container kill chaos<td>
     <td> Optional </td>
-    <td> If not provided it will select from the app label provided</td>
+    <td> If not provided it will select from the appLabel provided</td>
   </tr>  
   <tr>
     <td> LIB_IMAGE  </td>
@@ -167,6 +167,12 @@ subjects:
     <td> Period to wait before injection of chaos in sec </td>
     <td> Optional  </td>
     <td> </td>
+  </tr>
+  <tr>
+    <td> SEQUENCE </td>
+    <td> It defines sequence of chaos execution for multiple target pods </td>
+    <td> Optional </td>
+    <td> Default value: parallel. Supported: serial, parallel </td>
   </tr>
   <tr>
     <td> SOCKET_PATH </td>
@@ -257,7 +263,7 @@ spec:
 
   `watch -n 1 kubectl get pods -n <application-namespace>`
 
-### Abort/Restart the Chaos Experiment
+### Abort/Restart the ChaosExperiment
 
 - To stop the pod-delete experiment immediately, either delete the ChaosEngine resource or execute the following command:
 
@@ -267,7 +273,7 @@ spec:
 
   `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"active"}}'`
 
-### Check Chaos Experiment Result
+### Check ChaosExperiment Result
 
 - Check whether the application is resilient to the container kill, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 

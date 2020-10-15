@@ -25,7 +25,7 @@ Running chaos on your application involves the following steps:
 
 [Run Chaos](#run-chaos)
 
-[Observe chaos results](#observe-chaos-results)
+[Observe ChaosResults](#observe-chaos-results)
 
 <hr>
 
@@ -34,14 +34,14 @@ Running chaos on your application involves the following steps:
 ###  Install Litmus
 
 ```
-oc apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.8.1.yaml
+oc apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.8.2.yaml
 ```
 
 The above command install all the CRDs, required service account configuration, and chaos-operator. Before you start running a chaos experiment, verify if Litmus is installed correctly.
 
 **Verify your installation**
 
-- Verify if the chaos operator is running
+- Verify if the ChaosOperator is running
 
 ```
 oc get pods -n litmus
@@ -108,7 +108,7 @@ The generic chaos experiments such as `pod-delete`,  `container-kill`,` pod-netw
 This is the first chart you are recommended to install.
 
 ```
-oc apply -f https://hub.litmuschaos.io/api/chaos/1.8.1?file=charts/generic/experiments.yaml -n nginx
+oc apply -f https://hub.litmuschaos.io/api/chaos/1.8.2?file=charts/generic/experiments.yaml -n nginx
 ```
 
 Verify if the chaos experiments are installed.
@@ -171,7 +171,7 @@ subjects:
 ### Annotate your application
 
 Your application has to be annotated with `litmuschaos.io/chaos="true"`. As a security measure, and also as a means
-to reduce blast radius the chaos operator checks for this annotation before invoking chaos experiment(s) on the application.
+to reduce blast radius the ChaosOperator checks for this annotation before invoking chaos experiment(s) on the application.
 Replace `nginx` with the name of your deployment.
 
 <div class="danger">
@@ -257,7 +257,7 @@ oc describe chaosresult nginx-chaos-container-kill -n nginx
 You can uninstall Litmus by deleting the namespace.
 
 ```console
-oc delete -f https://litmuschaos.github.io/litmus/litmus-operator-v1.8.1.yaml
+oc delete -f https://litmuschaos.github.io/litmus/litmus-operator-v1.8.2.yaml
 ```
 
 ## More Chaos Experiments

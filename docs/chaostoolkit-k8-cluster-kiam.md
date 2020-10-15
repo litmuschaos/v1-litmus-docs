@@ -21,9 +21,9 @@ sidebar_label: Cluster Pod - kiam
 </table>
 
 ## Prerequisites
-- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `k8-pod-delete` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.8.1?file=charts/generic/k8-pod-delete/experiment.yaml)
-- Ensure you have nginx default application setup on default namespace ( if you are using specific namespace please execute beloe on that namespace)
+- Ensure that the Litmus ChaosOperator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
+- Ensure that the `k8-pod-delete` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.8.2?file=charts/generic/k8-pod-delete/experiment.yaml)
+- Ensure you have nginx default application setup on default namespace ( if you are using specific namespace please execute below on that namespace)
 
 ## Entry Criteria
 
@@ -98,9 +98,9 @@ sidebar_label: Cluster Pod - kiam
 
 - Pod failures can be effected using one of these chaos libraries: `litmus`
 
-## Steps to Execute the Chaos Experiment
+## Steps to Execute the ChaosExperiment
 
-- This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to provide in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
+- This ChaosExperiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to provide in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
 
 - Follow the steps in the sections below to create the chaosServiceAccount, prepare the ChaosEngine & execute the experiment.
 
@@ -187,7 +187,7 @@ subjects:
   </tr>
   <tr>
     <td> APP_ENDPOINT </td>
-    <td> Endpoint where chaostoolkit will make a call and ensure the application endpoint is healthy </td>
+    <td> Endpoint where ChaosToolKit will make a call and ensure the application endpoint is healthy </td>
     <td> Mandatory </td>
     <td> Defaults to localhost </td>
   </tr>
@@ -226,7 +226,7 @@ spec:
   #ex. values: ns1:name=percona,ns2:run=nginx
   appinfo:
     appns: kube-system
-    # FYI, To see app label, apply kubectl get pods --show-labels
+    # FYI, To see appLabel, apply kubectl get pods --show-labels
     #applabel: "app=nginx"
     applabel: "app=kiam"
     appkind: deployment
@@ -265,17 +265,17 @@ spec:
 
 ### Watch Chaos progress
 
-- View chaostoolkit pod terminations & recovery by setting up a watch on the chaostoolkit pods in the application namespace
+- View ChaosToolKit pod terminations & recovery by setting up a watch on the ChaosToolKit pods in the application namespace
 
   `watch kubectl get pods -n kube-system`
 
-### Check Chaos Experiment Result
+### Check ChaosExperiment Result
 
-- Check whether the application is resilient to the chaostoolkit pod failure, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
+- Check whether the application is resilient to the ChaosToolKit pod failure, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
   `kubectl describe chaosresult k8-pod-delete -n <chaos-namespace>`
 
-### Check Chaos Experiment logs
+### Check ChaosExperiment logs
 
 - Check the log and result for existing experiment
 

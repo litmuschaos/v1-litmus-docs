@@ -23,7 +23,7 @@ sidebar_label: Pod Memory Hog
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `pod-memory-hog` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.8.1?file=charts/generic/pod-memory-hog/experiment.yaml)
+- Ensure that the `pod-memory-hog` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.8.2?file=charts/generic/pod-memory-hog/experiment.yaml)
 - Cluster must run docker container runtime
 
 ## Entry Criteria
@@ -146,7 +146,7 @@ subjects:
     <td> TARGET_POD </td>
     <td> Name of the application pod subjected to pod memory hog chaos<td>
     <td> Optional </td>
-    <td> If not provided it will select from the app label provided</td>
+    <td> If not provided it will select from the appLabel provided</td>
   </tr>
   <tr>
     <td> CHAOS_KILL_COMMAND </td>
@@ -166,11 +166,17 @@ subjects:
     <td> Optional  </td>
     <td> </td>
   </tr>
+  <tr>
+    <td> SEQUENCE </td>
+    <td> It defines sequence of chaos execution for multiple target pods </td>
+    <td> Optional </td>
+    <td> Default value: parallel </td>
+  </tr>
    <tr>
     <td> LIB </td>
     <td> The chaos lib used to inject the chaos </td>
     <td> Optional  </td>
-    <td> Defaults to litmus, only litmus supported </td>
+    <td> Default value: parallel. Supported: serial, parallel </td>
   </tr>
   <tr>
     <td> INSTANCE_ID </td>
