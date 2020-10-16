@@ -69,6 +69,12 @@ If you set your `user.name` and `user.email` in git config, you can sign your co
 
 You can also use git [aliases](https://git-scm.com/book/tr/v2/Git-Basics-Git-Aliases) like `git config --global alias.ci 'commit -s'`. Now you can commit with `git ci` and the commit will be signed.
 
+### Adhere to Documentation Standards
+
+Please ensure you follow the below standards around naming to avoid rework on the submitted pull requests.
+
+- Resource names like ChaosEngine, ChaosExperiment, ChaosResult etc. should be in PascalCase.
+- Spec attributes should be in camelCase.
 ## Community
 
 We organize the Litmus into Special Interest Groups or SIGs in order to improve our workflow and to easily manage this community project. The developers within each SIG have autonomy and ownership over that SIG’s part of Litmus.
