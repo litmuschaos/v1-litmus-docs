@@ -61,6 +61,8 @@
           "Kubernetes-Chaostoolkit-Application",
           "Kubernetes-Chaostoolkit-Service",
           "Kubernetes-Chaostoolkit-Cluster-Kiam",
+          "Kubernetes-Chaostoolkit-Cluster-Calico-Node",
+          "Kubernetes-Chaostoolkit-Cluster-Wavefront",
           "pod-io-stress",
           "node-io-stress"
         ]
