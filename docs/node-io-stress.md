@@ -16,7 +16,7 @@ sidebar_label: Node IO Stress
   <tr>
     <td> Generic </td>
     <td> Give IO Disk Stress on the Kubernetes Node </td>
-    <td> GKE, EKS, Minikube, AKS </td>
+    <td> GKE, EKS, Minikube </td>
   </tr>
 </table>
 
@@ -139,13 +139,13 @@ subjects:
     <td> It is the number of IO workers involved in IO disk stress </td>
     <td> Optional  </td>
     <td> Default to 4 </td>
-  </tr>
+  </tr>   
   <tr>
     <td> APP_NODE </td>
     <td> Name of the node subjected to IO stress </td>
     <td> Optional  </td>
     <td> If not provided. It will select the app node from appinfo randomly</td>
-  </tr>
+  </tr>  
    <tr>
     <td> LIB  </td>
     <td> The chaos lib used to inject the chaos </td>
@@ -187,7 +187,7 @@ spec:
   annotationCheck: 'false'
   # It can be active/stop
   engineState: 'active'
-  #ex. values: ns1:name=percona,ns2:run=nginx
+  #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ''
   appinfo:
     appns: 'default'
@@ -209,7 +209,7 @@ spec:
             ## specify the size as percentage of free space on the file system
             - name: FILESYSTEM_UTILIZATION_PERCENTAGE
               value: '10'
-
+            
              ## enter the name of the desired node
             - name: APP_NODE
               value: ''
@@ -221,19 +221,19 @@ spec:
 
   `kubectl apply -f chaosengine.yml`
 
-- If the chaos experiment is not executed, refer to the [troubleshooting](https://docs.litmuschaos.io/docs/faq-troubleshooting/)
+- If the chaos experiment is not executed, refer to the [troubleshooting](https://docs.litmuschaos.io/docs/faq-troubleshooting/) 
   section to identify the root cause and fix the issues.
 
 ### Watch Chaos progress
 
-- View the status of the pods as they are subjected to IO disk stress.
+- View the status of the pods as they are subjected to IO disk stress. 
 
   `watch -n 1 kubectl get pods -n <application-namespace>`
 
 - Monitor the capacity filled up on the host filesystem
 
   `watch du -h`
-
+  
 ### Abort/Restart the Chaos Experiment
 
 - To stop the pod-io-stress experiment immediately, either delete the ChaosEngine resource or execute the following command:
