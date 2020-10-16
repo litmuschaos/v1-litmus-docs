@@ -16,7 +16,7 @@ sidebar_label: Node IO Stress
   <tr>
     <td> Generic </td>
     <td> Give IO Disk Stress on the Kubernetes Node </td>
-    <td> GKE, EKS, Minikube </td>
+    <td> GKE, EKS, Minikube, AKS </td>
   </tr>
 </table>
 

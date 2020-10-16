@@ -16,7 +16,7 @@ sidebar_label: Pod IO Stress
   <tr>
      <td> Generic </td>
     <td> Inject IO stress on the application container</td>
-    <td> GKE, Packet(Kubeadm), Minikube </td>
+    <td> GKE, Packet(Kubeadm), Minikube, AKS </td>
   </tr>
 </table>
 
