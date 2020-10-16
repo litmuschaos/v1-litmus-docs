@@ -16,7 +16,7 @@ sidebar_label: Pod Autoscaler
   <tr>
     <td> Generic </td>
     <td> Scale the application replicas and test the node autoscaling on cluster </td>
-    <td> GKE, EKS, Minikube </td>
+    <td> GKE, EKS, Minikube, AKS </td>
   </tr>
 </table>
 
