@@ -16,7 +16,7 @@ sidebar_label: Pod IO Stress
   <tr>
      <td> Generic </td>
     <td> Inject IO stress on the application container</td>
-    <td> GKE, Packet(Kubeadm), Minikube </td>
+    <td> GKE, Packet(Kubeadm), Minikube, AKS </td>
   </tr>
 </table>
 
@@ -130,13 +130,13 @@ subjects:
     <td> It is the number of IO workers involved in IO disk stress </td>
     <td> Optional  </td>
     <td> Default to 4 </td>
-  </tr> 
+  </tr>
   <tr>
     <td> TARGET_POD </td>
     <td> Name of the application pod subjected to IO stress chaos</td>
     <td> Optional </td>
     <td> If not provided it will select from the appLabel provided</td>
-  </tr>   
+  </tr>
   <tr>
     <td> TOTAL_CHAOS_DURATION </td>
     <td> The time duration for chaos (seconds)  </td>
@@ -154,19 +154,19 @@ subjects:
     <td> Image used to run the stress command </td>
     <td> Optional  </td>
     <td> Default to <code>gaiaadm/pumba<code> </td>
-  </tr>  
+  </tr>
   <tr>
     <td> TARGET_POD </td>
     <td> Name of the application pod subjected to pod io stress chaos<td>
     <td> Optional </td>
     <td> If not provided it will select from the appLabel provided</td>
-  </tr>  
+  </tr>
   <tr>
     <td> PODS_AFFECTED_PERC </td>
     <td> The Percentage of total pods to target  </td>
     <td> Optional </td>
     <td> Default to 0% (corresponds to 1 replica) </td>
-  </tr> 
+  </tr>
   <tr>
     <td> RAMP_TIME </td>
     <td> Period to wait before and after injection of chaos in sec </td>
@@ -202,7 +202,7 @@ spec:
   annotationCheck: 'true'
   # It can be active/stop
   engineState: 'active'
-  #ex. values: ns1:name=percona,ns2:run=nginx 
+  #ex. values: ns1:name=percona,ns2:run=nginx
   auxiliaryAppInfo: ''
   appinfo:
     appns: 'default'
@@ -235,12 +235,12 @@ spec:
 
   `kubectl apply -f chaosengine.yml`
 
-- If the chaos experiment is not executed, refer to the [troubleshooting](https://docs.litmuschaos.io/docs/faq-troubleshooting/) 
+- If the chaos experiment is not executed, refer to the [troubleshooting](https://docs.litmuschaos.io/docs/faq-troubleshooting/)
   section to identify the root cause and fix the issues.
 
 ### Watch Chaos progress
 
-- View the status of the pods as they are subjected to IO disk stress. 
+- View the status of the pods as they are subjected to IO disk stress.
 
   `watch -n 1 kubectl get pods -n <application-namespace>`
 
@@ -250,13 +250,13 @@ spec:
 
 ### Abort/Restart the Chaos Experiment
 
-- To stop the pod-io-stress experiment immediately, either delete the ChaosEngine resource or execute the following command: 
+- To stop the pod-io-stress experiment immediately, either delete the ChaosEngine resource or execute the following command:
 
-  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"stop"}}'` 
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"stop"}}'`
 
-- To restart the experiment, either re-apply the ChaosEngine YAML or execute the following command: 
+- To restart the experiment, either re-apply the ChaosEngine YAML or execute the following command:
 
-  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"active"}'`  
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"active"}'`
 
 
 ### Check Chaos Experiment Result

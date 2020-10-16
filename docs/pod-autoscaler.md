@@ -16,7 +16,7 @@ sidebar_label: Pod Autoscaler
   <tr>
     <td> Generic </td>
     <td> Scale the application replicas and test the node autoscaling on cluster </td>
-    <td> GKE, EKS, Minikube </td>
+    <td> GKE, EKS, Minikube, AKS </td>
   </tr>
 </table>
 
@@ -42,7 +42,7 @@ sidebar_label: Pod Autoscaler
 ## Integrations
 
 - Pod Autoscaler can be effected using the chaos library: `litmus`
-- The desired chaos library can be selected by setting `litmus` as value for the env variable `LIB` 
+- The desired chaos library can be selected by setting `litmus` as value for the env variable `LIB`
 
 ## Steps to Execute the Chaos Experiment
 
@@ -162,7 +162,7 @@ spec:
   annotationCheck: 'false'
   # It can be active/stop
   engineState: 'active'
-  #ex. values: ns1:name=percona,ns2:run=nginx 
+  #ex. values: ns1:name=percona,ns2:run=nginx
   auxiliaryAppInfo: ''
   appinfo:
     appns: 'default'
@@ -184,7 +184,7 @@ spec:
             # number of replicas to scale
             - name: REPLICA_COUNT
               value: '5'
-              
+
 ```
 
 ### Create the ChaosEngine Resource
@@ -193,7 +193,7 @@ spec:
 
   `kubectl apply -f chaosengine.yml`
 
-- If the chaos experiment is not executed, refer to the [troubleshooting](https://docs.litmuschaos.io/docs/faq-troubleshooting/) 
+- If the chaos experiment is not executed, refer to the [troubleshooting](https://docs.litmuschaos.io/docs/faq-troubleshooting/)
   section to identify the root cause and fix the issues.
 
 ### Watch Chaos progress
