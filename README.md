@@ -14,7 +14,7 @@ Documentation pour le projet Litmus
 ![GitHub top language](https://img.shields.io/github/languages/top/litmuschaos/litmus-docs)
 
 
-Une description détaillée de porjet Docusaurus est disponible
+Une description détaillée de projet Docusaurus est disponible
  [ici](https://docusaurus.io/docs/en/installation.html).
 
 ## Pour les développeurs
