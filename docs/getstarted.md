@@ -44,6 +44,28 @@ The above command installs all the CRDs, required service account configuration,
 **Note**: Ensure that you have the right privileges to install the CRDs & setup cluster-wide RBAC policies (by default, the 
 ChaosOperator watches for Chaos CRs across namespaces)
 
+Alternatively, you can choose to install it with Helm:
+
+- Add the litmuschaos helm repo
+
+```
+helm repo add litmuschaos https://litmuschaos.github.io/litmus-helm/
+```
+
+- Create litmus namespace in Kubernetes
+
+```
+kubectl create ns litmus
+```
+
+- Install the litmus helm chart
+
+```
+helm install chaos litmuschaos/litmus --namespace=litmus
+```
+
+**Note**: Litmus uses Kubernetes custom resource definitions (CRDs) to define chaos intent. Helm3 handles CRDs better than helm2.
+
 Before you start running a chaos experiment, verify if Litmus is installed correctly.
 
 **Verify your installation**
