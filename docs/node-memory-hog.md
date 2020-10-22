@@ -201,8 +201,8 @@ spec:
             - name: MEMORY_PERCENTAGE
               value: '90'
             
-             # ENTER THE NAME OF THE APPLICATION NODE
-            - name: APP_NODE
+             # ENTER THE NAME OF THE TARGET NODE
+            - name: TARGET_NODE
               value: ''
 ```
 

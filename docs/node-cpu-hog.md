@@ -200,7 +200,7 @@ spec:
               value: ''
             
              # ENTER THE NAME OF THE APPLICATION NODE
-            - name: APP_NODE
+            - name: TARGET_NODE
               value: ''
 ```
 

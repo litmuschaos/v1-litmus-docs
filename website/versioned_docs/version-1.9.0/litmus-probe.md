@@ -73,8 +73,6 @@ probe:
     probeTimeout: 5
     interval: 5
     retry: 1
-    probePollingInterval: 2
-
 ```
 
 ### k8sProbe

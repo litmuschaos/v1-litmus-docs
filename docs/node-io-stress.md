@@ -211,7 +211,7 @@ spec:
               value: '10'
             
              ## enter the name of the desired node
-            - name: APP_NODE
+            - name: TARGET_NODE
               value: ''
 ```
 
