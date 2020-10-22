@@ -75,13 +75,13 @@ sidebar_label: Cluster Pod - active-monitor-controller
 - Follow the steps in the sections below to create the chaosServiceAccount, prepare the ChaosEngine & execute the experiment.
 
 ## Prepare chaosServiceAccount
-- Based on your use case pick one of the choice from here `https://hub.litmuschaos.io/generic/k8-active-monitor-controller`
+- Based on your use case pick one of the choice from here `https://hub.litmuschaos.io/keiko/k8-keiko-active-monitor-controller`
     * Service owner use case
         * Install the rbac for cluster in namespace from where you are executing the experiments `kubectl apply rbac-admin.yaml`
 
 ### Sample Rbac Manifest for Cluster Owner use case
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/k8-active-monitor-controller/rbac-admin.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/keiko/k8-keiko-active-monitor-controller/rbac-admin.yaml yaml)
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
@@ -187,13 +187,13 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/k8-active-monitor-controller/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/keiko/k8-keiko-active-monitor-controller/engine.yaml yaml)
 ```yaml
 # engine.yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
-  name: k8-active-monitor-controller
+  name: k8-keiko-active-monitor-controller
   namespace: default
 spec:
   appinfo:
