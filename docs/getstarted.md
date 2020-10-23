@@ -46,25 +46,25 @@ ChaosOperator watches for Chaos CRs across namespaces)
 
 Alternatively, you can choose to install it with Helm:
 
-- Add the litmuschaos helm repo
+- Add the LitmusChaos Helm repo
 
 ```
 helm repo add litmuschaos https://litmuschaos.github.io/litmus-helm/
 ```
 
-- Create litmus namespace in Kubernetes
+- Create a Litmus namespace in Kubernetes
 
 ```
 kubectl create ns litmus
 ```
 
-- Install the litmus helm chart
+- Install the Litmus Helm chart
 
 ```
 helm install chaos litmuschaos/litmus --namespace=litmus
 ```
 
-**Note**: Litmus uses Kubernetes custom resource definitions (CRDs) to define chaos intent. Helm3 handles CRDs better than helm2.
+**Note**: Litmus uses Kubernetes CRDs to define chaos intent. Helm3 handles CRDs better than Helm2.
 
 Before you start running a chaos experiment, verify if Litmus is installed correctly.
 
