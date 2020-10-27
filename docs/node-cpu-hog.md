@@ -118,7 +118,7 @@ subjects:
     <th> Notes </th>
   </tr>
   <tr>
-    <td> APP_NODE </td>
+    <td> TARGET_NODE </td>
     <td> Name of the node subjected to node cpu hog chaos</td>
     <td> Mandatory  </td>
     <td> </td>
@@ -154,6 +154,18 @@ subjects:
     <td> Optional  </td>
     <td> </td>
   </tr>  
+   <tr>
+    <td> NODES_AFFECTED_PERC </td>
+    <td> The Percentage of total nodes to target  </td>
+    <td> Optional </td>
+    <td> Defaults to 0% (corresponds to 1 node) </td>
+  </tr> 
+   <tr>
+    <td> SEQUENCE </td>
+    <td> It defines sequence of chaos execution for multiple target nodes </td>
+    <td> Optional </td>
+    <td> Default value: parallel. Supported: serial, parallel </td>
+  </tr>
   <tr>
     <td> INSTANCE_ID </td>
     <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
@@ -200,7 +212,7 @@ spec:
               value: ''
             
              # ENTER THE NAME OF THE APPLICATION NODE
-            - name: APP_NODE
+            - name: TARGET_NODE
               value: ''
 ```
 

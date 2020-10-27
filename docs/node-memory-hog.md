@@ -119,7 +119,7 @@ subjects:
     <th> Notes </th>
   </tr>
   <tr>
-    <td> APP_NODE </td>
+    <td> TARGET_NODE </td>
     <td> Name of the node subjected to memory hog  </td>
     <td> Mandatory  </td>
     <td> </td>
@@ -153,6 +153,18 @@ subjects:
     <td> Period to wait before and after injection of chaos in sec </td>
     <td> Optional  </td>
     <td> </td>
+  </tr>
+   <tr>
+    <td> NODES_AFFECTED_PERC </td>
+    <td> The Percentage of total nodes to target  </td>
+    <td> Optional </td>
+    <td> Defaults to 0% (corresponds to 1 node) </td>
+  </tr> 
+   <tr>
+    <td> SEQUENCE </td>
+    <td> It defines sequence of chaos execution for multiple target nodes </td>
+    <td> Optional </td>
+    <td> Default value: parallel. Supported: serial, parallel </td>
   </tr>
   <tr>
     <td> INSTANCE_ID </td>
@@ -201,8 +213,8 @@ spec:
             - name: MEMORY_PERCENTAGE
               value: '90'
             
-             # ENTER THE NAME OF THE APPLICATION NODE
-            - name: APP_NODE
+             # ENTER THE NAME OF THE TARGET NODE
+            - name: TARGET_NODE
               value: ''
 ```
 

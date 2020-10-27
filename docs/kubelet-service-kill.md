@@ -24,7 +24,7 @@ sidebar_label: Kubelet Service Kill
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `kubelet-service-kill` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.9.0?file=charts/generic/kubelet-service-kill/experiment.yaml)
-- Ensure that the node specified in the experiment ENV variable `APP_NODE` (the node for which kubelet service need to be killed) should be cordoned before execution of the chaos experiment (before applying the chaosengine manifest) to ensure that the litmus experiment runner pods are not scheduled on it / subjected to eviction. This can be achieved with the following steps: 
+- Ensure that the node specified in the experiment ENV variable `TARGET_NODE` (the node for which kubelet service need to be killed) should be cordoned before execution of the chaos experiment (before applying the chaosengine manifest) to ensure that the litmus experiment runner pods are not scheduled on it / subjected to eviction. This can be achieved with the following steps: 
 
   - Get node names against the applications pods: `kubectl get pods -o wide`
   - Cordon the node `kubectl cordon <nodename>` 
@@ -123,7 +123,7 @@ subjects:
     <th> Notes </th>
   </tr>
   <tr>
-    <td> APP_NODE </td>
+    <td> TARGET_NODE </td>
     <td> Name of the node, to which kubelet service need to be killed </td>
     <td> Mandatory  </td>
     <td> </td>
@@ -197,7 +197,7 @@ spec:
               value: '90' # in seconds
               
              # provide the actual name of node under test
-            - name: APP_NODE
+            - name: TARGET_NODE
               value: 'node-01'
 ```
 

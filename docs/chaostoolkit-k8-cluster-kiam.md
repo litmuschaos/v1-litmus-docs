@@ -111,43 +111,54 @@ sidebar_label: Cluster Pod - kiam
 
 ### Sample Rbac Manifest for Service Owner use case
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/k8-pod-delete/Cluster/rbac-admin.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/k8-pod-delete/Cluster/rbac.yaml yaml)
 ```yaml
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: chaos-admin
+  name: k8-pod-delete-sa
+  namespace: default
   labels:
-    name: chaos-admin
+    name: k8-pod-delete-sa
+    app.kubernetes.io/part-of: litmus
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
+kind: Role
 metadata:
-  name: chaos-admin
+  name: k8-pod-delete-sa
+  namespace: default
   labels:
-    name: chaos-admin
+    name: k8-pod-delete-sa
+    app.kubernetes.io/part-of: litmus
 rules:
-- apiGroups: ["","apps","batch","extensions","litmuschaos.io","openebs.io","storage.k8s.io"]
-  resources: ["chaosengines","chaosexperiments","chaosresults","configmaps","cstorpools","cstorvolumereplicas","events","jobs","persistentvolumeclaims","persistentvolumes","pods","pods/exec","pods/log","secrets","storageclasses","chaosengines","chaosexperiments","chaosresults","configmaps","cstorpools","cstorvolumereplicas","daemonsets","deployments","events","jobs","persistentvolumeclaims","persistentvolumes","pods","pods/eviction","pods/exec","pods/log","replicasets","secrets","services","statefulsets","storageclasses"]
-  verbs: ["create","delete","get","list","patch","update"]
+- apiGroups: ["","apps","batch"]
+  resources: ["jobs","deployments","daemonsets"]
+  verbs: ["create","list","get","patch","delete"]
+- apiGroups: ["","litmuschaos.io"]
+  resources: ["pods","configmaps","events","services","chaosengines","chaosexperiments","chaosresults","deployments","jobs"]
+  verbs: ["get","create","update","patch","delete","list"] 
 - apiGroups: [""]
   resources: ["nodes"]
-  verbs: ["get","list","patch"]
+  verbs : ["get","list"] 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
-  name: chaos-admin
+  name: k8-pod-delete-sa
+  namespace: default
   labels:
-    name: chaos-admin
+    name: k8-pod-delete-sa
+    app.kubernetes.io/part-of: litmus
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: chaos-admin
+  kind: Role
+  name: k8-pod-delete-sa
 subjects:
 - kind: ServiceAccount
-  name: chaos-admin
+  name: k8-pod-delete-sa
   namespace: default
+
 ```
 
 ### Prepare ChaosEngine
@@ -214,36 +225,35 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/k8-pod-delete/Cluster/engine-kiam-health.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/k8-pod-delete/Cluster/engine-app-health.yaml yaml)
 ```yaml
-# chaosengine.yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
-  name: k8-kiam-health
+  name: nginx-chaos-cluster-health
   namespace: default
 spec:
-  #ex. values: ns1:name=percona,ns2:run=nginx
   appinfo:
-    appns: kube-system
-    # FYI, To see app label, apply kubectl get pods --show-labels
-    #applabel: "app=nginx"
-    applabel: "app=kiam"
-    appkind: deployment
-  jobCleanUpPolicy: retain
-  monitoring: false
-  annotationCheck: 'false'
+    appns: 'default'
+    applabel: 'app=nginx'
+    appkind: 'deployment'
+  annotationCheck: 'true'
   engineState: 'active'
   chaosServiceAccount: chaos-admin
+  monitoring: false
+  jobCleanUpPolicy: 'retain'
   experiments:
     - name: k8-pod-delete
       spec:
         components:
           env:
+            # set chaos namespace
             - name: NAME_SPACE
-              value: kube-system
+              value: 'default'
+            # set chaos label name
             - name: LABEL_NAME
-              value: kiam
+              value: 'nginx'
+            # pod endpoint
             - name: APP_ENDPOINT
               value: 'localhost'
             - name: FILE
@@ -254,6 +264,7 @@ spec:
               value: 'none'
             - name: TEST_NAMESPACE
               value: 'default'
+
 
 ```
 
