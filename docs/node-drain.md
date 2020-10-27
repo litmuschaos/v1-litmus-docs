@@ -185,7 +185,7 @@ spec:
             kubernetes.io/hostname: 'node02'        
           env:
             # set node name
-            - name: APP_NODE
+            - name: TARGET_NODE
               value: 'node-01'
 ```
 
