@@ -1,4 +1,5 @@
-# Documentation for the Litmus Project
+
+Documentation pour le projet Litmus
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Flitmuschaos%2Flitmus-docs.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Flitmuschaos%2Flitmus-docs?ref=badge_shield)
 [![Slack Channel](https://img.shields.io/badge/Slack-Join-purple)](https://slack.litmuschaos.io)
@@ -13,70 +14,67 @@
 ![GitHub top language](https://img.shields.io/github/languages/top/litmuschaos/litmus-docs)
 
 
-#### *Read this in [other languages](translations/TRANSLATIONS.md).*
+Une description détaillée de projet Docusaurus est disponible
+ [ici](https://docusaurus.io/docs/en/installation.html).
 
-[FR](translations/README-fr.md)
+## Pour les développeurs
 
-Additional details on the Docusaurus project can be found [here](https://docusaurus.io/docs/en/installation.html).
-
-## For Developers
-
-### Clone litmus-docs repository
+### Cloner le répertoire litmus-docs
 
 ```bash
 git clone https://github.com/litmuschaos/litmus-docs.git
 cd litmus-docs
 ```
 
-The docs website server can be setup manually or through docker compose
+Le serveur de site web documentaire peut être configuré manuellement ou en utilisant docker  compose
 
-## Use embedmd command before commiting changes
+## Utiliser les commandes embedmd avant de commiter les changements
 
-The embedded code will be extracted from the file at `URL`, which can either be a relative path to a file in the local file system (using forward slashes as directory separator) or a URL starting with `http://` or `https://.`
+Le code incorporé sera extrait du fichier à `URL`, qui peut être un chemin relatif vers un autre dans le fichier de système local( en utilisant les barres obliques comme spérateur de répertoire) ou une URL commençant par  `http://` ou `https://.`
 
 _Installation:_
 
-- Make sure you have [golang](https://github.com/golang/go) installed. We just need to run the following command to install embedmd.
+- Il faut bien vérfier que [golang](https://github.com/golang/go) est installé. On a juste besoin d'exécuter la commande ci-dessous pour installer embedmd.
 
 ```bash
 go get github.com/campoy/embedmd
 ```
 
-_Run embedmd (needs to be done before commiting the changes):_
+_Exécution embedmd (doît être faite avant de commiter les modifications):_
 
-- Follow the steps (from root directory) to run embedmd:
+- Suivez les étapes ci-dessous(à partir de répertoire root) pour exécuter embedmd:
 
 ```bash
 cd docs
 embedmd -w $(find *.md)
 ```
-_Check the difference:_
+_Vérifier la différence:_
 
-- Executing `embedmd -d docs-name.md` will display the difference between the contents of docs-name.md and the output of embedmd docs-name.md.
+- L'exécution de cette commmande `embedmd -d docs-name.md` révelera la différence entre le contenu de docs-name.md et le résultat de embedmd docs-name.md.
 
 
-## Manual Setup
+## La configuration manuelle
 
-### Install Node.js
+### Installer Node.js
 
 ```bash
 sudo apt-get install software-properties-common
 curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
 ```
 
-### Get the latest Node.js package
+### Télécharger la dérniére version Node.js 
 
 ```bash
 sudo apt-get install -y nodejs
 ```
 
-### Install Yarn
+### Installer Yarn
 
 ```bash
 npm install -g yarn
 ```
 
-### Start the server
+### Démarrer le serveur 
 
 ```bash
 cd website
@@ -84,24 +82,25 @@ yarn install
 yarn start
 ```
 
-## Using Docker compose
+## La configuration via Docker compose
 
-### Install docker compose
+### Installer docker compose
 
 ```bash
 sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 ```
 
-### Run the server
+### Démarrer le serveur
 
 ```bash
 docker-compose up
 ```
 
 
-## Browse local documentation
+## Parcourir la documentation locale
 http://localhost:3000/docs/next/getstarted.html
+
 
 ## License
 
