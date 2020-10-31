@@ -5,21 +5,7 @@ sidebar_label: Resources
 ---
 ------
 
-## Chaos Demos
-
-
-
-### Getting Started
-
-Use this video to learn how to get started with Litmus. You will learn how to install Litmus, how to inject a fault into your application using one of the experiments available at ChaosHub.
-
-<a href="https://asciinema.org/a/G9TcXpgikLuGTBY7btIUNSuWN" target="_blank">
-
-<img src="/docs/assets/getstarted.svg" width="300">
-
-</a>
-
-<hr>
+## LitmusChaos Resources
 
 ### LitmusChaos Objective & High Level Design
 
