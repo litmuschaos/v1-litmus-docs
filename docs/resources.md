@@ -37,8 +37,6 @@ This video discusses the LitmusChaos Architecture! The CRDs required for practic
  - Anatomy of a chaos experiment
 - The detailed workflow of a chaos engine
 
-Litmus is your one-stop toolset to carry out Chaos Engineering for Kubernetes applications. One of the most important tools for Kubernetes Developers, SREs, and DevOps engineers to ensure resilient Kubernetes infrastructure.
-
 Check the video <a href="https://www.youtube.com/watch?v=L38gBn8eEHw&list=PLmM1fgu30seVGFyNIEyDgAq6KnzgW2p3m&index=3&t=6s">here
   
 </a>
@@ -48,8 +46,6 @@ Check the video <a href="https://www.youtube.com/watch?v=L38gBn8eEHw&list=PLmM1f
 ### LitmusChaos Component Details
 
 This video takes you around the components of LitmusChaos easing your walkthrough of Litmus as a Chaos Engineering toolset and helping you achieve immense knowledge of each minute component of Litmus to help deploy chaos to your Kubernetes application as easily as possible.
-
-Litmus is your one-stop toolset to carry out Chaos Engineering for Kubernetes applications. One of the most important tools for Kubernetes Developers, SREs, and DevOps engineers to ensure resilient Kubernetes infrastructure.
 
 Check the video <a href="https://www.youtube.com/watch?v=yhWgzN90SME&list=PLmM1fgu30seVGFyNIEyDgAq6KnzgW2p3m&index=5&t=3674s">here
   
