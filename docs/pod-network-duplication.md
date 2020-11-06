@@ -155,13 +155,11 @@ subjects:
     <td> Optional  </td>
     <td> Defaults to `/run/containerd/containerd.sock` </td>
   </tr> 
-  <tr>
-    <td> TARGET_POD </td>
-    <td> Name of the application pod subjected to pod network duplication chaos</td>
+ <tr>
+    <td> TARGET_PODS </td>
+    <td> Comma separated list of application pod name subjected to pod network duplication chaos</td>
     <td> Optional </td>
-    <td> If not provided it will select from the appLabel provided</td>
-  </tr>    
-    <td> If not provided it will select from the app label provided</td>
+    <td> If not provided, it will select target pods randomly based on provided appLabels</td>
   </tr> 
   <tr>
     <td> TARGET_IPS </td>

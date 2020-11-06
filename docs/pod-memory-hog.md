@@ -145,10 +145,10 @@ subjects:
     <td> Defaults to <code>gaiaadm/pumba<code> </td>
   </tr>
   <tr>
-    <td> TARGET_POD </td>
-    <td> Name of the application pod subjected to pod memory hog chaos<td>
+    <td> TARGET_PODS </td>
+    <td> Comma separated list of application pod name subjected to pod memory hog chaos</td>
     <td> Optional </td>
-    <td> If not provided it will select from the appLabel provided</td>
+    <td> If not provided, it will select target pods randomly based on provided appLabels</td>
   </tr>
   <tr>
     <td> CHAOS_KILL_COMMAND </td>

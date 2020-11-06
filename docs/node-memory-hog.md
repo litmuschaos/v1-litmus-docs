@@ -80,7 +80,7 @@ metadata:
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps"]
   resources: ["pods","jobs","pods/log","events","chaosengines","chaosexperiments","chaosresults"]
-  verbs: ["create","list","get","patch","update","delete"]
+  verbs: ["create","list","get","patch","update","delete","deletecollection"]
 - apiGroups: [""]
   resources: ["nodes"]
   verbs: ["get","list"]
