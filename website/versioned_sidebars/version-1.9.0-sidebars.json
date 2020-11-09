@@ -60,9 +60,6 @@
           "version-1.9.0-Kubernetes-Chaostoolkit-Application",
           "version-1.9.0-Kubernetes-Chaostoolkit-Service",
           "version-1.9.0-Kubernetes-Chaostoolkit-Cluster-Kiam",
-          "Kubernetes-Chaostoolkit-Cluster-prometheus-k8s-prometheus",
-          "Kubernetes-Chaostoolkit-Cluster-prometheus-pushgateway",
-          "Kubernetes-Chaostoolkit-Cluster-prometheus-operator",
           "version-1.9.0-pod-io-stress",
           "version-1.9.0-node-io-stress"
         ]
