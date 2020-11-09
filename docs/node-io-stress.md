@@ -23,7 +23,7 @@ sidebar_label: Node IO Stress
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `node-io-stress` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.9.0?file=charts/generic/node-io-stress/experiment.yaml)
+- Ensure that the `node-io-stress` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.9.1?file=charts/generic/node-io-stress/experiment.yaml)
 
 ## Entry Criteria
 
@@ -141,7 +141,7 @@ subjects:
     <td> Default to 4 </td>
   </tr>   
   <tr>
-    <td> APP_NODE </td>
+    <td> TARGET_NODE </td>
     <td> Name of the node subjected to IO stress </td>
     <td> Optional  </td>
     <td> If not provided. It will select the app node from appinfo randomly</td>
@@ -163,6 +163,18 @@ subjects:
     <td> Period to wait before and after injection of chaos in sec </td>
     <td> Optional  </td>
     <td> </td>
+  </tr>
+   <tr>
+    <td> NODES_AFFECTED_PERC </td>
+    <td> The Percentage of total nodes to target  </td>
+    <td> Optional </td>
+    <td> Defaults to 0% (corresponds to 1 node) </td>
+  </tr> 
+   <tr>
+    <td> SEQUENCE </td>
+    <td> It defines sequence of chaos execution for multiple target nodes </td>
+    <td> Optional </td>
+    <td> Default value: parallel. Supported: serial, parallel </td>
   </tr>
   <tr>
     <td> INSTANCE_ID </td>
@@ -211,7 +223,7 @@ spec:
               value: '10'
             
              ## enter the name of the desired node
-            - name: APP_NODE
+            - name: TARGET_NODE
               value: ''
 ```
 

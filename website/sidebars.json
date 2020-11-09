@@ -64,6 +64,11 @@
           "Kubernetes-Chaostoolkit-Cluster-active-monitor-controller",
           "Kubernetes-Chaostoolkit-Cluster-alb-ingress-controller",
           "Kubernetes-Chaostoolkit-Cluster-kube-proxy",
+          "Kubernetes-Chaostoolkit-Cluster-prometheus-k8s-prometheus",
+          "Kubernetes-Chaostoolkit-Cluster-prometheus-pushgateway",
+          "Kubernetes-Chaostoolkit-Cluster-prometheus-operator",
+          "Kubernetes-Chaostoolkit-Cluster-Calico-Node",
+          "Kubernetes-Chaostoolkit-Cluster-Wavefront",
           "pod-io-stress",
           "node-io-stress"
         ]

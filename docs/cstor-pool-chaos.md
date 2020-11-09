@@ -23,7 +23,7 @@ sidebar_label: cStor Pool Chaos
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`).If not, install from [here](https://litmuschaos.github.io/litmus/litmus-operator-latest.yaml)
-- Ensure that the `openebs-pool-pod-failure` experiment resource is available in the cluster by executing `kubectl get chaosexperiments -n openebs` in the openebs namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.9.0?file=charts/openebs/openebs-pool-pod-failure/experiment.yaml)
+- Ensure that the `openebs-pool-pod-failure` experiment resource is available in the cluster by executing `kubectl get chaosexperiments -n openebs` in the openebs namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.9.1?file=charts/openebs/openebs-pool-pod-failure/experiment.yaml)
 
 ## Entry Criteria
 

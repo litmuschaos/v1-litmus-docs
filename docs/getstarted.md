@@ -36,7 +36,7 @@ Running chaos on your application involves the following steps:
 Apply the LitmusChaos Operator manifest:
  
 ```
-kubectl apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.9.0.yaml
+kubectl apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.9.1.yaml
 ```
 
 The above command installs all the CRDs, required service account configuration, and chaos-operator. 
@@ -44,6 +44,27 @@ The above command installs all the CRDs, required service account configuration,
 **Note**: Ensure that you have the right privileges to install the CRDs & setup cluster-wide RBAC policies (by default, the 
 ChaosOperator watches for Chaos CRs across namespaces)
 
+Alternatively, you can choose to install it with Helm:
+
+- Add the LitmusChaos Helm repo
+
+```
+helm repo add litmuschaos https://litmuschaos.github.io/litmus-helm/
+```
+
+- Create a Litmus namespace in Kubernetes
+
+```
+kubectl create ns litmus
+```
+
+- Install the Litmus Helm chart
+
+```
+helm install chaos litmuschaos/litmus --namespace=litmus
+```
+
+**Note**: Litmus uses Kubernetes CRDs to define chaos intent. Helm3 handles CRDs better than Helm2.
 Before you start running a chaos experiment, verify if Litmus is installed correctly.
 
 **Verify your installation**
@@ -120,7 +141,7 @@ The generic chaos experiments such as `pod-delete`,  `container-kill`,` pod-netw
 This is the first chart you are recommended to install.
 
 ```
-kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.9.0?file=charts/generic/experiments.yaml -n nginx
+kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.9.1?file=charts/generic/experiments.yaml -n nginx
 ```
 
 Verify if the chaos experiments are installed.
@@ -293,7 +314,7 @@ kubectl delete chaosengine --all -n <namespace>
 ```
 
 ```console
-kubectl delete -f https://litmuschaos.github.io/litmus/litmus-operator-v1.9.0.yaml
+kubectl delete -f https://litmuschaos.github.io/litmus/litmus-operator-v1.9.1.yaml
 ```
 
 **NOTE**
