@@ -1,8 +1,7 @@
 ---
-id: version-1.9.0-Kubernetes-Chaostoolkit-Cluster-Kiam
+id: Kubernetes-Chaostoolkit-Cluster-Calico-Node
 title: ChaosToolKit Cluster Level Pod Delete Experiment Details in kube-system
-sidebar_label: Cluster Pod - kiam
-original_id: Kubernetes-Chaostoolkit-Cluster-Kiam
+sidebar_label: Cluster Pod - calico-node
 ---
 ------
 
@@ -54,38 +53,8 @@ original_id: Kubernetes-Chaostoolkit-Cluster-Kiam
   <tr>
     <td> ChaosToolKit </td>
     <td> ChaosToolKit single, random pod delete experiment with count </td>
-    <td> Executing via label name app=<> </td>
-    <td> pod-app-kill-count.json</td>
-  </tr>
-  <tr>
-    <td> ChaosToolKit </td>
-    <td> ChaosToolKit single, random pod delete experiment </td>
-    <td> Executing via label name app=<> </td>
-    <td> pod-app-kill-health.json </td>
-  </tr>
-  <tr>
-    <td> ChaosToolKit </td>
-    <td> ChaosToolKit single, random pod delete experiment with count </td>
-    <td> Executing via Custom label name <custom>=<> </td>
-    <td> pod-app-kill-count.json</td>
-  </tr>
-  <tr>
-    <td> ChaosToolKit </td>
-    <td> ChaosToolKit single, random pod delete experiment </td>
-    <td> Executing via Custom label name <custom>=<> </td>
-    <td> pod-app-kill-health.json </td>
-  </tr>
-  <tr>
-    <td> ChaosToolKit </td>
-    <td> ChaosToolKit All pod delete experiment with health validation </td>
-    <td> Executing via Custom label name app=<> </td>
-    <td> pod-app-kill-all.json </td>
-  </tr>
-  <tr>
-    <td> ChaosToolKit </td>
-    <td> ChaosToolKit All pod delete experiment with health validation</td>
-    <td> Executing via Custom label name <custom>=<> </td>
-    <td> pod-custom-kill-all.json </td>
+    <td> Executing via label name k8s-app=<> </td>
+    <td> pod-custom-kill-health.json</td>
   </tr>
   <tr>
     <td> TEST_NAMESPACE </td>
@@ -106,13 +75,13 @@ original_id: Kubernetes-Chaostoolkit-Cluster-Kiam
 - Follow the steps in the sections below to create the chaosServiceAccount, prepare the ChaosEngine & execute the experiment.
 
 ## Prepare chaosServiceAccount
-- Based on your use case pick one of the choice from here `https://github.com/sumitnagal/chaos-charts/tree/testing/charts/chaostoolkit/k8-pod-delete`
+- Based on your use case pick one of the choice from here `https://hub.litmuschaos.io/generic/k8-calico-node`
     * Service owner use case
-        * Install the rbac for cluster in namespace from where you are executing the experiments `kubectl apply Cluster/rbac-admin.yaml`
+        * Install the rbac for cluster in namespace from where you are executing the experiments `kubectl apply rbac-admin.yaml`
 
-### Sample Rbac Manifest for Service Owner use case
+### Sample Rbac Manifest for Cluster Owner use case
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/k8-pod-delete/Cluster/rbac-admin.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/k8-calico-node/rbac-admin.yaml yaml)
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
@@ -128,12 +97,15 @@ metadata:
   labels:
     name: chaos-admin
 rules:
-- apiGroups: ["","apps","batch","extensions","litmuschaos.io","openebs.io","storage.k8s.io"]
-  resources: ["chaosengines","chaosexperiments","chaosresults","configmaps","cstorpools","cstorvolumereplicas","events","jobs","persistentvolumeclaims","persistentvolumes","pods","pods/exec","pods/log","secrets","storageclasses","chaosengines","chaosexperiments","chaosresults","configmaps","cstorpools","cstorvolumereplicas","daemonsets","deployments","events","jobs","persistentvolumeclaims","persistentvolumes","pods","pods/eviction","pods/exec","pods/log","replicasets","secrets","services","statefulsets","storageclasses"]
-  verbs: ["create","delete","get","list","patch","update"]
-- apiGroups: [""]
-  resources: ["nodes"]
-  verbs: ["get","list","patch"]
+  - apiGroups: ["","apps","batch"]
+    resources: ["jobs","deployments","daemonsets"]
+    verbs: ["create","list","get","patch","delete"]
+  - apiGroups: ["","litmuschaos.io"]
+    resources: ["pods","configmaps","events","services","chaosengines","chaosexperiments","chaosresults","deployments","jobs"]
+    verbs: ["get","create","update","patch","delete","list"] 
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs : ["get","list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -158,7 +130,7 @@ subjects:
     ```
       appinfo:
         appns: default
-        applabel: 'app=kiam'
+        applabel: 'k8s-app=calico-node'
         appkind: deployment
     ```
 
@@ -184,7 +156,7 @@ subjects:
     <td> LABEL_NAME </td>
     <td> The default name of the label </td>
     <td> Mandatory </td>
-    <td> Defaults to kiam </td>
+    <td> Defaults to calico-node </td>
   </tr>
   <tr>
     <td> APP_ENDPOINT </td>
@@ -196,13 +168,13 @@ subjects:
     <td> FILE </td>
     <td> Type of chaos experiments we want to execute </td>
     <td> Mandatory  </td>
-    <td> Default to `pod-app-kill-health.json` </td>
+    <td> Default to `pod-custom-kill-health.json` </td>
   </tr>
   <tr>
     <td> REPORT  </td>
     <td> The Report of execution coming in json format </td>
     <td> Optional  </td>
-    <td> Defaults to is `true` </td>
+    <td> Defaults to is `false` </td>
   </tr>
   <tr>
     <td> REPORT_ENDPOINT </td>
@@ -215,13 +187,13 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/k8-pod-delete/Cluster/engine-kiam-health.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/k8-calico-node/engine.yaml yaml)
 ```yaml
 # chaosengine.yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
-  name: k8-kiam-health
+  name: k8-calico-node-health
   namespace: default
 spec:
   #ex. values: ns1:name=percona,ns2:run=nginx
@@ -229,7 +201,7 @@ spec:
     appns: kube-system
     # FYI, To see app label, apply kubectl get pods --show-labels
     #applabel: "app=nginx"
-    applabel: "app=kiam"
+    applabel: "k8s-app=calico-node"
     appkind: deployment
   jobCleanUpPolicy: retain
   monitoring: false
@@ -244,11 +216,11 @@ spec:
             - name: NAME_SPACE
               value: kube-system
             - name: LABEL_NAME
-              value: kiam
+              value: k8s-app=calico-node
             - name: APP_ENDPOINT
               value: 'localhost'
             - name: FILE
-              value: 'pod-app-kill-health.json'
+              value: 'pod-custom-kill-health.json'
             - name: REPORT
               value: 'true'
             - name: REPORT_ENDPOINT
