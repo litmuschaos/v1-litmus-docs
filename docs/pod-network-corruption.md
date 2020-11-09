@@ -22,7 +22,7 @@ sidebar_label: Pod Network Corruption
 
 ## Prerequisites
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `pod-network-corruption` experiment resource is available in the cluster by `kubectl get chaosexperiments` command. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.9.0?file=charts/generic/pod-network-corruption/experiment.yaml)
+- Ensure that the `pod-network-corruption` experiment resource is available in the cluster by `kubectl get chaosexperiments` command. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.9.1?file=charts/generic/pod-network-corruption/experiment.yaml)
 -  Cluster must run docker container runtime
 
 <div class="danger">
@@ -158,17 +158,17 @@ subjects:
     <td> If not provided it will select from the appLabel provided</td>
   </tr>  
   <tr>
-    <td> TARGET_IPs </td>
-    <td> Destination ips for network chaos </td>
+    <td> TARGET_IPS </td>
+    <td> IP addresses of the services or pods, the accessibility to which, is impacted </td>
     <td> Optional </td>
     <td> if not provided, it will induce network chaos for all ips/destinations</td>
   </tr>  
   <tr>
     <td> TARGET_HOSTS </td>
-    <td> Destination hosts for network chaos <td>
+    <td> DNS Names/FQDN names of the services, the accessibility to which, is impacted </td>
     <td> Optional </td>
     <td> if not provided, it will induce network chaos for all ips/destinations or TARGET_IPs if already defined</td>
-  </tr>  
+  </tr>      
   <tr>
     <td> PODS_AFFECTED_PERC </td>
     <td> The Percentage of total pods to target  </td>

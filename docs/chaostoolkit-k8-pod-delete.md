@@ -22,7 +22,7 @@ sidebar_label: Service Pod - Application
 
 ## Prerequisites
 - Ensure that the Litmus ChaosOperator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `k8-pod-delete` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.9.0?file=charts/generic/k8-pod-delete/experiment.yaml)
+- Ensure that the `k8-pod-delete` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.9.1?file=charts/generic/k8-pod-delete/experiment.yaml)
 - Ensure you have nginx default application setup on default namespace ( if you are using specific namespace please execute below on that namespace)
 
 ## Entry Criteria
@@ -114,6 +114,7 @@ metadata:
   namespace: default
   labels:
     name: k8-pod-delete-sa
+    app.kubernetes.io/part-of: litmus
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -122,13 +123,17 @@ metadata:
   namespace: default
   labels:
     name: k8-pod-delete-sa
+    app.kubernetes.io/part-of: litmus
 rules:
-- apiGroups: ["","litmuschaos.io","batch","apps"]
-  resources: ["pods","deployments","jobs","configmaps","chaosengines","chaosexperiments","chaosresults"]
-  verbs: ["create","list","get","patch","update","delete"]
+- apiGroups: ["","apps","batch"]
+  resources: ["jobs","deployments","daemonsets"]
+  verbs: ["create","list","get","patch","delete"]
+- apiGroups: ["","litmuschaos.io"]
+  resources: ["pods","configmaps","events","services","chaosengines","chaosexperiments","chaosresults","deployments","jobs"]
+  verbs: ["get","create","update","patch","delete","list"] 
 - apiGroups: [""]
   resources: ["nodes"]
-  verbs : ["get","list"]
+  verbs : ["get","list"] 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -137,6 +142,7 @@ metadata:
   namespace: default
   labels:
     name: k8-pod-delete-sa
+    app.kubernetes.io/part-of: litmus
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role

@@ -8,5 +8,5 @@
 
 **Checklist:**
 -   [ ] Fixes #<issue number>
--   [ ] Signed the commit for DCO to be passed
+-   [ ] Signed the commit for [DCO](https://github.com/litmuschaos/litmus-docs/blob/master/CONTRIBUTING.md#sign-your-work) check to be passed
 -   [ ] Labelled this PR & related issue with `documentation` tag

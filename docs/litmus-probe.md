@@ -29,6 +29,7 @@ All probes share some common attributes:
 - **probeTimeout:** Represents the time limit for the probe to execute the check specified and return the expected data. 
 - **retry:** The number of times a check is re-run upon failure in the first attempt before declaring the probe status as failed. 
 - **interval:** The period between subsequent retries 
+- **probePollingInterval:** The time interval for which continuous probe should be sleep after each iteration
 
 
 ## Types of Litmus Probes
@@ -72,13 +73,18 @@ probe:
     probeTimeout: 5
     interval: 5
     retry: 1
-    probePollingInterval: 2
-
 ```
 
 ### k8sProbe
 
-With the proliferation of custom resources & operators, especially in the case of stateful applications, the steady-state is manifested as status parameters/flags within Kubernetes resources. k8sProbe addresses verification of the desired resource state by allowing users to define the Kubernetes GVR (group-version-resource) with appropriate filters (field selectors/label selectors). The experiment makes use of the Kubernetes Dynamic Client to achieve this.The `k8sProbe` can be defined at `.spec.experiments[].spec.probe` the path inside ChaosEngine.
+With the proliferation of custom resources & operators, especially in the case of stateful applications, the steady-state is manifested as status parameters/flags within Kubernetes resources. k8sProbe addresses verification of the desired resource state by allowing users to define the Kubernetes GVR (group-version-resource) with appropriate filters (field selectors/label selectors). The experiment makes use of the Kubernetes Dynamic Client to achieve this.The `k8sProbe` can be defined at `.spec.experiments[].spec.probe` the path inside ChaosEngine. 
+
+It supports following CRUD operations which can be defined at `probe.operation`.
+
+- **create:** It creates kubernetes resource based on the data provided inside `probe.data` field. 
+- **delete:** It deletes matching kubernetes resource via GVR and filters (field selectors/label selectors).
+- **present:** It checks for the presence of kubernetes resource based on GVR and filters (field selectors/labelselectors).
+- **absent:** It checks for the absence of kubernetes resource based on GVR and filters (field selectors/labelselectors).
 
 ```yaml
 probe:
@@ -91,7 +97,8 @@ probe:
       resource: "<appResource>"
       namespace: "default"
       fieldSelector: "metadata.name=<appResourceName>,status.phase=Running"
-      labelSelector: "metadata.name=<appResourceName>,status.phase=Running"
+      labelSelector: "<app-labels>"
+  operation: "present" # it can be present, absent, create, delete
   mode: "EoT"
   runProperties:
     probeTimeout: 5
