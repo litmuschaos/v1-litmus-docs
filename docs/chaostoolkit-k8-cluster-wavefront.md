@@ -22,7 +22,7 @@ sidebar_label: Cluster Pod - calico-node
 
 ## Prerequisites
 - Ensure that the Litmus ChaosOperator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `k8-pod-delete` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.9.0?file=charts/generic/k8-pod-delete/experiment.yaml)
+- Ensure that the `k8-pod-delete` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/kube-components/k8-wavefront-collector/experiment.yaml)
 - Ensure you have nginx default application setup on default namespace ( if you are using specific namespace please execute below on that namespace)
 
 ## Entry Criteria
@@ -75,13 +75,13 @@ sidebar_label: Cluster Pod - calico-node
 - Follow the steps in the sections below to create the chaosServiceAccount, prepare the ChaosEngine & execute the experiment.
 
 ## Prepare chaosServiceAccount
-- Based on your use case pick one of the choice from here `https://hub.litmuschaos.io/generic/k8-calico-node`
+- Based on your use case pick one of the choice from here `https://hub.litmuschaos.io/kube-components/k8-calico-node`
     * Service owner use case
         * Install the rbac for cluster in namespace from where you are executing the experiments `kubectl apply rbac-admin.yaml`
 
 ### Sample Rbac Manifest for Cluster Owner use case
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/k8-calico-node/rbac-admin.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kube-components/k8-wavefront-collector/rbac-admin.yaml yaml)
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
@@ -187,36 +187,35 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/k8-calico-node/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kube-components/k8-wavefront-collector/engine.yaml yaml)
 ```yaml
-# chaosengine.yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
-  name: k8-calico-node-health
+  name: k8-calico-node
   namespace: default
 spec:
-  #ex. values: ns1:name=percona,ns2:run=nginx
   appinfo:
-    appns: kube-system
-    # FYI, To see app label, apply kubectl get pods --show-labels
-    #applabel: "app=nginx"
-    applabel: "k8s-app=calico-node"
+    appns: 'default'
+    applabel: "k8s-app=wavefront-collector"
     appkind: deployment
-  jobCleanUpPolicy: retain
-  monitoring: false
   annotationCheck: 'false'
   engineState: 'active'
   chaosServiceAccount: chaos-admin
+  monitoring: false
+  jobCleanUpPolicy: 'retain'
   experiments:
     - name: k8-pod-delete
       spec:
         components:
           env:
+            # set chaos namespace, we assume you are using the kube-system if not modify the below namespace
             - name: NAME_SPACE
               value: kube-system
+            # set chaos label name
             - name: LABEL_NAME
-              value: k8s-app=calico-node
+              value: k8s-app=wavefront-collector
+            # pod endpoint
             - name: APP_ENDPOINT
               value: 'localhost'
             - name: FILE
@@ -227,6 +226,7 @@ spec:
               value: 'none'
             - name: TEST_NAMESPACE
               value: 'default'
+
 
 ```
 
