@@ -122,8 +122,8 @@ subjects:
     <th> Notes </th>
   </tr>
   <tr>
-    <td> TARGET_NODE </td>
-    <td> Name of the node to be tainted  </td>
+    <td> TARGET_NODES </td>
+    <td> Comma separated list of nodes, subjected to node taint</td>
     <td> Mandatory  </td>
     <td> </td>
   </tr>

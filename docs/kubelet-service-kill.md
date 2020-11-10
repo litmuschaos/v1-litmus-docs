@@ -123,8 +123,8 @@ subjects:
     <th> Notes </th>
   </tr>
   <tr>
-    <td> TARGET_NODE </td>
-    <td> Name of the node, to which kubelet service need to be killed </td>
+    <td> TARGET_NODES </td>
+    <td> Comma separated list of nodes, to which kubelet service need to be killed </td>
     <td> Mandatory  </td>
     <td> </td>
   </tr>
