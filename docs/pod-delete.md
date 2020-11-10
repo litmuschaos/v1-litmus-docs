@@ -185,11 +185,11 @@ subjects:
     <td> Default to `true`, With `terminationGracePeriodSeconds=0`  </td>
   </tr>
   <tr>
-    <td> TARGET_POD </td>
-    <td> Name of the application pod subjected to pod delete chaos</td>
+    <td> TARGET_PODS </td>
+    <td> Comma separated list of application pod name subjected to pod delete chaos</td>
     <td> Optional </td>
-    <td> If not provided it will select from the appLabel provided</td>
-  </tr>  
+    <td> If not provided, it will select target pods randomly based on provided appLabels</td>
+  </tr> 
   <tr>
     <td> PODS_AFFECTED_PERC </td>
     <td> The Percentage of total pods to target  </td>
