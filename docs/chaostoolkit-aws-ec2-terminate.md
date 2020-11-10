@@ -22,7 +22,7 @@ sidebar_label: EC2 Terminate
 
 ## Prerequisites
 - Ensure that the Litmus ChaosOperator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `aws-ec2-terminate` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/kube-aws/k8-aws-ec2-terminate/experiment.yaml)
+- Ensure that the `aws-ec2-terminate` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.9.1?file=charts/kube-aws/k8-aws-ec2-terminate/experiment.yaml)
 - Ensure you have nginx default application setup on default namespace ( if you are using specific namespace please execute below on that namespace)
 
 ## Entry Criteria
@@ -286,18 +286,18 @@ spec:
 
 ### Watch Chaos progress
 
-- View application pod termination & recovery by setting up a watch on the pods in the application namespace
+- View aws ec2 instance termination & recovery by setting up a watch on the nodes/verify in AWS console
 
   `watch kubectl get pods`
 
 ### Check ChaosExperiment Result
 
-- Check whether the application is resilient to the ChaosToolKit pod failure, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
+- Check whether the application is resilient to the ChaosToolKit aws ec2 termination, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult k8-pod-delete -n <chaos-namespace>`
+  `kubectl describe chaosresult k8-aws-ec2-terminate-k8-aws-ec2-terminate -n <chaos-namespace>`
 
 ### Check ChaosExperiment logs
 
 - Check the log and result for existing experiment
 
-    `kubectl log -f k8-pod-delete-<> -n <chaos-namespace>`
+    `kubectl log -f  k8-aws-ec2-terminate-<hax-value> -n <chaos-namespace>`

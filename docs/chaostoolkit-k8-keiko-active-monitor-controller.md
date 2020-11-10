@@ -22,7 +22,7 @@ sidebar_label: Cluster Pod - active-monitor-controller
 
 ## Prerequisites
 - Ensure that the Litmus ChaosOperator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `k8-pod-delete` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.9.0?file=charts/generic/k8-pod-delete/experiment.yaml)
+- Ensure that the `k8-pod-delete` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.9.1?file=charts/generic/k8-pod-delete/experiment.yaml)
 - Ensure you have nginx default application setup on default namespace ( if you are using specific namespace please execute below on that namespace)
 
 ## Entry Criteria
@@ -81,46 +81,54 @@ sidebar_label: Cluster Pod - active-monitor-controller
 
 ### Sample Rbac Manifest for Cluster Owner use case
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/keiko/k8-keiko-active-monitor-controller/rbac-admin.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/k8-pod-delete/rbac.yaml yaml)
 ```yaml
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: chaos-admin
+  name: k8-pod-delete-sa
+  namespace: default
   labels:
-    name: chaos-admin
+    name: k8-pod-delete-sa
+    app.kubernetes.io/part-of: litmus
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
+kind: Role
 metadata:
-  name: chaos-admin
+  name: k8-pod-delete-sa
+  namespace: default
   labels:
-    name: chaos-admin
+    name: k8-pod-delete-sa
+    app.kubernetes.io/part-of: litmus
 rules:
-  - apiGroups: ["","apps","batch"]
-    resources: ["jobs","deployments","daemonsets"]
-    verbs: ["create","list","get","patch","delete"]
-  - apiGroups: ["","litmuschaos.io"]
-    resources: ["pods","configmaps","events","services","chaosengines","chaosexperiments","chaosresults","deployments","jobs"]
-    verbs: ["get","create","update","patch","delete","list"] 
-  - apiGroups: [""]
-    resources: ["nodes"]
-    verbs : ["get","list"]
+- apiGroups: ["","apps","batch"]
+  resources: ["jobs","deployments","daemonsets"]
+  verbs: ["create","list","get","patch","delete"]
+- apiGroups: ["","litmuschaos.io"]
+  resources: ["pods","configmaps","events","services","chaosengines","chaosexperiments","chaosresults","deployments","jobs"]
+  verbs: ["get","create","update","patch","delete","list"] 
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs : ["get","list"] 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
-  name: chaos-admin
+  name: k8-pod-delete-sa
+  namespace: default
   labels:
-    name: chaos-admin
+    name: k8-pod-delete-sa
+    app.kubernetes.io/part-of: litmus
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: chaos-admin
+  kind: Role
+  name: k8-pod-delete-sa
 subjects:
 - kind: ServiceAccount
-  name: chaos-admin
+  name: k8-pod-delete-sa
   namespace: default
+
 ```
 
 ### Prepare ChaosEngine
@@ -187,22 +195,21 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/keiko/k8-keiko-active-monitor-controller/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/k8-pod-delete/engine.yaml yaml)
 ```yaml
-# engine.yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
-  name: k8-keiko-active-monitor-controller
+  name: nginx-chaos-app-health
   namespace: default
 spec:
   appinfo:
     appns: 'default'
-    applabel: "app.kubernetes.io/name=addon-active-monitor,name=active-monitor-controller"
-    appkind: deployment
-  annotationCheck: 'false'
+    applabel: 'app=nginx'
+    appkind: 'deployment'
+  annotationCheck: 'true'
   engineState: 'active'
-  chaosServiceAccount: chaos-admin
+  chaosServiceAccount: k8-pod-delete-sa
   monitoring: false
   jobCleanUpPolicy: 'retain'
   experiments:
@@ -212,21 +219,22 @@ spec:
           env:
             # set chaos namespace
             - name: NAME_SPACE
-              value: addon-active-monitor-ns
+              value: 'default'
             # set chaos label name
             - name: LABEL_NAME
-              value: app.kubernetes.io/name=addon-active-monitor,name=active-monitor-controller
+              value: 'nginx'
             # pod endpoint
             - name: APP_ENDPOINT
               value: 'localhost'
             - name: FILE
-              value: 'pod-custom-kill-health.json'
+              value: 'pod-app-kill-health.json'
             - name: REPORT
               value: 'true'
             - name: REPORT_ENDPOINT
               value: 'none'
             - name: TEST_NAMESPACE
               value: 'default'
+
 ```
 
 ### Create the ChaosEngine Resource

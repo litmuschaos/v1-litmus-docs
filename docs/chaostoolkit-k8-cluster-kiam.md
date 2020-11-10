@@ -22,7 +22,7 @@ sidebar_label: Cluster Pod - kiam
 
 ## Prerequisites
 - Ensure that the Litmus ChaosOperator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `k8-pod-delete` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.9.1?file=charts/generic/k8-pod-delete/experiment.yaml)
+- Ensure that the `k8-pod-delete` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/kube-components/k8-kiam/experiment.yaml)
 - Ensure you have nginx default application setup on default namespace ( if you are using specific namespace please execute below on that namespace)
 
 ## Entry Criteria
@@ -105,7 +105,7 @@ sidebar_label: Cluster Pod - kiam
 - Follow the steps in the sections below to create the chaosServiceAccount, prepare the ChaosEngine & execute the experiment.
 
 ## Prepare chaosServiceAccount
-- Based on your use case pick one of the choice from here `https://hub.litmuschaos.io/generic/k8-kiam`
+- Based on your use case pick one of the choice from here `https://hub.litmuschaos.io/kube-components/k8-kiam`
     * Service owner use case
         * Install the rbac for cluster in namespace from where you are executing the experiments `kubectl apply rbac-admin.yaml`
 
@@ -113,24 +113,19 @@ sidebar_label: Cluster Pod - kiam
 
 [embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kube-components/k8-kiam/rbac-admin.yaml yaml)
 ```yaml
----
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: k8-pod-delete-sa
-  namespace: default
+  name: chaos-admin
   labels:
-    name: k8-pod-delete-sa
-    app.kubernetes.io/part-of: litmus
+    name: chaos-admin
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
+kind: ClusterRole
 metadata:
-  name: k8-pod-delete-sa
-  namespace: default
+  name: chaos-admin
   labels:
-    name: k8-pod-delete-sa
-    app.kubernetes.io/part-of: litmus
+    name: chaos-admin
 rules:
   - apiGroups: ["","apps","batch"]
     resources: ["jobs","deployments","daemonsets"]
@@ -143,22 +138,19 @@ rules:
     verbs : ["get","list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
+kind: ClusterRoleBinding
 metadata:
-  name: k8-pod-delete-sa
-  namespace: default
+  name: chaos-admin
   labels:
-    name: k8-pod-delete-sa
-    app.kubernetes.io/part-of: litmus
+    name: chaos-admin
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: k8-pod-delete-sa
+  kind: ClusterRole
+  name: chaos-admin
 subjects:
 - kind: ServiceAccount
-  name: k8-pod-delete-sa
+  name: chaos-admin
   namespace: default
-
 ```
 
 ### Prepare ChaosEngine
@@ -227,17 +219,18 @@ subjects:
 
 [embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kube-components/k8-kiam/engine.yaml yaml)
 ```yaml
+# Generic Chaos engine for Application team, who want to participate in Game Day
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
-  name: nginx-chaos-cluster-health
+  name: k8-calico-node
   namespace: default
 spec:
   appinfo:
     appns: 'default'
-    applabel: 'app=nginx'
-    appkind: 'deployment'
-  annotationCheck: 'true'
+    applabel: "app=kiam"
+    appkind: deployment
+  annotationCheck: 'false'
   engineState: 'active'
   chaosServiceAccount: chaos-admin
   monitoring: false
@@ -249,10 +242,10 @@ spec:
           env:
             # set chaos namespace
             - name: NAME_SPACE
-              value: 'default'
+              value: kube-system
             # set chaos label name
             - name: LABEL_NAME
-              value: 'nginx'
+              value: kiam
             # pod endpoint
             - name: APP_ENDPOINT
               value: 'localhost'
