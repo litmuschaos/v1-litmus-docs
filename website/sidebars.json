@@ -77,7 +77,9 @@
         "type": "subcategory",
         "label": "Kube-AWS",
         "ids": [
-          "Kubernetes-Chaostoolkit-AWS"
+          "Kubernetes-Chaostoolkit-AWS",
+          "ebs-loss",
+          "ec2-terminate"
         ]
       },
       {
