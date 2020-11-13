@@ -141,11 +141,11 @@ subjects:
     <td> Default to 4 </td>
   </tr>   
   <tr>
-    <td> TARGET_NODE </td>
-    <td> Name of the node subjected to IO stress </td>
-    <td> Optional  </td>
-    <td> If not provided. It will select the app node from appinfo randomly</td>
-  </tr>  
+    <td> TARGET_NODES </td>
+    <td> Comma separated list of nodes, subjected to node io stress</td>
+    <td> Mandatory  </td>
+    <td> </td>
+  </tr>
    <tr>
     <td> LIB  </td>
     <td> The chaos lib used to inject the chaos </td>
@@ -222,8 +222,8 @@ spec:
             - name: FILESYSTEM_UTILIZATION_PERCENTAGE
               value: '10'
             
-             ## enter the name of the desired node
-            - name: TARGET_NODE
+             ## enter the comma separated target nodes name
+            - name: TARGET_NODES
               value: ''
 ```
 

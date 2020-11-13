@@ -118,8 +118,8 @@ subjects:
     <th> Notes </th>
   </tr>
   <tr>
-    <td> TARGET_NODE </td>
-    <td> Name of the node subjected to node cpu hog chaos</td>
+    <td> TARGET_NODES </td>
+    <td> Comma separated list of nodes, subjected to node cpu hog chaos</td>
     <td> Mandatory  </td>
     <td> </td>
   </tr>
@@ -211,8 +211,8 @@ spec:
             - name: NODE_CPU_CORE
               value: ''
             
-             # ENTER THE NAME OF THE APPLICATION NODE
-            - name: TARGET_NODE
+            # ENTER THE COMMA SEPARATED TARGET NODES NAME
+            - name: TARGET_NODES
               value: ''
 ```
 
