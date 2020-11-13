@@ -122,8 +122,8 @@ subjects:
     <th> Notes </th>
   </tr>
   <tr>
-    <td> TARGET_NODES </td>
-    <td> Comma separated list of nodes, subjected to node taint</td>
+    <td> TARGET_NODE </td>
+    <td> Name of the node to be tainted </td>
     <td> Mandatory  </td>
     <td> </td>
   </tr>
@@ -192,7 +192,7 @@ spec:
             # provide the node labels
             kubernetes.io/hostname: 'node02'        
           env:
-            # set node name
+            # set target node name
             - name: TARGET_NODE
               value: 'node-01'
               

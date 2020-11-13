@@ -211,8 +211,8 @@ spec:
             - name: NODE_CPU_CORE
               value: ''
             
-             # ENTER THE NAME OF THE APPLICATION NODE
-            - name: TARGET_NODE
+            # ENTER THE COMMA SEPARATED TARGET NODES NAME
+            - name: TARGET_NODES
               value: ''
 ```
 

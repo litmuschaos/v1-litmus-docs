@@ -123,8 +123,8 @@ subjects:
     <th> Notes </th>
   </tr>
   <tr>
-    <td> TARGET_NODES </td>
-    <td> Comma separated list of nodes, to which kubelet service need to be killed </td>
+    <td> TARGET_NODE </td>
+    <td> Name of the node, to which kubelet service need to be killed </td>
     <td> Mandatory  </td>
     <td> </td>
   </tr>
@@ -196,7 +196,7 @@ spec:
             - name: TOTAL_CHAOS_DURATION
               value: '90' # in seconds
               
-             # provide the actual name of node under test
+             # provide the target node name
             - name: TARGET_NODE
               value: 'node-01'
 ```

@@ -222,8 +222,8 @@ spec:
             - name: FILESYSTEM_UTILIZATION_PERCENTAGE
               value: '10'
             
-             ## enter the name of the desired node
-            - name: TARGET_NODE
+             ## enter the comma separated target nodes name
+            - name: TARGET_NODES
               value: ''
 ```
 
