@@ -224,6 +224,8 @@ spec:
             - name: TOTAL_CHAOS_DURATION
               value: '60' # in seconds
             
+            - name: CHAOS_KILL_COMMAND
+              value: "kill -9 $(ps afx | grep \"[dd] if /dev/zero\" | awk '{print $1}' | tr '\n' ' ')"            
 ```
 
 ### Create the ChaosEngine Resource
