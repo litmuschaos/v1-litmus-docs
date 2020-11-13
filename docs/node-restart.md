@@ -70,6 +70,48 @@ stringData:
 #### Sample Rbac Manifest
 
 [embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/node-restart/rbac.yaml yaml)
+```yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: node-restart-sa
+  namespace: default
+  labels:
+    name: node-restart-sa
+    app.kubernetes.io/part-of: litmus
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: node-restart-sa
+  labels:
+    name: node-restart-sa
+    app.kubernetes.io/part-of: litmus
+rules:
+- apiGroups: ["","litmuschaos.io","batch","apps"]
+  resources: ["pods","jobs","secrets","events","chaosengines","pods/log","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","update","delete","deletecollection"]
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["get","list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: node-restart-sa
+  labels:
+    name: node-restart-sa
+    app.kubernetes.io/part-of: litmus
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: node-restart-sa
+subjects:
+- kind: ServiceAccount
+  name: node-restart-sa
+  namespace: default
+```
 
 ### Prepare ChaosEngine
 
@@ -153,6 +195,40 @@ stringData:
 #### Sample ChaosEngine Manifest
 
 [embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/node-restart/engine.yaml yaml)
+```yaml
+apiVersion: litmuschaos.io/v1alpha1
+kind: ChaosEngine
+metadata:
+  name: nginx-chaos
+  namespace: default
+spec:
+  # It can be true/false
+  annotationCheck: 'false'
+  # It can be active/stop
+  engineState: 'active'
+  #ex. values: ns1:name=percona,ns2:run=nginx 
+  auxiliaryAppInfo: ''
+  appinfo:
+    appns: 'default'
+    applabel: 'app=nginx'
+    appkind: 'deployment'
+  chaosServiceAccount: node-restart-sa
+  monitoring: false
+  # It can be delete/retain
+  jobCleanUpPolicy: 'delete'
+  experiments:
+    - name: node-restart
+      spec:
+        components:
+          env:
+             # ENTER THE NAME OF THE TARGET NODE
+            - name: TARGET_NODE
+              value: ''
+
+             # ENTER THE USER TO BE USED FOR SSH AUTH
+            - name: SSH_USER
+              value: ''
+```
 
 ### Create the ChaosEngine Resource
 
