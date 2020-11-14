@@ -49,7 +49,7 @@ stringData:
 
 ## Details
 
--   Causes chaos to disrupt state of node for a certain chaos duration. 
+-   Causes chaos to disrupt state of node by restarting it. 
 -   Tests deployment sanity (replica availability & uninterrupted service) and recovery workflows of the application pod
 
 ## Integrations
