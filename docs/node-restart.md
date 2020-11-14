@@ -247,7 +247,7 @@ spec:
 
 ### Watch Chaos progress
 
-- View the status of the nodess as they are subjected to node restart. 
+- View the status of the nodes as they are subjected to node restart. 
 
   `watch -n 1 kubectl get nodes`
   
