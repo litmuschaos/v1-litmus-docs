@@ -70,7 +70,8 @@
           "Kubernetes-Chaostoolkit-Cluster-Calico-Node",
           "Kubernetes-Chaostoolkit-Cluster-Wavefront",
           "pod-io-stress",
-          "node-io-stress"
+          "node-io-stress",
+          "node-restart"
         ]
       },
       {
