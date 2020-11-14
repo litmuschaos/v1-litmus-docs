@@ -23,6 +23,7 @@ The probes can be set up to run in different modes:
 - **EoT:** Executed at the End of Test as a post-chaos check
 - **Edge:** Executed both, before and after the chaos 
 - **Continuous:** The probe is executed continuously, with a specified polling interval during the chaos injection. 
+- **OnChaos:** The probe is executed continuously, with a specified polling interval for entire chaos duration
 
 All probes share some common attributes:
 
@@ -30,6 +31,7 @@ All probes share some common attributes:
 - **retry:** The number of times a check is re-run upon failure in the first attempt before declaring the probe status as failed. 
 - **interval:** The period between subsequent retries 
 - **probePollingInterval:** The time interval for which continuous probe should be sleep after each iteration
+- **initialDelaySeconds:** Represents the initial waiting time interval for the probes.
 
 
 ## Types of Litmus Probes
@@ -66,13 +68,17 @@ probe:
   type: "cmdProbe"
   cmdProbe/inputs:
     command: "<command>"
-    expectedResult: "<expected-result>"
+    comparator:
+      type: "string" # supports: string, int, float
+      criteria: "contains" #supports >=,<=,>,<,==,!= for int and contains,equal,notEqual for string values
+      value: "<value-for-criteria-match>"
     source: "<repo>/<tag>" # it can be “inline” or any image
   mode: "Edge"
   runProperties:
     probeTimeout: 5
     interval: 5
     retry: 1
+    initialDelaySeconds: 5
 ```
 
 ### k8sProbe
@@ -99,7 +105,7 @@ probe:
       fieldSelector: "metadata.name=<appResourceName>,status.phase=Running"
       labelSelector: "<app-labels>"
   operation: "present" # it can be present, absent, create, delete
-  mode: "EoT"
+  mode: "EOT"
   runProperties:
     probeTimeout: 5
     interval: 5
@@ -171,7 +177,10 @@ probe:
     type: "cmdProbe"
     cmdProbe/inputs:
       command: "<command>"
-      expectedResult: "<expected-result>"
+      comparator:
+        type: "string"
+        criteria: "equals"
+        value: "<value-for-criteria-match>"
       source: "inline"
     mode: "SOT"
     runProperties:
@@ -183,7 +192,10 @@ probe:
     cmdProbe/inputs:
       ## probe1's result being used as one of the args in probe2
       command: "<commmand> {{ .probe1.ProbeArtifacts.Register }} <arg2>"
-      expectedResult: "<expected-result>"
+      comparator:
+        type: "string"
+        criteria: "equals"
+        value: "<value-for-criteria-match>"
       source: "inline"
     mode: "SOT"
     runProperties:
