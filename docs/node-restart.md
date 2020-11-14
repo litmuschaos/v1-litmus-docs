@@ -55,7 +55,6 @@ stringData:
 ## Integrations
 
 -   Node Restart can be effected using the chaos library: `litmus`.
--   The desired chaoslib can be selected by setting the above options as value for the env variable `LIB`
 
 ## Steps to Execute the Chaos Experiment
 
