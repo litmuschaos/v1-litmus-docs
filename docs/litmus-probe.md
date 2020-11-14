@@ -23,7 +23,7 @@ The probes can be set up to run in different modes:
 - **EoT:** Executed at the End of Test as a post-chaos check
 - **Edge:** Executed both, before and after the chaos 
 - **Continuous:** The probe is executed continuously, with a specified polling interval during the chaos injection. 
-- **OnChaos:** The probe is executed continuously, with a specified polling interval for entire chaos duration
+- **OnChaos:** The probe is executed continuously, with a specified polling interval strictly for chaos duration of chaos
 
 All probes share some common attributes:
 
