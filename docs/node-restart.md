@@ -24,7 +24,7 @@ sidebar_label: Node Restart
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `node-restart` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/node-restart/experiment.yaml)
-- Ensure to create a Kubernetes secret having the rsa-key needed for ssh in the `CHAOS_NAMESPACE`. A sample secret file looks like:
+- Create a Kubernetes secret having the private SSH key for `SSH_USER` used to connect to `TARGET_NODE`. The name of secret should be `id-rsa` along with private SSH key data, named `ssh-privatekey`. A sample secret example is given below:
 
 ```yaml
 apiVersion: v1
@@ -142,14 +142,14 @@ subjects:
     <td> Defaults to `root` </td>
   </tr>
   <tr>
-    <td> TARGET_NODES </td>
-    <td> comma separated list of target nodes, subjected to chaos </td>
+    <td> TARGET_NODE </td>
+    <td> name of target node, subjected to chaos </td>
     <td> Mandatory </td>
     <td>  </td>
   </tr>
   <tr>
-    <td> TARGET_NODE_IPS </td>
-    <td> comma separated list of target node ips, subjected to chaos </td>
+    <td> TARGET_NODE_IP </td>
+    <td> ip of the target node, subjected to chaos </td>
     <td> Mandatory </td>
     <td>  </td>
   </tr>
