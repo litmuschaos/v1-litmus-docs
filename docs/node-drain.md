@@ -121,7 +121,7 @@ subjects:
   </tr>
   <tr>
     <td> TARGET_NODE </td>
-    <td> Name of the node to drain  </td>
+    <td> Name of the node to drain </td>
     <td> Mandatory  </td>
     <td> </td>
   </tr>
@@ -184,7 +184,7 @@ spec:
             # provide the node labels
             kubernetes.io/hostname: 'node02'        
           env:
-            # set node name
+            # enter the target node name
             - name: TARGET_NODE
               value: 'node-01'
 ```

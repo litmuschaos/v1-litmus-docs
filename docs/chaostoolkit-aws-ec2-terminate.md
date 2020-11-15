@@ -1,7 +1,7 @@
 ---
 id: Kubernetes-Chaostoolkit-AWS
 title: ChaosToolKit AWS EC2 Experiment Details
-sidebar_label: EC2 Terminate 
+sidebar_label: ChaosToolKit AWS EC2 Terminate 
 ---
 ------
 

@@ -60,24 +60,18 @@
           "pod-autoscaler",
           "Kubernetes-Chaostoolkit-Application",
           "Kubernetes-Chaostoolkit-Service",
-          "Kubernetes-Chaostoolkit-Cluster-Kiam",
-          "Kubernetes-Chaostoolkit-Cluster-active-monitor-controller",
-          "Kubernetes-Chaostoolkit-Cluster-alb-ingress-controller",
-          "Kubernetes-Chaostoolkit-Cluster-kube-proxy",
-          "Kubernetes-Chaostoolkit-Cluster-prometheus-k8s-prometheus",
-          "Kubernetes-Chaostoolkit-Cluster-prometheus-pushgateway",
-          "Kubernetes-Chaostoolkit-Cluster-prometheus-operator",
-          "Kubernetes-Chaostoolkit-Cluster-Calico-Node",
-          "Kubernetes-Chaostoolkit-Cluster-Wavefront",
           "pod-io-stress",
-          "node-io-stress"
+          "node-io-stress",
+          "node-restart"
         ]
       },
       {
         "type": "subcategory",
         "label": "Kube-AWS",
         "ids": [
-          "Kubernetes-Chaostoolkit-AWS"
+          "Kubernetes-Chaostoolkit-AWS",
+          "ebs-loss",
+          "ec2-terminate"
         ]
       },
       {
@@ -118,6 +112,21 @@
         "label": "Cassandra",
         "ids": [
            "cassandra-pod-delete"
+        ]
+      }, 
+      {
+        "type": "subcategory",
+        "label": "Kube-Components",
+        "ids": [
+          "Kubernetes-Chaostoolkit-Cluster-Kiam",
+          "Kubernetes-Chaostoolkit-Cluster-active-monitor-controller",
+          "Kubernetes-Chaostoolkit-Cluster-alb-ingress-controller",
+          "Kubernetes-Chaostoolkit-Cluster-kube-proxy",
+          "Kubernetes-Chaostoolkit-Cluster-prometheus-k8s-prometheus",
+          "Kubernetes-Chaostoolkit-Cluster-prometheus-pushgateway",
+          "Kubernetes-Chaostoolkit-Cluster-prometheus-operator",
+          "Kubernetes-Chaostoolkit-Cluster-Calico-Node",
+          "Kubernetes-Chaostoolkit-Cluster-Wavefront"
         ]
       }
     ],

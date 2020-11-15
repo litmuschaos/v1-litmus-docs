@@ -132,12 +132,6 @@ subjects:
     <td> Default to 4 </td>
   </tr> 
   <tr>
-    <td> TARGET_POD </td>
-    <td> Name of the application pod subjected to IO stress chaos</td>
-    <td> Optional </td>
-    <td> If not provided it will select from the appLabel provided</td>
-  </tr>   
-  <tr>
     <td> TOTAL_CHAOS_DURATION </td>
     <td> The time duration for chaos (seconds)  </td>
     <td> Optional </td>
