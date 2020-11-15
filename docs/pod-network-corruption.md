@@ -22,7 +22,7 @@ sidebar_label: Pod Network Corruption
 
 ## Prerequisites
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `pod-network-corruption` experiment resource is available in the cluster by `kubectl get chaosexperiments` command. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.9.1?file=charts/generic/pod-network-corruption/experiment.yaml)
+- Ensure that the `pod-network-corruption` experiment resource is available in the cluster by `kubectl get chaosexperiments` command. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.10.0?file=charts/generic/pod-network-corruption/experiment.yaml)
 -  Cluster must run docker container runtime
 
 <div class="danger">
@@ -57,7 +57,7 @@ sidebar_label: Pod Network Corruption
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-network-corruption/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/v1.10.x/charts/generic/pod-network-corruption/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
@@ -216,7 +216,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-network-corruption/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/v1.10.x/charts/generic/pod-network-corruption/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -249,7 +249,7 @@ spec:
               value: 'nginx' 
 
             - name: LIB_IMAGE
-              value: 'litmuschaos/go-runner:latest'
+              value: 'litmuschaos/go-runner:1.10.0'
 
             #Network interface inside target container              
             - name: NETWORK_INTERFACE

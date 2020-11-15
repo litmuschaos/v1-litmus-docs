@@ -34,7 +34,7 @@ metadata:
 type: Opaque
 stringData:
   ssh-privatekey: |-
-  # Add the private key for ssh here
+    # Add the private key for ssh here
 ```
 
 ## Entry-Criteria

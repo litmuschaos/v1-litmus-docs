@@ -23,7 +23,7 @@ Provide this ServiceAccount in ChaosEngine's .spec.chaosServiceAccount.
 - Select Chaos Experiment from [hub.litmuschaos.io](https://hub.litmuschaos.io/) and click on `INSTALL EXPERIMENT` button.
 
 ```bash
-kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.9.1?file=charts/generic/pod-delete/experiment.yaml -n litmus
+kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.10.0?file=charts/generic/pod-delete/experiment.yaml -n litmus
 ```
 
 #### Prepare RBAC Manifest
@@ -51,8 +51,8 @@ rules:
 - apiGroups: ["","apps","batch","extensions","litmuschaos.io"]
   resources: ["pods","pods/exec","pods/eviction","jobs","daemonsets","events","chaosresults","chaosengines"]
   verbs: ["create","delete","get","list","patch","update", "deletecollection"]
-- apiGroups: ["","apps","litmuschaos.io"]
-  resources: ["configmaps","secrets","services","chaosexperiments","pods/log","replicasets","deployments","statefulsets","services"]
+- apiGroups: ["","apps","litmuschaos.io","apps.openshift.io","argoproj.io"]
+  resources: ["configmaps","secrets","services","chaosexperiments","pods/log","replicasets","deployments","statefulsets","deploymentconfigs","rollouts","services"]
   verbs: ["get","list","patch","update"]
 - apiGroups: [""]
   resources: ["nodes"]
