@@ -128,7 +128,7 @@ has just enough permissions needed to run the pod-delete chaos experiment.
 - For rbac samples corresponding to other experiments such as, say, container-kill, please refer the respective experiment folder in the [chaos-charts](https://github.com/litmuschaos/chaos-charts/tree/master/charts/generic/container-kill) repository.
 
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/1.10.0/charts/generic/pod-delete/rbac_nginx_getstarted.yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/v1.10.x/charts/generic/pod-delete/rbac_nginx_getstarted.yaml)
 ```yaml
 ---
 apiVersion: v1

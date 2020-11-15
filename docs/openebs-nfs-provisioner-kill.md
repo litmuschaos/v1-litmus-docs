@@ -75,7 +75,7 @@ Use this sample RBAC manifest to create a chaosServiceAccount in the desired nam
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/1.10.0/charts/openebs/openebs-nfs-provisioner-kill/rbac.yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/v1.10.x/charts/openebs/openebs-nfs-provisioner-kill/rbac.yaml)
 ```yaml
 ---
 apiVersion: v1
@@ -166,7 +166,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/1.10.0/charts/openebs/openebs-nfs-provisioner-kill/engine.yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/v1.10.x/charts/openebs/openebs-nfs-provisioner-kill/engine.yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
