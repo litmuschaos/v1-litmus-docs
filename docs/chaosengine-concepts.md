@@ -534,7 +534,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>.spec.components.runner.tolerations</code> The tolerations contains toleration for the runner pod so that it will scheduled on the given node. Typically used in case of infra/node level chaos.</td>
+  <td>The <code>.spec.components.runner.tolerations</code> Provides tolerations for the runner pod so that it can be scheduled on the respective tainted node. Typically used in case of infra/node level chaos.</td>
 </tr>
 </table>
 
@@ -833,7 +833,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>.spec.components.tolerations</code> The tolerations contains toleration for the experiment pod so that it will scheduled on the given node. Typically used in case of infra/node level chaos.</td>
+  <td>The <code>.spec.components.tolerations</code>Tolerations for the experiment pod so that it can be scheduled on the respective tainted node. Typically used in case of infra/node level chaos.</td>
 </tr>
 </table>
 
