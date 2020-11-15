@@ -81,7 +81,7 @@ sidebar_label: Cluster Pod - alb-ingress-controller
 
 ### Sample Rbac Manifest for Cluster Owner use case
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kube-components/k8-alb-ingress-controller/rbac-admin.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/1.10.0/charts/kube-components/k8-alb-ingress-controller/rbac-admin.yaml yaml)
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
@@ -187,7 +187,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kube-components/k8-alb-ingress-controller/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/1.10.0/charts/kube-components/k8-alb-ingress-controller/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine

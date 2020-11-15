@@ -57,7 +57,7 @@ sidebar_label: Pod Delete
 
 #### Sample Rbac Manifest for litmus LIB
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-delete/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/1.10.0/charts/generic/pod-delete/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
@@ -103,7 +103,7 @@ subjects:
 
 #### Sample Rbac Manifest for powerfulseal LIB
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-delete/powerfulseal_rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/1.10.0/charts/generic/pod-delete/powerfulseal_rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
@@ -218,7 +218,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-delete/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/1.10.0/charts/generic/pod-delete/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine

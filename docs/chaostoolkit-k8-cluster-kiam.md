@@ -111,7 +111,7 @@ sidebar_label: Cluster Pod - kiam
 
 ### Sample Rbac Manifest for Service Owner use case
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kube-components/k8-kiam/rbac-admin.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/1.10.0/charts/kube-components/k8-kiam/rbac-admin.yaml yaml)
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
@@ -217,7 +217,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kube-components/k8-kiam/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/1.10.0/charts/kube-components/k8-kiam/engine.yaml yaml)
 ```yaml
 # Generic Chaos engine for Application team, who want to participate in Game Day
 apiVersion: litmuschaos.io/v1alpha1

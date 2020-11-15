@@ -55,7 +55,7 @@ sidebar_label: CoreDNS Pod Delete
 
 ### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/coredns/coredns-pod-delete/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/1.10.0/charts/coredns/coredns-pod-delete/rbac.yaml yaml)
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
@@ -159,7 +159,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/coredns/coredns-pod-delete/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/1.10.0/charts/coredns/coredns-pod-delete/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine

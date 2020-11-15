@@ -70,7 +70,7 @@ sidebar_label: Broker Pod Failure
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kafka/kafka-broker-pod-failure/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/1.10.0/charts/kafka/kafka-broker-pod-failure/rbac.yaml yaml)
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
@@ -253,7 +253,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kafka/kafka-broker-pod-failure/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/1.10.0/charts/kafka/kafka-broker-pod-failure/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine

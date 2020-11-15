@@ -69,7 +69,7 @@ stringData:
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/disk-loss/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/1.10.0/charts/generic/disk-loss/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
@@ -191,7 +191,7 @@ subjects:
 
 ## Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/disk-loss/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/1.10.0/charts/generic/disk-loss/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine

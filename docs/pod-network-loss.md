@@ -55,7 +55,7 @@ sidebar_label: Pod Network Loss
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-network-loss/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/1.10.0/charts/generic/pod-network-loss/rbac.yaml yaml)
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
@@ -213,7 +213,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-network-loss/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/1.10.0/charts/generic/pod-network-loss/engine.yaml yaml)
 ```yaml
 # chaosengine.yaml
 apiVersion: litmuschaos.io/v1alpha1

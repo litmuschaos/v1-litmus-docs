@@ -203,7 +203,7 @@ has just enough permissions needed to run the container-kill chaos experiment.
 the [chaos-charts](https://github.com/litmuschaos/chaos-charts/tree/master/charts/generic/pod-delete) repository.  
 
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/container-kill/rbac_nginx_getstarted.yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/1.10.0/charts/generic/container-kill/rbac_nginx_getstarted.yaml)
 ```yaml
 ---
 apiVersion: v1
@@ -273,7 +273,7 @@ ChaosEngine connects the application instance to a Chaos Experiment. Copy the fo
 **NOTE:** You may update the values of `applabel` , `appns`, `appkind` and `experiments` as per your deployment and choices. 
 Change the `chaosServiceAccount` to the name of service account created in above previous steps if you modified the `rbac.yaml`.
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/container-kill/engine_nginx_getstarted.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/1.10.0/charts/generic/container-kill/engine_nginx_getstarted.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine

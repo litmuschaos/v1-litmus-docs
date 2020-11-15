@@ -64,7 +64,7 @@ Use this sample RBAC manifest to create a chaosServiceAccount in the desired (op
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/openebs-control-plane-chaos/rbac.yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/1.10.0/charts/openebs/openebs-control-plane-chaos/rbac.yaml)
 ```yaml
 ---
 apiVersion: v1
@@ -142,7 +142,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/openebs-control-plane-chaos/engine.yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/1.10.0/charts/openebs/openebs-control-plane-chaos/engine.yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine

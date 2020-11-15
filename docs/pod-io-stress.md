@@ -54,7 +54,7 @@ Use this sample RBAC manifest to create a <code>chaosServiceAccount</code> in th
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-io-stress/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/1.10.0/charts/generic/pod-io-stress/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
@@ -138,6 +138,12 @@ subjects:
     <td> Default to 120s </td>
   </tr>
   <tr>
+    <td> VOLUME_MOUNT_PATH </td>
+    <td> Fill the given volume mount path</td>
+    <td> Optional </td>
+    <td>  </td>
+  </tr>  
+  <tr>
     <td> LIB  </td>
     <td> The chaos lib used to inject the chaos </td>
     <td> Optional </td>
@@ -184,7 +190,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-io-stress/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/1.10.0/charts/generic/pod-io-stress/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
