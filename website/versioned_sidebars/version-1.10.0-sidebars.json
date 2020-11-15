@@ -60,8 +60,7 @@
           "version-1.10.0-Kubernetes-Chaostoolkit-Application",
           "version-1.10.0-Kubernetes-Chaostoolkit-Service",
           "version-1.10.0-pod-io-stress",
-          "version-1.10.0-node-io-stress",
-          "version-1.10.0-node-restart"
+          "version-1.10.0-node-io-stress"
         ]
       },
       {
