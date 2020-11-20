@@ -158,16 +158,16 @@ subjects:
     <td> If not provided, it will select target pods randomly based on provided appLabels</td>
   </tr> 
   <tr>
-    <td> TARGET_IPS </td>
+    <td> DESTINATION_IPS </td>
     <td> IP addresses of the services or pods, the accessibility to which, is impacted </td>
     <td> Optional </td>
     <td> if not provided, it will induce network chaos for all ips/destinations</td>
   </tr>  
   <tr>
-    <td> TARGET_HOSTS </td>
+    <td> DESTINATION_HOSTS </td>
     <td> DNS Names/FQDN names of the services, the accessibility to which, is impacted </td>
     <td> Optional </td>
-    <td> if not provided, it will induce network chaos for all ips/destinations or TARGET_IPs if already defined</td>
+    <td> if not provided, it will induce network chaos for all ips/destinations or DESTINATION_IPS if already defined</td>
   </tr>      
   <tr>
     <td> PODS_AFFECTED_PERC </td>
