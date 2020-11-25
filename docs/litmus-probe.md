@@ -70,7 +70,7 @@ probe:
     command: "<command>"
     comparator:
       type: "string" # supports: string, int, float
-      criteria: "contains" #supports >=,<=,>,<,==,!= for int and contains,equal,notEqual for string values
+      criteria: "contains" #supports >=,<=,>,<,==,!= for int and contains,equal,notEqual,matches,notMatches for string values
       value: "<value-for-criteria-match>"
     source: "<repo>/<tag>" # it can be “inline” or any image
   mode: "Edge"
