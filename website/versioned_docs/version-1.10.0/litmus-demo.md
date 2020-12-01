@@ -1,7 +1,8 @@
 ---
-id: litmus-demo
+id: version-1.10.0-litmus-demo
 title: Chaos Engineering in a Microservices Environment
-sidebar_label: Litmus Demo
+sidebar_label: Litmus demo
+original_id: litmus-demo
 ---
 ------
 
@@ -30,9 +31,9 @@ Three cluster types are supported:
 
 ## PreRequisites
 
-- Docker 18.09 or greater (When using containerized setup)
+- Docker 18.09 or greater 
+- Docker, Kubectl & Python3.7+ (with the PyYaml package) are all you will need for running the KinD platform based chaos demo. If GKE/EKS is your platform choice, you may need to configure gcloud/aws (When using non-containerized setup).
 
-- Docker, Kubectl & Python3.7+ (with the PyYaml package) are all you will need for running the KinD platform based chaos demo. If GKE/EKS is your platform choice, you may need to configure gcloud/aws (When using a non-containerized setup).
 
 ## Getting started:
 
@@ -57,7 +58,6 @@ We can Setup litmus demo in two different ways:
     <td>We need to make sure that all the prerequisites are installed manually before running the demo script.</td>
   </tr>
 </table>
-
 
 ### Containerized Setup
 
@@ -165,8 +165,9 @@ optional arguments:
 
 ## Usage
 
-If you are using containerized setup. Follow one of the steps mentioned above to run the litmus demo. If you want to run the demo script without execing into the container 
-replace `./manage.py` with `./runcmd` from the below commands. For a non-containerized setup you can directly run the commands mentioned below.
+Follow one of the steps mentioned above to run the litmus demo. If you want to run the demo script without execing into the container 
+replace `./manage.py` with `./runcmd` from the below commands.
+
 
 - Install the demo environment using one of the platforms with the start argument
 
@@ -231,10 +232,10 @@ replace `./manage.py` with `./runcmd` from the below commands. For a non-contain
 
   **For EKS Cluster** 
 
-  - Create the EKS cluster (ensure you have setup access to your AWS project)
+  - Create the EKS cluster (ensure you have setup access to your aws project)
 
     ```bash
-    ./manage.py start --platform EKS --name {EKS_CLUSTER_NAME}
+     ./manage.py start --platform EKS --name {EKS_CLUSTER_NAME}
     ```
 
   - Wait for all the pods to get in a ready state. You can monitor this using

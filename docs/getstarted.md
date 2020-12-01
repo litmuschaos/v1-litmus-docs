@@ -119,10 +119,9 @@ Expected output:
 **NOTE**:
 
 - In this guide, we shall describe the steps to inject pod-delete chaos on an nginx application already deployed in the
-nginx namespace. It is a mandatory requirement to ensure that the chaos custom resources (chaosexperiment and chaosengine)
-and the experiment specific serviceaccount are created in the same namespace (typically, the same as the namespace of the
-application under test (AUT), in this case nginx). This is done to ensure that the developers/users of the experiment isolate
-the chaos to their respective work-namespaces in shared environments.
+nginx namespace. If you don't have this setup you can easily create one by running these two commands:
+  - Create nginx namespace `kubectl create ns nginx`.
+  - Create nginx deployment in nginx namespace `kubectl create deployment nginx --image nginx -n nginx`.
 
 - In all subsequent steps, please follow these instructions by replacing the nginx namespace and labels with that of your
 application.
