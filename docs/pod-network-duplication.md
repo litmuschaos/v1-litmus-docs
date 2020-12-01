@@ -97,6 +97,7 @@ subjects:
   namespace: default
 ```
 
+***Note:*** In case of restricted systems/setup, create a PodSecurityPolicy(psp) with the required permissions. The `chaosServiceAccount` can subscribe to work around the respective limitations. An example of a standard psp that can be used for litmus chaos experiments can be found [here]().
 
 ### Prepare ChaosEngine
 
