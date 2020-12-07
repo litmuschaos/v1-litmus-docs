@@ -11,7 +11,7 @@ of container runtime-specific socket files from the Kubernetes nodes in order to
 number of them use purely the K8s API), those involving injection of chaos processes into the network/process namespaces of other containers have this requirement 
 (ex: netem, stress).
 
-The restrictive policies are often enforced via [pod security policies](https://kubernetes.io/docs/concepts/policy/pod-security-policy/)(PSP) today, with organizations
+The restrictive policies are often enforced via [pod security policies](https://kubernetes.io/docs/concepts/policy/pod-security-policy/) (PSP) today, with organizations
 opting for the default ["restricted"](https://kubernetes.io/docs/concepts/policy/pod-security-policy/#example-policies) policy. 
 
 
@@ -63,7 +63,7 @@ spec:
   other hand, in case of CRI-O runtime, network-chaos tests need the chaos pods executed in privileged mode. It is also possible that different PSP configs are
   used in different namespaces based on ChaosExperiments installed/executed in them. 
 
-- Subscribe to the created PSP in the experiment RBAC (or in the [admin-mode](https://docs.litmuschaos.io/docs/admin-mode/#prepare-rbac-manifest) rbac, as applicable) 
+- Subscribe to the created PSP in the experiment RBAC (or in the [admin-mode](https://docs.litmuschaos.io/docs/admin-mode/#prepare-rbac-manifest) rbac, as applicable).
   For example, the pod-delete experiment rbac instrumented with the PSP is shown below:
 
 [embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-delete/rbac-psp.yaml yaml) 
