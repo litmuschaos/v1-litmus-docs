@@ -142,7 +142,8 @@
     ],
     "Advanced": [
       "admin-mode",
-      "namespaced-mode"
+      "namespaced-mode",
+      "litmus-psp"
     ]
   }
 }
