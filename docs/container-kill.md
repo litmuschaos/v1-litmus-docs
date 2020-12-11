@@ -62,7 +62,7 @@ sidebar_label: Container Kill
 
 - Use this sample RBAC manifest to create a chaosServiceAccount in the desired (app) namespace. This example consists of the minimum necessary role permissions to execute the experiment.
 
-#### Sample Rbac Manifest
+#### Sample RBAC Manifest
 
 [embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/v1.10.x/charts/generic/container-kill/rbac.yaml yaml)
 ```yaml
@@ -107,6 +107,8 @@ subjects:
   namespace: default
 
 ```
+
+***Note:*** In case of restricted systems/setup, create a PodSecurityPolicy(psp) with the required permissions. The `chaosServiceAccount` can subscribe to work around the respective limitations. An example of a standard psp that can be used for litmus chaos experiments can be found [here](https://docs.litmuschaos.io/docs/next/litmus-psp/). 
 
 ### Prepare ChaosEngine
 
