@@ -23,12 +23,8 @@ sidebar_label: Pod Network Loss
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `pod-network-loss` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.10.0?file=charts/generic/pod-network-loss/experiment.yaml)
-  <div class="danger">
-    <strong>NOTE</strong>: 
-        Experiment is supported only on Docker Runtime. Support for containerd/CRIO runtimes will be added in subsequent releases.
-</div>
-
+- Ensure that the `pod-network-loss` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/pod-network-loss/experiment.yaml)
+ 
 ## Entry Criteria
 
 - Application pods are healthy before chaos injection
@@ -55,7 +51,7 @@ sidebar_label: Pod Network Loss
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/v1.10.x/charts/generic/pod-network-loss/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-network-loss/rbac.yaml yaml)
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
@@ -166,19 +162,19 @@ subjects:
     <td> CONTAINER_RUNTIME  </td>
     <td> container runtime interface for the cluster</td>
     <td> Optional </td>
-    <td> Defaults to docker, supported values: docker, containerd, crio </td>
+    <td> Defaults to docker, supported values: docker, containerd and crio for litmus and only docker for pumba LIB </td>
   </tr>
   <tr>
     <td> SOCKET_PATH </td>
-    <td> Path of the containerd/crio socket file </td>
+    <td> Path of the containerd/crio/docker socket file </td>
     <td> Optional  </td>
-    <td> Defaults to `/run/containerd/containerd.sock` </td>
+    <td> Defaults to `/var/run/docker.sock` </td>
   </tr>
   <tr>
     <td> LIB </td>
     <td> The chaos lib used to inject the chaos </td>
     <td> Optional  </td>
-    <td> Defaults to litmus, only litmus supported </td>
+    <td> Default value: litmus, supported values: pumba and litmus </td>
   </tr>
   <tr>
     <td> TC_IMAGE </td>
@@ -215,7 +211,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/v1.10.x/charts/generic/pod-network-loss/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-network-loss/engine.yaml yaml)
 ```yaml
 # chaosengine.yaml
 apiVersion: litmuschaos.io/v1alpha1
