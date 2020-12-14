@@ -9,13 +9,14 @@ sidebar_label: Litmus Probe
 
 Litmus probes are pluggable checks that can be defined within the ChaosEngine for any chaos experiment. The experiment pods execute these checks based on the mode they are defined in & factor their success as necessary conditions in determining the verdict of the experiment (along with the standard “in-built” checks). 
 
-Litmus currently supports three types of probes: 
+Litmus currently supports four types of probes: 
 
 - **httpProbe:** To query health/downstream URIs
 - **cmdProbe:** To execute any user-desired health-check function implemented as a shell command
 - **k8sProbe:** To perform CRUD operations against native & custom Kubernetes resources
+- **promProbe:** To execute promql queries and match prometheus metrics for specific criteria
 
-These probes can be used in isolation or in several combinations to achieve the desired checks. While the `httpProbe` & `k8sProbe` are fully declarative in the way they are conceived, the `cmdProbe` expects the user to provide a shell command to implement checks that are highly specific to the application use case.
+These probes can be used in isolation or in several combinations to achieve the desired checks. While the `httpProbe` & `k8sProbe` are fully declarative in the way they are conceived, the `cmdProbe` expects the user to provide a shell command to implement checks that are highly specific to the application use case. `promProbe` expects the user to provide a promql query along with endpoints to check for some criteria.
 
 The probes can be set up to run in different modes: 
 
@@ -111,6 +112,32 @@ probe:
     interval: 5
     retry: 1
 ```
+
+### promProbe
+
+The `promProbe` allows developers to run prometheus queries and match the resulting output to follow some criteria. The intent behind this probe was to allow users to declare their prometheus hypothesis, run the promql query for the same on certain endpoints and match the output for specified criteria. If it doesn't follow expected criteria, the experiment should failed.
+
+The promql query can be provided in `.query` field. But in case of complex query, the configmap can be created with promql query file. The details of configmap can be passed in chaosengine/chaosexperiment. The `.queryPath` should contains `<cm-mountPath>/<fileName>` value. The `promProbe` can be defined at `.spec.experiments[].spec.probe` the path inside the ChaosEngine.
+
+<strong>NOTE:</strong> `query` and `queryPath` both are mutually exclusive.
+
+```yaml
+probe:
+- name: "check-probe-success"
+  type: "promProbe"
+  promProbe/inputs:
+    endpoint: "<prometheus-endpoint>"
+    query: "<promql-query>"
+    comparator:
+      criteria: "==" #supports >=,<=,>,<,==,!= comparision
+      value: "<value-for-criteria-match>"
+  mode: "Edge"
+  runProperties:
+    probeTimeout: 5
+    interval: 5
+    retry: 1
+```
+
 ## Probe Status & Deriving Inferences 
 
 The litmus chaos experiments run the probes defined in the ChaosEngine and update their stage-wise success in the ChaosResult custom resource, with details including the overall `probeSuccessPercentage` (a ratio of successful checks v/s total probes) and failure step, where applicable. The success of a probe is dependent on whether the expected status/results are met and also on whether it is successful in all the experiment phases defined by the probe’s execution mode. For example, probes that are executed in “Edge” mode, need the checks to be successful both during the pre-chaos & post-chaos phases to be declared as successful. 
