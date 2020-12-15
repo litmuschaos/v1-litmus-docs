@@ -35,16 +35,16 @@ sidebar_label: Container Kill
 
 ## Details
 
-- pumba LIB Details:
-    - It support only docker container runtime.
-    - It can kill the container of multiple pods in parallel (can be tuned by `PODS_AFFECTED_PERC` env). It kill the container by sending SIGKILL termination signal to its docker socket (hence docker runtime is required).
-    - Containers are killed using the `kill` command provided by [pumba](https://github.com/alexei-led/pumba)
-    - Pumba is run as a pod on the application node. It have ability to kill the application containers multiple times. Which can be varied by `TOTAL_CHAOS_DURATION` and `CHAOS_INTERVAL`.
 - litmus LIB Details:
     - It supports docker, containerd and crio container runtime.
     - It can kill the container of multiple pods in parallel (can be tuned by `PODS_AFFECTED_PERC` env).
     - Containers are killed using the `docker kill` in docker runtime and `crictl stop` command in containerd or crio runtime.
     - container-kill is run as a pod on the application node. It have ability to kill the application containers multiple times. Which can be varied by `TOTAL_CHAOS_DURATION` and `CHAOS_INTERVAL`.
+- pumba LIB Details:
+    - It support only docker container runtime.
+    - It can kill the container of multiple pods in parallel (can be tuned by `PODS_AFFECTED_PERC` env). It kill the container by sending SIGKILL termination signal to its docker socket (hence docker runtime is required).
+    - Containers are killed using the `kill` command provided by [pumba](https://github.com/alexei-led/pumba)
+    - Pumba is run as a pod on the application node. It have ability to kill the application containers multiple times. Which can be varied by `TOTAL_CHAOS_DURATION` and `CHAOS_INTERVAL`.
 - Tests deployment sanity (replica availability & uninterrupted service) and recovery workflow of the application
 - Good for testing recovery of pods having side-car containers
 
@@ -151,7 +151,7 @@ subjects:
     <td> PODS_AFFECTED_PERC </td>
     <td> The Percentage of total pods to target  </td>
     <td> Optional </td>
-    <td> Defaults to 0% (corresponds to 1 replica) </td>
+    <td> Defaults to 0 (corresponds to 1 replica), provide numeric value only </td>
   </tr>  
   <tr>
     <td> TARGET_PODS </td>
@@ -217,8 +217,6 @@ spec:
   annotationCheck: 'true'
   # It can be active/stop
   engineState: 'active'
-  #ex. values: ns1:name=percona,ns2:run=nginx 
-  auxiliaryAppInfo: ''
   appinfo:
     appns: 'default'
     applabel: 'app=nginx'

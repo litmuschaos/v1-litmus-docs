@@ -167,7 +167,7 @@ subjects:
     <td> PODS_AFFECTED_PERC </td>
     <td> The Percentage of total pods to target  </td>
     <td> Optional </td>
-    <td> Default to 0% (corresponds to 1 replica) </td>
+    <td> Defaults to 0 (corresponds to 1 replica), provide numeric value only </td>
   </tr> 
   <tr>
     <td> RAMP_TIME </td>
@@ -204,8 +204,6 @@ spec:
   annotationCheck: 'true'
   # It can be active/stop
   engineState: 'active'
-  #ex. values: ns1:name=percona,ns2:run=nginx 
-  auxiliaryAppInfo: ''
   appinfo:
     appns: 'default'
     applabel: 'app=nginx'

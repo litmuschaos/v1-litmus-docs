@@ -20,7 +20,7 @@ opting for the default ["restricted"](https://kubernetes.io/docs/concepts/policy
 
 - To run the litmus pods with operating characteristics described above, first create a custom PodSecurityPolicy that allows the same: 
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-delete/litmus-psp.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/pod-security-policy/psp-litmus.yaml yaml)
 ```yaml
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
@@ -29,9 +29,9 @@ metadata:
   annotations:
     seccomp.security.alpha.kubernetes.io/allowedProfileNames: '*'
 spec:
-  privileged: false
+  privileged: true
   # Required to prevent escalations to root.
-  allowPrivilegeEscalation: false
+  allowPrivilegeEscalation: true
   # Allow core volume types.
   volumes:
     - 'configMap'
@@ -41,25 +41,41 @@ spec:
     - 'downwardAPI'
     # Assume that persistentVolumes set up by the cluster admin are safe to use.
     - 'persistentVolumeClaim'
-    - 'hostPath'
+  allowedHostPaths:
+    # substitutes this path with an appropriate socket path
+    # ex: '/var/run/docker.sock', '/run/containerd/containerd.sock', '/run/crio/crio.sock'
+    - pathPrefix: "/var/run/docker.sock"
+    # substitutes this path with an appropriate container path
+    # ex: '/var/lib/docker/containers', '/var/lib/containerd/io.containerd.runtime.v1.linux/k8s.io', '/var/lib/containers/storage/overlay/'
+    - pathPrefix: "/var/lib/docker/containers"
+  allowedCapabilities:
+    - "NET_ADMIN"
+    - "SYS_ADMIN"
   hostNetwork: false
   hostIPC: false
-  hostPID: false
+  hostPID: true
   runAsUser:
-    # Require the container to run without root privileges.
     rule: 'RunAsAny'
   seLinux:
     # This policy assumes the nodes are using AppArmor rather than SELinux.
     rule: 'RunAsAny'
   supplementalGroups:
-    rule: 'RunAsAny'
+    rule: 'MustRunAs'
+    ranges:
+      # Forbid adding the root group.
+      - min: 1
+        max: 65535
   fsGroup:
-    rule: 'RunAsAny'
+    rule: 'MustRunAs'
+    ranges:
+      # Forbid adding the root group.
+      - min: 1
+        max: 65535
   readOnlyRootFilesystem: false
 ```
 
   **Note**: This PodSecurityPolicy is a sample configuration which works for a majority of the usecases. It is left to the user's discretion to modify it based 
-  on the environment. For example, if the experiment doesn't need the socket file to be mounted, `hostPath` can be excluded from the list of volumes. On the
+  on the environment. For example, if the experiment doesn't need the socket file to be mounted, `allowedHostPaths` can be excluded from the psp spec. On the
   other hand, in case of CRI-O runtime, network-chaos tests need the chaos pods executed in privileged mode. It is also possible that different PSP configs are
   used in different namespaces based on ChaosExperiments installed/executed in them. 
 

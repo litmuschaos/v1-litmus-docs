@@ -170,7 +170,7 @@ subjects:
     <td> PODS_AFFECTED_PERC </td>
     <td> The Percentage of total pods to target  </td>
     <td> Optional </td>
-    <td> Defaults to 0% (corresponds to 1 replica) </td>
+    <td> Defaults to 0 (corresponds to 1 replica), provide numeric value only </td>
   </tr> 
  <tr>
     <td> LIB </td>
@@ -227,8 +227,6 @@ spec:
   annotationCheck: 'true'
   # It can be active/stop
   engineState: 'active'
-  #ex. values: ns1:name=percona,ns2:run=nginx 
-  auxiliaryAppInfo: ''
   monitoring: false
   appinfo: 
     appns: 'default'
@@ -241,9 +239,6 @@ spec:
       spec:
         components:
           env:
-            - name: LIB_IMAGE
-              value: 'litmuschaos/go-runner:latest'
-
             #Network interface inside target container              
             - name: NETWORK_INTERFACE
               value: 'eth0'

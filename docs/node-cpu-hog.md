@@ -160,7 +160,7 @@ subjects:
     <td> NODES_AFFECTED_PERC </td>
     <td> The Percentage of total nodes to target  </td>
     <td> Optional </td>
-    <td> Defaults to 0% (corresponds to 1 node) </td>
+    <td> Defaults to 0 (corresponds to 1 node), provide numeric value only </td>
   </tr> 
    <tr>
     <td> SEQUENCE </td>
