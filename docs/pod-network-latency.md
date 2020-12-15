@@ -74,7 +74,7 @@ metadata:
     app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: ["","litmuschaos.io","batch"]
-  resources: ["pods","jobs","pods/log","events","chaosengines","chaosexperiments","chaosresults"]
+  resources: ["pods","jobs","pods/log","pods/exec","events","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete","deletecollection"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -241,16 +241,12 @@ spec:
       spec:
         components:
           env:
-            #Container name where chaos has to be injected
-            - name: TARGET_CONTAINER
-              value: 'nginx' 
-
             #Network interface inside target container
             - name: NETWORK_INTERFACE
               value: 'eth0'     
 
             - name: LIB_IMAGE
-              value: 'litmuschaos/go-runner:1.10.0'
+              value: 'litmuschaos/go-runner:latest'
 
             - name: NETWORK_LATENCY
               value: '60000'
@@ -259,15 +255,14 @@ spec:
               value: '60' # in seconds
 
             # provide the name of container runtime
-            # it supports docker, containerd, crio
-            # default to docker
+            # for litmus LIB, it supports docker, containerd, crio
+            # for pumba LIB, it supports docker only
             - name: CONTAINER_RUNTIME
               value: 'docker'
 
             # provide the socket file path
-            # applicable only for containerd and crio runtime
             - name: SOCKET_PATH
-              value: '/run/containerd/containerd.sock'
+              value: '/var/run/docker.sock'
 ```
 
 ### Create the ChaosEngine Resource
