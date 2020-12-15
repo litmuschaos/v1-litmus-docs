@@ -16,7 +16,7 @@ Litmus currently supports four types of probes:
 - **k8sProbe:** To perform CRUD operations against native & custom Kubernetes resources
 - **promProbe:** To execute promql queries and match prometheus metrics for specific criteria
 
-These probes can be used in isolation or in several combinations to achieve the desired checks. While the `httpProbe` & `k8sProbe` are fully declarative in the way they are conceived, the `cmdProbe` expects the user to provide a shell command to implement checks that are highly specific to the application use case. `promProbe` expects the user to provide a promql query along with endpoints to check for some criteria.
+These probes can be used in isolation or in several combinations to achieve the desired checks. While the `httpProbe` & `k8sProbe` are fully declarative in the way they are conceived, the `cmdProbe` expects the user to provide a shell command to implement checks that are highly specific to the application use case. `promProbe` expects the user to provide a promql query along with Prometheus service endpoints to check for specific criteria.
 
 The probes can be set up to run in different modes: 
 
@@ -115,11 +115,11 @@ probe:
 
 ### promProbe
 
-The `promProbe` allows developers to run prometheus queries and match the resulting output to follow some criteria. The intent behind this probe was to allow users to declare their prometheus hypothesis, run the promql query for the same on certain endpoints and match the output for specified criteria. If it doesn't follow expected criteria, the experiment should failed.
+The `promProbe` allows users to run Prometheus queries and match the resulting output against specific conditions. The intent behind this probe is to allow users to define metrics-based SLOs in a declarative way and determine the experiment verdict based on its success. The probe runs the query on a Prometheus server defined by the `endpoint`, and checks whether the output satisfies the specified `criteria`.
 
-The promql query can be provided in `.query` field. But in case of complex query, the configmap can be created with promql query file. The details of configmap can be passed in chaosengine/chaosexperiment. The `.queryPath` should contains `<cm-mountPath>/<fileName>` value. The `promProbe` can be defined at `.spec.experiments[].spec.probe` the path inside the ChaosEngine.
+The promql query can be provided in the `query` field. In the case of complex queries that span multiple lines, the `queryPath` attribute can be used to provide the link to a file consisting of the query. This file can be made available in the experiment pod via a ConfigMap resource, with the ConfigMap being passed in the [ChaosEngine](https://docs.litmuschaos.io/docs/chaosengine/#experiment-specification) OR the [ChaosExperiment](https://docs.litmuschaos.io/docs/chaosexperiment/#configuration-specification) CR.  
 
-<strong>NOTE:</strong> `query` and `queryPath` both are mutually exclusive.
+<strong>NOTE:</strong> `query` and `queryPath` are mutually exclusive.
 
 ```yaml
 probe:
