@@ -23,7 +23,7 @@ sidebar_label: Pod Delete
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`).If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `pod-delete` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.10.0?file=charts/generic/pod-delete/experiment.yaml)
+- Ensure that the `pod-delete` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/pod-delete/experiment.yaml)
 
 ## Entry Criteria
 
@@ -57,7 +57,7 @@ sidebar_label: Pod Delete
 
 #### Sample Rbac Manifest for litmus LIB
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/v1.10.x/charts/generic/pod-delete/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-delete/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
@@ -79,7 +79,7 @@ metadata:
     app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: ["","litmuschaos.io","batch","apps"]
-  resources: ["pods","deployments","pods/log","events","jobs","chaosengines","chaosexperiments","chaosresults"]
+  resources: ["pods","deployments","pods/log","pods/exec","events","jobs","chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update","delete","deletecollection"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -103,7 +103,7 @@ subjects:
 
 #### Sample Rbac Manifest for powerfulseal LIB
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/v1.10.x/charts/generic/pod-delete/powerfulseal_rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-delete/powerfulseal_rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
@@ -196,7 +196,7 @@ subjects:
     <td> PODS_AFFECTED_PERC </td>
     <td> The Percentage of total pods to target  </td>
     <td> Optional </td>
-    <td> Defaults to 0% (corresponds to 1 replica) </td>
+    <td> Defaults to 0 (corresponds to 1 replica), provide numeric value only </td>
   </tr> 
   <tr>
     <td> RAMP_TIME </td>
@@ -220,7 +220,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/v1.10.x/charts/generic/pod-delete/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-delete/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -236,8 +236,6 @@ spec:
   annotationCheck: 'true'
   # It can be active/stop
   engineState: 'active'
-  #ex. values: ns1:name=percona,ns2:run=nginx
-  auxiliaryAppInfo: ''
   chaosServiceAccount: pod-delete-sa
   monitoring: false
   # It can be delete/retain
