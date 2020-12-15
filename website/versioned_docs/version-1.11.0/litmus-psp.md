@@ -83,7 +83,7 @@ spec:
 - Subscribe to the created PSP in the experiment RBAC (or in the [admin-mode](https://docs.litmuschaos.io/docs/admin-mode/#prepare-rbac-manifest) rbac, as applicable).
   For example, the pod-delete experiment rbac instrumented with the PSP is shown below:
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-delete/rbac-psp.yaml yaml) 
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/v1.11.x/charts/generic/pod-delete/rbac-psp.yaml yaml) 
 ```yaml
 ---
 apiVersion: v1
