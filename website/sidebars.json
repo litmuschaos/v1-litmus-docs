@@ -130,11 +130,14 @@
         ]
       }
     ],
-    "Scheduler": [
+    "Chaos Scheduler": [
       "scheduling"
     ],
-    "Chaos Workflow": [
+    "Chaos Workflows": [
       "chaos-workflows"
+    ],
+    "Litmus Portal": [
+      "portal"
     ],
     "Litmus FAQs": [
       "faq-general",
