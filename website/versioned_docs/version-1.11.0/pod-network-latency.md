@@ -122,8 +122,8 @@ subjects:
   <tr>
     <td> TARGET_CONTAINER  </td>
     <td> Name of container which is subjected to network latency </td>
-    <td> Mandatory </td>
-    <td> </td>
+    <td> Optional </td>
+    <td> Applicable for containerd & CRI-O runtime only. Even with these runtimes, if the value is not provided, it injects chaos on the first container of the pod </td>
   </tr>
   <tr>
     <td> NETWORK_LATENCY </td>

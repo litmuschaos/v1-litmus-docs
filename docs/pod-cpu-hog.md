@@ -118,12 +118,6 @@ subjects:
     <th> Notes </th>
   </tr>
   <tr>
-    <td> TARGET_CONTAINER </td>
-    <td> Name of the container subjected to CPU stress  </td>
-    <td> Mandatory  </td>
-    <td> </td>
-  </tr>
-  <tr>
     <td> CPU_CORES </td>
     <td> Number of the cpu cores subjected to CPU stress  </td>
     <td> Optional  </td>
@@ -219,11 +213,6 @@ spec:
       spec:
         components:
           env:
-            # Provide name of target container
-            # where chaos has to be injected
-            - name: TARGET_CONTAINER
-              value: 'nginx'
-
             #number of cpu cores to be consumed
             #verify the resources the app has been launched with
             - name: CPU_CORES

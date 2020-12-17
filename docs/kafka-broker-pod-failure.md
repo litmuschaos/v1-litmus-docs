@@ -54,7 +54,6 @@ sidebar_label: Broker Pod Failure
 
 ## Integrations
 
-- Pod failures can be effected using one of these chaos libraries: `litmus`, `powerfulseal`
 - The desired chaos library can be selected by setting one of the above options as value for the environment variable `LIB`
 
 ## Steps to Execute the Chaos Experiment
@@ -229,18 +228,6 @@ subjects:
     <td> Time interval b/w two successive broker failures (sec) </td>
     <td> Optional </td>
     <td> Defaults to 5s </td>
-  </tr>
-  <tr>
-    <td> KILL_COUNT </td>
-    <td> No. of application pods to be deleted </td>
-    <td> Optional  </td>
-    <td> Default to `1`, kill_count > 1 is only supported by litmus lib , not by the powerfulseal </td>
-  </tr>
-  <tr>
-    <td> LIB </td>
-    <td> The chaos lib used to inject the chaos </td>
-    <td> Optional </td>
-    <td> Defaults to `litmus`. Supported: `litmus`, `powerfulseal </td>
   </tr>
   <tr>
     <td> INSTANCE_ID </td>

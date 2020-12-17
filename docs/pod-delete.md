@@ -37,11 +37,9 @@ sidebar_label: Pod Delete
 
 - Causes (forced/graceful) pod failure of specific/random replicas of an application resources
 - Tests deployment sanity (replica availability & uninterrupted service) and recovery workflow of the application
-- The pod delete by `Powerfulseal` is only supporting single pod failure (kill_count = 1).
 
 ## Integrations
 
-- Pod failures can be effected using one of these chaos libraries: `litmus`, `powerfulseal`
 - The desired chaos library can be selected by setting one of the above options as value for the env variable `LIB`
 
 ## Steps to Execute the Chaos Experiment
@@ -53,9 +51,8 @@ sidebar_label: Pod Delete
 ### Prepare chaosServiceAccount
 
 - Use this sample RBAC manifest to create a chaosServiceAccount in the desired (app) namespace. This example consists of the minimum necessary role permissions to execute the experiment.
-- The RBAC sample manifest is different for both LIB (litmus, powerseal). Use the respective rbac sample manifest on the basis of LIB ENV.
 
-#### Sample Rbac Manifest for litmus LIB
+#### Sample Rbac Manifest 
 
 [embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-delete/rbac.yaml yaml)
 ```yaml
@@ -101,50 +98,6 @@ subjects:
 
 ```
 
-#### Sample Rbac Manifest for powerfulseal LIB
-
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-delete/powerfulseal_rbac.yaml yaml)
-```yaml
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: pod-delete-sa
-  namespace: default
-  labels:
-    name: pod-delete-sa
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: pod-delete-sa
-  labels:
-    name: pod-delete-sa
-rules:
-- apiGroups: ["","litmuschaos.io","batch","apps"]
-  resources: ["pods","deployments","pods/log","events","jobs","configmaps","chaosengines","chaosexperiments","chaosresults"]
-  verbs: ["create","list","get","patch","update","delete"]
-- apiGroups: [""]
-  resources: ["nodes"]
-  verbs: ["get","list"]
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: pod-delete-sa
-  labels:
-    name: pod-delete-sa
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: pod-delete-sa
-subjects:
-- kind: ServiceAccount
-  name: pod-delete-sa
-  namespace: default
-
-```
-
 ***Note:*** In case of restricted systems/setup, create a PodSecurityPolicy(psp) with the required permissions. The `chaosServiceAccount` can subscribe to work around the respective limitations. An example of a standard psp that can be used for litmus chaos experiments can be found [here](https://docs.litmuschaos.io/docs/next/litmus-psp/).
 
 ### Prepare ChaosEngine
@@ -173,12 +126,6 @@ subjects:
     <td> Time interval b/w two successive pod failures (in sec) </td>
     <td> Optional </td>
     <td> Defaults to 5s </td>
-  </tr>
-  <tr>
-    <td> LIB </td>
-    <td> The chaos lib used to inject the chaos </td>
-    <td> Optional  </td>
-    <td> Defaults to `litmus`. Supported: `litmus`, `powerfulseal`. In case of powerfulseal use the <a href="https://github.com/litmuschaos/chaos-charts/blob/master/charts/generic/pod-delete/powerfulseal_experiment.yaml">powerfulseal </a>experiment CR. </td>
   </tr>
   <tr>
     <td> FORCE  </td>

@@ -118,12 +118,6 @@ subjects:
     <th> Notes </th>
   </tr>
   <tr>
-    <td> TARGET_CONTAINER </td>
-    <td> Name of the container subjected to Memory stress  </td>
-    <td> Mandatory  </td>
-    <td> </td>
-  </tr>
-  <tr>
     <td> MEMORY_CONSUMPTION </td>
     <td>  The amount of memory used of hogging a Kubernetes pod (megabytes)</td>
     <td> Optional  </td>
@@ -212,11 +206,6 @@ spec:
       spec:
         components:
           env:
-            # Provide name of target container
-            # where chaos has to be injected
-            - name: TARGET_CONTAINER
-              value: 'nginx'
-
             # Enter the amount of memory in megabytes to be consumed by the application pod
             - name: MEMORY_CONSUMPTION
               value: '500'
