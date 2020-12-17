@@ -82,7 +82,7 @@ namespaces. Ensure that you have the right permission to be able to create the s
   - Install the pod-delete chaos experiment
 
   ```
-  kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.11.0?file=charts/generic/pod-delete/experiment.yaml -n litmus
+  kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.11.1?file=charts/generic/pod-delete/experiment.yaml -n litmus
   ```
 
   - **Note**: If you are interested in using chaostoolkit to perform the pod-delete, instead of the native litmus lib, you can apply 
