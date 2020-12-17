@@ -118,12 +118,6 @@ subjects:
     <th> Notes </th>
   </tr>
   <tr>
-    <td> TARGET_CONTAINER </td>
-    <td> Name of the container subjected to CPU stress  </td>
-    <td> Mandatory  </td>
-    <td> </td>
-  </tr>
-  <tr>
     <td> CPU_CORES </td>
     <td> Number of the cpu cores subjected to CPU stress  </td>
     <td> Optional  </td>
@@ -169,7 +163,7 @@ subjects:
     <td> CHAOS_KILL_COMMAND </td>
     <td> The command to kill the chaos process</td>
     <td> Optional </td>
-    <td> Default to <code>kill $(find /proc -name exe -lname '*/md5sum' 2>&1 | grep -v 'Permission denied' | awk -F/ '{print $(NF-1)}' |  head -n 1</code> </td>
+    <td> Default to <code>kill $(find /proc -name exe -lname '*/md5sum' 2>&1 | grep -v 'Permission denied' | awk -F/ '{print $(NF-1)}' |  head -n 1)</code>. Another useful one that generally works (in case the default doesn't) is <code>kill -9 $(ps afx | grep \"[md5sum] /dev/zero\" | awk '{print$1}' | tr '\n' ' ')</code>. In case neither works, please check whether the target pod's base image offers a shell. If yes, identify appropriate shell command to kill the chaos process </td>
   </tr>   
   <tr>
     <td> RAMP_TIME </td>
@@ -219,11 +213,6 @@ spec:
       spec:
         components:
           env:
-            # Provide name of target container
-            # where chaos has to be injected
-            - name: TARGET_CONTAINER
-              value: 'nginx'
-
             #number of cpu cores to be consumed
             #verify the resources the app has been launched with
             - name: CPU_CORES
@@ -231,13 +220,6 @@ spec:
 
             - name: TOTAL_CHAOS_DURATION
               value: '60' # in seconds
-
-            - name: CHAOS_INJECT_COMMAND
-              value: 'md5sum /dev/zero'
-
-            - name: CHAOS_KILL_COMMAND
-              value: "kill -9 $(ps afx | grep \"[md5sum] /dev/zero\" | awk '{print$1}' | tr '\n' ' ')"
-                    
 ```
 
 ### Create the ChaosEngine Resource

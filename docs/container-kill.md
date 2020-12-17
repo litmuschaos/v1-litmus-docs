@@ -131,8 +131,8 @@ subjects:
   </tr>
   <tr>
     <td> TARGET_CONTAINER  </td>
-    <td> The container to be killed inside the pod </td>
-    <td> Mandatory </td>
+    <td> The name of container to be killed inside the pod </td>
+    <td> Optional </td>
     <td> If the TARGET_CONTAINER is not provided it will delete the first container </td>
   </tr>
   <tr>

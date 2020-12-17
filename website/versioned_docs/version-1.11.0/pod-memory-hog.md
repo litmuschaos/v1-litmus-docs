@@ -119,12 +119,6 @@ subjects:
     <th> Notes </th>
   </tr>
   <tr>
-    <td> TARGET_CONTAINER </td>
-    <td> Name of the container subjected to Memory stress  </td>
-    <td> Mandatory  </td>
-    <td> </td>
-  </tr>
-  <tr>
     <td> MEMORY_CONSUMPTION </td>
     <td>  The amount of memory used of hogging a Kubernetes pod (megabytes)</td>
     <td> Optional  </td>
@@ -157,7 +151,7 @@ subjects:
     <td> CHAOS_KILL_COMMAND </td>
     <td> The command to kill the chaos process</td>
     <td> Optional </td>
-    <td> Default to <code>kill $(find /proc -name exe -lname '*/dd' 2>&1 | grep -v 'Permission denied' | awk -F/ '{print $(NF-1)}' |  head -n 1</code> </td>
+    <td> Defaults to <code>kill $(find /proc -name exe -lname '*/dd' 2>&1 | grep -v 'Permission denied' | awk -F/ '{print $(NF-1)}' |  head -n 1)</code>. Another useful one that generally works (in case the default doesn't) is <code>kill -9 $(ps afx | grep \"[dd] if /dev/zero\" | awk '{print $1}' | tr '\n' ' ')</code>. In case neither works, please check whether the target pod's base image offers a shell. If yes, identify appropriate shell command to kill the chaos process</td> 
   </tr>            
   <tr>
     <td> PODS_AFFECTED_PERC </td>
@@ -213,11 +207,6 @@ spec:
       spec:
         components:
           env:
-            # Provide name of target container
-            # where chaos has to be injected
-            - name: TARGET_CONTAINER
-              value: 'nginx'
-
             # Enter the amount of memory in megabytes to be consumed by the application pod
             - name: MEMORY_CONSUMPTION
               value: '500'
@@ -225,8 +214,6 @@ spec:
             - name: TOTAL_CHAOS_DURATION
               value: '60' # in seconds
             
-            - name: CHAOS_KILL_COMMAND
-              value: "kill -9 $(ps afx | grep \"[dd] if /dev/zero\" | awk '{print $1}' | tr '\n' ' ')"            
 ```
 
 ### Create the ChaosEngine Resource

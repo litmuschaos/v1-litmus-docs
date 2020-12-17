@@ -157,8 +157,8 @@ subjects:
   <tr> 
      <td> TARGET_CONTAINER </td>
     <td> Name of container which is subjected to disk-fill </td>
-    <td> Mandatory </td>
-    <td>  </td>
+    <td> Optional </td>
+    <td> If not provided, the first container in the targeted pod will be subject to chaos </td>
   </tr>
   <tr> 
      <td> CONTAINER_PATH </td>

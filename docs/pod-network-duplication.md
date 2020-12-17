@@ -120,7 +120,7 @@ subjects:
     <td> TARGET_CONTAINER  </td>
     <td> Name of container which is subjected to network latency </td>
     <td> Optional </td>
-     <td> By default it will take the first container of the target application pod </td>
+    <td> Applicable for containerd & CRI-O runtime only. Even with these runtimes, if the value is not provided, it injects chaos on the first container of the pod </td>
   </tr>
   <tr>
     <td> NETWORK_PACKET_DUPLICATION_PERCENTAGE </td>
