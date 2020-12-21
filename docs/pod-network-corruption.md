@@ -295,7 +295,7 @@ spec:
 
 - To restart the experiment, either re-apply the ChaosEngine YAML or execute the following command: 
 
-  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"active"}'`  
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"active"}}'`  
 
 ### Check Chaos Experiment Result
 
