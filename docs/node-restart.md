@@ -24,18 +24,30 @@ sidebar_label: Node Restart
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `node-restart` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/node-restart/experiment.yaml)
-- Create a Kubernetes secret having the private SSH key for `SSH_USER` used to connect to `TARGET_NODE`. The name of secret should be `id-rsa` along with private SSH key data, named `ssh-privatekey`. A sample secret example is given below:
+- Create a Kubernetes secret named `id-rsa` where the experiment will run, where its contents will be the private SSH key for `SSH_USER` used to connect to the node that hosts the target pod in the secret field `ssh-privatekey`. A sample secret is shown below:
 
 ```yaml
 apiVersion: v1
 kind: Secret
 metadata:
   name: id-rsa
-type: Opaque
+type: kubernetes.io/ssh-auth
 stringData:
   ssh-privatekey: |-
-    # Add the private key for ssh here
+    # SSH private key for ssh contained here
 ```
+
+Creating the RSA key pair for remote SSH access should be a trivial exercise for those who are already familiar with an ssh client, which entails the following actions:
+1. Create a new key pair and store the keys in a file named `my-id-rsa-key` and `my-id-rsa-key.pub` for the private and public keys respectively: 
+```
+ssh-keygen -f ~/my-id-rsa-key -t rsa -b 4096
+```
+2. For each node available, run this following command to copy the public key of `my-id-rsa-key`:
+```
+ssh-copy-id -i my-id-rsa-key user@node
+```
+
+For further details, please check this [documentation](https://www.ssh.com/ssh/keygen/). Once you have copied the public key to all nodes and created the secret described earlier, you are ready to start your experiment.
 
 ## Entry-Criteria
 
@@ -116,9 +128,9 @@ subjects:
 
 ### Prepare ChaosEngine
 
-- Provide the application info in `spec.appinfo`
-- Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
-- Override the experiment tunables if desired in `experiments.spec.components.env`
+- Provide the application info in `spec.appinfo` or populate the `TARGET_NODE` and `TARGET_NODE_IP` in the `experiments.spec.components.env` section. Note that the environment values take precedence over the `spec.appinfo` fields.
+- Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo` 
+- Override the extra experiment tunables if desired in `experiments.spec.components.env`
 - To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
 
 #### Supported Experiment Tunables
@@ -144,15 +156,15 @@ subjects:
   </tr>
   <tr>
     <td> TARGET_NODE </td>
-    <td> name of target node, subjected to chaos </td>
-    <td> Mandatory </td>
-    <td>  </td>
+    <td> Name of target node, subjected to chaos. If not provided, the experiment will lookup the node that hosts the pod running based on the `appInfo` details section in the `ChaosEngine`. If provided, it also requires the `TARGET_NODE_IP` to be populated.</td>
+    <td> Optional </td>
+    <td> Defaults to empty </td>
   </tr>
   <tr>
     <td> TARGET_NODE_IP </td>
-    <td> ip of the target node, subjected to chaos </td>
-    <td> Mandatory </td>
-    <td>  </td>
+    <td> Internal IP of the target node, subjected to chaos. If not provided, the experiment will lookup the node IP that hosts the pod running based on the `appInfo` details section in the `ChaosEngine`. If provided, it also requires `TARGET_NODE` to be populated.</td>
+    <td> Optional </td>
+    <td> Defaults to empty </td>
   </tr>
   <tr>
     <td> REBOOT_COMMAND  </td>
