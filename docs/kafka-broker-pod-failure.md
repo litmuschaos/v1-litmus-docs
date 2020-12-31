@@ -71,6 +71,7 @@ sidebar_label: Broker Pod Failure
 
 [embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kafka/kafka-broker-pod-failure/rbac.yaml yaml)
 ```yaml
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -88,9 +89,18 @@ metadata:
     name: kafka-broker-pod-failure-sa
     app.kubernetes.io/part-of: litmus
 rules:
-- apiGroups: ["","litmuschaos.io","batch","apps"]
-  resources: ["pods","deployments","pods/log","events","jobs","pods/exec","statefulsets","configmaps","chaosengines","chaosexperiments","chaosresults"]
-  verbs: ["create","list","get","patch","delete"]
+- apiGroups: [""]
+  resources: ["pods","pods/exec","pods/log","events"]
+  verbs: ["create","list","get","patch","update","delete","deletecollection"]
+- apiGroups: ["batch"]
+  resources: ["jobs"]
+  verbs: ["create","list","get","delete","deletecollection"]
+- apiGroups: ["apps"]
+  resources: ["deployments","statefulsets"]
+  verbs: ["list","get"]
+- apiGroups: ["litmuschaos.io"]
+  resources: ["chaosengines","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","update"]
 - apiGroups: [""]
   resources: ["nodes"]
   verbs: ["get","list"]
@@ -110,6 +120,7 @@ subjects:
 - kind: ServiceAccount
   name: kafka-broker-pod-failure-sa
   namespace: default
+
 ```
 
 ### Prepare ChaosEngine
@@ -249,7 +260,7 @@ metadata:
   namespace: default
 spec:
   # It can be true/false
-  annotationCheck: 'true'
+  annotationCheck: 'false'
   # It can be active/stop
   engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx 

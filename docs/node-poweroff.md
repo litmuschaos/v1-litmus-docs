@@ -1,7 +1,7 @@
 ---
-id: node-restart
-title: Node Restart Experiment Details
-sidebar_label: Node Restart
+id: node-poweroff
+title: Node Poweroff Experiment Details
+sidebar_label: Node Poweroff
 ---
 ------
 
@@ -15,7 +15,7 @@ sidebar_label: Node Restart
   </tr>
   <tr>
     <td> Generic </td>
-    <td> Restart the target node </td>
+    <td> Powers off the target node </td>
     <td> Kubevirt VMs </td>
   </tr>
 </table>
@@ -23,7 +23,7 @@ sidebar_label: Node Restart
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `node-restart` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/node-restart/experiment.yaml)
+- Ensure that the `node-poweroff` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/node-poweroff/experiment.yaml)
 - Create a Kubernetes secret named `id-rsa` where the experiment will run, where its contents will be the private SSH key for `SSH_USER` used to connect to the node that hosts the target pod in the secret field `ssh-privatekey`. A sample secret is shown below:
 
 ```yaml
@@ -47,7 +47,7 @@ ssh-keygen -f ~/my-id-rsa-key -t rsa -b 4096
 ssh-copy-id -i my-id-rsa-key user@node
 ```
 
-For further details, please check this [documentation](https://www.ssh.com/ssh/keygen/). Once you have copied the public key to all nodes and created the secret described earlier, you are ready to start your experiment.
+ For further details, please check this [documentation](https://www.ssh.com/ssh/keygen/). Once you have copied the public key to all nodes and created the secret described earlier, you are ready to start your experiment.
 
 ## Entry-Criteria
 
@@ -61,12 +61,12 @@ For further details, please check this [documentation](https://www.ssh.com/ssh/k
 
 ## Details
 
--   Causes chaos to disrupt state of node by restarting it. 
+-   Causes chaos to disrupt state of node by powering it off. 
 -   Tests deployment sanity (replica availability & uninterrupted service) and recovery workflows of the application pod
 
 ## Integrations
 
--   Node Restart can be effected using the chaos library: `litmus`.
+-   Node Poweroff can be effected using the chaos library: `litmus`.
 
 ## Steps to Execute the Chaos Experiment
 
@@ -80,24 +80,24 @@ For further details, please check this [documentation](https://www.ssh.com/ssh/k
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/node-restart/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/node-poweroff/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: node-restart-sa
+  name: node-poweroff-sa
   namespace: default
   labels:
-    name: node-restart-sa
+    name: node-poweroff-sa
     app.kubernetes.io/part-of: litmus
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: node-restart-sa
+  name: node-poweroff-sa
   labels:
-    name: node-restart-sa
+    name: node-poweroff-sa
     app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: [""]
@@ -116,17 +116,17 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: node-restart-sa
+  name: node-poweroff-sa
   labels:
-    name: node-restart-sa
+    name: node-poweroff-sa
     app.kubernetes.io/part-of: litmus
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: node-restart-sa
+  name: node-poweroff-sa
 subjects:
 - kind: ServiceAccount
-  name: node-restart-sa
+  name: node-poweroff-sa
   namespace: default
 ```
 
@@ -150,19 +150,19 @@ subjects:
   </tr>
   <tr>
     <td> LIB_IMAGE  </td>
-    <td> The image used to restart the node </td>
+    <td> The image used to poweroff the node </td>
     <td> Optional </td>
     <td> Defaults to `litmuschaos/go-runner:latest` </td>
   </tr>
   <tr>
     <td> SSH_USER  </td>
-    <td> name of ssh user </td>
-    <td> Mandatory </td>
+    <td> Name of ssh user </td>
+    <td> Optional </td>
     <td> Defaults to `root` </td>
   </tr>
   <tr>
     <td> TARGET_NODE </td>
-    <td> Name of target node, subjected to chaos. If not provided, the experiment will lookup the node that hosts the pod running based on the `appInfo` details section in the `ChaosEngine`. If provided, it also requires the `TARGET_NODE_IP` to be populated.</td>
+    <td> Name of target node, subjected to chaos. If not provided, the experiment will lookup the node that hosts the pod running based on the `appInfo` details section in the `ChaosEngine`. If provided, it also requires the `TARGET_NODE_IP` to be populated</td>
     <td> Optional </td>
     <td> Defaults to empty </td>
   </tr>
@@ -175,14 +175,14 @@ subjects:
   <tr>
     <td> REBOOT_COMMAND  </td>
     <td> Command used for reboot </td>
-    <td> Mandatory </td>
-    <td> Defaults to `sudo systemctl reboot` </td>
+    <td> Optional </td>
+    <td> Defaults to `-o ServerAliveInterval=1 -o ServerAliveCountMax=1 "sudo systemctl poweroff --force --force" ; true` </td>
   </tr>
   <tr>
     <td> TOTAL_CHAOS_DURATION </td>
     <td> The time duration for chaos insertion (sec) </td>
     <td> Optional </td>
-    <td> Defaults to 30s </td>
+    <td> Defaults to 360s </td>
   </tr>
   <tr>
     <td> RAMP_TIME </td>
@@ -198,7 +198,7 @@ subjects:
   </tr>
   <tr>
     <td> LIB_IMAGE  </td>
-    <td> The image used to restart the node </td>
+    <td> The image used to poweroff the node </td>
     <td> Optional </td>
     <td> Defaults to `litmuschaos/go-runner:latest` </td>
   </tr>
@@ -213,7 +213,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/node-restart/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/node-poweroff/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -231,12 +231,12 @@ spec:
     appns: 'default'
     applabel: 'app=nginx'
     appkind: 'deployment'
-  chaosServiceAccount: node-restart-sa
+  chaosServiceAccount: node-poweroff-sa
   monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:
-    - name: node-restart
+    - name: node-poweroff
       spec:
         components:
           nodeSelector: 
@@ -245,7 +245,7 @@ spec:
           env:
              # ENTER THE TARGET NODE NAME
             - name: TARGET_NODE
-              value: 'node01'
+              value: ''
 
             # ENTER THE TARGET NODE IP
             - name: TARGET_NODE_IP
@@ -267,16 +267,16 @@ spec:
 
 ### Watch Chaos progress
 
-- View the status of the nodes as they are subjected to node restart. 
+- View the status of the nodes as they are subjected to Node Poweroff. 
 
   `watch -n 1 kubectl get nodes`
   
 ### Check Chaos Experiment Result
 
-- Check whether the application is resilient to the node restart, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
+- Check whether the application is resilient to the Node Poweroff, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult nginx-chaos-node-restart -n <application-namespace>`
+  `kubectl describe chaosresult nginx-chaos-node-poweroff -n <application-namespace>`
 
-### Node Restart Experiment Demo
+### Node Poweroff Experiment Demo
 
 - A sample recording of this experiment execution will be added soon.
