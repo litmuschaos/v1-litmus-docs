@@ -48,6 +48,7 @@ probe:
   httpProbe/inputs:
     url: "<url>"
     expectedResponseCode: "200"
+    insecureSkipVerify: false
   mode: "Continuous"
   runProperties:
     probeTimeout: 5
@@ -56,6 +57,8 @@ probe:
     probePollingInterval: 2
 ```
 The `httpProbe` is better used in the Continuous mode of operation as a parallel liveness indicator of a target or downstream application. It uses the `probePollingInterval` property to specify the polling interval for the access checks. 
+
+<strong>NOTE:</strong> `insecureSkipVerify` can be set to true to skip the certificate checks.
 
 ### cmdProbe
 

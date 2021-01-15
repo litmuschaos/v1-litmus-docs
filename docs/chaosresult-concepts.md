@@ -85,7 +85,7 @@ This section describes the fields/details provided by the ChaosResult spec.
 <table>
 <tr>
   <th>Field</th>
-  <td><code>.status.phase</code></td>
+  <td><code>.status.experimentstatus.phase</code></td>
 </tr>
 <tr>
   <th>Description</th>
@@ -101,14 +101,14 @@ This section describes the fields/details provided by the ChaosResult spec.
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>.status.phase</code> shows the current phase in which the experiment is. It gets updated as the experiment proceeds.If the experiment is aborted then the status will be Aborted.</td>
+  <td>The <code>.status.experimentstatus.phase</code> shows the current phase in which the experiment is. It gets updated as the experiment proceeds.If the experiment is aborted then the status will be Aborted.</td>
 </tr>
 </table>
 
 <table>
 <tr>
   <th>Field</th>
-  <td><code>.status.probesuccesspercentage</code></td>
+  <td><code>.status.experimentstatus.probesuccesspercentage</code></td>
 </tr>
 <tr>
   <th>Description</th>
@@ -124,14 +124,14 @@ This section describes the fields/details provided by the ChaosResult spec.
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>.status.probesuccesspercentage</code> shows the probe success percentage which is a ratio of successful checks v/s total probes.</td>
+  <td>The <code>.status.experimentstatus.probesuccesspercentage</code> shows the probe success percentage which is a ratio of successful checks v/s total probes.</td>
 </tr>
 </table>
 
 <table>
 <tr>
   <th>Field</th>
-  <td><code>.status.verdict</code></td>
+  <td><code>.status.experimentstatus.verdict</code></td>
 </tr>
 <tr>
   <th>Description</th>
@@ -147,7 +147,76 @@ This section describes the fields/details provided by the ChaosResult spec.
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>.status.verdict</code> shows the verdict of the experiment. It is <code>Awaited</code> when the experiment is in progress and ends up with Pass or Fail according to the experiment result.</td>
+  <td>The <code>.status.experimentstatus.verdict</code> shows the verdict of the experiment. It is <code>Awaited</code> when the experiment is in progress and ends up with Pass or Fail according to the experiment result.</td>
+</tr>
+</table>
+
+<table>
+<tr>
+  <th>Field</th>
+  <td><code>.status.history.passedRuns</code></td>
+</tr>
+<tr>
+  <th>Description</th>
+  <td>It contains cumulative passed run count</td>
+</tr>
+<tr>
+  <th>Type</th>
+  <td>Mandatory</td>
+</tr>
+<tr>
+  <th>Range</th>
+  <td> ANY NON NEGATIVE INTEGER </td>
+</tr>
+<tr>
+  <th>Notes</th>
+  <td>The <code>.status.history.passedRuns</code> contains cumulative passed run counts for a specific ChaosResult.</td>
+</tr>
+</table>
+
+<table>
+<tr>
+  <th>Field</th>
+  <td><code>.status.history.failedRuns</code></td>
+</tr>
+<tr>
+  <th>Description</th>
+  <td>It contains cumulative failed run count</td>
+</tr>
+<tr>
+  <th>Type</th>
+  <td>Mandatory</td>
+</tr>
+<tr>
+  <th>Range</th>
+  <td> ANY NON NEGATIVE INTEGER </td>
+</tr>
+<tr>
+  <th>Notes</th>
+  <td>The <code>.status.history.failedRuns</code> contains cumulative failed run counts for a specific ChaosResult.</td>
+</tr>
+</table>
+
+<table>
+<tr>
+  <th>Field</th>
+  <td><code>.status.history.stoppedRuns</code></td>
+</tr>
+<tr>
+  <th>Description</th>
+  <td>It contains cumulative stopped run count</td>
+</tr>
+<tr>
+  <th>Type</th>
+  <td>Mandatory</td>
+</tr>
+<tr>
+  <th>Range</th>
+  <td> ANY NON NEGATIVE INTEGER </td>
+</tr>
+<tr>
+  <th>Notes</th>
+  <td>The <code>.status.history.stoppedRuns</code> contains cumulative stopped run counts for a specific ChaosResult.</td>
 </tr>
 </table>
 

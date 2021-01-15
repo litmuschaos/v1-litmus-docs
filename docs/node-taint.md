@@ -95,9 +95,6 @@ rules:
   verbs: ["create","list","get","patch","update"]
 - apiGroups: [""]
   resources: ["nodes"]
-  verbs: ["patch","get","list"]
-- apiGroups: [""]
-  resources: ["nodes"]
   verbs: ["patch","get","list","update"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
