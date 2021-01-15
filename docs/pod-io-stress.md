@@ -170,7 +170,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> Image used to run the stress command </td>
     <td> Optional  </td>
-    <td> Default to <code>gaiaadm/pumba<code> </td>
+    <td> Default to <code>litmuschaos/go-runner:latest<code> </td>
   </tr>  
   <tr>
     <td> TARGET_PODS </td>

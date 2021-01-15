@@ -136,8 +136,8 @@ subjects:
   <tr> 
     <td> EC2_INSTANCE_ID </td>
     <td> Instance Id of the target ec2 instance.</td>
-    <td> Mandatory </td>
-    <td>  </td>
+    <td> Optional </td>
+    <td> <strong>NOTE:</strong> It will select a random id from the given region, if not provided </td>
   </tr>
   <tr> 
     <td> TOTAL_CHAOS_DURATION </td>

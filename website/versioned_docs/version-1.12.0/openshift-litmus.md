@@ -35,7 +35,7 @@ Running chaos on your application involves the following steps:
 ###  Install Litmus
 
 ```
-oc apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.10.0.yaml
+oc apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.12.0.yaml
 ```
 
 The above command install all the CRDs, required service account configuration, and chaos-operator. Before you start running a chaos experiment, verify if Litmus is installed correctly.
@@ -109,7 +109,7 @@ The generic chaos experiments such as `pod-delete`,  `container-kill`,` pod-netw
 This is the first chart you are recommended to install.
 
 ```
-oc apply -f https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/experiments.yaml -n nginx
+oc apply -f https://hub.litmuschaos.io/api/chaos/1.12.0?file=charts/generic/experiments.yaml -n nginx
 ```
 
 Verify if the chaos experiments are installed.
@@ -129,7 +129,7 @@ has just enough permissions needed to run the pod-delete chaos experiment.
 - For rbac samples corresponding to other experiments such as, say, container-kill, please refer the respective experiment folder in the [chaos-charts](https://github.com/litmuschaos/chaos-charts/tree/master/charts/generic/container-kill) repository.
 
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-delete/rbac_nginx_getstarted.yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/v1.12.x/charts/generic/pod-delete/rbac_nginx_getstarted.yaml)
 ```yaml
 ---
 apiVersion: v1
@@ -273,7 +273,7 @@ oc describe chaosresult nginx-chaos-container-kill -n nginx
 You can uninstall Litmus by deleting the namespace.
 
 ```console
-oc delete -f https://litmuschaos.github.io/litmus/litmus-operator-v1.10.0.yaml
+oc delete -f https://litmuschaos.github.io/litmus/litmus-operator-v1.12.0.yaml
 ```
 
 ## More Chaos Experiments
