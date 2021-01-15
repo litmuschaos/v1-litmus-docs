@@ -1,7 +1,8 @@
 ---
-id: ebs-loss
+id: version-1.12.0-ebs-loss
 title: EBS Loss Experiment Details
 sidebar_label: EBS Loss
+original_id: ebs-loss
 ---
 ------
 
@@ -44,7 +45,6 @@ stringData:
 
 - If you change the secret key name (from `cloud_config.yml`) please also update the `AWS_SHARED_CREDENTIALS_FILE` 
 ENV value on `experiment.yaml`with the same name.
-
 
 ## Entry-Criteria
 
