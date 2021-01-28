@@ -37,7 +37,7 @@ sidebar_label: Node Memory Hog
 ## Details
 
 - This experiment causes Memory resource exhaustion on the Kubernetes node. The experiment aims to verify resiliency of applications whose replicas may be evicted on account on nodes turning unschedulable (Not Ready) due to lack of Memory resources.
-- The Memory chaos is injected using a job running the linux stress-ng tool (a workload generator). The chaos is effected for a period equalling the TOTAL_CHAOS_DURATION and upto MEMORY_PERCENTAGE(out of 100).
+- The Memory chaos is injected using a job running the linux stress-ng tool (a workload generator). The chaos is effected for a period equalling the TOTAL_CHAOS_DURATION and upto MEMORY_CONSUMPTION_PERCENTAGE(out of 100) or MEMORY_CONSUMPTION_MEBIBYTES(in Mebibytes out of total available memory).
 - Application implies services. Can be reframed as:
 Tests application resiliency upon replica evictions caused due to lack of Memory resources
 
@@ -151,11 +151,18 @@ subjects:
     <td> Defaults to <code>litmuschaos/go-runner:latest</code> </td>
   </tr>
     <tr>
-    <td> MEMORY_PERCENTAGE </td>
+    <td> MEMORY_CONSUMPTION_PERCENTAGE </td>
     <td> The size as percent of total available memory </td>
     <td> Optional </td>
-    <td> Defaults to 90 </td>
+    <td> Defaults to 30 </td>
   </tr>
+  </tr>
+    <tr>
+    <td> MEMORY_CONSUMPTION_MEBIBYTES </td>
+    <td> The size in Mebibytes of total available memory. When using this we need to keep MEMORY_CONSUMPTION_PERCENTAGE empty otherwise the percentage will have more precedence</td>
+    <td> Optional </td>
+    <td>  </td>
+  </tr>  
   <tr>
     <td> RAMP_TIME </td>
     <td> Period to wait before and after injection of chaos in sec </td>
@@ -216,10 +223,10 @@ spec:
             - name: TOTAL_CHAOS_DURATION
               value: '120'
 
-            ## specify the size as percent of total available memory (in percentage)
-            ## default value 90
-            - name: MEMORY_PERCENTAGE
-              value: '90'
+            ## specify the size as percent of total available memory default value is 30
+            ## Note: For consuming memory in mebibytes change the variable to MEMORY_CONSUMPTION_MEBIBYTES
+            - name: MEMORY_CONSUMPTION_PERCENTAGE
+              value: ''
             
             # ENTER THE COMMA SEPARATED TARGET NODES NAME
             - name: TARGET_NODES
@@ -240,6 +247,43 @@ spec:
 - Setting up a watch of the Memory consumed by nodes in the Kubernetes Cluster
 
   `watch kubectl top nodes`
+
+OR
+- Setting up a monitoring pod on the target node.
+
+_myhtop.yml_
+```yaml
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myhtop
+spec:
+  containers:
+  - name: myhtop
+    image: litmuschaos/go-runner:latest
+    imagePullPolicy: Always
+    command: ['sh', '-c', 'sleep 3600']
+  nodeName: kube-01 ## Replace this with the target node name...
+```
+Create the htop monitoring pod on Target node:
+
+```bash
+kubectl apply -f myhtop.yml
+```
+
+Now Exec into the pod and run htop command
+
+```bash
+kubectl exec -it myhtop -- /bin/sh
+/litmus $ htop
+```
+The output will be similar to:
+
+![Screenshot from 2021-01-22 16-01-30](https://user-images.githubusercontent.com/35391335/105480001-30b1b080-5ccb-11eb-91d1-09c49b81ea0a.png)
+
+It is showing:
+- The node size is `3.79G` out of which `517M` is in use. Now run the experiment and keep checking the available memory.
 
 ### Abort/Restart the Chaos Experiment
 
