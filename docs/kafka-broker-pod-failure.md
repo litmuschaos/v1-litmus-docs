@@ -208,7 +208,7 @@ subjects:
     <td> KAFKA_LIVENESS_IMAGE </td>
     <td> Image used for liveness message stream </td>
     <td> Optional </td>
-    <td> Image as `<registry_url>/<repository>/<image>:<tag>` </td>
+    <td> Set the liveness image as &lt;registry_url&gt;/&lt;repository&gt;:&lt;image-tag&gt; </td>
   </tr>
   <tr>
     <td> KAFKA_REPLICATION_FACTOR </td>
