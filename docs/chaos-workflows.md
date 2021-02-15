@@ -85,7 +85,7 @@ namespaces. Ensure that you have the right permission to be able to create the s
   ```
 
   - **Note**: If you are interested in using chaostoolkit to perform the pod-delete, instead of the native litmus lib, you can apply 
-  this [rbac](https://github.com/litmuschaos/chaos-charts/tree/master/charts/generic/k8-pod-delete/Cluster/rbac-admin.yaml) 
+  this [rbac](https://github.com/litmuschaos/chaos-charts/tree/master/charts/generic/k8-pod-delete/Cluster/rbac.yaml) 
   & [experiment](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/k8-pod-delete/experiment.yaml) manifests instead 
   of the ones described above.
 
