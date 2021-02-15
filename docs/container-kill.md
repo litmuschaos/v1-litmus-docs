@@ -199,6 +199,12 @@ subjects:
     <td> Default value: parallel. Supported: serial, parallel </td>
   </tr>
   <tr>
+    <td> SIGNAL </td>
+    <td> It contains termination signal used for container kill </td>
+    <td> Optional </td>
+    <td> Default value: SIGKILL </td>
+  </tr>
+  <tr>
     <td> SOCKET_PATH </td>
     <td> Path of the containerd/crio/docker socket file </td>
     <td> Optional  </td>

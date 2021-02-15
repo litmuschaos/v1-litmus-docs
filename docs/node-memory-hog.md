@@ -152,14 +152,14 @@ subjects:
   </tr>
     <tr>
     <td> MEMORY_CONSUMPTION_PERCENTAGE </td>
-    <td> The size as percent of total available memory </td>
+    <td> Percent of the total node memory capacity </td>
     <td> Optional </td>
     <td> Defaults to 30 </td>
   </tr>
   </tr>
     <tr>
     <td> MEMORY_CONSUMPTION_MEBIBYTES </td>
-    <td> The size in Mebibytes of total available memory. When using this we need to keep MEMORY_CONSUMPTION_PERCENTAGE empty otherwise the percentage will have more precedence</td>
+    <td> The size in Mebibytes of total available memory. When using this we need to keep MEMORY_CONSUMPTION_PERCENTAGE empty as the percentage have more precedence</td>
     <td> Optional </td>
     <td>  </td>
   </tr>  
@@ -223,10 +223,10 @@ spec:
             - name: TOTAL_CHAOS_DURATION
               value: '120'
 
-            ## specify the size as percent of total available memory default value is 30
+            ## Specify the size as percent of total node capacity Ex: '30'
             ## Note: For consuming memory in mebibytes change the variable to MEMORY_CONSUMPTION_MEBIBYTES
             - name: MEMORY_CONSUMPTION_PERCENTAGE
-              value: ''
+              value: '30'
             
             # ENTER THE COMMA SEPARATED TARGET NODES NAME
             - name: TARGET_NODES

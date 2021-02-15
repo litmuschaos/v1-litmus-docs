@@ -39,7 +39,15 @@ All probes share some common attributes:
 
 ### httpProbe
 
-The `httpProbe` allows developers to specify a URL which the experiment uses to gauge health/service availability (or other custom conditions) as part of the entry/exit criteria. The received status code is mapped against an expected status. It can be defined at `.spec.experiments[].spec.probe` the path inside ChaosEngine.
+The `httpProbe` allows developers to specify a URL which the experiment uses to gauge health/service availability (or other custom conditions) as part of the entry/exit criteria. The received status code is mapped against an expected status.
+It supports http `Get` and `Post` methods. 
+
+In HTTP `Get` method it sends a http `GET` request to the provided url and matches the response code based on the given criteria(`==`, `!=`, `oneOf`).
+
+In HTTP `Post` method it sends a http `POST` request to the provided url. The http body can be provided in the `body` field. In the case of a complex POST request in which the body spans multiple lines, the `bodyPath` attribute can be used to provide the path to a file consisting of the same. This file can be made available to the experiment pod via a ConfigMap resource, with the ConfigMap name being defined in the [ChaosEngine](https://docs.litmuschaos.io/docs/chaosengine/#experiment-specification) OR the [ChaosExperiment](https://docs.litmuschaos.io/docs/chaosexperiment/#configuration-specification) CR.  
+ It can be defined at `.spec.experiments[].spec.probe` inside ChaosEngine.
+
+ <strong>NOTE:</strong> `body` and `bodyPath` are mutually exclusive.
 
 ```yaml
 probe:
@@ -47,8 +55,11 @@ probe:
   type: "httpProbe"
   httpProbe/inputs:
     url: "<url>"
-    expectedResponseCode: "200"
     insecureSkipVerify: false
+    method:
+      get: 
+        criteria: == # supports == & != and oneof operations
+        responseCode: "<response code>"
   mode: "Continuous"
   runProperties:
     probeTimeout: 5
