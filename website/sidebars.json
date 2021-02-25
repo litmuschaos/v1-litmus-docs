@@ -76,6 +76,13 @@
       },
       {
         "type": "subcategory",
+        "label": "Azure",
+        "ids": [
+          "azure-instance-terminate"
+        ]
+      },      
+      {
+        "type": "subcategory",
         "label": "OpenEBS",
         "ids": [
           "openebs-target-container-failure",
