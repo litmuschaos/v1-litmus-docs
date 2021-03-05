@@ -215,7 +215,7 @@ subjects:
     <td> KAFKA_REPLICATION_FACTOR </td>
     <td> Number of partition replicas for liveness topic partition </td>
     <td> Optional </td>
-    <td> Necessary if KAFKA_LIVENESS_STREAM is `enabled` </td>
+    <td> Necessary if KAFKA_LIVENESS_STREAM is `enabled`. The replication factor should be less than or equal to number of Kafka brokers </td>
   </tr>
   <tr>
     <td> KAFKA_INSTANCE_NAME </td>
