@@ -3,9 +3,10 @@ id: admin-mode
 title: Administrator Mode
 sidebar_label: Administrator Mode
 ---
-------
 
-###  What is Adminstator Mode?
+---
+
+### What is Adminstator Mode?
 
 Admin mode is one of the ways the chaos orchestration is set up in Litmus, wherein all chaos resources (i.e., install time resources like the operator, chaosexperiment CRs, chaosServiceAccount/rbac and runtime resources like chaosengine, chaos-runner, experiment jobs & chaosresults) are setup in a single admin namespace (typically, litmus). In other words, centralized administration of chaos.
 This feature is aimed at making the SRE/Cluster Admins life easier by doing away with setting up chaos pre-requisites on a per namespace basis (which may be more relevant in an autonomous/self-service cluster sharing model in dev environments).
@@ -13,7 +14,7 @@ This mode typically needs a "wider" & "stronger" ClusterRole, albeit one that is
 
 ### How to use Adminstator Mode?
 
-In order to use Admin Mode, you just have to create a ServiceAccount in the *admin* or so called *chaos* namespace (`litmus` itself can be used), which is tied to a ClusterRole that has the permissions to perform operations on Kubernetes resources involved in the selected experiments across namespaces.
+In order to use Admin Mode, you just have to create a ServiceAccount in the _admin_ or so called _chaos_ namespace (`litmus` itself can be used), which is tied to a ClusterRole that has the permissions to perform operations on Kubernetes resources involved in the selected experiments across namespaces.
 Provide this ServiceAccount in ChaosEngine's .spec.chaosServiceAccount.
 
 ### Example
@@ -30,7 +31,8 @@ kubectl apply -f https://hub.litmuschaos.io/api/chaos/master?file=charts/generic
 
 Here is an RBAC definition, which in essence is a superset of individual experiments RBAC that has the permissions to run all chaos experiments across different namespaces.
 
-[embedmd]:# (https://litmuschaos.github.io/litmus/litmus-admin-rbac.yaml)
+[embedmd]: # "https://litmuschaos.github.io/litmus/litmus-admin-rbac.yaml"
+
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
@@ -48,15 +50,40 @@ metadata:
   labels:
     name: litmus-admin
 rules:
-- apiGroups: ["","apps","batch","extensions","litmuschaos.io"]
-  resources: ["pods","pods/exec","pods/eviction","jobs","daemonsets","events","chaosresults","chaosengines"]
-  verbs: ["create","delete","get","list","patch","update", "deletecollection"]
-- apiGroups: ["","apps","litmuschaos.io","apps.openshift.io","argoproj.io"]
-  resources: ["configmaps","secrets","services","chaosexperiments","pods/log","replicasets","deployments","statefulsets","deploymentconfigs","rollouts","services"]
-  verbs: ["get","list","patch","update"]
-- apiGroups: [""]
-  resources: ["nodes"]
-  verbs: ["get","list","patch","update"]
+  - apiGroups: ["", "apps", "batch", "extensions", "litmuschaos.io"]
+    resources:
+      [
+        "pods",
+        "pods/exec",
+        "pods/eviction",
+        "jobs",
+        "daemonsets",
+        "events",
+        "chaosresults",
+        "chaosengines",
+      ]
+    verbs:
+      ["create", "delete", "get", "list", "patch", "update", "deletecollection"]
+  - apiGroups:
+      ["", "apps", "litmuschaos.io", "apps.openshift.io", "argoproj.io"]
+    resources:
+      [
+        "configmaps",
+        "secrets",
+        "services",
+        "chaosexperiments",
+        "pods/log",
+        "replicasets",
+        "deployments",
+        "statefulsets",
+        "deploymentconfigs",
+        "rollouts",
+        "services",
+      ]
+    verbs: ["get", "list", "patch", "update"]
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list", "patch", "update"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -69,12 +96,10 @@ roleRef:
   kind: ClusterRole
   name: litmus-admin
 subjects:
-- kind: ServiceAccount
-  name: litmus-admin
-  namespace: litmus
-
+  - kind: ServiceAccount
+    name: litmus-admin
+    namespace: litmus
 ```
-
 
 #### Prepare ChaosEngine
 
@@ -86,19 +111,19 @@ metadata:
   namespace: litmus #Chaos Resources Namespace
 spec:
   appinfo:
-    appns: 'default' #Application Namespace
-    applabel: 'app=nginx'
-    appkind: 'deployment'
+    appns: "default" #Application Namespace
+    applabel: "app=nginx"
+    appkind: "deployment"
   # It can be true/false
-  annotationCheck: 'true'
+  annotationCheck: "true"
   # It can be active/stop
-  engineState: 'active'
+  engineState: "active"
   #ex. values: ns1:name=percona,ns2:run=nginx
-  auxiliaryAppInfo: ''
+  auxiliaryAppInfo: ""
   chaosServiceAccount: litmus-admin
   monitoring: false
   # It can be delete/retain
-  jobCleanUpPolicy: 'delete'
+  jobCleanUpPolicy: "delete"
   experiments:
     - name: pod-delete
       spec:
@@ -106,15 +131,15 @@ spec:
           env:
             # set chaos duration (in sec) as desired
             - name: TOTAL_CHAOS_DURATION
-              value: '30'
+              value: "30"
 
             # set chaos interval (in sec) as desired
             - name: CHAOS_INTERVAL
-              value: '10'
+              value: "10"
 
             # pod failures without '--force' & default terminationGracePeriodSeconds
             - name: FORCE
-              value: 'false'
+              value: "false"
 ```
 
 ### Create the ChaosEngine Resource
