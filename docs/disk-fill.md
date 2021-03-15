@@ -109,8 +109,11 @@ metadata:
     app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: [""]
-  resources: ["pods","pods/exec","pods/log","events","replicationcontrollers"]
+  resources: ["pods","events"]
   verbs: ["create","list","get","patch","update","delete","deletecollection"]
+- apiGroups: [""]
+  resources: ["pods/exec","pods/log","replicationcontrollers"]
+  verbs: ["list","get","create"]
 - apiGroups: ["batch"]
   resources: ["jobs"]
   verbs: ["create","list","get","delete","deletecollection"]
@@ -221,6 +224,12 @@ subjects:
     <td> It defines sequence of chaos execution for multiple target pods </td>
     <td> Optional </td>
     <td> Default value: parallel. Supported: serial, parallel </td>
+  </tr>
+   <tr>
+    <td> EPHEMERAL_STORAGE_MEBIBYTES </td>
+    <td> Ephemeral storage which need to fill (unit: MiBi)</td>
+    <td> Optional </td>
+    <td></td>
   </tr>
   <tr>
     <td> INSTANCE_ID </td>
