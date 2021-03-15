@@ -114,6 +114,9 @@ rules:
 - apiGroups: ["litmuschaos.io"]
   resources: ["chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update"]
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["patch","get","list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -214,6 +217,10 @@ spec:
             # provide the region name of the instace
             - name: REGION
               value: ''
+
+            # enable it if the target instance is a part of self-managed nodegroup.
+            - name: MANAGED_NODEGROUP
+              value: 'disable'              
 ```
 
 ### Create the ChaosEngine Resource

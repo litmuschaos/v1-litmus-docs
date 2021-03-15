@@ -57,6 +57,7 @@ probe:
   httpProbe/inputs:
     url: "<url>"
     insecureSkipVerify: false
+    responseTimeout: <value> # in milli seconds
     method:
       get: 
         criteria: == # supports == & != and oneof operations

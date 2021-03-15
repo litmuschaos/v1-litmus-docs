@@ -24,7 +24,7 @@ original_id: pod-memory-hog
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `pod-memory-hog` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.0?file=charts/generic/pod-memory-hog/experiment.yaml)
+- Ensure that the `pod-memory-hog` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.2?file=charts/generic/pod-memory-hog/experiment.yaml)
 - Cluster must run docker container runtime
 
 ## Entry Criteria
@@ -79,8 +79,11 @@ metadata:
     app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: [""]
-  resources: ["pods","pods/exec","pods/log","events","replicationcontrollers"]
+  resources: ["pods","events"]
   verbs: ["create","list","get","patch","update","delete","deletecollection"]
+- apiGroups: [""]
+  resources: ["pods/exec","pods/log","replicationcontrollers"]
+  verbs: ["create","list","get"]
 - apiGroups: ["batch"]
   resources: ["jobs"]
   verbs: ["create","list","get","delete","deletecollection"]
@@ -154,7 +157,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> Image used to run the stress command. Only used in LIB <code>pumba</code></td>
     <td> Optional  </td>
-    <td> Defaults to <code>litmuschaos/go-runner:1.13.0<code> </td>
+    <td> Defaults to <code>litmuschaos/go-runner:1.13.2<code> </td>
   </tr>
   <tr>
     <td> TARGET_PODS </td>
@@ -162,6 +165,12 @@ subjects:
     <td> Optional </td>
     <td> If not provided, it will select target pods randomly based on provided appLabels</td>
   </tr>
+  <tr>
+    <td> TARGET_CONTAINER </td>
+    <td> Name of the target container under chaos.</td>
+    <td> Optional </td>
+    <td> If not provided, it will select the first container of the target pod</td>
+  </tr>      
   <tr>
     <td> CHAOS_KILL_COMMAND </td>
     <td> The command to kill the chaos process</td>

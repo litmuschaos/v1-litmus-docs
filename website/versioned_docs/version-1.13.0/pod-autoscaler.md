@@ -24,7 +24,7 @@ original_id: pod-autoscaler
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `pod-autoscaler` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.0?file=charts/generic/pod-autoscaler/experiment.yaml)
+- Ensure that the `pod-autoscaler` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.2?file=charts/generic/pod-autoscaler/experiment.yaml)
 
 ## Entry Criteria
 
@@ -78,8 +78,11 @@ metadata:
     app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: [""]
-  resources: ["pods","pods/exec","pods/log","events"]
+  resources: ["pods","events"]
   verbs: ["create","list","get","patch","update","delete","deletecollection"]
+- apiGroups: [""]
+  resources: ["pods/exec","pods/log"]
+  verbs: ["create","list","get"]
 - apiGroups: ["batch"]
   resources: ["jobs"]
   verbs: ["create","list","get","delete","deletecollection"]
@@ -156,6 +159,9 @@ subjects:
   </tr>
 
 </table>
+
+**NOTE:** Provide the label of resource object (deployment/statefulset) in the appinfo section of chaosegnine while running this experiment
+ and _NOT_ the pod label. You can check the resource object label using `kubectl get <resource-type> --show-labels` (where `resource-type` can be deploy,sts).
 
 #### Sample ChaosEngine Manifest
 
