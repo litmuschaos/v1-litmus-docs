@@ -223,6 +223,12 @@ subjects:
     <td> Optional </td>
     <td> Default value: parallel. Supported: serial, parallel </td>
   </tr>
+   <tr>
+    <td> EPHEMERAL_STORAGE_MEBIBYTES </td>
+    <td> Ephemeral storage which need to fill (unit: MiBi)</td>
+    <td> Optional </td>
+    <td></td>
+  </tr>  
   <tr>
     <td> INSTANCE_ID </td>
     <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
