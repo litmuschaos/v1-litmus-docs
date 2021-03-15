@@ -24,7 +24,7 @@ original_id: node-io-stress
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `node-io-stress` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.0?file=charts/generic/node-io-stress/experiment.yaml)
+- Ensure that the `node-io-stress` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.2?file=charts/generic/node-io-stress/experiment.yaml)
 
 ## Entry Criteria
 
@@ -165,7 +165,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> Image used to run the stress command </td>
     <td> Optional  </td>
-    <td> Default to <code>litmuschaos/go-runner:1.13.0<code> </td>
+    <td> Default to <code>litmuschaos/go-runner:1.13.2<code> </td>
   </tr>
   <tr>
     <td> RAMP_TIME </td>

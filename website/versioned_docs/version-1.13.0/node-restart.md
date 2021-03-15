@@ -24,7 +24,7 @@ original_id: node-restart
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `node-restart` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.0?file=charts/generic/node-restart/experiment.yaml)
+- Ensure that the `node-restart` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.2?file=charts/generic/node-restart/experiment.yaml)
 - Create a Kubernetes secret named `id-rsa` where the experiment will run, where its contents will be the private SSH key for `SSH_USER` used to connect to the node that hosts the target pod in the secret field `ssh-privatekey`. A sample secret is shown below:
 
 ```yaml
@@ -153,7 +153,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> The image used to restart the node </td>
     <td> Optional </td>
-    <td> Defaults to `litmuschaos/go-runner:1.13.0` </td>
+    <td> Defaults to `litmuschaos/go-runner:1.13.2` </td>
   </tr>
   <tr>
     <td> SSH_USER  </td>
@@ -201,7 +201,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> The image used to restart the node </td>
     <td> Optional </td>
-    <td> Defaults to `litmuschaos/go-runner:1.13.0` </td>
+    <td> Defaults to `litmuschaos/go-runner:1.13.2` </td>
   </tr>
   <tr>
     <td> INSTANCE_ID </td>

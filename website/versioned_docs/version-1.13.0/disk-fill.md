@@ -25,7 +25,7 @@ original_id: disk-fill
 
 - Ensure that Kubernetes Version > 1.13
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `disk-fill` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.0?file=charts/generic/disk-fill/experiment.yaml)
+- Ensure that the `disk-fill` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.2?file=charts/generic/disk-fill/experiment.yaml)
 - Cluster must run docker container runtime
 - Appropriate Ephemeral Storage Requests and Limits should be set for the application before running the experiment. 
   An example specification is shown below:
@@ -209,7 +209,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> The image used to fill the disk </td>
     <td> Optional </td>
-    <td> Defaults to `litmuschaos/go-runner:1.13.0` </td>
+    <td> Defaults to `litmuschaos/go-runner:1.13.2` </td>
   </tr>
   <tr>
     <td> RAMP_TIME </td>
