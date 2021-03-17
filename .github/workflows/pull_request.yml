@@ -20,7 +20,7 @@ jobs:
       - name: Links Verification
         run: |
           go get -u -v github.com/bmuschko/link-verifier
-          link-verifier --dirs website,README.md --fail=false
+          link-verifier --dirs website,README.md,docs --fail=false
 
       - name: Installing and Running embedmed
         run: |
