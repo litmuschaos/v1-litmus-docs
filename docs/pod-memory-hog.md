@@ -78,8 +78,11 @@ metadata:
     app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: [""]
-  resources: ["pods","pods/exec","pods/log","events","replicationcontrollers"]
+  resources: ["pods","events"]
   verbs: ["create","list","get","patch","update","delete","deletecollection"]
+- apiGroups: [""]
+  resources: ["pods/exec","pods/log","replicationcontrollers"]
+  verbs: ["create","list","get"]
 - apiGroups: ["batch"]
   resources: ["jobs"]
   verbs: ["create","list","get","delete","deletecollection"]
@@ -161,6 +164,12 @@ subjects:
     <td> Optional </td>
     <td> If not provided, it will select target pods randomly based on provided appLabels</td>
   </tr>
+  <tr>
+    <td> TARGET_CONTAINER </td>
+    <td> Name of the target container under chaos.</td>
+    <td> Optional </td>
+    <td> If not provided, it will select the first container of the target pod</td>
+  </tr>   
   <tr>
     <td> CHAOS_KILL_COMMAND </td>
     <td> The command to kill the chaos process</td>

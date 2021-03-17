@@ -20,6 +20,11 @@ sidebar_label: EC2 Terminate
   </tr>
 </table>
 
+### WARNING
+```
+If the target EC2 instance is a part of a self-managed nodegroup:
+Make sure to drain the target node if any application is running on it and also ensure to cordon the target node before running the experiment so that the experiment pods do not schedule on it. 
+```
 ## Prerequisites
 
 - Ensure that Kubernetes Version > 1.13
@@ -58,6 +63,7 @@ ENV value on `experiment.yaml`with the same name.
 
 -   Causes termination of an EC2 instance before bringing it back to running state after the specified chaos duration. 
 -   It helps to check the performance of the application/process running on the ec2 instance.
+-   When the `MANAGED_NODEGROUP` is enable then the experiment will not try to start the instance post chaos instead it will check of the addition of the new node instance to the cluster.
 
 ## Integrations
 
@@ -96,9 +102,21 @@ metadata:
     name: ec2-terminate-sa
     app.kubernetes.io/part-of: litmus
 rules:
-- apiGroups: ["","litmuschaos.io","batch"]
-  resources: ["pods","jobs","secrets","events","pods/log","pods/exec","chaosengines","chaosexperiments","chaosresults"]
-  verbs: ["create","list","get","patch","update","delete"]
+- apiGroups: [""]
+  resources: ["pods","events","secrets"]
+  verbs: ["create","list","get","patch","update","delete","deletecollection"]
+- apiGroups: [""]
+  resources: ["pods/exec","pods/log"]
+  verbs: ["create","list","get"]
+- apiGroups: ["batch"]
+  resources: ["jobs"]
+  verbs: ["create","list","get","delete","deletecollection"]
+- apiGroups: ["litmuschaos.io"]
+  resources: ["chaosengines","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","update"]
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["patch","get","list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -145,6 +163,12 @@ subjects:
     <td> Optional </td>
     <td> Defaults to 60s </td>
   </tr>
+  <tr> 
+    <td> MANAGED_NODEGROUP </td>
+    <td> Set to <code>enable</code> if the target instance is the part of self-managed nodegroups </td>
+    <td> Optional </td>
+    <td> Defaults to <code>disable</code> </td>
+  </tr>  
   <tr>
     <td> REGION </td>
     <td> The region name of the target instace</td>
@@ -193,6 +217,10 @@ spec:
             # provide the region name of the instace
             - name: REGION
               value: ''
+
+            # enable it if the target instance is a part of self-managed nodegroup.
+            - name: MANAGED_NODEGROUP
+              value: 'disable'              
 ```
 
 ### Create the ChaosEngine Resource

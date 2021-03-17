@@ -57,6 +57,7 @@ probe:
   httpProbe/inputs:
     url: "<url>"
     insecureSkipVerify: false
+    responseTimeout: <value> # in milli seconds
     method:
       get: 
         criteria: == # supports == & != and oneof operations
@@ -101,7 +102,7 @@ probe:
 
 With the proliferation of custom resources & operators, especially in the case of stateful applications, the steady-state is manifested as status parameters/flags within Kubernetes resources. k8sProbe addresses verification of the desired resource state by allowing users to define the Kubernetes GVR (group-version-resource) with appropriate filters (field selectors/label selectors). The experiment makes use of the Kubernetes Dynamic Client to achieve this.The `k8sProbe` can be defined at `.spec.experiments[].spec.probe` the path inside ChaosEngine. 
 
-It supports following CRUD operations which can be defined at `probe.operation`.
+It supports following CRUD operations which can be defined at `probe.k8sProbe/inputs.operation`.
 
 - **create:** It creates kubernetes resource based on the data provided inside `probe.data` field. 
 - **delete:** It deletes matching kubernetes resource via GVR and filters (field selectors/label selectors).
@@ -113,14 +114,13 @@ probe:
 - name: "check-app-cluster-cr-status"
   type: "k8sProbe"
   k8sProbe/inputs:
-    command:
-      group: "<appGroup>"
-      version: "<appVersion>"
-      resource: "<appResource>"
-      namespace: "default"
-      fieldSelector: "metadata.name=<appResourceName>,status.phase=Running"
-      labelSelector: "<app-labels>"
-  operation: "present" # it can be present, absent, create, delete
+    group: "<appGroup>"
+    version: "<appVersion>"
+    resource: "<appResource>"
+    namespace: "default"
+    fieldSelector: "metadata.name=<appResourceName>,status.phase=Running"
+    labelSelector: "<app-labels>"
+    operation: "present" # it can be present, absent, create, delete
   mode: "EOT"
   runProperties:
     probeTimeout: 5

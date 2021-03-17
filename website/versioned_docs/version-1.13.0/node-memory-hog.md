@@ -24,7 +24,7 @@ original_id: node-memory-hog
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `node-memory-hog` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.0?file=charts/generic/node-memory-hog/experiment.yaml)
+- Ensure that the `node-memory-hog` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.2?file=charts/generic/node-memory-hog/experiment.yaml)
 - There should be administrative access to the platform on which the Kubernetes cluster is hosted, as the recovery of the affected node could be manual. For example, gcloud access to the GKE project
 
 ## Entry Criteria
@@ -80,8 +80,11 @@ metadata:
     app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: [""]
-  resources: ["pods","pods/exec","pods/log","events"]
+  resources: ["pods","events"]
   verbs: ["create","list","get","patch","update","delete","deletecollection"]
+- apiGroups: [""]
+  resources: ["pods/exec","pods/log"]
+  verbs: ["create","list","get"]
 - apiGroups: ["batch"]
   resources: ["jobs"]
   verbs: ["create","list","get","delete","deletecollection"]
@@ -149,7 +152,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> Image used to run the stress command </td>
     <td> Optional  </td>
-    <td> Defaults to <code>litmuschaos/go-runner:1.13.0</code> </td>
+    <td> Defaults to <code>litmuschaos/go-runner:1.13.2</code> </td>
   </tr>
     <tr>
     <td> MEMORY_CONSUMPTION_PERCENTAGE </td>
@@ -262,7 +265,7 @@ metadata:
 spec:
   containers:
   - name: myhtop
-    image: litmuschaos/go-runner:1.13.0
+    image: litmuschaos/go-runner:1.13.2
     imagePullPolicy: Always
     command: ['sh', '-c', 'sleep 3600']
   nodeName: kube-01 ## Replace this with the target node name...

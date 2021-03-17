@@ -77,8 +77,11 @@ metadata:
     app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: [""]
-  resources: ["pods","pods/exec","pods/log","events"]
+  resources: ["pods","events"]
   verbs: ["create","list","get","patch","update","delete","deletecollection"]
+- apiGroups: [""]
+  resources: ["pods/exec","pods/log"]
+  verbs: ["create","list","get"]
 - apiGroups: ["batch"]
   resources: ["jobs"]
   verbs: ["create","list","get","delete","deletecollection"]
@@ -155,6 +158,9 @@ subjects:
   </tr>
 
 </table>
+
+**NOTE:** Provide the label of resource object (deployment/statefulset) in the appinfo section of chaosegnine while running this experiment
+ and _NOT_ the pod label. You can check the resource object label using `kubectl get <resource-type> --show-labels` (where `resource-type` can be deploy,sts).
 
 #### Sample ChaosEngine Manifest
 
