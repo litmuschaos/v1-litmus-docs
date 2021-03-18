@@ -20,5 +20,5 @@ jobs:
         run: echo ${{ secrets.DPASS }} | docker login -u ${{ secrets.DNAME }} --password-stdin
       - name: Build and Push the Docker Image
         run: |
-          docker build -t ${GITHUB_REPOSITORY}:${{ steps.vars.outputs.branch }}-${{ steps.vars.outputs.sha_short }} .
-          docker push ${GITHUB_REPOSITORY}:${{ steps.vars.outputs.branch }}-${{ steps.vars.outputs.sha_short }}
+          docker build -t mayadataio/litmus-docs:${{ steps.vars.outputs.branch }}-${{ steps.vars.outputs.sha_short }} .
+          docker push mayadataio/litmus-docs:${{ steps.vars.outputs.branch }}-${{ steps.vars.outputs.sha_short }}
