@@ -292,7 +292,7 @@ This section describes the fields in the ChaosExperiment spec and the possible v
 <table>
 <tr>
   <th>Field</th>
-  <td><code>.spec.definition.configmaps</code></td>
+  <td><code>.spec.definition.configMaps</code></td>
 </tr>
 <tr>
   <th>Description</th>
@@ -312,7 +312,7 @@ This section describes the fields in the ChaosExperiment spec and the possible v
 </tr>
 <tr>
   <th>Notes</th>
-  <td> The <code>.spec.definition.configmaps</code> allows the developers to mount the ConfigMap volume into the experiment pod.</td>
+  <td> The <code>.spec.definition.configMaps</code> allows the developers to mount the ConfigMap volume into the experiment pod.</td>
 </tr>
 </table>
 
@@ -346,7 +346,7 @@ This section describes the fields in the ChaosExperiment spec and the possible v
 <table>
 <tr>
   <th>Field</th>
-  <td><code>.spec.definition.experimentannotations</code></td>
+  <td><code>.spec.definition.experimentAnnotations</code></td>
 </tr>
 <tr>
   <th>Description</th>
@@ -366,7 +366,7 @@ This section describes the fields in the ChaosExperiment spec and the possible v
 </tr>
 <tr>
   <th>Notes</th>
-  <td> The <code>.spec.definition.experimentannotations</code> allows the developer to specify the Custom annotation for the chaos pod.</td>
+  <td> The <code>.spec.definition.experimentAnnotations</code> allows the developer to specify the Custom annotation for the chaos pod.</td>
 </tr>
 </table>
 

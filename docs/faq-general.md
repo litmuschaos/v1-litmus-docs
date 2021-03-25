@@ -280,7 +280,7 @@ To restart chaosengine, check the `.spec.engineState`, which should be equal to 
 
 Litmus provides a basic set of prometheus metrics indicating the total count of chaos experiments, passed/failed 
 experiments and individual status of experiments specified in the ChaosEngine, which can be queried against the monitor 
-pod. Work to enhance and improve this is underway. The default mode is to run experiments with `monitoring: false`.
+pod. Work to enhance and improve this is underway.
 
 ### Does Litmus track any usage metrics on the test clusters?
 

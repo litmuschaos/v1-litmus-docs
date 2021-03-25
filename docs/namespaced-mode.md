@@ -75,7 +75,6 @@ spec:
   annotationCheck: 'true'
   engineState: 'active'
   chaosServiceAccount: litmus
-  monitoring: false
   jobCleanUpPolicy: 'delete'
   experiments:
     - name: pod-delete

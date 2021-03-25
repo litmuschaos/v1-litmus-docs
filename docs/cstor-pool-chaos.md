@@ -148,7 +148,6 @@ spec:
   # It can be true/false
   annotationCheck: 'false'
   chaosServiceAccount: cStor-pool-chaos-sa
-  monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:
