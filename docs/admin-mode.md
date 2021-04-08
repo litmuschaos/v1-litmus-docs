@@ -117,7 +117,6 @@ spec:
   #ex. values: ns1:name=percona,ns2:run=nginx
   auxiliaryAppInfo: ""
   chaosServiceAccount: litmus-admin
-  monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: "delete"
   experiments:

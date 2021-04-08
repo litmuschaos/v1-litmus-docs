@@ -215,11 +215,11 @@ This section describes the fields in the ChaosEngine spec and the possible value
 <table>
 <tr>
   <th>Field</th>
-  <td><code>.spec.monitoring</code></td>
+  <td><code>.spec.terminationGracePeriodSeconds</code></td>
 </tr>
 <tr>
   <th>Description</th>
-  <td>Flag to enable collection of simple chaos metrics</td>
+  <td>Flag to control terminationGracePeriodSeconds for the chaos pods(abort case)</td>
 </tr>
 <tr>
   <th>Type</th>
@@ -227,17 +227,18 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Range</th>
-  <td><code>true</code>, <code>false</code></td>
+  <td>integer value</td>
 </tr>
 <tr>
   <th>Default</th>
-  <td><code>false</code></td>
+  <td><code>30</code></td>
 </tr>
 <tr>
   <th>Notes</th>
-  <td><code>monitoring</code> in the spec enables or disables collection of chaos metrics with an exporter pod. Metrics include count of experiments in a chaosengine & individual experiment status. It is recommended to keep this disabled.</td>
+  <td>The <code>terminationGracePeriodSeconds</code> in the spec controls the terminationGracePeriodSeconds for the chaos resources in abort case. Chaos pods contains chaos revert upon abortion steps, which continuously looking for the termination signals. The terminationGracePeriodSeconds should be provided in such a way that the chaos pods got enough time for the revert before completely terminated.</td>
 </tr>
 </table>
+
 
 <table>
 <tr>
@@ -352,7 +353,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 <table>
 <tr>
   <th>Field</th>
-  <td><code>.spec.components.runner.runnerannotation</code></td>
+  <td><code>.spec.components.runner.runnerAnnotation</code></td>
 </tr>
 <tr>
   <th>Description</th>
@@ -372,7 +373,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>.components.runner.runnerannotation</code> allows developers to specify the custom annotations for the runner pod.</td>
+  <td>The <code>.components.runner.runnerAnnotation</code> allows developers to specify the custom annotations for the runner pod.</td>
 </tr>
 </table>
 
@@ -813,7 +814,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 <table>
 <tr>
   <th>Field</th>
-  <td><code>.spec.experiments[].spec.components.experimentannotation</code></td>
+  <td><code>.spec.experiments[].spec.components.experimentAnnotation</code></td>
 </tr>
 <tr>
   <th>Description</th>
@@ -833,7 +834,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>.spec.components.experimentannotation</code> allows developers to specify the custom annotations for the experiment pod.</td>
+  <td>The <code>.spec.components.experimentAnnotation</code> allows developers to specify the custom annotations for the experiment pod.</td>
 </tr>
 </table>
 
