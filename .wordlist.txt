@@ -653,3 +653,15 @@ NODEGROUP
 nodegroups
 milli
 responseTimeout
+runnerAnnotation
+experimentAnnotation
+experimentAnnotations
+experimentStatus
+fieldSelectors
+labelSelectors
+CmdProbeInputs
+HTTPProbeInput
+contentType
+PromProbeInputs
+Runproperties
+sProbeInputs

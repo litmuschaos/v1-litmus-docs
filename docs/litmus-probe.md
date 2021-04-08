@@ -622,7 +622,7 @@ This section describes the different fields of the litmus probes and the possibl
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>.httpProbe/inputs.responseTimeout</code> contains flag to provide the resonse timeout for the http Get/Post request.</td>
+  <td>The <code>.httpProbe/inputs.responseTimeout</code> contains flag to provide the response timeout for the http Get/Post request.</td>
 </tr>
 </table>
 
