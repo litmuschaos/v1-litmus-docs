@@ -159,7 +159,7 @@ subjects:
 
 </table>
 
-**NOTE:** Provide the label of resource object (deployment/statefulset) in the appinfo section of chaosegnine while running this experiment
+**NOTE:** Provide the label of resource object (deployment/statefulset) in the appinfo section of chaosengine while running this experiment
  and _NOT_ the pod label. You can check the resource object label using `kubectl get <resource-type> --show-labels` (where `resource-type` can be deploy,sts).
 
 #### Sample ChaosEngine Manifest

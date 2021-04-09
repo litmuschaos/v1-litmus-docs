@@ -363,7 +363,7 @@ spec:
                 value: 'false'
 ```
 
-#### Puttings Things Together
+#### Putting Things Together
 
 A sample ChaosSchedule that combines attributes discussed till this point
 
