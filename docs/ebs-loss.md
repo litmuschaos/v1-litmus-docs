@@ -196,7 +196,6 @@ spec:
   annotationCheck: 'false'
   engineState: 'active'
   chaosServiceAccount: ebs-loss-sa
-  monitoring: false
   # It can be retain/delete
   jobCleanUpPolicy: 'delete'
   experiments:

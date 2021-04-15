@@ -262,7 +262,6 @@ spec:
   #ex. values: ns1:name=percona,ns2:run=nginx
   auxiliaryAppInfo: ''
   chaosServiceAccount: pod-delete-sa
-  monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:

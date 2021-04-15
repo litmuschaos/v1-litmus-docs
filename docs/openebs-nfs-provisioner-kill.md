@@ -183,7 +183,6 @@ spec:
     applabel: 'app=minio'
     appkind: 'deployment'
   chaosServiceAccount: nfs-chaos-sa
-  monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:
