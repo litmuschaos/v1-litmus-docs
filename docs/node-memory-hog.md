@@ -167,6 +167,12 @@ subjects:
     <td>  </td>
   </tr>  
   <tr>
+    <td> NUMBER_OF_WORKERS </td>
+    <td> It is the number of VM workers involved in IO disk stress </td>
+    <td> Optional  </td>
+    <td> Default to 1 </td>
+  </tr>
+  <tr>
     <td> RAMP_TIME </td>
     <td> Period to wait before and after injection of chaos in sec </td>
     <td> Optional  </td>

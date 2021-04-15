@@ -146,11 +146,23 @@ subjects:
     <td>  </td>
   </tr>
   <tr>
+    <td> CPU </td>
+    <td> Number of core of CPU to be used </td>
+    <td> Optional  </td>
+    <td> Default to 1 </td>
+  </tr>    
+  <tr>
     <td> NUMBER_OF_WORKERS </td>
     <td> It is the number of IO workers involved in IO disk stress </td>
     <td> Optional  </td>
     <td> Default to 4 </td>
-  </tr>   
+  </tr> 
+  <tr>
+    <td> VM_WORKERS </td>
+    <td> It is the number vm workers involved in IO disk stress </td>
+    <td> Optional  </td>
+    <td> Default to 1 </td>
+  </tr>     
   <tr>
     <td> TARGET_NODES </td>
     <td> Comma separated list of nodes, subjected to node io stress</td>
