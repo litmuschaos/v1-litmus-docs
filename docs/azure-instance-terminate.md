@@ -192,16 +192,16 @@ spec:
           env: 
             # set chaos duration (in sec) as desired
             - name: TOTAL_CHAOS_DURATION
-              value: '60'
+              value: '30'
 
-             # Instance ID of the target ec2 instance
-             # If not provided it will select randomly from the region
-            - name: EC2_INSTANCE_ID
+            # provide the target instance name
+            - name: AZURE_INSTANCE_NAME
               value: ''
-              
-            # provide the region name of the instace
-            - name: REGION
+
+            # provide the resource group of the instance
+            - name: RESOURCE_GROUP
               value: ''
+
 ```
 
 ### Create the ChaosEngine Resource
