@@ -224,11 +224,15 @@ spec:
           env: 
             # set chaos duration (in sec) as desired
             - name: TOTAL_CHAOS_DURATION
-              value: '60'
+              value: '30'
 
-             # Instance ID of the target ec2 instance
-             # If not provided it will select randomly from the region
-            - name: EC2_INSTANCE_ID
+            # set interval duration (in sec) as desired
+            - name: CHAOS_INTERVAL
+              value: '30'              
+
+             # Instance Tag of the target ec2 instances
+             # ex: team:devops (key:value)
+            - name: INSTANCE_TAG
               value: ''
               
             # provide the region name of the instace
@@ -237,7 +241,7 @@ spec:
 
             # enable it if the target instance is a part of self-managed nodegroup.
             - name: MANAGED_NODEGROUP
-              value: 'disable'              
+              value: 'disable'
 ```
 
 ### Create the ChaosEngine Resource

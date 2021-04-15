@@ -218,10 +218,14 @@ spec:
           env: 
             # set chaos duration (in sec) as desired
             - name: TOTAL_CHAOS_DURATION
-              value: '60'
+              value: '30'
+
+            # set interval duration (in sec) as desired
+            - name: CHAOS_INTERVAL
+              value: '30'
 
              # Instance ID of the target ec2 instance
-             # If not provided it will select randomly from the region
+             # Multiple IDs can also be provided as comma seperated values ex: id1,id2
             - name: EC2_INSTANCE_ID
               value: ''
               
