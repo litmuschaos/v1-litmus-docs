@@ -70,7 +70,8 @@
         "ids": [
           "Kubernetes-Chaostoolkit-AWS",
           "ebs-loss",
-          "ec2-terminate"
+          "ec2-terminate-by-id",
+          "ec2-terminate-by-tag"
         ]
       },
       {

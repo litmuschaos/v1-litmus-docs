@@ -113,7 +113,7 @@ subjects:
 
 ### Prepare ChaosEngine
 
-- Provide the application info in `spec.appinfo`
+- Provide the application info in `spec.appinfo`. It is an optional parameter for infra level experiment.
 - Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
 - Override the experiment tunables if desired in `experiments.spec.components.env`
 - To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
@@ -146,11 +146,23 @@ subjects:
     <td>  </td>
   </tr>
   <tr>
+    <td> CPU </td>
+    <td> Number of core of CPU to be used </td>
+    <td> Optional  </td>
+    <td> Default to 1 </td>
+  </tr>    
+  <tr>
     <td> NUMBER_OF_WORKERS </td>
     <td> It is the number of IO workers involved in IO disk stress </td>
     <td> Optional  </td>
     <td> Default to 4 </td>
-  </tr>   
+  </tr> 
+  <tr>
+    <td> VM_WORKERS </td>
+    <td> It is the number vm workers involved in IO disk stress </td>
+    <td> Optional  </td>
+    <td> Default to 1 </td>
+  </tr>     
   <tr>
     <td> TARGET_NODES </td>
     <td> Comma separated list of nodes, subjected to node io stress</td>
@@ -227,6 +239,14 @@ spec:
             ## specify the size as percentage of free space on the file system
             - name: FILESYSTEM_UTILIZATION_PERCENTAGE
               value: '10'
+
+            ## Number of core of CPU
+            - name: CPU
+              value: '1'
+
+            ## Total number of workers default value is 4
+            - name: NUMBER_OF_WORKERS
+              value: '4'                               
             
              ## enter the comma separated target nodes name
             - name: TARGET_NODES
