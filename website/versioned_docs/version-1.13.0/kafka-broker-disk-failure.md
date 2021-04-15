@@ -34,7 +34,7 @@ original_id: kafka-broker-disk-failure
  
   Zookeeper uses this to construct a path in which kafka cluster data is stored. 
 
-- Ensure that the kafka-broker-disk failure experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.2?file=charts/kafka/kafka-broker-disk-failure/experiment.yaml)
+- Ensure that the kafka-broker-disk failure experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.3?file=charts/kafka/kafka-broker-disk-failure/experiment.yaml)
 
 - Create a secret with the gcloud serviceaccount key (placed in a file `cloud_config.yml`) named `kafka-broker-disk-failure` in the namespace where the experiment CRs are created. This is necessary to perform the disk-detach steps from the litmus experiment container.
 
@@ -279,7 +279,6 @@ spec:
     applabel: 'app=cp-kafka'
     appkind: 'statefulset'
   chaosServiceAccount: kafka-broker-disk-failure-sa
-  monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete' 
   experiments:

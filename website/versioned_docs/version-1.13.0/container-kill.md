@@ -24,7 +24,7 @@ original_id: container-kill
 ## Prerequisites
 
 - Ensure that the Litmus ChaosOperator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `container-kill` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.2?file=charts/generic/container-kill/experiment.yaml)
+- Ensure that the `container-kill` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.3?file=charts/generic/container-kill/experiment.yaml)
 
 ## Entry Criteria
 
@@ -182,7 +182,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> LIB Image used to kill the container </td>
     <td> Optional </td>
-    <td> Defaults to `litmuschaos/go-runner:1.13.2`</td>
+    <td> Defaults to `litmuschaos/go-runner:1.13.3`</td>
   </tr>
   <tr>
     <td> LIB  </td>
@@ -247,7 +247,6 @@ spec:
     applabel: 'app=nginx'
     appkind: 'deployment'
   chaosServiceAccount: container-kill-sa
-  monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete' 
   experiments:
