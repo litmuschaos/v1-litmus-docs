@@ -69,7 +69,8 @@
         "ids": [
           "version-1.13.0-Kubernetes-Chaostoolkit-AWS",
           "version-1.13.0-ebs-loss",
-          "version-1.13.0-ec2-terminate"
+          "version-1.13.0-ec2-terminate-by-id",
+          "version-1.13.0-ec2-terminate-by-tag"
         ]
       },
       {
