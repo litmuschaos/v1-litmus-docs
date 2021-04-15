@@ -160,6 +160,12 @@ subjects:
     <td> Optional  </td>
     <td> Default to <code>litmuschaos/go-runner:1.13.2<code> </td>
   </tr>
+   <tr>
+    <td> STRESS_IMAGE  </td>
+    <td> Image pulled at runtime by the pumba lib to run the stress process. Only used in LIB <code>pumba</code></td>
+    <td> Optional  </td>
+    <td> Default to <code>alexeiled/stress-ng:latest-ubuntu</code> </td>
+  </tr>
   <tr>
     <td> TARGET_PODS </td>
     <td> Comma separated list of application pod name subjected to pod cpu hog chaos</td>
