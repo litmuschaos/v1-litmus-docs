@@ -1,7 +1,7 @@
 ---
-id: ec2-terminate
-title: EC2 Terminate Experiment Details
-sidebar_label: EC2 Terminate
+id: ec2-terminate-by-id
+title: EC2 Terminate By ID Experiment Details
+sidebar_label: EC2 Terminate By ID
 ---
 ------
 
@@ -15,16 +15,21 @@ sidebar_label: EC2 Terminate
   </tr>
   <tr>
     <td> Kube AWS </td>
-    <td> Termination of an EC2 instance for a certain chaos duration</td>
+    <td> Termination of an EC2 instance by id for a certain chaos duration</td>
     <td> EKS </td>
   </tr>
 </table>
 
+### WARNING
+```
+If the target EC2 instance is a part of a self-managed nodegroup:
+Make sure to drain the target node if any application is running on it and also ensure to cordon the target node before running the experiment so that the experiment pods do not schedule on it. 
+```
 ## Prerequisites
 
 - Ensure that Kubernetes Version > 1.13
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `ec2-terminate` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/kube-aws/ec2-terminate/experiment.yaml)
+- Ensure that the `ec2-terminate-by-id` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/kube-aws/ec2-terminate-by-id/experiment.yaml)
 - Ensure that you have sufficient AWS access to stop and start an ec2 instance. 
 - Ensure to create a Kubernetes secret having the AWS access configuration(key) in the `CHAOS_NAMESPACE`. A sample secret file looks like:
 
@@ -56,8 +61,9 @@ ENV value on `experiment.yaml`with the same name.
 
 ## Details
 
--   Causes termination of an EC2 instance before bringing it back to running state after the specified chaos duration. 
+-   Causes termination of an EC2 instance by instance ID or list of instance IDs before bringing it back to running state after the specified chaos duration. 
 -   It helps to check the performance of the application/process running on the ec2 instance.
+-   When the `MANAGED_NODEGROUP` is enable then the experiment will not try to start the instance post chaos instead it will check of the addition of the new node instance to the cluster.
 
 ## Integrations
 
@@ -76,50 +82,62 @@ ENV value on `experiment.yaml`with the same name.
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kube-aws/ec2-terminate/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kube-aws/ec2-terminate-by-id/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: ec2-terminate-sa
+  name: ec2-terminate-by-id-sa
   namespace: default
   labels:
-    name: ec2-terminate-sa
+    name: ec2-terminate-by-id-sa
     app.kubernetes.io/part-of: litmus
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: ec2-terminate-sa
+  name: ec2-terminate-by-id-sa
   labels:
-    name: ec2-terminate-sa
+    name: ec2-terminate-by-id-sa
     app.kubernetes.io/part-of: litmus
 rules:
-- apiGroups: ["","litmuschaos.io","batch"]
-  resources: ["pods","jobs","secrets","events","pods/log","pods/exec","chaosengines","chaosexperiments","chaosresults"]
-  verbs: ["create","list","get","patch","update","delete"]
+- apiGroups: [""]
+  resources: ["pods","events","secrets"]
+  verbs: ["create","list","get","patch","update","delete","deletecollection"]
+- apiGroups: [""]
+  resources: ["pods/exec","pods/log"]
+  verbs: ["create","list","get"]
+- apiGroups: ["batch"]
+  resources: ["jobs"]
+  verbs: ["create","list","get","delete","deletecollection"]
+- apiGroups: ["litmuschaos.io"]
+  resources: ["chaosengines","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","update"]
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["patch","get","list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: ec2-terminate-sa
+  name: ec2-terminate-by-id-sa
   labels:
-    name: ec2-terminate-sa
+    name: ec2-terminate-by-id-sa
     app.kubernetes.io/part-of: litmus
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: ec2-terminate-sa
+  name: ec2-terminate-by-id-sa
 subjects:
 - kind: ServiceAccount
-  name: ec2-terminate-sa
+  name: ec2-terminate-by-id-sa
   namespace: default
 ```
 
 ### Prepare ChaosEngine
 
-- Provide the application info in `spec.appinfo`
+- Provide the application info in `spec.appinfo`. It is an optional parameter for infra level experiment.
 - Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
 - Override the experiment tunables if desired in `experiments.spec.components.env`
 - To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
@@ -135,16 +153,34 @@ subjects:
   </tr>
   <tr> 
     <td> EC2_INSTANCE_ID </td>
-    <td> Instance Id of the target ec2 instance.</td>
-    <td> Optional </td>
-    <td> <strong>NOTE:</strong> It will select a random id from the given region, if not provided </td>
+    <td> Instance ID of the target ec2 instance. Multiple IDs can also be provided as a comma(,) separated values</td>
+    <td> Mandatory </td>
+    <td> Multiple IDs can be provided as `id1,id2` </td>
   </tr>
   <tr> 
     <td> TOTAL_CHAOS_DURATION </td>
-    <td> The time duration for chaos insertion (sec) </td>
+    <td> The total time duration for chaos insertion (sec) </td>
     <td> Optional </td>
-    <td> Defaults to 60s </td>
+    <td> Defaults to 30s </td>
   </tr>
+  <tr> 
+    <td> CHAOS_INTERVAL </td>
+    <td> The interval (in sec) between successive instance termination.</td>
+    <td> Optional </td>
+    <td> Defaults to 30s </td>
+  </tr>  
+  <tr> 
+    <td> MANAGED_NODEGROUP </td>
+    <td> Set to <code>enable</code> if the target instance is the part of self-managed nodegroups </td>
+    <td> Optional </td>
+    <td> Defaults to <code>disable</code> </td>
+  </tr>  
+  <tr>
+    <td> SEQUENCE </td>
+    <td> It defines sequence of chaos execution for multiple instance</td>
+    <td> Optional </td>
+    <td> Default value: parallel. Supported: serial, parallel </td>
+  </tr>  
   <tr>
     <td> REGION </td>
     <td> The region name of the target instace</td>
@@ -162,7 +198,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kube-aws/ec2-terminate/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kube-aws/ec2-terminate-by-id/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -172,27 +208,34 @@ metadata:
 spec:
   annotationCheck: 'false'
   engineState: 'active'
-  chaosServiceAccount: ec2-terminate-sa
-  monitoring: false
+  chaosServiceAccount: ec2-terminate-by-id-sa
   # It can be retain/delete
   jobCleanUpPolicy: 'delete'
   experiments:
-    - name: ec2-terminate
+    - name: ec2-terminate-by-id
       spec:
         components:
           env: 
             # set chaos duration (in sec) as desired
             - name: TOTAL_CHAOS_DURATION
-              value: '60'
+              value: '30'
+
+            # set interval duration (in sec) as desired
+            - name: CHAOS_INTERVAL
+              value: '30'
 
              # Instance ID of the target ec2 instance
-             # If not provided it will select randomly from the region
+             # Multiple IDs can also be provided as comma separated values ex: id1,id2
             - name: EC2_INSTANCE_ID
               value: ''
               
             # provide the region name of the instace
             - name: REGION
               value: ''
+
+            # enable it if the target instance is a part of self-managed nodegroup.
+            - name: MANAGED_NODEGROUP
+              value: 'disable'              
 ```
 
 ### Create the ChaosEngine Resource
@@ -214,9 +257,9 @@ spec:
 
 ### Check Chaos Experiment Result
 
-- Check whether the application is resilient to the ec2-terminate, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
+- Check whether the application is resilient to the ec2-terminate-by-id, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult nginx-chaos-ec2-terminate -n <application-namespace>`
+  `kubectl describe chaosresult nginx-chaos-ec2-terminate-by-id -n <application-namespace>`
 
 ### EC2 Terminate Experiment Demo
 

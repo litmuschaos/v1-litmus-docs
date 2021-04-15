@@ -128,7 +128,7 @@ subjects:
 
 ### Prepare ChaosEngine
 
-- Provide the application info in `spec.appinfo`
+- Provide the application info in `spec.appinfo`. It is an optional parameter for infra level experiment.
 - Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
 - Override the experiment tunables if desired in `experiments.spec.components.env`
 - To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
@@ -148,18 +148,18 @@ subjects:
     <td> Mandatory </td>
     <td>  </td>
   </tr>
-  <tr> 
-    <td> TOTAL_CHAOS_DURATION </td>
-    <td> The time duration for chaos insertion (sec) </td>
-    <td> Optional </td>
-    <td> Defaults to 30s </td>
-  </tr>
   <tr>
     <td> RESOURCE_GROUP </td>
     <td> The resource group of the target instance</td>
     <td> Mandatory </td>
     <td> </td>
   </tr> 
+  <tr> 
+    <td> TOTAL_CHAOS_DURATION </td>
+    <td> The time duration for chaos insertion (sec) </td>
+    <td> Optional </td>
+    <td> Defaults to 30s </td>
+  </tr>
   <tr>
     <td> INSTANCE_ID </td>
     <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
@@ -225,7 +225,7 @@ spec:
 
 - Check whether the application is resilient to the azure-instance-terminate, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult nginx-chaos-azure-instance-terminate -n <application-namespace>`
+  `kubectl describe chaosresult nginx-chaos-azure-instance-terminate -n <chaos-namespace>`
 
 ### EC2 Terminate Experiment Demo
 

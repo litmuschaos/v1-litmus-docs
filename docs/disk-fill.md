@@ -101,16 +101,20 @@ metadata:
     app.kubernetes.io/part-of: litmus
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
+kind: Role
 metadata:
   name: disk-fill-sa
+  namespace: default
   labels:
     name: disk-fill-sa
     app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: [""]
-  resources: ["pods","pods/exec","pods/log","events","replicationcontrollers"]
+  resources: ["pods","events"]
   verbs: ["create","list","get","patch","update","delete","deletecollection"]
+- apiGroups: [""]
+  resources: ["pods/exec","pods/log","replicationcontrollers"]
+  verbs: ["list","get","create"]
 - apiGroups: ["batch"]
   resources: ["jobs"]
   verbs: ["create","list","get","delete","deletecollection"]
@@ -128,15 +132,16 @@ rules:
   verbs: ["create","list","get","patch","update"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: disk-fill-sa
+  namespace: default
   labels:
     name: disk-fill-sa
     app.kubernetes.io/part-of: litmus
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
+  kind: Role
   name: disk-fill-sa
 subjects:
 - kind: ServiceAccount
@@ -222,6 +227,12 @@ subjects:
     <td> Optional </td>
     <td> Default value: parallel. Supported: serial, parallel </td>
   </tr>
+   <tr>
+    <td> EPHEMERAL_STORAGE_MEBIBYTES </td>
+    <td> Ephemeral storage which need to fill (unit: MiBi)</td>
+    <td> Optional </td>
+    <td></td>
+  </tr>
   <tr>
     <td> INSTANCE_ID </td>
     <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
@@ -252,7 +263,6 @@ spec:
     applabel: 'app=nginx'
     appkind: 'deployment'
   chaosServiceAccount: disk-fill-sa
-  monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:

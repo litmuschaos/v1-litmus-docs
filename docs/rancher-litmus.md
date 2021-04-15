@@ -223,8 +223,11 @@ metadata:
     name: container-kill-sa
 rules:
 - apiGroups: [""]
-  resources: ["pods","pods/exec","pods/log","events","replicationcontrollers"]
+  resources: ["pods","events"]
   verbs: ["create","list","get","patch","update","delete","deletecollection"]
+- apiGroups: [""]
+  resources: ["pods/exec","pods/log","replicationcontrollers"]
+  verbs: ["list","get","create"]
 - apiGroups: ["batch"]
   resources: ["jobs"]
   verbs: ["create","list","get","delete","deletecollection"]
@@ -307,7 +310,6 @@ spec:
     applabel: 'app=nginx'
     appkind: 'deployment'
   chaosServiceAccount: container-kill-sa
-  monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete' 
   experiments:

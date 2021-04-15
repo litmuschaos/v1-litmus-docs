@@ -80,8 +80,11 @@ metadata:
     app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: [""]
-  resources: ["pods","pods/exec","pods/log","events","services"]
+  resources: ["pods","events","services"]
   verbs: ["create","list","get","patch","update","delete","deletecollection"]
+- apiGroups: [""]
+  resources: ["pods/exec","pods/log"]
+  verbs: ["create","list","get"]
 - apiGroups: ["batch"]
   resources: ["jobs"]
   verbs: ["create","list","get","delete","deletecollection"]
@@ -228,7 +231,6 @@ spec:
   #ex. values: ns1:name=percona,ns2:run=nginx
   auxiliaryAppInfo: ''
   chaosServiceAccount: cassandra-pod-delete-sa
-  monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:

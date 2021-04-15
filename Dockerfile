@@ -1,4 +1,4 @@
-FROM node:8.11.4 AS build-env
+FROM node:14.15.0 AS build-env
 
 WORKDIR /app/website
 

@@ -101,8 +101,11 @@ metadata:
     app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: [""]
-  resources: ["pods","pods/exec","pods/log","events","secrets"]
+  resources: ["pods","events","secrets"]
   verbs: ["create","list","get","patch","update","delete","deletecollection"]
+- apiGroups: [""]
+  resources: ["pods/exec","pods/log"]
+  verbs: ["create","list","get"]
 - apiGroups: ["batch"]
   resources: ["jobs"]
   verbs: ["create","list","get","delete","deletecollection"]
@@ -134,7 +137,7 @@ subjects:
 
 ### Prepare ChaosEngine
 
-- Provide the application info in `spec.appinfo` or populate the `TARGET_NODE` and `TARGET_NODE_IP` in the `experiments.spec.components.env` section. Note that the environment values take precedence over the `spec.appinfo` fields.
+- Provide the application info in `spec.appinfo`. It is an optional parameter for infra level experiment. or populate the `TARGET_NODE` and `TARGET_NODE_IP` in the `experiments.spec.components.env` section. Note that the environment values take precedence over the `spec.appinfo` fields.
 - Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo` 
 - Override the extra experiment tunables if desired in `experiments.spec.components.env`
 - To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
@@ -227,21 +230,16 @@ spec:
   engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ''
-  appinfo:
-    appns: 'default'
-    applabel: 'app=nginx'
-    appkind: 'deployment'
   chaosServiceAccount: node-poweroff-sa
-  monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:
     - name: node-poweroff
       spec:
         components:
-          nodeSelector: 
-            # provide the node labels
-            kubernetes.io/hostname: 'node02'  
+        # nodeSelector: 
+        #   # provide the node labels
+        #   kubernetes.io/hostname: 'node02'   
           env:
              # ENTER THE TARGET NODE NAME
             - name: TARGET_NODE

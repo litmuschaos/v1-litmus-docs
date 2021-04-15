@@ -32,7 +32,6 @@ spec:
       appkind: 'deployment'
     annotationCheck: 'true'
     chaosServiceAccount: pod-delete-sa
-    monitoring: false
     jobCleanUpPolicy: 'delete'
     experiments:
       - name: pod-delete
@@ -71,7 +70,6 @@ spec:
       appkind: 'deployment'
     annotationCheck: 'true'
     chaosServiceAccount: pod-delete-sa
-    monitoring: false
     jobCleanUpPolicy: 'delete'
     experiments:
       - name: pod-delete
@@ -120,7 +118,6 @@ spec:
       appkind: 'deployment'
     annotationCheck: 'true'
     chaosServiceAccount: pod-delete-sa
-    monitoring: false
     jobCleanUpPolicy: 'delete'
     experiments:
       - name: pod-delete
@@ -166,7 +163,6 @@ spec:
       appkind: 'deployment'
     annotationCheck: 'true'
     chaosServiceAccount: pod-delete-sa
-    monitoring: false
     jobCleanUpPolicy: 'delete'
     experiments:
       - name: pod-delete
@@ -211,7 +207,6 @@ spec:
       appkind: 'deployment'
     annotationCheck: 'true'
     chaosServiceAccount: pod-delete-sa
-    monitoring: false
     jobCleanUpPolicy: 'delete'
     experiments:
       - name: pod-delete
@@ -257,7 +252,6 @@ spec:
     annotationCheck: 'true'
     auxiliaryAppInfo: ''
     chaosServiceAccount: pod-delete-sa
-    monitoring: false
     jobCleanUpPolicy: 'delete'
     experiments:
       - name: pod-delete
@@ -305,7 +299,6 @@ spec:
     #ex. values: ns1:name=percona,ns2:run=nginx
     auxiliaryAppInfo: ''
     chaosServiceAccount: pod-delete-sa
-    monitoring: false
     # It can be delete/retain
     jobCleanUpPolicy: 'delete'
     experiments:
@@ -351,7 +344,6 @@ spec:
     annotationCheck: 'true'
     auxiliaryAppInfo: ''
     chaosServiceAccount: pod-delete-sa
-    monitoring: false
     jobCleanUpPolicy: 'delete'
     experiments:
       - name: pod-delete
@@ -371,7 +363,7 @@ spec:
                 value: 'false'
 ```
 
-#### Puttings Things Together
+#### Putting Things Together
 
 A sample ChaosSchedule that combines attributes discussed till this point
 
@@ -402,7 +394,6 @@ spec:
       appkind: 'deployment'
     annotationCheck: 'true'
     chaosServiceAccount: pod-delete-sa
-    monitoring: false
     jobCleanUpPolicy: 'delete'
     experiments:
       - name: pod-delete

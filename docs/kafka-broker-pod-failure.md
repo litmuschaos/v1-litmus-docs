@@ -90,8 +90,11 @@ metadata:
     app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: [""]
-  resources: ["pods","pods/exec","pods/log","events"]
+  resources: ["pods","events"]
   verbs: ["create","list","get","patch","update","delete","deletecollection"]
+- apiGroups: [""]
+  resources: ["pods/exec","pods/log"]
+  verbs: ["create","list","get"]
 - apiGroups: ["batch"]
   resources: ["jobs"]
   verbs: ["create","list","get","delete","deletecollection"]
@@ -214,7 +217,7 @@ subjects:
     <td> KAFKA_REPLICATION_FACTOR </td>
     <td> Number of partition replicas for liveness topic partition </td>
     <td> Optional </td>
-    <td> Necessary if KAFKA_LIVENESS_STREAM is `enabled` </td>
+    <td> Necessary if KAFKA_LIVENESS_STREAM is `enabled`. The replication factor should be less than or equal to number of Kafka brokers </td>
   </tr>
   <tr>
     <td> KAFKA_INSTANCE_NAME </td>
@@ -270,7 +273,6 @@ spec:
     applabel: 'app=cp-kafka'
     appkind: 'statefulset'
   chaosServiceAccount: kafka-broker-pod-failure-sa
-  monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete' 
   experiments:

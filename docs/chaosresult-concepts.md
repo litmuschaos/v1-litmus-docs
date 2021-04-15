@@ -62,7 +62,7 @@ This section describes the fields/details provided by the ChaosResult spec.
 <table>
 <tr>
   <th>Field</th>
-  <td><code>.status.experimentstatus.failstep</code></td>
+  <td><code>.status.experimentStatus.failstep</code></td>
 </tr>
 <tr>
   <th>Description</th>
@@ -78,14 +78,14 @@ This section describes the fields/details provided by the ChaosResult spec.
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>.status.experimentstatus.failstep</code> Show the step at which the experiment failed. It helps in faster debugging of failures in the experiment execution.</td>
+  <td>The <code>.status.experimentStatus.failstep</code> Show the step at which the experiment failed. It helps in faster debugging of failures in the experiment execution.</td>
 </tr>
 </table>
 
 <table>
 <tr>
   <th>Field</th>
-  <td><code>.status.experimentstatus.phase</code></td>
+  <td><code>.status.experimentStatus.phase</code></td>
 </tr>
 <tr>
   <th>Description</th>
@@ -101,14 +101,14 @@ This section describes the fields/details provided by the ChaosResult spec.
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>.status.experimentstatus.phase</code> shows the current phase in which the experiment is. It gets updated as the experiment proceeds.If the experiment is aborted then the status will be Aborted.</td>
+  <td>The <code>.status.experimentStatus.phase</code> shows the current phase in which the experiment is. It gets updated as the experiment proceeds.If the experiment is aborted then the status will be Aborted.</td>
 </tr>
 </table>
 
 <table>
 <tr>
   <th>Field</th>
-  <td><code>.status.experimentstatus.probesuccesspercentage</code></td>
+  <td><code>.status.experimentStatus.probesuccesspercentage</code></td>
 </tr>
 <tr>
   <th>Description</th>
@@ -124,14 +124,14 @@ This section describes the fields/details provided by the ChaosResult spec.
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>.status.experimentstatus.probesuccesspercentage</code> shows the probe success percentage which is a ratio of successful checks v/s total probes.</td>
+  <td>The <code>.status.experimentStatus.probesuccesspercentage</code> shows the probe success percentage which is a ratio of successful checks v/s total probes.</td>
 </tr>
 </table>
 
 <table>
 <tr>
   <th>Field</th>
-  <td><code>.status.experimentstatus.verdict</code></td>
+  <td><code>.status.experimentStatus.verdict</code></td>
 </tr>
 <tr>
   <th>Description</th>
@@ -147,7 +147,7 @@ This section describes the fields/details provided by the ChaosResult spec.
 </tr>
 <tr>
   <th>Notes</th>
-  <td>The <code>.status.experimentstatus.verdict</code> shows the verdict of the experiment. It is <code>Awaited</code> when the experiment is in progress and ends up with Pass or Fail according to the experiment result.</td>
+  <td>The <code>.status.experimentStatus.verdict</code> shows the verdict of the experiment. It is <code>Awaited</code> when the experiment is in progress and ends up with Pass or Fail according to the experiment result.</td>
 </tr>
 </table>
 

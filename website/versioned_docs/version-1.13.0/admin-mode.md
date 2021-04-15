@@ -24,7 +24,7 @@ Provide this ServiceAccount in ChaosEngine's .spec.chaosServiceAccount.
 - Select Chaos Experiment from [hub.litmuschaos.io](https://hub.litmuschaos.io/) and click on `INSTALL EXPERIMENT` button.
 
 ```bash
-kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.13.0?file=charts/generic/pod-delete/experiment.yaml -n litmus
+kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.13.2?file=charts/generic/pod-delete/experiment.yaml -n litmus
 ```
 
 #### Prepare RBAC Manifest
@@ -49,15 +49,36 @@ metadata:
   labels:
     name: litmus-admin
 rules:
-- apiGroups: ["","apps","batch","extensions","litmuschaos.io"]
-  resources: ["pods","pods/exec","pods/eviction","jobs","daemonsets","events","chaosresults","chaosengines"]
+- apiGroups: [""]
+  resources: ["pods","events","configmaps","secrets","services"]
   verbs: ["create","delete","get","list","patch","update", "deletecollection"]
-- apiGroups: ["","apps","litmuschaos.io","apps.openshift.io","argoproj.io"]
-  resources: ["configmaps","secrets","services","chaosexperiments","pods/log","replicasets","deployments","statefulsets","deploymentconfigs","rollouts","services"]
-  verbs: ["get","list","patch","update"]
+- apiGroups: [""]
+  resources: ["pods/exec","pods/log","pods/eviction","replicationcontrollers"]
+  verbs: ["get","list","create"]
+- apiGroups: ["batch"]
+  resources: ["jobs"]
+  verbs: ["create","list","get","delete","deletecollection"]
+- apiGroups: ["apps"]
+  resources: ["deployments","statefulsets"]
+  verbs: ["list","get","patch","update"]
+- apiGroups: ["apps"]
+  resources: ["replicasets"]
+  verbs: ["list","get"]
+- apiGroups: ["apps"]
+  resources: ["daemonsets"]
+  verbs: ["list","get","delete"]
+- apiGroups: ["apps.openshift.io"]
+  resources: ["deploymentconfigs"]
+  verbs: ["list","get"]
+- apiGroups: ["argoproj.io"]
+  resources: ["rollouts"]
+  verbs: ["list","get"]
+- apiGroups: ["litmuschaos.io"]
+  resources: ["chaosengines","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","update","delete"]
 - apiGroups: [""]
   resources: ["nodes"]
-  verbs: ["get","list","patch","update"]
+  verbs: ["patch","get","list","update"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding

@@ -49,7 +49,6 @@
           "pod-cpu-hog",
           "pod-memory-hog",
           "disk-fill",
-          "disk-loss",
           "node-cpu-hog",
           "node-memory-hog",
           "node-drain",
@@ -71,7 +70,8 @@
         "ids": [
           "Kubernetes-Chaostoolkit-AWS",
           "ebs-loss",
-          "ec2-terminate"
+          "ec2-terminate-by-id",
+          "ec2-terminate-by-tag"
         ]
       },
       {

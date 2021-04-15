@@ -72,8 +72,11 @@ metadata:
     app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: [""]
-  resources: ["pods","pods/exec","pods/log","events","replicationcontrollers"]
+  resources: ["pods","events"]
   verbs: ["create","list","get","patch","update","delete","deletecollection"]
+- apiGroups: [""]
+  resources: ["pods/exec","pods/log","replicationcontrollers"]
+  verbs: ["create","list","get"]
 - apiGroups: ["batch"]
   resources: ["jobs"]
   verbs: ["create","list","get","delete","deletecollection"]
@@ -241,7 +244,6 @@ spec:
   annotationCheck: 'false'
   # It can be active/stop
   engineState: 'active'
-  monitoring: false
   appinfo: 
     appns: 'default'
     # FYI, To see app label, apply kubectl get pods --show-labels

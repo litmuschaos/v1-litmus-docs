@@ -68,7 +68,7 @@ The nginx default web site should be available now.
 ###  Install Litmus
 Followed the steps in the [Getting Started Guide](https://docs.litmuschaos.io/docs/getstarted/)* to install litmus in a `nginx` namespace with an nginx application.
 
-Download `litmus-operator-v1.13.0.yaml` from https://litmuschaos.github.io/litmus/litmus-operator-v1.13.0.yaml.
+Download `litmus-operator-v1.13.2.yaml` from https://litmuschaos.github.io/litmus/litmus-operator-v1.13.2.yaml.
 Modify it to use the `nginx` namespace in three places (at lines 10, 41, and 47 approximately).
 Install the litmus-operator in `nginx` application namespace using kubectl.
 ``` console
@@ -146,7 +146,7 @@ The generic chaos experiments such as `pod-delete`,  `container-kill`,` pod-netw
 This is the first chart you are recommended to install. 
 
 ```
-$ kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.13.0?file=charts/generic/experiments.yaml -n nginx
+$ kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.13.2?file=charts/generic/experiments.yaml -n nginx
 ```
 
 Expected output: 
@@ -224,8 +224,11 @@ metadata:
     name: container-kill-sa
 rules:
 - apiGroups: [""]
-  resources: ["pods","pods/exec","pods/log","events","replicationcontrollers"]
+  resources: ["pods","events"]
   verbs: ["create","list","get","patch","update","delete","deletecollection"]
+- apiGroups: [""]
+  resources: ["pods/exec","pods/log","replicationcontrollers"]
+  verbs: ["list","get","create"]
 - apiGroups: ["batch"]
   resources: ["jobs"]
   verbs: ["create","list","get","delete","deletecollection"]
@@ -329,7 +332,7 @@ spec:
               value: '20'
 
             - name: LIB_IMAGE  
-              value: 'litmuschaos/go-runner:1.13.0' 
+              value: 'litmuschaos/go-runner:1.13.2' 
 
             # provide the name of container runtime
             # it supports docker, containerd, crio
@@ -418,7 +421,7 @@ You can uninstall Litmus by deleting the namespace.
 ```console
 kubectl delete -f chaosengine.yaml -n nginx
 kubectl delete -f rbac.yaml -n nginx
-kubectl delete -f https://hub.litmuschaos.io/api/chaos/1.13.0?file=charts/generic/experiments.yaml -n nginx
+kubectl delete -f https://hub.litmuschaos.io/api/chaos/1.13.2?file=charts/generic/experiments.yaml -n nginx
 kubectl delete -f litmus-operator.yaml -n nginx
 
 ```

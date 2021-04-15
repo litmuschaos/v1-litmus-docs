@@ -78,8 +78,11 @@ metadata:
     app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: [""]
-  resources: ["pods","pods/exec","pods/log","events","replicationcontrollers"]
+  resources: ["pods","events"]
   verbs: ["create","list","get","patch","update","delete","deletecollection"]
+- apiGroups: [""]
+  resources: ["pods/exec","pods/log","replicationcontrollers"]
+  verbs: ["create","list","get"]
 - apiGroups: ["batch"]
   resources: ["jobs"]
   verbs: ["create","list","get","delete","deletecollection"]
@@ -151,9 +154,15 @@ subjects:
   </tr>
    <tr>
     <td> LIB_IMAGE  </td>
-    <td> Image used to run the stress command. Only used in LIB <code>pumba</code></td>
+    <td> Image used to run the pumba helper pod. Only used in LIB <code>pumba</code></td>
     <td> Optional  </td>
     <td> Defaults to <code>litmuschaos/go-runner:latest<code> </td>
+  </tr>
+   <tr>
+    <td> STRESS_IMAGE  </td>
+    <td> Container run on the node at runtime by the pumba lib to inject stressors. Only used in LIB <code>pumba</code></td>
+    <td> Optional  </td>
+    <td> Default to <code>alexeiled/stress-ng:latest-ubuntu</code> </td>
   </tr>
   <tr>
     <td> TARGET_PODS </td>
@@ -161,6 +170,12 @@ subjects:
     <td> Optional </td>
     <td> If not provided, it will select target pods randomly based on provided appLabels</td>
   </tr>
+  <tr>
+    <td> TARGET_CONTAINER </td>
+    <td> Name of the target container under chaos.</td>
+    <td> Optional </td>
+    <td> If not provided, it will select the first container of the target pod</td>
+  </tr>   
   <tr>
     <td> CHAOS_KILL_COMMAND </td>
     <td> The command to kill the chaos process</td>
@@ -213,7 +228,6 @@ spec:
     applabel: 'app=nginx'
     appkind: 'deployment'
   chaosServiceAccount: pod-memory-hog-sa
-  monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:

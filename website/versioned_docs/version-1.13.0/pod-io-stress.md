@@ -24,7 +24,7 @@ original_id: pod-io-stress
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `pod-io-stress` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.0?file=charts/generic/pod-io-stress/experiment.yaml)
+- Ensure that the `pod-io-stress` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.2?file=charts/generic/pod-io-stress/experiment.yaml)
 - Cluster must run docker container runtime
 
 ## Entry Criteria
@@ -77,8 +77,11 @@ metadata:
     app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: [""]
-  resources: ["pods","pods/exec","pods/log","events","replicationcontrollers"]
+  resources: ["pods","events"]
   verbs: ["create","list","get","patch","update","delete","deletecollection"]
+- apiGroups: [""]
+  resources: ["pods/exec","pods/log","replicationcontrollers"]
+  verbs: ["create","list","get"]
 - apiGroups: ["batch"]
   resources: ["jobs"]
   verbs: ["create","list","get","delete","deletecollection"]
@@ -171,7 +174,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> Image used to run the stress command </td>
     <td> Optional  </td>
-    <td> Default to <code>litmuschaos/go-runner:1.13.0<code> </td>
+    <td> Default to <code>litmuschaos/go-runner:1.13.2<code> </td>
   </tr>  
   <tr>
     <td> TARGET_PODS </td>

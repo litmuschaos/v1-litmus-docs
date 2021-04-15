@@ -1,0 +1,24 @@
+name: CD-Build
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  cd:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Declare some variables
+        id: vars
+        shell: bash
+        run: |
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+          echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+      - name: Docker login
+        run: echo ${{ secrets.DPASS }} | docker login -u ${{ secrets.DNAME }} --password-stdin
+      - name: Build and Push the Docker Image
+        run: |
+          docker build -t $GITHUB_REPOSITORY:${{ steps.vars.outputs.branch }}-${{ steps.vars.outputs.sha_short }} .
+          docker push $GITHUB_REPOSITORY:${{ steps.vars.outputs.branch }}-${{ steps.vars.outputs.sha_short }}
