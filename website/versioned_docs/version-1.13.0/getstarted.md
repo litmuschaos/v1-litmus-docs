@@ -37,7 +37,7 @@ Running chaos on your application involves the following steps:
 Apply the LitmusChaos Operator manifest:
  
 ```
-kubectl apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.13.2.yaml
+kubectl apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.13.3.yaml
 ```
 
 The above command installs all the CRDs, required service account configuration, and chaos-operator. 
@@ -141,7 +141,7 @@ The generic chaos experiments such as `pod-delete`,  `container-kill`,` pod-netw
 This is the first chart you are recommended to install.
 
 ```
-kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.13.2?file=charts/generic/experiments.yaml -n nginx
+kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.13.3?file=charts/generic/experiments.yaml -n nginx
 ```
 
 Verify if the chaos experiments are installed.
@@ -263,7 +263,6 @@ spec:
   #ex. values: ns1:name=percona,ns2:run=nginx
   auxiliaryAppInfo: ''
   chaosServiceAccount: pod-delete-sa
-  monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:
@@ -332,7 +331,7 @@ kubectl delete chaosengine --all -n <namespace>
 ```
 
 ```console
-kubectl delete -f https://litmuschaos.github.io/litmus/litmus-operator-v1.13.2.yaml
+kubectl delete -f https://litmuschaos.github.io/litmus/litmus-operator-v1.13.3.yaml
 ```
 
 **NOTE**

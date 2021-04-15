@@ -24,7 +24,7 @@ original_id: node-drain
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `node-drain` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.2?file=charts/generic/node-drain/experiment.yaml)
+- Ensure that the `node-drain` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.3?file=charts/generic/node-drain/experiment.yaml)
 - Ensure that the node specified in the experiment ENV variable `TARGET_NODE` (the node which will be drained)  should be cordoned before execution of the chaos experiment (before applying the chaosengine manifest) to ensure that the litmus experiment runner pods are not scheduled on it / subjected to eviction. This can be achieved with the following steps: 
 
   - Get node names against the applications pods: `kubectl get pods -o wide`
@@ -183,21 +183,16 @@ spec:
   engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ''
-  appinfo:
-    appns: 'default'
-    applabel: 'app=nginx'
-    appkind: 'deployment'
   chaosServiceAccount: node-drain-sa
-  monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:
     - name: node-drain
       spec:
         components:
-          nodeSelector: 
-            # provide the node labels
-            kubernetes.io/hostname: 'node02'        
+        # nodeSelector: 
+        #   # provide the node labels
+        #   kubernetes.io/hostname: 'node02'        
           env:
             # enter the target node name
             - name: TARGET_NODE

@@ -24,7 +24,7 @@ original_id: node-cpu-hog
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `node-cpu-hog` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.2?file=charts/generic/node-cpu-hog/experiment.yaml)
+- Ensure that the `node-cpu-hog` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.3?file=charts/generic/node-cpu-hog/experiment.yaml)
 - There should be administrative access to the platform on which the Kubernetes cluster is hosted, as the recovery of the affected node could be manual. For example, gcloud access to the GKE project
 ## Entry Criteria
 
@@ -203,12 +203,7 @@ spec:
   engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ''
-  appinfo:
-    appns: 'default'
-    applabel: 'app=nginx'
-    appkind: 'deployment'
   chaosServiceAccount: node-cpu-hog-sa
-  monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:

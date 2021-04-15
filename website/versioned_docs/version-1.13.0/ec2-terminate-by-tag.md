@@ -1,8 +1,8 @@
 ---
-id: version-1.13.0-ec2-terminate
-title: EC2 Terminate Experiment Details
-sidebar_label: EC2 Terminate
-original_id: ec2-terminate
+id: version-1.13.0-ec2-terminate-by-tag
+title: EC2 Terminate By Tag Experiment Details
+sidebar_label: EC2 Terminate By Tag
+original_id: ec2-terminate-by-tag
 ---
 ------
 
@@ -16,7 +16,7 @@ original_id: ec2-terminate
   </tr>
   <tr>
     <td> Kube AWS </td>
-    <td> Termination of an EC2 instance for a certain chaos duration</td>
+    <td> Termination of an EC2 instance by tags for a certain chaos duration</td>
     <td> EKS </td>
   </tr>
 </table>
@@ -30,7 +30,7 @@ Make sure to drain the target node if any application is running on it and also 
 
 - Ensure that Kubernetes Version > 1.13
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `ec2-terminate` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.2?file=charts/kube-aws/ec2-terminate/experiment.yaml)
+- Ensure that the `ec2-terminate-by-tag` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/kube-aws/ec2-terminate-by-tag/experiment.yaml)
 - Ensure that you have sufficient AWS access to stop and start an ec2 instance. 
 - Ensure to create a Kubernetes secret having the AWS access configuration(key) in the `CHAOS_NAMESPACE`. A sample secret file looks like:
 
@@ -62,7 +62,7 @@ ENV value on `experiment.yaml`with the same name.
 
 ## Details
 
--   Causes termination of an EC2 instance before bringing it back to running state after the specified chaos duration. 
+-   Causes termination of an EC2 instance by tag before bringing it back to running state after the specified chaos duration. 
 -   It helps to check the performance of the application/process running on the ec2 instance.
 -   When the `MANAGED_NODEGROUP` is enable then the experiment will not try to start the instance post chaos instead it will check of the addition of the new node instance to the cluster.
 
@@ -83,24 +83,24 @@ ENV value on `experiment.yaml`with the same name.
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/1.13.2/charts/kube-aws/ec2-terminate/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kube-aws/ec2-terminate-by-tag/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: ec2-terminate-sa
+  name: ec2-terminate-by-tag-sa
   namespace: default
   labels:
-    name: ec2-terminate-sa
+    name: ec2-terminate-by-tag-sa
     app.kubernetes.io/part-of: litmus
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: ec2-terminate-sa
+  name: ec2-terminate-by-tag-sa
   labels:
-    name: ec2-terminate-sa
+    name: ec2-terminate-by-tag-sa
     app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: [""]
@@ -122,23 +122,23 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: ec2-terminate-sa
+  name: ec2-terminate-by-tag-sa
   labels:
-    name: ec2-terminate-sa
+    name: ec2-terminate-by-tag-sa
     app.kubernetes.io/part-of: litmus
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: ec2-terminate-sa
+  name: ec2-terminate-by-tag-sa
 subjects:
 - kind: ServiceAccount
-  name: ec2-terminate-sa
+  name: ec2-terminate-by-tag-sa
   namespace: default
 ```
 
 ### Prepare ChaosEngine
 
-- Provide the application info in `spec.appinfo`
+- Provide the application info in `spec.appinfo`. It is an optional parameter for infra level experiment.
 - Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
 - Override the experiment tunables if desired in `experiments.spec.components.env`
 - To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
@@ -153,17 +153,23 @@ subjects:
     <th> Notes </th>
   </tr>
   <tr> 
-    <td> EC2_INSTANCE_ID </td>
-    <td> Instance Id of the target ec2 instance.</td>
+    <td> INSTANCE_TAG </td>
+    <td> Instance Tag to filter the target ec2 instance.</td>
     <td> Optional </td>
-    <td> <strong>NOTE:</strong> It will select a random id from the given region, if not provided </td>
+    <td> The <code>INSTANCE_TAG</code> should be provided as <code>key:value</code> ex: <code>team:devops</code></td>
   </tr>
   <tr> 
     <td> TOTAL_CHAOS_DURATION </td>
     <td> The time duration for chaos insertion (sec) </td>
     <td> Optional </td>
-    <td> Defaults to 60s </td>
+    <td> Defaults to 30s </td>
   </tr>
+  <tr> 
+    <td> CHAOS_INTERVAL </td>
+    <td> The interval (in sec) between successive instance termination.</td>
+    <td> Optional </td>
+    <td> Defaults to 30s </td>
+  </tr>    
   <tr> 
     <td> MANAGED_NODEGROUP </td>
     <td> Set to <code>enable</code> if the target instance is the part of self-managed nodegroups </td>
@@ -171,11 +177,23 @@ subjects:
     <td> Defaults to <code>disable</code> </td>
   </tr>  
   <tr>
+    <td> INSTANCE_AFFECTED_PERC </td>
+    <td> The Percentage of total ec2 intance to target  </td>
+    <td> Optional </td>
+    <td> Defaults to 0 (corresponds to 1 instance), provide numeric value only </td>
+  </tr>   
+  <tr>
     <td> REGION </td>
     <td> The region name of the target instace</td>
     <td> Optional </td>
     <td> </td>
   </tr> 
+  <tr>
+    <td> SEQUENCE </td>
+    <td> It defines sequence of chaos execution for multiple instance</td>
+    <td> Optional </td>
+    <td> Default value: parallel. Supported: serial, parallel </td>
+  </tr>    
   <tr>
     <td> INSTANCE_ID </td>
     <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
@@ -187,7 +205,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/1.13.2/charts/kube-aws/ec2-terminate/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kube-aws/ec2-terminate-by-tag/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -197,22 +215,25 @@ metadata:
 spec:
   annotationCheck: 'false'
   engineState: 'active'
-  chaosServiceAccount: ec2-terminate-sa
-  monitoring: false
+  chaosServiceAccount: ec2-terminate-by-tag-sa
   # It can be retain/delete
   jobCleanUpPolicy: 'delete'
   experiments:
-    - name: ec2-terminate
+    - name: ec2-terminate-by-tag
       spec:
         components:
           env: 
             # set chaos duration (in sec) as desired
             - name: TOTAL_CHAOS_DURATION
-              value: '60'
+              value: '30'
 
-             # Instance ID of the target ec2 instance
-             # If not provided it will select randomly from the region
-            - name: EC2_INSTANCE_ID
+            # set interval duration (in sec) as desired
+            - name: CHAOS_INTERVAL
+              value: '30'              
+
+             # Instance Tag of the target ec2 instances
+             # ex: team:devops (key:value)
+            - name: INSTANCE_TAG
               value: ''
               
             # provide the region name of the instace
@@ -221,7 +242,7 @@ spec:
 
             # enable it if the target instance is a part of self-managed nodegroup.
             - name: MANAGED_NODEGROUP
-              value: 'disable'              
+              value: 'disable'
 ```
 
 ### Create the ChaosEngine Resource
@@ -243,9 +264,9 @@ spec:
 
 ### Check Chaos Experiment Result
 
-- Check whether the application is resilient to the ec2-terminate, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
+- Check whether the application is resilient to the ec2-terminate-by-tag, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult nginx-chaos-ec2-terminate -n <application-namespace>`
+  `kubectl describe chaosresult nginx-chaos-ec2-terminate-by-tag -n <application-namespace>`
 
 ### EC2 Terminate Experiment Demo
 

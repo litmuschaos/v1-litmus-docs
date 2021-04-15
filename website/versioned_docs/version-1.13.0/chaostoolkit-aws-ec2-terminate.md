@@ -237,7 +237,6 @@ spec:
     appkind: 'deployment'
   annotationCheck: 'false'
   engineState: 'active'
-  monitoring: false
   jobCleanUpPolicy: 'retain'
   chaosServiceAccount: chaos-admin
   components:

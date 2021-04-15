@@ -225,7 +225,6 @@ spec:
     applabel: 'app=nginx'
     appkind: 'deployment'
   chaosServiceAccount: pool-container-failure-sa
-  monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:
