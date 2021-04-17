@@ -354,7 +354,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 <table>
 <tr>
   <th>Field</th>
-  <td><code>.spec.components.runner.runnerAnnotation</code></td>
+  <td><code>.spec.components.runner.runnerAnnotations</code></td>
 </tr>
 <tr>
   <th>Description</th>
@@ -815,7 +815,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 <table>
 <tr>
   <th>Field</th>
-  <td><code>.spec.experiments[].spec.components.experimentAnnotation</code></td>
+  <td><code>.spec.experiments[].spec.components.experimentAnnotations</code></td>
 </tr>
 <tr>
   <th>Description</th>
