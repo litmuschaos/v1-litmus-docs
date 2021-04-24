@@ -17,7 +17,7 @@ original_id: node-restart
   <tr>
     <td> Generic </td>
     <td> Restart the target node </td>
-    <td> Kubevirt VMs </td>
+    <td> Kubevirt VMs, AWS(kubeadm) </td>
   </tr>
 </table>
 
@@ -138,7 +138,8 @@ subjects:
 
 ### Prepare ChaosEngine
 
-- Provide the application info in `spec.appinfo` or populate the `TARGET_NODE` and `TARGET_NODE_IP` in the `experiments.spec.components.env` section. Note that the environment values take precedence over the `spec.appinfo` fields.
+- Provide the application info in `spec.appinfo`. It is an optional parameter for infra level experiment.
+- Populate the `TARGET_NODE` and `TARGET_NODE_IP` in the `experiments.spec.components.env` section. Note that the environment values take precedence over the `spec.appinfo` fields.
 - Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo` 
 - Override the extra experiment tunables if desired in `experiments.spec.components.env`
 - To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
@@ -190,7 +191,7 @@ subjects:
   </tr>
   <tr>
     <td> RAMP_TIME </td>
-    <td> Period to wait before injection of chaos in sec </td>
+    <td> Period to wait before and after injection of chaos in sec </td>
     <td> Optional  </td>
     <td> </td>
   </tr>
@@ -199,12 +200,6 @@ subjects:
     <td> The chaos lib used to inject the chaos </td>
     <td> Optional </td>
     <td> Defaults to `litmus` supported litmus only </td>
-  </tr>
-  <tr>
-    <td> LIB_IMAGE  </td>
-    <td> The image used to restart the node </td>
-    <td> Optional </td>
-    <td> Defaults to `litmuschaos/go-runner:1.13.2` </td>
   </tr>
   <tr>
     <td> INSTANCE_ID </td>
@@ -266,9 +261,9 @@ spec:
 
 ### Watch Chaos progress
 
-- View the status of the nodes as they are subjected to node restart. 
+- SSH into the targeted node and verify the `uptime`. The uptime should be reinitialized to `0mins` after the node restart.
 
-  `watch -n 1 kubectl get nodes`
+  `root@<node-name>$ uptime`
   
 ### Check Chaos Experiment Result
 

@@ -153,7 +153,7 @@ subjects:
   </tr>
   <tr> 
     <td> EC2_INSTANCE_ID </td>
-    <td> Instance ID of the target ec2 instance. Multiple IDs can also be provided as a comma(,) seperated values</td>
+    <td> Instance ID of the target ec2 instance. Multiple IDs can also be provided as a comma(,) separated values</td>
     <td> Optional </td>
     <td> Multiple IDs can be provided as `id1,id2` </td>
   </tr>
