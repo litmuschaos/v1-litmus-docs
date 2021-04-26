@@ -177,7 +177,7 @@ subjects:
   </tr>  
   <tr>
     <td> INSTANCE_AFFECTED_PERC </td>
-    <td> The Percentage of total ec2 intance to target  </td>
+    <td> The Percentage of total ec2 instance to target  </td>
     <td> Optional </td>
     <td> Defaults to 0 (corresponds to 1 instance), provide numeric value only </td>
   </tr>   
