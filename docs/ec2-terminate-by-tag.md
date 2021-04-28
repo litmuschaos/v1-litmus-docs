@@ -235,7 +235,7 @@ spec:
             - name: INSTANCE_TAG
               value: ''
               
-            # provide the region name of the instace
+            # provide the region name of the instance
             - name: REGION
               value: ''
 

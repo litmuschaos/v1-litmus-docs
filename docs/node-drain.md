@@ -140,6 +140,12 @@ subjects:
     <td> </td>
   </tr>
   <tr>
+    <td> NODE_LABEL </td>
+    <td> It contains node label, which will be used to filter the target nodes if TARGET_NODE ENV is not set </td>
+    <td> Optional </td>
+    <td> </td>
+  </tr>
+  <tr>
     <td> TOTAL_CHAOS_DURATION </td>
     <td> The time duration for chaos insertion (seconds)  </td>
     <td> Optional </td>

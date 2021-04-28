@@ -198,6 +198,12 @@ subjects:
     <td> If not provided, it will select target pods randomly based on provided appLabels</td>
   </tr> 
   <tr>
+    <td> DATA_BLOCK_SIZE </td>
+    <td> It contains data block size used to fill the disk(in KB)</td>
+    <td> Optional </td>
+    <td> Defaults to 256, it supports unit as KB only</td>
+  </tr> 
+  <tr>
     <td> PODS_AFFECTED_PERC </td>
     <td> The Percentage of total pods to target  </td>
     <td> Optional </td>

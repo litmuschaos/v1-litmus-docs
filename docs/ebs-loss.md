@@ -219,7 +219,7 @@ spec:
             - name: DEVICE_NAME
               value: '/dev/sdb'
               
-            # provide the region name of the instace
+            # provide the region name of the instance
             - name: REGION
               value: ''
 ```

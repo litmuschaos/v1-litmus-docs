@@ -142,6 +142,12 @@ subjects:
     <td> </td>
   </tr>
   <tr>
+    <td> NODE_LABEL </td>
+    <td> It contains node label, which will be used to filter the target nodes if TARGET_NODE ENV is not set </td>
+    <td> Optional </td>
+    <td> </td>
+  </tr>
+  <tr>
     <td> TAINT_LABEL </td>
     <td> Label and effect to be tainted on application node </td>
     <td> Mandatory </td>

@@ -127,6 +127,18 @@ subjects:
     <th> Specify in ChaosEngine </th>
     <th> Notes </th>
   </tr>
+    <tr>
+    <td> TARGET_NODES </td>
+    <td> Comma separated list of nodes, subjected to node io stress</td>
+    <td> Mandatory  </td>
+    <td> </td>
+  </tr>
+  <tr>
+    <td> NODE_LABEL </td>
+    <td> It contains node label, which will be used to filter the target nodes if TARGET_NODES ENV is not set </td>
+    <td> Optional </td>
+    <td> </td>
+  </tr>
   <tr>
     <td> TOTAL_CHAOS_DURATION </td>
     <td> The time duration for chaos (seconds) </td>
@@ -163,12 +175,6 @@ subjects:
     <td> Optional  </td>
     <td> Default to 1 </td>
   </tr>     
-  <tr>
-    <td> TARGET_NODES </td>
-    <td> Comma separated list of nodes, subjected to node io stress</td>
-    <td> Mandatory  </td>
-    <td> </td>
-  </tr>
    <tr>
     <td> LIB  </td>
     <td> The chaos lib used to inject the chaos </td>
