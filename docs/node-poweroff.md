@@ -171,6 +171,12 @@ subjects:
     <td> Defaults to empty </td>
   </tr>
   <tr>
+    <td> NODE_LABEL </td>
+    <td> It contains node label, which will be used to filter the target nodes if TARGET_NODE ENV is not set </td>
+    <td> Optional </td>
+    <td> </td>
+  </tr>
+  <tr>
     <td> TARGET_NODE_IP </td>
     <td> Internal IP of the target node, subjected to chaos. If not provided, the experiment will lookup the node IP that hosts the pod running based on the `appInfo` details section in the `ChaosEngine`. If provided, it also requires `TARGET_NODE` to be populated.</td>
     <td> Optional </td>

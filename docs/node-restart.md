@@ -16,7 +16,7 @@ sidebar_label: Node Restart
   <tr>
     <td> Generic </td>
     <td> Restart the target node </td>
-    <td> Kubevirt VMs, AWS(kubeadm) </td>
+    <td> Kubevirt VMs, AWS(kubeadm), EKS </td>
   </tr>
 </table>
 
@@ -169,6 +169,12 @@ subjects:
     <td> Name of target node, subjected to chaos. If not provided, the experiment will lookup the node that hosts the pod running based on the `appInfo` details section in the `ChaosEngine`. If provided, it also requires the `TARGET_NODE_IP` to be populated.</td>
     <td> Optional </td>
     <td> Defaults to empty </td>
+  </tr>
+  <tr>
+    <td> NODE_LABEL </td>
+    <td> It contains node label, which will be used to filter the target nodes if TARGET_NODE ENV is not set </td>
+    <td> Optional </td>
+    <td> </td>
   </tr>
   <tr>
     <td> TARGET_NODE_IP </td>

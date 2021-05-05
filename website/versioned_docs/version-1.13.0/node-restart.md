@@ -17,7 +17,7 @@ original_id: node-restart
   <tr>
     <td> Generic </td>
     <td> Restart the target node </td>
-    <td> Kubevirt VMs, AWS(kubeadm) </td>
+    <td> Kubevirt VMs, AWS(kubeadm), EKS </td>
   </tr>
 </table>
 
@@ -138,7 +138,7 @@ subjects:
 
 ### Prepare ChaosEngine
 
-- Provide the application info in `spec.appinfo`. It is an optional parameter for infra level experiment.
+- Provide the application info in `spec.appinfo`. It is an optional parameter for infra level experiment. 
 - Populate the `TARGET_NODE` and `TARGET_NODE_IP` in the `experiments.spec.components.env` section. Note that the environment values take precedence over the `spec.appinfo` fields.
 - Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo` 
 - Override the extra experiment tunables if desired in `experiments.spec.components.env`
@@ -157,7 +157,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> The image used to restart the node </td>
     <td> Optional </td>
-    <td> Defaults to `litmuschaos/go-runner:1.13.2` </td>
+    <td> Defaults to `litmuschaos/go-runner:1.13.3` </td>
   </tr>
   <tr>
     <td> SSH_USER  </td>
@@ -170,6 +170,12 @@ subjects:
     <td> Name of target node, subjected to chaos. If not provided, the experiment will lookup the node that hosts the pod running based on the `appInfo` details section in the `ChaosEngine`. If provided, it also requires the `TARGET_NODE_IP` to be populated.</td>
     <td> Optional </td>
     <td> Defaults to empty </td>
+  </tr>
+  <tr>
+    <td> NODE_LABEL </td>
+    <td> It contains node label, which will be used to filter the target nodes if TARGET_NODE ENV is not set </td>
+    <td> Optional </td>
+    <td> </td>
   </tr>
   <tr>
     <td> TARGET_NODE_IP </td>
