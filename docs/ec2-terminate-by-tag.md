@@ -212,7 +212,6 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
-  annotationCheck: 'false'
   engineState: 'active'
   chaosServiceAccount: ec2-terminate-by-tag-sa
   # It can be retain/delete

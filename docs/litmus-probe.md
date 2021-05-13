@@ -36,6 +36,8 @@ All probes share some common attributes:
 - **initialDelaySeconds:** Represents the initial waiting time interval for the probes.
 
 
+<strong>NOTE:</strong> If probe needs any additional RBAC permissions other than the experiment's serviceAccount(&lt;experiment-name&gt;-sa) permissions. In that case the additional permissions should be provided inside the corresponding Role/ClusterRole bind with the serviceAccount(&lt;experiment-name&gt;-sa). 
+
 ## Types of Litmus Probes
 
 ### httpProbe
@@ -210,8 +212,6 @@ Events:
 
 Probe chaining enables reuse of probe a result (represented by the template function `{{ .<probeName>.probeArtifact.Register}}`) in subsequent "downstream" probes defined 
 in the ChaosEngine. Note that the order of execution of probes in the experiment depends purely on the order in which they are defined in the ChaosEngine. 
-
-Probe chaining is currently supported only for `cmdProbes`. 
   
 ```yaml
 probe:
