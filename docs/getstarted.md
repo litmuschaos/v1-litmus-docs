@@ -36,7 +36,7 @@ Running chaos on your application involves the following steps:
 Apply the LitmusChaos Operator manifest:
  
 ```
-kubectl apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.13.3.yaml
+kubectl apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.13.5.yaml
 ```
 
 The above command installs all the CRDs, required service account configuration, and chaos-operator. 
@@ -217,24 +217,6 @@ subjects:
   name: pod-delete-sa
   namespace: nginx
 ```
-
-
-### Annotate your application
-
-Your application has to be annotated with `litmuschaos.io/chaos="true"`. As a security measure, and also as a means
-to reduce blast radius the ChaosOperator checks for this annotation before invoking chaos experiment(s) on the application.
-Replace `nginx` with the name of your deployment.
-
-<div class="danger">
-<strong>NOTE</strong>:
-Litmus supports chaos on deployments, statefulsets & daemonsets. This example refers to a nginx deploymemt. In case
-of other types, please use the appropriate resource/resource-name convention (say, `sts/kafka` or `ds/node-device-manager`, for example).
-</div>
-
-```console
-kubectl annotate deploy/nginx litmuschaos.io/chaos="true" -n nginx
-```
-
 ### Prepare ChaosEngine
 
 ChaosEngine connects the application instance to a Chaos Experiment. Copy the following YAML snippet into a file called
@@ -328,7 +310,7 @@ kubectl delete chaosengine --all -n <namespace>
 ```
 
 ```console
-kubectl delete -f https://litmuschaos.github.io/litmus/litmus-operator-v1.12.0.yaml
+kubectl delete -f https://litmuschaos.github.io/litmus/litmus-operator-v1.13.5.yaml
 ```
 
 **NOTE**
