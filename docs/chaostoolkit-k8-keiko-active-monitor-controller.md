@@ -207,7 +207,6 @@ spec:
     appns: 'default'
     applabel: 'app=nginx'
     appkind: 'deployment'
-  annotationCheck: 'true'
   engineState: 'active'
   chaosServiceAccount: k8-pod-delete-sa
   jobCleanUpPolicy: 'retain'

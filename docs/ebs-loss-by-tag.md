@@ -1,7 +1,7 @@
 ---
-id: ec2-terminate-by-id
-title: EC2 Terminate By ID Experiment Details
-sidebar_label: EC2 Terminate By ID
+id: ebs-loss-by-tag
+title: EBS Loss By Tag Experiment Details
+sidebar_label: EBS Loss By Tag
 ---
 ------
 
@@ -10,27 +10,23 @@ sidebar_label: EC2 Terminate By ID
 <table>
   <tr>
     <th> Type </th>
-    <th> Description  </th>
+    <th>  Description  </th>
     <th> Tested K8s Platform </th>
   </tr>
   <tr>
     <td> Kube AWS </td>
-    <td> Termination of an EC2 instance by id for a certain chaos duration</td>
+    <td> EBS volume loss by Tag against specified application </td>
     <td> EKS </td>
   </tr>
 </table>
 
-### WARNING
-```
-If the target EC2 instance is a part of a self-managed nodegroup:
-Make sure to drain the target node if any application is running on it and also ensure to cordon the target node before running the experiment so that the experiment pods do not schedule on it. 
-```
 ## Prerequisites
 
 - Ensure that Kubernetes Version > 1.15
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `ec2-terminate-by-id` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/kube-aws/ec2-terminate-by-id/experiment.yaml)
-- Ensure that you have sufficient AWS access to stop and start an ec2 instance. 
+- Ensure that the `ebs-loss-by-tag` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/kube-aws/ebs-loss-by-tag/experiment.yaml)
+- Ensure that you have sufficient AWS access to attach or detach an ebs volume from the instance.
+- Ensure the target volume to detach should not be the root volume from instance.
 - Ensure to create a Kubernetes secret having the AWS access configuration(key) in the `CHAOS_NAMESPACE`. A sample secret file looks like:
 
 ```yaml
@@ -53,21 +49,24 @@ ENV value on `experiment.yaml`with the same name.
 
 ## Entry-Criteria
 
--   EC2 instance is healthy before chaos injection.
+- Application pods are healthy before chaos injection
+- EBS volume is attached to the instance.
 
 ## Exit-Criteria
 
--   EC2 instance is healthy post chaos injection.
+-  Application pods are healthy post chaos injection 
+-  EBS volume is attached to the instance.
 
 ## Details
 
--   Causes termination of an EC2 instance by instance ID or list of instance IDs before bringing it back to running state after the specified chaos duration. 
--   It helps to check the performance of the application/process running on the ec2 instance.
--   When the `MANAGED_NODEGROUP` is enable then the experiment will not try to start the instance post chaos instead it will check of the addition of the new node instance to the cluster.
+-  Causes chaos to disrupt state of infra resources ebs volume loss from node or ec2 instance for a certain chaos duration using a common volume tag.
+-  In case of persistent volumes on top of EBS, the volumes can get self-attached and experiment skips the attachment procees in this case.
+-  Tests deployment sanity (replica availability & uninterrupted service) and recovery workflows of the application pod.
 
 ## Integrations
 
--   EC2 Terminate can be effected using the chaos library: `litmus`, which makes use of aws sdk to start/stop an EC2 instance. 
+-   EBS Loss by tag can be effected using the chaos library: `litmus`, which makes use of aws sdk to attach/detach an ebs volume from the target instance. 
+    specified capacity on the node.
 -   The desired chaoslib can be selected by setting the above options as value for the env variable `LIB`
 
 ## Steps to Execute the Chaos Experiment
@@ -82,24 +81,24 @@ ENV value on `experiment.yaml`with the same name.
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kube-aws/ec2-terminate-by-id/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kube-aws/ebs-loss-by-tag/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: ec2-terminate-by-id-sa
+  name: ebs-loss-by-tag-sa
   namespace: default
   labels:
-    name: ec2-terminate-by-id-sa
+    name: ebs-loss-by-tag-sa
     app.kubernetes.io/part-of: litmus
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: ec2-terminate-by-id-sa
+  name: ebs-loss-by-tag-sa
   labels:
-    name: ec2-terminate-by-id-sa
+    name: ebs-loss-by-tag-sa
     app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: [""]
@@ -114,24 +113,21 @@ rules:
 - apiGroups: ["litmuschaos.io"]
   resources: ["chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update"]
-- apiGroups: [""]
-  resources: ["nodes"]
-  verbs: ["patch","get","list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: ec2-terminate-by-id-sa
+  name: ebs-loss-by-tag-sa
   labels:
-    name: ec2-terminate-by-id-sa
+    name: ebs-loss-by-tag-sa
     app.kubernetes.io/part-of: litmus
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: ec2-terminate-by-id-sa
+  name: ebs-loss-by-tag-sa
 subjects:
 - kind: ServiceAccount
-  name: ec2-terminate-by-id-sa
+  name: ebs-loss-by-tag-sa
   namespace: default
 ```
 
@@ -152,38 +148,26 @@ subjects:
     <th> Notes </th>
   </tr>
   <tr> 
-    <td> EC2_INSTANCE_ID </td>
-    <td> Instance ID of the target ec2 instance. Multiple IDs can also be provided as a comma(,) separated values</td>
-    <td> Optional </td>
-    <td> Multiple IDs can be provided as `id1,id2` </td>
+     <td> EBS_VOLUME_ID </td>
+    <td> Comma separated list of volume IDs subjected to ebs detach chaos</td>
+    <td> Mandatory </td>
+    <td>  </td>
   </tr>
   <tr> 
     <td> TOTAL_CHAOS_DURATION </td>
-    <td> The total time duration for chaos insertion (sec) </td>
+    <td> The time duration for chaos insertion (sec) </td>
     <td> Optional </td>
     <td> Defaults to 30s </td>
   </tr>
   <tr> 
     <td> CHAOS_INTERVAL </td>
-    <td> The interval (in sec) between successive instance termination.</td>
+    <td> The time duration between the attachment and detachment of the volumes (sec) </td>
     <td> Optional </td>
     <td> Defaults to 30s </td>
   </tr>  
-  <tr> 
-    <td> MANAGED_NODEGROUP </td>
-    <td> Set to <code>enable</code> if the target instance is the part of self-managed nodegroups </td>
-    <td> Optional </td>
-    <td> Defaults to <code>disable</code> </td>
-  </tr>  
-  <tr>
-    <td> SEQUENCE </td>
-    <td> It defines sequence of chaos execution for multiple instance</td>
-    <td> Optional </td>
-    <td> Default value: parallel. Supported: serial, parallel </td>
-  </tr>  
   <tr>
     <td> REGION </td>
-    <td> The region name of the target instace</td>
+    <td> The region name for the target volumes</td>
     <td> Optional </td>
     <td> </td>
   </tr> 
@@ -198,7 +182,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kube-aws/ec2-terminate-by-id/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kube-aws/ebs-loss-by-tag/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -207,11 +191,12 @@ metadata:
   namespace: default
 spec:
   engineState: 'active'
-  chaosServiceAccount: ec2-terminate-by-id-sa
+  annotationCheck: 'false'
+  chaosServiceAccount: ebs-loss-by-tag-sa
   # It can be retain/delete
   jobCleanUpPolicy: 'delete'
   experiments:
-    - name: ec2-terminate-by-id
+    - name: ebs-loss-by-tag
       spec:
         components:
           env: 
@@ -219,22 +204,17 @@ spec:
             - name: TOTAL_CHAOS_DURATION
               value: '30'
 
-            # set interval duration (in sec) as desired
             - name: CHAOS_INTERVAL
               value: '30'
 
-             # Instance ID of the target ec2 instance
-             # Multiple IDs can also be provided as comma separated values ex: id1,id2
-            - name: EC2_INSTANCE_ID
-              value: ''
+            # provide EBS volume tag attached to the given instance
+            # it'll be in form of key:value (ex: 'team:devops')
+            - name: EBS_VOLUME_TAG
+              value: ''              
               
             # provide the region name of the instance
             - name: REGION
               value: ''
-
-            # enable it if the target instance is a part of self-managed nodegroup.
-            - name: MANAGED_NODEGROUP
-              value: 'disable'              
 ```
 
 ### Create the ChaosEngine Resource
@@ -247,19 +227,23 @@ spec:
   section to identify the root cause and fix the issues.
 
 ### Watch Chaos progress
+
+- View the status of the pods as they are subjected to ebs loss. 
+
+  `watch -n 1 kubectl get pods -n <application-namespace>`
   
-- Monitor the ec2 state from AWS CLI.
+- Monitor the attachment status for ebs volume from AWS CLI.
 
-  `aws ec2 describe-instance-status --instance-ids <instance-id>`
+  `aws ec2 describe-volumes --volume-ids <vol-id>`
 
--  You can also use aws console to keep a watch over the instance state.   
+-  You can also use aws console to keep a watch over ebs attachment status.   
 
 ### Check Chaos Experiment Result
 
-- Check whether the application is resilient to the ec2-terminate-by-id, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
+- Check whether the application is resilient to the ebs loss, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult nginx-chaos-ec2-terminate-by-id -n <application-namespace>`
+  `kubectl describe chaosresult nginx-chaos-ebs-loss-by-tag -n <application-namespace>`
 
-### EC2 Terminate Experiment Demo
+### EBS Loss Experiment Demo
 
 - A sample recording of this experiment execution will be added soon.

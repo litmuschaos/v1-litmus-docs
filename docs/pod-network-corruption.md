@@ -21,6 +21,8 @@ sidebar_label: Pod Network Corruption
 </table>
 
 ## Prerequisites
+
+- Ensure that Kubernetes Version > 1.15
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `pod-network-corruption` experiment resource is available in the cluster by `kubectl get chaosexperiments` command. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/pod-network-corruption/experiment.yaml)
 -  Cluster must run docker container runtime
@@ -241,8 +243,6 @@ metadata:
 spec:
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
-  # It can be true/false
-  annotationCheck: 'false'
   # It can be active/stop
   engineState: 'active'
   appinfo: 

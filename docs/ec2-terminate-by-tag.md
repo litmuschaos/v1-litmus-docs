@@ -27,7 +27,7 @@ Make sure to drain the target node if any application is running on it and also 
 ```
 ## Prerequisites
 
-- Ensure that Kubernetes Version > 1.13
+- Ensure that Kubernetes Version > 1.15
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `ec2-terminate-by-tag` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/kube-aws/ec2-terminate-by-tag/experiment.yaml)
 - Ensure that you have sufficient AWS access to stop and start an ec2 instance. 
@@ -212,7 +212,6 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
-  annotationCheck: 'false'
   engineState: 'active'
   chaosServiceAccount: ec2-terminate-by-tag-sa
   # It can be retain/delete

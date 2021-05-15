@@ -7,7 +7,7 @@ sidebar_label: Introduction
 
 ## Pre-requisites
 
-Kubernetes 1.11 or later.
+Kubernetes 1.15 or later.
 
 ## Getting Started
 
@@ -36,7 +36,7 @@ Running chaos on your application involves the following steps:
 Apply the LitmusChaos Operator manifest:
  
 ```
-kubectl apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.12.0.yaml
+kubectl apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.13.3.yaml
 ```
 
 The above command installs all the CRDs, required service account configuration, and chaos-operator. 
@@ -255,8 +255,6 @@ spec:
     appns: 'nginx'
     applabel: 'app=nginx'
     appkind: 'deployment'
-  # It can be true/false
-  annotationCheck: 'true'
   # It can be active/stop
   engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx
