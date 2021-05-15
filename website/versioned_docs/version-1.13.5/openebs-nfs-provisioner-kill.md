@@ -25,7 +25,7 @@ original_id: openebs-nfs-provisioner-kill
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 
-- Ensure that the `openebs-nfs-provisioner-kill` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the `openebs` namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/openebs/openebs-nfs-provisioner-kill/experiment.yaml)
+- Ensure that the `openebs-nfs-provisioner-kill` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the `openebs` namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.5?file=charts/openebs/openebs-nfs-provisioner-kill/experiment.yaml)
 
 - The "DATA_PERSISTENCE" env variable takes effect only if the "EXTERNAL_APP_CHECK" is enabled. A stateful busybox deployment is used to create and validate data persistence on the RMW NFS persistent volumes.
 
@@ -76,7 +76,7 @@ Use this sample RBAC manifest to create a chaosServiceAccount in the desired nam
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/openebs-nfs-provisioner-kill/rbac.yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/v1.13.x/charts/openebs/openebs-nfs-provisioner-kill/rbac.yaml)
 ```yaml
 ---
 apiVersion: v1
@@ -167,7 +167,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/openebs/openebs-nfs-provisioner-kill/engine.yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/v1.13.x/charts/openebs/openebs-nfs-provisioner-kill/engine.yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
