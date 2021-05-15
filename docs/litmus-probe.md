@@ -36,7 +36,7 @@ All probes share some common attributes:
 - **initialDelaySeconds:** Represents the initial waiting time interval for the probes.
 
 
-<strong>NOTE:</strong> If probe needs any additional RBAC permissions other than the experiment's serviceAccount(&lt;experiment-name&gt;-sa) permissions. In that case the additional permissions should be provided inside the corresponding Role/ClusterRole bind with the serviceAccount(&lt;experiment-name&gt;-sa). 
+<strong>NOTE:</strong> If probe needs any additional RBAC permissions other than the experiment's serviceAccount(&lt;experiment-name&gt;-sa) permissions, then the additional permissions should be provided inside the corresponding Role/ClusterRole bind with the serviceAccount(&lt;experiment-name&gt;-sa). 
 
 ## Types of Litmus Probes
 
