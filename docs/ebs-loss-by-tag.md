@@ -1,7 +1,7 @@
 ---
-id: ebs-loss
-title: EBS Loss Experiment Details
-sidebar_label: EBS Loss
+id: ebs-loss-by-tag
+title: EBS Loss By Tag Experiment Details
+sidebar_label: EBS Loss By Tag
 ---
 ------
 
@@ -15,17 +15,18 @@ sidebar_label: EBS Loss
   </tr>
   <tr>
     <td> Kube AWS </td>
-    <td> EBS volume loss against specified application </td>
+    <td> EBS volume loss by Tag against specified application </td>
     <td> EKS </td>
   </tr>
 </table>
 
 ## Prerequisites
 
-- Ensure that Kubernetes Version > 1.13
+- Ensure that Kubernetes Version > 1.15
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `ebs-loss` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/kube-aws/ebs-loss/experiment.yaml)
+- Ensure that the `ebs-loss-by-tag` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/kube-aws/ebs-loss-by-tag/experiment.yaml)
 - Ensure that you have sufficient AWS access to attach or detach an ebs volume from the instance.
+- Ensure the target volume to detach should not be the root volume for the instance.
 - Ensure to create a Kubernetes secret having the AWS access configuration(key) in the `CHAOS_NAMESPACE`. A sample secret file looks like:
 
 ```yaml
@@ -48,21 +49,23 @@ ENV value on `experiment.yaml`with the same name.
 
 ## Entry-Criteria
 
--   Application pods are healthy before chaos injection also ebs volume is attached to the instance.
+- Application pods are healthy before chaos injection
+- EBS volume is attached to the instance.
 
 ## Exit-Criteria
 
--   Application pods are healthy post chaos injection and ebs volume is attached to the instance.
+-  Application pods are healthy post chaos injection 
+-  EBS volume is attached to the instance.
 
 ## Details
 
--   Causes chaos to disrupt state of infra resources ebs volume loss from node or ec2 instance for a certain chaos duration.
--   Causes Pod to get Evicted if the Pod exceeds it Ephemeral Storage Limit.
--   Tests deployment sanity (replica availability & uninterrupted service) and recovery workflows of the application pod
+-  Causes chaos to disrupt state of ebs volume by detaching it from the node/ec2 instance for a certain chaos duration using volume tags.
+-  In case of EBS persistent volumes, the volumes can get self-attached and experiment skips the re-attachment step.
+-  Tests deployment sanity (replica availability & uninterrupted service) and recovery workflows of the application pod.
 
 ## Integrations
 
--   EBS Loss can be effected using the chaos library: `litmus`, which makes use of aws sdk to attach/detach an ebs volume from the target instance. 
+-   EBS Loss by tag can be effected using the chaos library: `litmus`, which makes use of aws sdk to attach/detach an ebs volume from the target instance. 
     specified capacity on the node.
 -   The desired chaoslib can be selected by setting the above options as value for the env variable `LIB`
 
@@ -78,24 +81,24 @@ ENV value on `experiment.yaml`with the same name.
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kube-aws/ebs-loss/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kube-aws/ebs-loss-by-tag/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: ebs-loss-sa
+  name: ebs-loss-by-tag-sa
   namespace: default
   labels:
-    name: ebs-loss-sa
+    name: ebs-loss-by-tag-sa
     app.kubernetes.io/part-of: litmus
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: ebs-loss-sa
+  name: ebs-loss-by-tag-sa
   labels:
-    name: ebs-loss-sa
+    name: ebs-loss-by-tag-sa
     app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: [""]
@@ -114,17 +117,17 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: ebs-loss-sa
+  name: ebs-loss-by-tag-sa
   labels:
-    name: ebs-loss-sa
+    name: ebs-loss-by-tag-sa
     app.kubernetes.io/part-of: litmus
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: ebs-loss-sa
+  name: ebs-loss-by-tag-sa
 subjects:
 - kind: ServiceAccount
-  name: ebs-loss-sa
+  name: ebs-loss-by-tag-sa
   namespace: default
 ```
 
@@ -145,32 +148,32 @@ subjects:
     <th> Notes </th>
   </tr>
   <tr> 
-    <td> EC2_INSTANCE_ID </td>
-    <td> Instance Id of the target ec2 instance.</td>
+     <td> EBS_VOLUME_TAG </td>
+    <td> provide the common tag for target volumes. It'll be in form of `key:value` (Ex: 'team:devops')</td>
     <td> Mandatory </td>
     <td>  </td>
-  </tr>
-  <tr> 
-     <td> EBS_VOL_ID </td>
-    <td> The EBS volume id attached to the given instance </td>
-    <td> Mandatory </td>
-    <td>  </td>
-  </tr>
-  <tr> 
-     <td> DEVICE_NAME </td>
-    <td> The device name which you wanted to mount</td>
-    <td> Mandatory </td>
-    <td> Defaults to '/dev/sdb'</td>
   </tr>
   <tr> 
     <td> TOTAL_CHAOS_DURATION </td>
     <td> The time duration for chaos insertion (sec) </td>
     <td> Optional </td>
-    <td> Defaults to 60s </td>
+    <td> Defaults to 30s </td>
   </tr>
+  <tr> 
+    <td> CHAOS_INTERVAL </td>
+    <td> The time duration between the attachment and detachment of the volumes (sec) </td>
+    <td> Optional </td>
+    <td> Defaults to 30s </td>
+  </tr>  
+  <tr>
+    <td> VOLUME_AFFECTED_PERC </td>
+    <td> The Percentage of total ebs volumes to target  </td>
+    <td> Optional </td>
+    <td> Defaults to 0 (corresponds to 1 volume), provide numeric value only </td>
+  </tr>   
   <tr>
     <td> REGION </td>
-    <td> The region name of the target instance</td>
+    <td> The region name for the target volumes</td>
     <td> Optional </td>
     <td> </td>
   </tr> 
@@ -185,7 +188,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kube-aws/ebs-loss/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kube-aws/ebs-loss-by-tag/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -194,29 +197,26 @@ metadata:
   namespace: default
 spec:
   engineState: 'active'
-  chaosServiceAccount: ebs-loss-sa
+  annotationCheck: 'false'
+  chaosServiceAccount: ebs-loss-by-tag-sa
   # It can be retain/delete
   jobCleanUpPolicy: 'delete'
   experiments:
-    - name: ebs-loss
+    - name: ebs-loss-by-tag
       spec:
         components:
           env: 
             # set chaos duration (in sec) as desired
             - name: TOTAL_CHAOS_DURATION
-              value: '60'
+              value: '30'
 
-            # Instance ID of the target ec2 instance 
-            - name: EC2_INSTANCE_ID
-              value: ''
+            - name: CHAOS_INTERVAL
+              value: '30'
 
-            # provide EBS volume id attached to the given instance
-            - name: EBS_VOL_ID
+            # provide EBS volume tag attached to the given instance
+            # it'll be in form of key:value (ex: 'team:devops')
+            - name: EBS_VOLUME_TAG
               value: ''              
-
-            # Enter the device name which you wanted to mount only for AWS.   
-            - name: DEVICE_NAME
-              value: '/dev/sdb'
               
             # provide the region name of the instance
             - name: REGION
@@ -240,7 +240,7 @@ spec:
   
 - Monitor the attachment status for ebs volume from AWS CLI.
 
-  `aws ec2 describe-volumes --volume-ids <vol-id>`
+  `aws ec2 describe-volumes --filters Name=tag:Name,Values=Test* --query "Volumes[*].{ID:VolumeId,Tag:Tags}"`
 
 -  You can also use aws console to keep a watch over ebs attachment status.   
 
@@ -248,7 +248,7 @@ spec:
 
 - Check whether the application is resilient to the ebs loss, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult nginx-chaos-ebs-loss -n <application-namespace>`
+  `kubectl describe chaosresult nginx-chaos-ebs-loss-by-tag -n <application-namespace>`
 
 ### EBS Loss Experiment Demo
 
