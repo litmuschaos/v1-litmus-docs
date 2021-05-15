@@ -255,8 +255,6 @@ spec:
     appns: 'nginx'
     applabel: 'app=nginx'
     appkind: 'deployment'
-  # It can be true/false
-  annotationCheck: 'true'
   # It can be active/stop
   engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx

@@ -193,7 +193,6 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
-  annotationCheck: 'false'
   engineState: 'active'
   chaosServiceAccount: ebs-loss-sa
   # It can be retain/delete
