@@ -331,7 +331,7 @@ kubectl delete chaosengine --all -n <namespace>
 ```
 
 ```console
-kubectl delete -f https://litmuschaos.github.io/litmus/litmus-operator-v1.12.0.yaml
+kubectl delete -f https://litmuschaos.github.io/litmus/litmus-operator-v1.13.5.yaml
 ```
 
 **NOTE**
