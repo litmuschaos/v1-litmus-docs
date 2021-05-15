@@ -204,6 +204,8 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
+  # It can be true/false
+  annotationCheck: 'false'
   # It can be active/stop
   engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx 

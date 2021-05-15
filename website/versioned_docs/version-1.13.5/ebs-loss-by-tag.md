@@ -197,6 +197,7 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
+  annotationCheck: 'false'
   engineState: 'active'
   annotationCheck: 'false'
   chaosServiceAccount: ebs-loss-by-tag-sa

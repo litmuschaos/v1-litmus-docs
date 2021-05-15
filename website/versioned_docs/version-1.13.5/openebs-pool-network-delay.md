@@ -210,6 +210,7 @@ metadata:
   name: pool-chaos
   namespace: default
 spec:
+  annotationCheck: 'false'
   appinfo:
     appns: 'default'
     applabel: 'app=nginx'

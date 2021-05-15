@@ -200,6 +200,7 @@ spec:
     appns: 'default'
     applabel: "app=prometheus"
     appkind: deployment
+  annotationCheck: 'false'
   engineState: 'active'
   chaosServiceAccount: chaos-admin
   jobCleanUpPolicy: 'retain'

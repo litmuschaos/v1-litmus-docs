@@ -200,6 +200,7 @@ spec:
     appns: 'default'
     applabel: "k8s-app=wavefront-collector"
     appkind: deployment
+  annotationCheck: 'false'
   engineState: 'active'
   chaosServiceAccount: chaos-admin
   jobCleanUpPolicy: 'retain'

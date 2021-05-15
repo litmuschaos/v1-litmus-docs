@@ -300,6 +300,8 @@ metadata:
   name: nginx-chaos
   namespace: nginx
 spec:
+  # It can be true/false
+  annotationCheck: 'true'
   # It can be active/stop
   engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx 
@@ -329,7 +331,7 @@ spec:
               value: '20'
 
             - name: LIB_IMAGE  
-              value: 'litmuschaos/go-runner:latest' 
+              value: 'litmuschaos/go-runner:1.13.5' 
 
             # provide the name of container runtime
             # it supports docker, containerd, crio
