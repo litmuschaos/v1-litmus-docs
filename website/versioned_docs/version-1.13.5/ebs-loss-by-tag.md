@@ -171,7 +171,13 @@ subjects:
     <td> The Percentage of total ebs volumes to target  </td>
     <td> Optional </td>
     <td> Defaults to 0 (corresponds to 1 volume), provide numeric value only </td>
-  </tr>   
+  </tr>  
+  <tr>
+    <td> SEQUENCE </td>  
+    <td> It defines sequence of chaos injection in case of multiple target volumes</td>
+    <td> Optional </td>
+    <td> Default value: parallel; Supported: serial, parallel </td>
+  </tr> 
   <tr>
     <td> REGION </td>
     <td> The region name for the target volumes</td>

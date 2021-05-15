@@ -165,7 +165,13 @@ subjects:
     <td> The time duration between the attachment and detachment of the volumes (sec) </td>
     <td> Optional </td>
     <td> Defaults to 30s </td>
-  </tr>  
+  </tr> 
+  <tr>
+    <td> SEQUENCE </td>  
+    <td> It defines sequence of chaos injection in case of multiple target volumes</td>
+    <td> Optional </td>
+    <td> Default value: parallel; Supported: serial, parallel </td>
+  </tr> 
   <tr>
     <td> REGION </td>
     <td> The region name for the target volumes</td>
