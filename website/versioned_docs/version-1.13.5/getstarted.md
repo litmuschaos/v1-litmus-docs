@@ -37,7 +37,7 @@ Running chaos on your application involves the following steps:
 Apply the LitmusChaos Operator manifest:
  
 ```
-kubectl apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.13.3.yaml
+kubectl apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.13.5.yaml
 ```
 
 The above command installs all the CRDs, required service account configuration, and chaos-operator. 
@@ -141,7 +141,7 @@ The generic chaos experiments such as `pod-delete`,  `container-kill`,` pod-netw
 This is the first chart you are recommended to install.
 
 ```
-kubectl apply -f https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/experiments.yaml -n nginx
+kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.13.5?file=charts/generic/experiments.yaml -n nginx
 ```
 
 Verify if the chaos experiments are installed.
@@ -161,7 +161,7 @@ into a `rbac.yaml` manifest and run `kubectl apply -f rbac.yaml` to create one s
 the [chaos-charts](https://github.com/litmuschaos/chaos-charts/tree/master/charts/generic/container-kill) repository.
 
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-delete/rbac_nginx_getstarted.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/v1.13.x/charts/generic/pod-delete/rbac_nginx_getstarted.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
@@ -244,7 +244,7 @@ Change the `chaosServiceAccount` to the name of service account created in above
 
 <strong> NOTE:</strong> To learn more about the various fields in the ChaosEngine spec and their supported values, refer to [Constructing ChaosEngine](https://docs.litmuschaos.io/docs/chaosengine/)
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-delete/engine_nginx_getstarted.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/v1.13.x/charts/generic/pod-delete/engine_nginx_getstarted.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -256,6 +256,8 @@ spec:
     appns: 'nginx'
     applabel: 'app=nginx'
     appkind: 'deployment'
+  # It can be true/false
+  annotationCheck: 'true'
   # It can be active/stop
   engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx
