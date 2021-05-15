@@ -148,8 +148,8 @@ subjects:
     <th> Notes </th>
   </tr>
   <tr> 
-     <td> EBS_VOLUME_ID </td>
-    <td> Comma separated list of volume IDs subjected to ebs detach chaos</td>
+     <td> EBS_VOLUME_TAG </td>
+    <td> provide the common tag for target volumes. It'll be in form of `key:value` (Ex: 'team:devops')</td>
     <td> Mandatory </td>
     <td>  </td>
   </tr>
@@ -165,6 +165,12 @@ subjects:
     <td> Optional </td>
     <td> Defaults to 30s </td>
   </tr>  
+  <tr>
+    <td> VOLUME_AFFECTED_PERC </td>
+    <td> The Percentage of total ebs volumes to target  </td>
+    <td> Optional </td>
+    <td> Defaults to 0 (corresponds to 1 volume), provide numeric value only </td>
+  </tr>   
   <tr>
     <td> REGION </td>
     <td> The region name for the target volumes</td>
