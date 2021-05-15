@@ -158,7 +158,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> The image used to poweroff the node </td>
     <td> Optional </td>
-    <td> Defaults to `litmuschaos/go-runner:latest` </td>
+    <td> Defaults to `litmuschaos/go-runner:1.13.5` </td>
   </tr>
   <tr>
     <td> SSH_USER  </td>

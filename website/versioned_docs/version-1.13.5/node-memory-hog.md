@@ -159,7 +159,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> Image used to run the stress command </td>
     <td> Optional  </td>
-    <td> Defaults to <code>litmuschaos/go-runner:latest</code> </td>
+    <td> Defaults to <code>litmuschaos/go-runner:1.13.5</code> </td>
   </tr>
     <tr>
     <td> MEMORY_CONSUMPTION_PERCENTAGE </td>
@@ -273,7 +273,7 @@ metadata:
 spec:
   containers:
   - name: myhtop
-    image: litmuschaos/go-runner:latest
+    image: litmuschaos/go-runner:1.13.5
     imagePullPolicy: Always
     command: ['sh', '-c', 'sleep 3600']
   nodeName: kube-01 ## Replace this with the target node name...

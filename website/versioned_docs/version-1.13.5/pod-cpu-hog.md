@@ -159,7 +159,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> Image used to run the pumba helper pod. Only used in LIB <code>pumba</code></td>
     <td> Optional  </td>
-    <td> Default to <code>litmuschaos/go-runner:latest</code> </td>
+    <td> Default to <code>litmuschaos/go-runner:1.13.5</code> </td>
   </tr>
    <tr>
     <td> STRESS_IMAGE  </td>
