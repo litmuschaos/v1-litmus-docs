@@ -25,8 +25,8 @@ sidebar_label: EBS Loss By ID
 - Ensure that Kubernetes Version > 1.15
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `ebs-loss-by-id` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/kube-aws/ebs-loss-by-id/experiment.yaml)
-- Ensure that you have sufficient AWS access to attach or detach an ebs volume from the instance.
-- Ensure the target volume to detach should not be the root volume from instance.
+- Ensure that you have sufficient AWS access to attach or detach an ebs volume for the instance.
+- Ensure the target volume to detach should not be the root volume for the instance.
 - Ensure to create a Kubernetes secret having the AWS access configuration(key) in the `CHAOS_NAMESPACE`. A sample secret file looks like:
 
 ```yaml
@@ -59,8 +59,8 @@ ENV value on `experiment.yaml`with the same name.
 
 ## Details
 
--  Causes chaos to disrupt state of infra resources ebs volume loss from node or ec2 instance for a certain chaos duration using volume id.
--  In case of persistent volumes on top of EBS, the volumes can get self-attached and experiment skips the attachment procees in this case.
+-  Causes chaos to disrupt state of ebs volume by detaching it from the node/ec2 instance for a certain chaos duration using volume id.
+-  In case of EBS persistent volumes, the volumes can get self-attached and experiment skips the re-attachment step.
 -  Tests deployment sanity (replica availability & uninterrupted service) and recovery workflows of the application pod.
 
 ## Integrations
