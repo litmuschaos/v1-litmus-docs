@@ -241,8 +241,6 @@ metadata:
   name: nginx-network-chaos
   namespace: default
 spec:
-  # It can be delete/retain
-  jobCleanUpPolicy: 'delete'
   # It can be active/stop
   engineState: 'active'
   appinfo: 

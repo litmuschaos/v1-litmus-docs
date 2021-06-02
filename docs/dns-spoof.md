@@ -54,22 +54,23 @@ sidebar_label: Pod DNS Spoof
 
 [embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-dns-error/rbac.yaml yaml)
 ```yaml
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: pod-dns-spoof-sa
+  name: pod-dns-error-sa
   namespace: default
   labels:
-    name: pod-dns-spoof-sa
+    name: pod-dns-error-sa
     app.kubernetes.io/part-of: litmus
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: pod-dns-spoof-sa
+  name: pod-dns-error-sa
   namespace: default
   labels:
-    name: pod-dns-spoof-sa
+    name: pod-dns-error-sa
     app.kubernetes.io/part-of: litmus
 rules:
   - apiGroups: [""]
@@ -98,18 +99,18 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: pod-dns-spoof-sa
+  name: pod-dns-error-sa
   namespace: default
   labels:
-    name: pod-dns-spoof-sa
+    name: pod-dns-error-sa
     app.kubernetes.io/part-of: litmus
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: pod-dns-spoof-sa
+  name: pod-dns-error-sa
 subjects:
   - kind: ServiceAccount
-    name: pod-dns-spoof-sa
+    name: pod-dns-error-sa
     namespace: default
 ```
 
@@ -201,7 +202,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-dns-dns/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-dns-spoof/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine

@@ -268,8 +268,6 @@ spec:
     applabel: 'app=nginx'
     appkind: 'deployment'
   chaosServiceAccount: pool-disk-loss-sa
-  # It can be delete/retain
-  jobCleanUpPolicy: 'delete'
   experiments:
     - name: openebs-pool-disk-loss
       spec:

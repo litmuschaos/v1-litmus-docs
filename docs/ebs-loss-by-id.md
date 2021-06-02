@@ -191,10 +191,7 @@ metadata:
   namespace: default
 spec:
   engineState: 'active'
-  annotationCheck: 'false'
   chaosServiceAccount: ebs-loss-by-id-sa
-  # It can be retain/delete
-  jobCleanUpPolicy: 'delete'
   experiments:
     - name: ebs-loss-by-id
       spec:

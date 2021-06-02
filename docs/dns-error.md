@@ -54,6 +54,7 @@ sidebar_label: Pod DNS Error
 
 [embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-dns-error/rbac.yaml yaml)
 ```yaml
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -144,7 +145,7 @@ subjects:
   </tr>
   <tr>
     <td> TARGET_HOSTNAMES </td>
-    <td> List of the target hostnames or keywords eg. '["litmuschaos","chaosnative.io"]'</td>
+    <td> List of the target hostnames or keywords eg. '["litmuschaos","chaosnative.com"]'</td>
     <td> Optional </td>
     <td> If not provided, all hostnames/domains will be targeted</td>
   </tr> 
@@ -228,7 +229,7 @@ spec:
       spec:
         components:
           env:
-            # list of the target hostnames or keywords eg. '["litmuschaos","chaosnative.io"]' . If empty all hostnames are targets
+            # list of the target hostnames or kewywords eg. '["litmuschaos","chaosnative.io"]' . If empty all hostnames are targets
             - name: TARGET_HOSTNAMES
               value: ""
 
@@ -246,7 +247,6 @@ spec:
             # provide the socket file path
             - name: SOCKET_PATH
               value: "/var/run/docker.sock"
-            
 ```
 
 ### Create the ChaosEngine Resource

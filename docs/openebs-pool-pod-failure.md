@@ -211,8 +211,6 @@ spec:
     applabel: 'app=nginx'
     appkind: 'deployment'
   chaosServiceAccount: pool-pod-failure-sa
-  # It can be delete/retain
-  jobCleanUpPolicy: 'delete'
   experiments:
     - name: openebs-pool-pod-failure
       spec:
