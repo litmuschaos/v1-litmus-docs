@@ -1,4 +1,3 @@
-
 {
   "docs": {
     "Getting Started": [
@@ -24,14 +23,14 @@
       {
         "type": "subcategory",
         "label": "OpenShift",
-        "ids" : [
+        "ids": [
           "openshift-litmus"
         ]
       },
       {
         "type": "subcategory",
         "label": "Rancher",
-        "ids" : [
+        "ids": [
           "rancher-litmus"
         ]
       }
@@ -48,6 +47,8 @@
           "pod-network-corruption",
           "pod-cpu-hog",
           "pod-memory-hog",
+          "pod-dns-error",
+          "pod-dns-spoof",
           "disk-fill",
           "node-cpu-hog",
           "node-memory-hog",
@@ -98,23 +99,23 @@
         "label": "Kafka",
         "ids": [
           "kafka-broker-pod-failure",
-	        "kafka-broker-disk-failure"
+          "kafka-broker-disk-failure"
         ]
       },
       {
         "type": "subcategory",
         "label": "CoreDns",
         "ids": [
-           "coredns-pod-delete"
+          "coredns-pod-delete"
         ]
       },
       {
         "type": "subcategory",
         "label": "Cassandra",
         "ids": [
-           "cassandra-pod-delete"
+          "cassandra-pod-delete"
         ]
-      }, 
+      },
       {
         "type": "subcategory",
         "label": "Kube-Components",
