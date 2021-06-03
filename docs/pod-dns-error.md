@@ -133,7 +133,7 @@ subjects:
   </tr>
   <tr>
     <td> TARGET_CONTAINER  </td>
-    <td> Name of container which is subjected to network loss </td>
+    <td> Name of container which is subjected to dns-error </td>
     <td> Optional </td>
     <td> Applicable for containerd & CRI-O runtime only. Even with these runtimes, if the value is not provided, it injects chaos on the first container of the pod</td>
   </tr>
@@ -151,7 +151,7 @@ subjects:
   </tr> 
   <tr>
     <td> MATCH_SCHEME </td>
-    <td> Determines whether the dns query has to match exactly with one of the targets or can have any of the targets as substring. Can be either `exact` or `substring` </td>
+    <td> Determines whether the dns query has to match exactly with one of the targets or can have any of the targets as substring. Can be either <code>exact</code> or <code>substring</code> </td>
     <td> Optional </td>
     <td> if not provided, it will be set as `exact`</td>
   </tr>     
@@ -165,7 +165,7 @@ subjects:
     <td> CONTAINER_RUNTIME  </td>
     <td> container runtime interface for the cluster</td>
     <td> Optional </td>
-    <td> Defaults to docker, supported values: docker, containerd and crio for litmus and only docker for pumba LIB </td>
+    <td> Defaults to docker, supported values: docker, containerd and crio </td>
   </tr>
   <tr>
     <td> SOCKET_PATH </td>
@@ -177,7 +177,7 @@ subjects:
     <td> LIB </td>
     <td> The chaos lib used to inject the chaos </td>
     <td> Optional  </td>
-    <td> Default value: litmus, supported values: pumba and litmus </td>
+    <td> Default value: litmus, supported values: litmus </td>
   </tr>
   <tr>
     <td> LIB_IMAGE  </td>
@@ -266,7 +266,7 @@ spec:
 
 ### Abort/Restart the Chaos Experiment
 
-- To stop the pod-network-loss experiment immediately, either delete the ChaosEngine resource or execute the following command: 
+- To stop the pod-dns-error experiment immediately, either delete the ChaosEngine resource or execute the following command: 
 
   `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"stop"}}'` 
 
@@ -276,7 +276,6 @@ spec:
 
 ### Check Chaos Experiment Result
 
-- Check whether the application is resilient to the Pod Network Loss, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
+- Check whether the application is resilient to the Pod Dns Chaos, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
   `kubectl describe chaosresult <ChaosEngine-Name>-<ChaosExperiment-Name> -n <application-namespace>`
-
