@@ -37,7 +37,7 @@ sidebar_label: Pod DNS Error
 ## Details
 
 - Pod-dns-error injects chaos to disrupt dns resolution in kubernetes pods.
-- The application pod should be healthy once chaos is stopped. Service-requests should be served despite chaos.
+- The application pod should be healthy once chaos is stopped.
 - Causes loss of access to services by blocking dns resolution of hostnames/domains
 
 ## Steps to Execute the Chaos Experiment
@@ -135,7 +135,7 @@ subjects:
     <td> TARGET_CONTAINER  </td>
     <td> Name of container which is subjected to dns-error </td>
     <td> Optional </td>
-    <td> Applicable for containerd & CRI-O runtime only. Even with these runtimes, if the value is not provided, it injects chaos on the first container of the pod</td>
+    <td> None </td>
   </tr>
   <tr>
     <td> TOTAL_CHAOS_DURATION </td>

@@ -37,7 +37,7 @@ sidebar_label: Pod DNS Spoof
 ## Details
 
 - Pod-dns-spoof injects chaos to spoof dns resolution in kubernetes pods.
-- The application pod should be healthy once chaos is stopped. Service-requests should be served despite chaos.
+- The application pod should be healthy once chaos is stopped.
 - Causes dns resolution of target hostnames/domains to wrong IPs as specified by `SPOOF_MAP` in the engine config.
 
 ## Steps to Execute the Chaos Experiment
@@ -135,7 +135,7 @@ subjects:
     <td> TARGET_CONTAINER  </td>
     <td> Name of container which is subjected to dns spoof </td>
     <td> Optional </td>
-    <td> Applicable for containerd & CRI-O runtime only. Even with these runtimes, if the value is not provided, it injects chaos on the first container of the pod</td>
+    <td> None </td>
   </tr>
   <tr>
     <td> TOTAL_CHAOS_DURATION </td>
@@ -145,7 +145,7 @@ subjects:
   </tr>
   <tr>
     <td> SPOOF_MAP </td>
-    <td> Map of the target hostnames eg. '{"abc.com":"spoofabc.com"}' where key is the hostname that needs to be spoofed and value is the hostname where it will be spoofed to.</td>
+    <td> Map of the target hostnames eg. '{"abc.com":"spoofabc.com"}' where key is the hostname that needs to be spoofed and value is the hostname where it will be spoofed/redirected to.</td>
     <td> Optional </td>
     <td> If not provided, no hostnames/domains will be spoofed</td>
   </tr>    
