@@ -52,25 +52,25 @@ sidebar_label: Pod DNS Spoof
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-dns-error/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-dns-spoof/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: pod-dns-error-sa
+  name: pod-dns-spoof-sa
   namespace: default
   labels:
-    name: pod-dns-error-sa
+    name: pod-dns-spoof-sa
     app.kubernetes.io/part-of: litmus
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: pod-dns-error-sa
+  name: pod-dns-spoof-sa
   namespace: default
   labels:
-    name: pod-dns-error-sa
+    name: pod-dns-spoof-sa
     app.kubernetes.io/part-of: litmus
 rules:
   - apiGroups: [""]
@@ -99,18 +99,18 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: pod-dns-error-sa
+  name: pod-dns-spoof-sa
   namespace: default
   labels:
-    name: pod-dns-error-sa
+    name: pod-dns-spoof-sa
     app.kubernetes.io/part-of: litmus
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: pod-dns-error-sa
+  name: pod-dns-spoof-sa
 subjects:
   - kind: ServiceAccount
-    name: pod-dns-error-sa
+    name: pod-dns-spoof-sa
     namespace: default
 ```
 

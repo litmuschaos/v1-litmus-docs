@@ -153,7 +153,7 @@ subjects:
     <td> MATCH_SCHEME </td>
     <td> Determines whether the dns query has to match exactly with one of the targets or can have any of the targets as substring. Can be either <code>exact</code> or <code>substring</code> </td>
     <td> Optional </td>
-    <td> if not provided, it will be set as `exact`</td>
+    <td> if not provided, it will be set as <code>exact</code></td>
   </tr>     
   <tr>
     <td> PODS_AFFECTED_PERC </td>
