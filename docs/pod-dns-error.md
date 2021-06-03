@@ -1,7 +1,7 @@
 ---
-id: pod-network-loss
-title: Pod Network Loss Experiment Details
-sidebar_label: Pod Network Loss  
+id: pod-dns-error
+title: Pod DNS Error Experiment Details
+sidebar_label: Pod DNS Error 
 ---
 ------
 
@@ -15,8 +15,8 @@ sidebar_label: Pod Network Loss
   </tr>
   <tr>
     <td> Generic </td>
-    <td> Inject Packet Loss Into Application Pod </td>
-    <td> GKE, Packet(Kubeadm), EKS, Minikube > v1.6.0, AKS </td>
+    <td> Injects dns failure/error in target pods </td>
+    <td> EKS, Minikube > v1.6.0</td>
   </tr>
 </table>
 
@@ -24,7 +24,7 @@ sidebar_label: Pod Network Loss
 
 - Ensure that Kubernetes Version > 1.15
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `pod-network-loss` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/pod-network-loss/experiment.yaml)
+- Ensure that the `pod-dns-error` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/pod-dns-error/experiment.yaml)
  
 ## Entry Criteria
 
@@ -36,9 +36,9 @@ sidebar_label: Pod Network Loss
 
 ## Details
 
-- Pod-network-loss injects chaos to disrupt network connectivity to kubernetes pods.
-- The application pod should be healthy once chaos is stopped. Service-requests should be served despite chaos.
-- Causes loss of access to application replica by injecting packet loss using pumba
+- Pod-dns-error injects chaos to disrupt dns resolution in kubernetes pods.
+- The application pod should be healthy once chaos is stopped.
+- Causes loss of access to services by blocking dns resolution of hostnames/domains
 
 ## Steps to Execute the Chaos Experiment
 
@@ -52,64 +52,66 @@ sidebar_label: Pod Network Loss
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-network-loss/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-dns-error/rbac.yaml yaml)
 ```yaml
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: pod-network-loss-sa
+  name: pod-dns-error-sa
   namespace: default
   labels:
-    name: pod-network-loss-sa
+    name: pod-dns-error-sa
     app.kubernetes.io/part-of: litmus
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: pod-network-loss-sa
+  name: pod-dns-error-sa
   namespace: default
   labels:
-    name: pod-network-loss-sa
+    name: pod-dns-error-sa
     app.kubernetes.io/part-of: litmus
 rules:
-- apiGroups: [""]
-  resources: ["pods","events"]
-  verbs: ["create","list","get","patch","update","delete","deletecollection"]
-- apiGroups: [""]
-  resources: ["pods/exec","pods/log","replicationcontrollers"]
-  verbs: ["create","list","get"]
-- apiGroups: ["batch"]
-  resources: ["jobs"]
-  verbs: ["create","list","get","delete","deletecollection"]
-- apiGroups: ["apps"]
-  resources: ["deployments","statefulsets","daemonsets","replicasets"]
-  verbs: ["list","get"]
-- apiGroups: ["apps.openshift.io"]
-  resources: ["deploymentconfigs"]
-  verbs: ["list","get"]
-- apiGroups: ["argoproj.io"]
-  resources: ["rollouts"]
-  verbs: ["list","get"]
-- apiGroups: ["litmuschaos.io"]
-  resources: ["chaosengines","chaosexperiments","chaosresults"]
-  verbs: ["create","list","get","patch","update"]
+  - apiGroups: [""]
+    resources: ["pods", "events"]
+    verbs:
+      ["create", "list", "get", "patch", "update", "delete", "deletecollection"]
+  - apiGroups: [""]
+    resources: ["pods/exec", "pods/log", "replicationcontrollers"]
+    verbs: ["create", "list", "get"]
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    verbs: ["create", "list", "get", "delete", "deletecollection"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "statefulsets", "daemonsets", "replicasets"]
+    verbs: ["list", "get"]
+  - apiGroups: ["apps.openshift.io"]
+    resources: ["deploymentconfigs"]
+    verbs: ["list", "get"]
+  - apiGroups: ["argoproj.io"]
+    resources: ["rollouts"]
+    verbs: ["list", "get"]
+  - apiGroups: ["litmuschaos.io"]
+    resources: ["chaosengines", "chaosexperiments", "chaosresults"]
+    verbs: ["create", "list", "get", "patch", "update"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: pod-network-loss-sa
+  name: pod-dns-error-sa
   namespace: default
   labels:
-    name: pod-network-loss-sa
+    name: pod-dns-error-sa
     app.kubernetes.io/part-of: litmus
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: pod-network-loss-sa
+  name: pod-dns-error-sa
 subjects:
-- kind: ServiceAccount
-  name: pod-network-loss-sa
-  namespace: default
+  - kind: ServiceAccount
+    name: pod-dns-error-sa
+    namespace: default
 ```
 
 ***Note:*** In case of restricted systems/setup, create a PodSecurityPolicy(psp) with the required permissions. The `chaosServiceAccount` can subscribe to work around the respective limitations. An example of a standard psp that can be used for litmus chaos experiments can be found [here](https://docs.litmuschaos.io/docs/next/litmus-psp/).
@@ -130,22 +132,10 @@ subjects:
     <th> Notes </th>
   </tr>
   <tr>
-    <td> NETWORK_INTERFACE </td>
-    <td> Name of ethernet interface considered for shaping traffic  </td>
-    <td> Mandatory </td>
-    <td> </td>
-  </tr>
-  <tr>
     <td> TARGET_CONTAINER  </td>
-    <td> Name of container which is subjected to network loss </td>
+    <td> Name of container which is subjected to dns-error </td>
     <td> Optional </td>
-    <td> Applicable for containerd & CRI-O runtime only. Even with these runtimes, if the value is not provided, it injects chaos on the first container of the pod</td>
-  </tr>
-  <tr>
-    <td> NETWORK_PACKET_LOSS_PERCENTAGE </td>
-    <td> The packet loss in percentage </td>
-    <td> Optional </td>
-    <td> Default to 100 percentage </td>
+    <td> None </td>
   </tr>
   <tr>
     <td> TOTAL_CHAOS_DURATION </td>
@@ -154,23 +144,17 @@ subjects:
     <td> Default (60s) </td>
   </tr>
   <tr>
-    <td> TARGET_PODS </td>
-    <td> Comma separated list of application pod name subjected to pod network loss chaos</td>
+    <td> TARGET_HOSTNAMES </td>
+    <td> List of the target hostnames or keywords eg. '["litmuschaos","chaosnative.com"]'</td>
     <td> Optional </td>
-    <td> If not provided, it will select target pods randomly based on provided appLabels</td>
-  </tr>  
+    <td> If not provided, all hostnames/domains will be targeted</td>
+  </tr> 
   <tr>
-    <td> DESTINATION_IPS </td>
-    <td> IP addresses of the services or pods, the accessibility to which, is impacted </td>
+    <td> MATCH_SCHEME </td>
+    <td> Determines whether the dns query has to match exactly with one of the targets or can have any of the targets as substring. Can be either <code>exact</code> or <code>substring</code> </td>
     <td> Optional </td>
-    <td> if not provided, it will induce network chaos for all ips/destinations</td>
-  </tr>  
-  <tr>
-    <td> DESTINATION_HOSTS </td>
-    <td> DNS Names/FQDN names of the services, the accessibility to which, is impacted </td>
-    <td> Optional </td>
-    <td> if not provided, it will induce network chaos for all ips/destinations or DESTINATION_IPS if already defined</td>
-  </tr>      
+    <td> if not provided, it will be set as <code>exact</code></td>
+  </tr>     
   <tr>
     <td> PODS_AFFECTED_PERC </td>
     <td> The Percentage of total pods to target  </td>
@@ -181,7 +165,7 @@ subjects:
     <td> CONTAINER_RUNTIME  </td>
     <td> container runtime interface for the cluster</td>
     <td> Optional </td>
-    <td> Defaults to docker, supported values: docker, containerd and crio for litmus and only docker for pumba LIB </td>
+    <td> Defaults to docker, supported values: docker, containerd and crio </td>
   </tr>
   <tr>
     <td> SOCKET_PATH </td>
@@ -193,13 +177,7 @@ subjects:
     <td> LIB </td>
     <td> The chaos lib used to inject the chaos </td>
     <td> Optional  </td>
-    <td> Default value: litmus, supported values: pumba and litmus </td>
-  </tr>
-  <tr>
-    <td> TC_IMAGE </td>
-    <td> Image used for traffic control in linux </td>
-    <td> Optional  </td>
-    <td> default value is `gaiadocker/iproute2` </td>
+    <td> Default value: litmus, supported values: litmus </td>
   </tr>
   <tr>
     <td> LIB_IMAGE  </td>
@@ -230,49 +208,45 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-network-loss/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-dns-error/engine.yaml yaml)
 ```yaml
-# chaosengine.yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
-  name: nginx-network-chaos
-  namespace: default
+  name: nginx-chaos
 spec:
+  appinfo:
+    appns: "default"
+    applabel: "app=nginx"
+    appkind: "deployment"
   # It can be active/stop
-  engineState: 'active'
-  appinfo: 
-    appns: 'default'
-    # FYI, To see app label, apply kubectl get pods --show-labels
-    applabel: 'app=nginx'
-    appkind: 'deployment'
-  chaosServiceAccount: pod-network-loss-sa 
+  engineState: "active"
+  #ex. values: ns1:name=percona,ns2:run=nginx
+  auxiliaryAppInfo: ""
+  chaosServiceAccount: pod-dns-error-sa
   experiments:
-    - name: pod-network-loss
+    - name: pod-dns-error
       spec:
         components:
           env:
+            # list of the target hostnames or kewywords eg. '["litmuschaos","chaosnative.io"]' . If empty all hostnames are targets
+            - name: TARGET_HOSTNAMES
+              value: ""
 
-            #Network interface inside target container
-            - name: NETWORK_INTERFACE
-              value: 'eth0'    
-
-            - name: NETWORK_PACKET_LOSS_PERCENTAGE
-              value: '100'
+            # can be either exact or substring, determines whether the dns query has to match exactly with one of the targets or can have any of the targets as substring
+            - name: MATCH_SCHEME
+              value: "exact"
 
             - name: TOTAL_CHAOS_DURATION
-              value: '60' # in seconds
+              value: "60" # in seconds
 
-            # provide the name of container runtime
-            # for litmus LIB, it supports docker, containerd, crio
-            # for pumba LIB, it supports docker only
+            # provide the name of container runtime, it supports docker, containerd, crio
             - name: CONTAINER_RUNTIME
-              value: 'docker'
+              value: "docker"
 
             # provide the socket file path
             - name: SOCKET_PATH
-              value: '/var/run/docker.sock'
-            
+              value: "/var/run/docker.sock"
 ```
 
 ### Create the ChaosEngine Resource
@@ -286,13 +260,13 @@ spec:
 
 ### Watch Chaos progress
 
-- View network latency by setting up a ping on the affected pod from the cluster nodes 
+- View dns failure by setting up a ping on the target domain/hostname from the affected pod, should error out.
 
-  `ping <pod_ip_address>`
+  `ping <target_domain>`
 
 ### Abort/Restart the Chaos Experiment
 
-- To stop the pod-network-loss experiment immediately, either delete the ChaosEngine resource or execute the following command: 
+- To stop the pod-dns-error experiment immediately, either delete the ChaosEngine resource or execute the following command: 
 
   `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"stop"}}'` 
 
@@ -302,11 +276,6 @@ spec:
 
 ### Check Chaos Experiment Result
 
-- Check whether the application is resilient to the Pod Network Loss, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
+- Check whether the application is resilient to the Pod Dns Chaos, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
   `kubectl describe chaosresult <ChaosEngine-Name>-<ChaosExperiment-Name> -n <application-namespace>`
-
-
-## Application Pod Network Loss Demo 
-
-- A sample recording of this experiment execution is provided [here](https://youtu.be/jqvYy-nWc_I).

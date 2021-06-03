@@ -235,7 +235,6 @@ spec:
     applabel: 'app=nginx'
     appkind: 'deployment'
   engineState: 'active'
-  jobCleanUpPolicy: 'retain'
   chaosServiceAccount: chaos-admin
   components:
     runner:
