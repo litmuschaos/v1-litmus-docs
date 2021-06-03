@@ -60,7 +60,9 @@
           "version-1.13.5-Kubernetes-Chaostoolkit-Service",
           "version-1.13.5-pod-io-stress",
           "version-1.13.5-node-io-stress",
-          "version-1.13.5-node-restart"
+          "version-1.13.5-node-restart",
+          "version-1.13.5-pod-dns-error",
+          "version-1.13.5-pod-dns-spoof"
         ]
       },
       {
