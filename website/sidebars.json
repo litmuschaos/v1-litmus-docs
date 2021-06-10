@@ -78,6 +78,13 @@
       },
       {
         "type": "subcategory",
+        "label": "VM-PowerOff",
+        "ids": [
+          "vm-poweroff"
+        ]
+      },      
+      {
+        "type": "subcategory",
         "label": "OpenEBS",
         "ids": [
           "openebs-target-container-failure",
