@@ -22,6 +22,7 @@ sidebar_label: Node Taint
 
 ## Prerequisites
 
+- Ensure that Kubernetes Version > 1.15
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `node-taint` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/node-taint/experiment.yaml)
 - Ensure that the node specified in the experiment ENV variable `TARGET_NODE` (the node which will be tainted) should be cordoned before execution of the chaos experiment (before applying the chaosengine manifest) to ensure that the litmus experiment runner pods are not scheduled on it / subjected to eviction. This can be achieved with the following steps: 
@@ -142,6 +143,12 @@ subjects:
     <td> </td>
   </tr>
   <tr>
+    <td> NODE_LABEL </td>
+    <td> It contains node label, which will be used to filter the target nodes if TARGET_NODE ENV is not set </td>
+    <td> Optional </td>
+    <td> </td>
+  </tr>
+  <tr>
     <td> TAINT_LABEL </td>
     <td> Label and effect to be tainted on application node </td>
     <td> Mandatory </td>
@@ -184,15 +191,11 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
-  # It can be true/false
-  annotationCheck: 'false'
   # It can be active/stop
   engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ''
   chaosServiceAccount: node-taint-sa
-  # It can be delete/retain
-  jobCleanUpPolicy: 'delete'
   experiments:
     - name: node-taint
       spec:

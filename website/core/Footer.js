@@ -109,11 +109,11 @@ class Footer extends React.Component {
               <br />
               <br /> Founded by{' '}
               <a
-                href="https://mayadata.io/"
+                href="https://chaosnative.com/"
                 target="_"
                 style={{ display: 'inline', color: '#fff', fontWeight: 'bold' }}
               >
-                MayaData{' '}
+                ChaosNative{' '}
               </a>
               ❤️
             </p>

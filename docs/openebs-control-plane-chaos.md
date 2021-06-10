@@ -150,8 +150,6 @@ metadata:
   name: control-plane-chaos
   namespace: openebs
 spec:
-  # It can be true/false
-  annotationCheck: 'false'
   # It can be active/stop
   engineState: 'active'
   appinfo:
@@ -159,8 +157,6 @@ spec:
     applabel: 'name=maya-apiserver'
     appkind: 'deployment'
   chaosServiceAccount: control-plane-sa
-  # It can be delete/retain
-  jobCleanUpPolicy: 'delete'
   experiments:
     - name: openebs-control-plane-chaos
       spec:

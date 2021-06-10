@@ -22,6 +22,7 @@ sidebar_label: Pod Memory Hog
 
 ## Prerequisites
 
+- Ensure that Kubernetes Version > 1.15
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `pod-memory-hog` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/pod-memory-hog/experiment.yaml)
 - Cluster must run docker container runtime
@@ -180,7 +181,7 @@ subjects:
     <td> CHAOS_KILL_COMMAND </td>
     <td> The command to kill the chaos process</td>
     <td> Optional </td>
-    <td> Defaults to <code>kill $(find /proc -name exe -lname '*/dd' 2>&1 | grep -v 'Permission denied' | awk -F/ '{print $(NF-1)}' | head -n 1)</code>. Another useful one that generally works (in case the default doesn't) is <code>kill -9 $(ps afx | grep \"[dd] if /dev/zero\" | awk '{print $1}' | tr '\n' ' ')</code>. In case neither works, please check whether the target pod's base image offers a shell. If yes, identify appropriate shell command to kill the chaos process</td>
+    <td> Defaults to <code>kill $(find /proc -name exe -lname '*/dd' 2>&1 | grep -v 'Permission denied' | awk -F/ '{print $(NF-1)}' | head -n 1)</code>. Another useful one that generally works (in case the default doesn't) is <code>kill -9 $(ps afx | grep \"[dd] if=/dev/zero\" | awk '{print $1}' | tr '\n' ' ')</code>. In case neither works, please check whether the target pod's base image offers a shell. If yes, identify appropriate shell command to kill the chaos process</td>
   </tr>            
   <tr>
     <td> PODS_AFFECTED_PERC </td>
@@ -219,8 +220,6 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
-  # It can be true/false
-  annotationCheck: 'false'
   # It can be active/stop
   engineState: 'active'
   appinfo:
@@ -228,8 +227,6 @@ spec:
     applabel: 'app=nginx'
     appkind: 'deployment'
   chaosServiceAccount: pod-memory-hog-sa
-  # It can be delete/retain
-  jobCleanUpPolicy: 'delete'
   experiments:
     - name: pod-memory-hog
       spec:

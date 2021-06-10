@@ -267,8 +267,6 @@ metadata:
   name: kafka-chaos
   namespace: default
 spec:
-  # It can be true/false
-  annotationCheck: 'true'
   # It can be active/stop
   engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx 
@@ -278,8 +276,6 @@ spec:
     applabel: 'app=cp-kafka'
     appkind: 'statefulset'
   chaosServiceAccount: kafka-broker-disk-failure-sa
-  # It can be delete/retain
-  jobCleanUpPolicy: 'delete' 
   experiments:
     - name: kafka-broker-disk-failure
       spec:

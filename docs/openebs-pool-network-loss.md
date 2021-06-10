@@ -212,7 +212,6 @@ metadata:
   namespace: default
 spec:
   auxiliaryAppInfo: ''
-  annotationCheck: 'false'
   # It can be active/stop
   engineState: 'active'
   appinfo:
@@ -220,8 +219,6 @@ spec:
     applabel: 'app=nginx'
     appkind: 'deployment'
   chaosServiceAccount: pool-network-loss-sa
-  # It can be delete/retain
-  jobCleanUpPolicy: 'delete'
   experiments:
     - name: openebs-pool-network-loss
       spec:

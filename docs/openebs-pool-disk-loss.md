@@ -259,8 +259,6 @@ metadata:
   name: pool-chaos
   namespace: default
 spec:
-  # It can be true/false
-  annotationCheck: 'false'
   # It can be active/stop
   engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=busybox 
@@ -270,8 +268,6 @@ spec:
     applabel: 'app=nginx'
     appkind: 'deployment'
   chaosServiceAccount: pool-disk-loss-sa
-  # It can be delete/retain
-  jobCleanUpPolicy: 'delete'
   experiments:
     - name: openebs-pool-disk-loss
       spec:

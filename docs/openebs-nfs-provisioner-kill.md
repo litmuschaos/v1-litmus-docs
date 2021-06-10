@@ -174,8 +174,6 @@ metadata:
   name: nfs-chaos
   namespace: default
 spec:
-  # It can be true/false
-  annotationCheck: 'false'
   # It can be active/stop
   engineState: 'active'
   appinfo:
@@ -183,8 +181,6 @@ spec:
     applabel: 'app=minio'
     appkind: 'deployment'
   chaosServiceAccount: nfs-chaos-sa
-  # It can be delete/retain
-  jobCleanUpPolicy: 'delete'
   experiments:
     - name: openebs-nfs-provisioner-kill
       spec:

@@ -24,7 +24,7 @@ original_id: node-poweroff
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `node-poweroff` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.2?file=charts/generic/node-poweroff/experiment.yaml)
+- Ensure that the `node-poweroff` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.3?file=charts/generic/node-poweroff/experiment.yaml)
 - Create a Kubernetes secret named `id-rsa` where the experiment will run, where its contents will be the private SSH key for `SSH_USER` used to connect to the node that hosts the target pod in the secret field `ssh-privatekey`. A sample secret is shown below:
 
 ```yaml
@@ -138,7 +138,8 @@ subjects:
 
 ### Prepare ChaosEngine
 
-- Provide the application info in `spec.appinfo` or populate the `TARGET_NODE` and `TARGET_NODE_IP` in the `experiments.spec.components.env` section. Note that the environment values take precedence over the `spec.appinfo` fields.
+- Provide the application info in `spec.appinfo`. It is an optional parameter for infra level experiment.
+- Populate the `TARGET_NODE` and `TARGET_NODE_IP` in the `experiments.spec.components.env` section. Note that the environment values take precedence over the `spec.appinfo` fields.
 - Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo` 
 - Override the extra experiment tunables if desired in `experiments.spec.components.env`
 - To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
@@ -190,7 +191,7 @@ subjects:
   </tr>
   <tr>
     <td> RAMP_TIME </td>
-    <td> Period to wait before injection of chaos in sec </td>
+    <td> Period to wait before and after injection of chaos in sec </td>
     <td> Optional  </td>
     <td> </td>
   </tr>
@@ -199,12 +200,6 @@ subjects:
     <td> The chaos lib used to inject the chaos </td>
     <td> Optional </td>
     <td> Defaults to `litmus` supported litmus only </td>
-  </tr>
-  <tr>
-    <td> LIB_IMAGE  </td>
-    <td> The image used to poweroff the node </td>
-    <td> Optional </td>
-    <td> Defaults to `litmuschaos/go-runner:1.13.2` </td>
   </tr>
   <tr>
     <td> INSTANCE_ID </td>
@@ -231,21 +226,16 @@ spec:
   engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ''
-  appinfo:
-    appns: 'default'
-    applabel: 'app=nginx'
-    appkind: 'deployment'
   chaosServiceAccount: node-poweroff-sa
-  monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:
     - name: node-poweroff
       spec:
         components:
-          nodeSelector: 
-            # provide the node labels
-            kubernetes.io/hostname: 'node02'  
+        # nodeSelector: 
+        #   # provide the node labels
+        #   kubernetes.io/hostname: 'node02'   
           env:
              # ENTER THE TARGET NODE NAME
             - name: TARGET_NODE

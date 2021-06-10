@@ -199,10 +199,8 @@ spec:
     appns: 'default'
     applabel: "k8s-app=prometheus-operator"
     appkind: deployment
-  annotationCheck: 'false'
   engineState: 'active'
   chaosServiceAccount: chaos-admin
-  jobCleanUpPolicy: 'retain'
   experiments:
     - name: k8-pod-delete
       spec:

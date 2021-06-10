@@ -54,8 +54,6 @@ spec:
   hostNetwork: false
   hostIPC: false
   hostPID: true
-  runAsUser:
-    rule: 'RunAsAny'
   seLinux:
     # This policy assumes the nodes are using AppArmor rather than SELinux.
     rule: 'RunAsAny'

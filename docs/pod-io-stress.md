@@ -22,6 +22,7 @@ sidebar_label: Pod IO Stress
 
 ## Prerequisites
 
+- Ensure that Kubernetes Version > 1.15
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `pod-io-stress` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/pod-io-stress/experiment.yaml)
 - Cluster must run docker container runtime
@@ -218,8 +219,6 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
-  # It can be true/false
-  annotationCheck: 'false'
   # It can be active/stop
   engineState: 'active'
   appinfo:
@@ -227,8 +226,6 @@ spec:
     applabel: 'app=nginx'
     appkind: 'deployment'
   chaosServiceAccount: pod-io-stress-sa
-  # It can be delete/retain
-  jobCleanUpPolicy: 'delete'
   experiments:
     - name: pod-io-stress
       spec:

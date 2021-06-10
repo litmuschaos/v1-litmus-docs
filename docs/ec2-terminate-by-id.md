@@ -27,7 +27,7 @@ Make sure to drain the target node if any application is running on it and also 
 ```
 ## Prerequisites
 
-- Ensure that Kubernetes Version > 1.13
+- Ensure that Kubernetes Version > 1.15
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `ec2-terminate-by-id` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/kube-aws/ec2-terminate-by-id/experiment.yaml)
 - Ensure that you have sufficient AWS access to stop and start an ec2 instance. 
@@ -206,11 +206,8 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
-  annotationCheck: 'false'
   engineState: 'active'
   chaosServiceAccount: ec2-terminate-by-id-sa
-  # It can be retain/delete
-  jobCleanUpPolicy: 'delete'
   experiments:
     - name: ec2-terminate-by-id
       spec:
@@ -225,11 +222,11 @@ spec:
               value: '30'
 
              # Instance ID of the target ec2 instance
-             # Multiple IDs can also be provided as comma seperated values ex: id1,id2
+             # Multiple IDs can also be provided as comma separated values ex: id1,id2
             - name: EC2_INSTANCE_ID
               value: ''
               
-            # provide the region name of the instace
+            # provide the region name of the instance
             - name: REGION
               value: ''
 

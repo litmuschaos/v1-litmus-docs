@@ -8,7 +8,7 @@ sidebar_label: Install and Troubleshoot Litmus
 ## Pre-requisites
 
 - Rancher 2.4.3 or later
-- Kubernetes 1.11 or later 
+- Kubernetes 1.15 or later 
 
 ## Getting Started
 
@@ -67,7 +67,7 @@ The nginx default web site should be available now.
 ###  Install Litmus
 Followed the steps in the [Getting Started Guide](https://docs.litmuschaos.io/docs/getstarted/)* to install litmus in a `nginx` namespace with an nginx application.
 
-Download `litmus-operator-v1.12.0.yaml` from https://litmuschaos.github.io/litmus/litmus-operator-v1.12.0.yaml.
+Download `litmus-operator-v1.13.3.yaml` from https://litmuschaos.github.io/litmus/litmus-operator-v1.13.3.yaml.
 Modify it to use the `nginx` namespace in three places (at lines 10, 41, and 47 approximately).
 Install the litmus-operator in `nginx` application namespace using kubectl.
 ``` console
@@ -299,8 +299,6 @@ metadata:
   name: nginx-chaos
   namespace: nginx
 spec:
-  # It can be true/false
-  annotationCheck: 'true'
   # It can be active/stop
   engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx 

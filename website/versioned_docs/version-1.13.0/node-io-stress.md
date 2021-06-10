@@ -24,7 +24,7 @@ original_id: node-io-stress
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `node-io-stress` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.2?file=charts/generic/node-io-stress/experiment.yaml)
+- Ensure that the `node-io-stress` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.3?file=charts/generic/node-io-stress/experiment.yaml)
 
 ## Entry Criteria
 
@@ -213,12 +213,7 @@ spec:
   engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ''
-  appinfo:
-    appns: 'default'
-    applabel: 'app=nginx'
-    appkind: 'deployment'
   chaosServiceAccount: node-io-stress-sa
-  monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:
@@ -233,6 +228,14 @@ spec:
             ## specify the size as percentage of free space on the file system
             - name: FILESYSTEM_UTILIZATION_PERCENTAGE
               value: '10'
+
+            ## Number of core of CPU
+            - name: CPU
+              value: '1'
+
+            ## Total number of workers default value is 4
+            - name: NUMBER_OF_WORKERS
+              value: '4'                               
             
              ## enter the comma separated target nodes name
             - name: TARGET_NODES

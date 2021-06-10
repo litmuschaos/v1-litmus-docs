@@ -209,14 +209,11 @@ metadata:
   name: pool-chaos
   namespace: default
 spec:
-  annotationCheck: 'false'
   appinfo:
     appns: 'default'
     applabel: 'app=nginx'
     appkind: 'deployment'
   chaosServiceAccount: pool-network-delay-sa
-  # It can be delete/retain
-  jobCleanUpPolicy: 'delete'
   experiments:
     - name: openebs-pool-network-delay
       spec:

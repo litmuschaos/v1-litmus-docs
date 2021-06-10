@@ -140,6 +140,12 @@ subjects:
     <td> </td>
   </tr>
   <tr>
+    <td> NODE_LABEL </td>
+    <td> It contains node label, which will be used to filter the target nodes if TARGET_NODE ENV is not set </td>
+    <td> Optional </td>
+    <td> </td>
+  </tr>
+  <tr>
     <td> TOTAL_CHAOS_DURATION </td>
     <td> The time duration for chaos insertion (seconds) </td>
     <td> Optional </td>
@@ -182,15 +188,11 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
-  # It can be true/false
-  annotationCheck: 'false'
   # It can be active/stop
   engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx 
   auxiliaryAppInfo: ''
   chaosServiceAccount: kubelet-service-kill-sa
-  # It can be delete/retain
-  jobCleanUpPolicy: 'delete'
   experiments:
     - name: kubelet-service-kill
       spec:

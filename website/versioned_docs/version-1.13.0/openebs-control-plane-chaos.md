@@ -160,7 +160,6 @@ spec:
     applabel: 'name=maya-apiserver'
     appkind: 'deployment'
   chaosServiceAccount: control-plane-sa
-  monitoring: false
   # It can be delete/retain
   jobCleanUpPolicy: 'delete'
   experiments:

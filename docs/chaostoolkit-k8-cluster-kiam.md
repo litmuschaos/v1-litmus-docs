@@ -230,10 +230,8 @@ spec:
     appns: 'default'
     applabel: "app=kiam"
     appkind: deployment
-  annotationCheck: 'false'
   engineState: 'active'
   chaosServiceAccount: chaos-admin
-  jobCleanUpPolicy: 'retain'
   experiments:
     - name: k8-pod-delete
       spec:
