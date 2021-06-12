@@ -192,25 +192,6 @@ spec:
             # provide vm moid
             - name: APP_VM_MOID
               value: ''
-
-            - name: VCENTERSERVER
-              valueFrom:
-                secretKeyRef:
-                  name: vcenter-secret
-                  key: VCENTERSERVER
-
-            - name: VCENTERUSER
-              valueFrom:
-                secretKeyRef:
-                  name: vcenter-secret
-                  key: VCENTERUSER
-
-            - name: VCENTERPASS
-              valueFrom:
-                secretKeyRef:
-                  name: vcenter-secret
-                  key: VCENTERPASS
-
 ```
 
 ### Create the ChaosEngine Resource
