@@ -20,6 +20,8 @@ sidebar_label: Docker Service Kill
   </tr>
 </table>
 
+<strong>Note:</strong> The experiment currently support for GKE cluster with Ubuntu with Docker (Ubuntu) image. The Container-Optimised OS with Containerd needs to have different pre and post chaos check that will be added in subsequent releases.
+
 ## Prerequisites
 
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
@@ -157,13 +159,8 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
-  appinfo:
-    appns: 'default'
-    applabel: 'app=nginx'
-    appkind: 'deployment'
   # It can be active/stop
   engineState: 'active'
-  #ex. values: ns1:name=percona,ns2:run=nginx
   auxiliaryAppInfo: ''
   chaosServiceAccount: docker-service-kill-sa
   experiments:
@@ -174,12 +171,10 @@ spec:
         #   # provide the node labels
         #   kubernetes.io/hostname: 'node02'
           env:
-            # set chaos duration (in sec) as desired
             - name: TOTAL_CHAOS_DURATION
-              value: '90'
-
-             # provide the actual name of node under test
-            - name: APP_NODE
+              value: '90' # in seconds
+              
+            - name: TARGET_NODE
               value: 'node-01'
 ```
 
