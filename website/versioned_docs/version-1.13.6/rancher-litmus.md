@@ -146,7 +146,7 @@ The generic chaos experiments such as `pod-delete`,  `container-kill`,` pod-netw
 This is the first chart you are recommended to install. 
 
 ```
-$ kubectl apply -f https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/experiments.yaml -n nginx
+$ kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.13.6?file=charts/generic/experiments.yaml -n nginx
 ```
 
 Expected output: 
@@ -204,7 +204,7 @@ has just enough permissions needed to run the container-kill chaos experiment.
 the [chaos-charts](https://github.com/litmuschaos/chaos-charts/tree/master/charts/generic/pod-delete) repository.  
 
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/container-kill/rbac_nginx_getstarted.yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/v1.13.x/charts/generic/container-kill/rbac_nginx_getstarted.yaml)
 ```yaml
 ---
 apiVersion: v1
@@ -292,7 +292,7 @@ ChaosEngine connects the application instance to a Chaos Experiment. Copy the fo
 **NOTE:** You may update the values of `applabel` , `appns`, `appkind` and `experiments` as per your deployment and choices. 
 Change the `chaosServiceAccount` to the name of service account created in above previous steps if you modified the `rbac.yaml`.
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/container-kill/engine_nginx_getstarted.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/v1.13.x/charts/generic/container-kill/engine_nginx_getstarted.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -329,7 +329,7 @@ spec:
               value: '20'
 
             - name: LIB_IMAGE  
-              value: 'litmuschaos/go-runner:latest' 
+              value: 'litmuschaos/go-runner:1.13.6' 
 
             # provide the name of container runtime
             # it supports docker, containerd, crio
@@ -418,7 +418,7 @@ You can uninstall Litmus by deleting the namespace.
 ```console
 kubectl delete -f chaosengine.yaml -n nginx
 kubectl delete -f rbac.yaml -n nginx
-kubectl delete -f https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/experiments.yaml -n nginx
+kubectl delete -f https://hub.litmuschaos.io/api/chaos/1.13.6?file=charts/generic/experiments.yaml -n nginx
 kubectl delete -f litmus-operator.yaml -n nginx
 
 ```

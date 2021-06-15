@@ -25,7 +25,7 @@ original_id: node-memory-hog
 
 - Ensure that Kubernetes Version > 1.15
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `node-memory-hog` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/node-memory-hog/experiment.yaml)
+- Ensure that the `node-memory-hog` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.6?file=charts/generic/node-memory-hog/experiment.yaml)
 - There should be administrative access to the platform on which the Kubernetes cluster is hosted, as the recovery of the affected node could be manual. For example, gcloud access to the GKE project
 
 ## Entry Criteria
@@ -60,7 +60,7 @@ Tests application resiliency upon replica evictions caused due to lack of Memory
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/node-memory-hog/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/v1.13.x/charts/generic/node-memory-hog/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
@@ -159,7 +159,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> Image used to run the stress command </td>
     <td> Optional  </td>
-    <td> Defaults to <code>litmuschaos/go-runner:latest</code> </td>
+    <td> Defaults to <code>litmuschaos/go-runner:1.13.6</code> </td>
   </tr>
     <tr>
     <td> MEMORY_CONSUMPTION_PERCENTAGE </td>
@@ -209,7 +209,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/node-memory-hog/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/v1.13.x/charts/generic/node-memory-hog/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -269,7 +269,7 @@ metadata:
 spec:
   containers:
   - name: myhtop
-    image: litmuschaos/go-runner:latest
+    image: litmuschaos/go-runner:1.13.6
     imagePullPolicy: Always
     command: ['sh', '-c', 'sleep 3600']
   nodeName: kube-01 ## Replace this with the target node name...
