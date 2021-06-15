@@ -34,7 +34,7 @@ All probes share some common attributes:
 - **interval:** The period between subsequent retries 
 - **probePollingInterval:** The time interval for which continuous probe should be sleep after each iteration
 - **initialDelaySeconds:** Represents the initial waiting time interval for the probes.
-
+- **stopOnFailure:** It can be set to true/false to stop or continue the experiment execution after probe fails
 
 <strong>NOTE:</strong> If probe needs any additional RBAC permissions other than the experiment's serviceAccount(&lt;experiment-name&gt;-sa) permissions, then the additional permissions should be provided inside the corresponding Role/ClusterRole bind with the serviceAccount(&lt;experiment-name&gt;-sa). 
 
@@ -973,6 +973,29 @@ This section describes the different fields of the litmus probes and the possibl
 <tr>
   <th>Notes</th>
   <td>The <code>.runProperties.initialDelaySeconds</code> represents the initial waiting time interval for the probes.</td>
+</tr>
+</table>
+
+<table>
+<tr>
+  <th>Field</th>
+  <td><code>.runProperties.stopOnFailure</code></td>
+</tr>
+<tr>
+  <th>Description</th>
+  <td> Flags to hold the stop or continue the experiment on probe failure</td>
+</tr>
+<tr>
+  <th>Type</th>
+  <td>Optional</td>
+</tr>
+<tr>
+  <th>Range</th>
+  <td>false {type: boolean}</td>
+</tr>
+<tr>
+  <th>Notes</th>
+  <td>The <code>.runProperties.stopOnFailure</code> can be set to true/false to stop or continue the experiment execution after probe fails</td>
 </tr>
 </table>
 
