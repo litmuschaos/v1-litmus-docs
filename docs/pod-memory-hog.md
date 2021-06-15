@@ -143,21 +143,27 @@ subjects:
     <td> Defaults to 500MB (Up to 2000MB)</td>
   </tr>
   <tr>
+    <td> NUMBER_OF_WORKERS </td>
+    <td> The number of workers used to run the stress process  </td>
+    <td> Optional </td>
+    <td> Defaults to 1 </td>
+  </tr>  
+  <tr>
     <td> TOTAL_CHAOS_DURATION </td>
     <td> The time duration for chaos insertion (seconds)  </td>
     <td> Optional </td>
     <td> Defaults to 60s </td>
   </tr>
     <td> LIB  </td>
-    <td> The chaos lib used to inject the chaos. Available libs are <code>litmus</code> and <code>pumba</code> </td>
+    <td> The chaos lib used to inject the chaos. Available libs are <code>litmus</code> and <code>litmus</code> </td>
     <td> Optional </td>
     <td> Defaults to <code>litmus</code> </td>
   </tr>
    <tr>
     <td> LIB_IMAGE  </td>
-    <td> Image used to run the pumba helper pod. Only used in LIB <code>pumba</code></td>
+    <td> Image used to run the helper pod.</td>
     <td> Optional  </td>
-    <td> Defaults to <code>litmuschaos/go-runner:latest<code> </td>
+    <td> Defaults to <code>litmuschaos/go-runner:ci<code> </td>
   </tr>
    <tr>
     <td> STRESS_IMAGE  </td>
@@ -178,11 +184,17 @@ subjects:
     <td> If not provided, it will select the first container of the target pod</td>
   </tr>   
   <tr>
-    <td> CHAOS_KILL_COMMAND </td>
-    <td> The command to kill the chaos process</td>
+    <td> CONTAINER_RUNTIME  </td>
+    <td> container runtime interface for the cluster</td>
     <td> Optional </td>
-    <td> Defaults to <code>kill $(find /proc -name exe -lname '*/dd' 2>&1 | grep -v 'Permission denied' | awk -F/ '{print $(NF-1)}' | head -n 1)</code>. Another useful one that generally works (in case the default doesn't) is <code>kill -9 $(ps afx | grep \"[dd] if=/dev/zero\" | awk '{print $1}' | tr '\n' ' ')</code>. In case neither works, please check whether the target pod's base image offers a shell. If yes, identify appropriate shell command to kill the chaos process</td>
-  </tr>            
+    <td> Defaults to docker, supported values: docker, containerd and crio for litmus and only docker for pumba LIB </td>
+  </tr>
+  <tr>
+    <td> SOCKET_PATH </td>
+    <td> Path of the containerd/crio/docker socket file </td>
+    <td> Optional  </td>
+    <td> Defaults to `/var/run/docker.sock` </td>
+  </tr>          
   <tr>
     <td> PODS_AFFECTED_PERC </td>
     <td> The Percentage of total pods to target  </td>
@@ -236,9 +248,11 @@ spec:
             - name: MEMORY_CONSUMPTION
               value: '500'
 
+            - name: NUMBER_OF_WORKERS
+              value: '1'              
+
             - name: TOTAL_CHAOS_DURATION
               value: '60' # in seconds
-            
 ```
 
 ### Create the ChaosEngine Resource

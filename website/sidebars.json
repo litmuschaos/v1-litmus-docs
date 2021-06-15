@@ -62,7 +62,9 @@
           "Kubernetes-Chaostoolkit-Service",
           "pod-io-stress",
           "node-io-stress",
-          "node-restart"
+          "node-restart",
+          "pod-cpu-hog-exec",
+          "pod-memory-hog-exec"          
         ]
       },
       {
