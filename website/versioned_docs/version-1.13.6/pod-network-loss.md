@@ -206,7 +206,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> Image used to run the netem command </td>
     <td> Optional  </td>
-    <td> Defaults to `litmuschaos/go-runner:latest` </td>
+    <td> Defaults to `litmuschaos/go-runner:1.13.6` </td>
   </tr>
   <tr>
     <td> RAMP_TIME </td>

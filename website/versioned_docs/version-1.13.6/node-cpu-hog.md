@@ -158,7 +158,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> Image used to run the stress command </td>
     <td> Optional  </td>
-    <td> Defaults to <code>litmuschaos/go-runner:latest</code> </td>
+    <td> Defaults to <code>litmuschaos/go-runner:1.13.6</code> </td>
   </tr>
   <tr>
     <td> RAMP_TIME </td>
