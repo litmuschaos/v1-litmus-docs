@@ -27,6 +27,7 @@ spec:
   schedule:
     now: true
   engineTemplateSpec:
+    engineState: 'active'
     appinfo:
       appns: 'default'
       applabel: 'app=nginx'
@@ -65,6 +66,7 @@ spec:
       #should be modified according to current UTC Time
       executionTime: "2020-05-12T05:47:00Z"   
   engineTemplateSpec:
+    engineState: 'active'
     appinfo:
       appns: 'default'
       applabel: 'app=nginx'
@@ -113,6 +115,7 @@ spec:
          #format should be like "10m" or "2h" accordingly for minutes or hours
         minChaosInterval: "2m"  
   engineTemplateSpec:
+    engineState: 'active'
     appinfo:
       appns: 'default'
       applabel: 'app=nginx'
@@ -158,6 +161,7 @@ spec:
         #format should be like "10m" or "2h" accordingly for minutes and hours
         minChaosInterval: "2m"   
   engineTemplateSpec:
+    engineState: 'active'
     appinfo:
       appns: 'default'
       applabel: 'app=nginx'
@@ -202,6 +206,7 @@ spec:
         #format should be like "10m" or "2h" accordingly for minutes and hours
         minChaosInterval: "2m"   
   engineTemplateSpec:
+    engineState: 'active'
     appinfo:
       appns: 'default'
       applabel: 'app=nginx'
@@ -246,6 +251,7 @@ spec:
          #format should be like "10m" or "2h" accordingly for minutes and hours
         minChaosInterval: "2m"  
   engineTemplateSpec:
+    engineState: 'active'
     appinfo:
       appns: 'default'
       applabel: 'app=nginx'
@@ -291,6 +297,7 @@ spec:
         # format should be <starting-hour-number>-<ending-hour-number>(inclusive)
         includedHours: 0-12
   engineTemplateSpec:
+    engineState: 'active'
     appinfo:
       appns: 'default'
       applabel: 'app=nginx'
@@ -338,6 +345,7 @@ spec:
       workDays:
         includedDays: "Mon,Tue,Wed,Sat,Sun"
   engineTemplateSpec:
+    engineState: 'active'
     appinfo:
       appns: 'default'
       applabel: 'app=nginx'
@@ -389,6 +397,7 @@ spec:
       workDays:
         includedDays: "Mon,Tue,Wed,Thu"
   engineTemplateSpec:
+    engineState: 'active'
     appinfo:
       appns: 'default'
       applabel: 'app=nginx'
