@@ -1,0 +1,161 @@
+{
+  "version-1.13.6-docs": {
+    "Getting Started": [
+      "version-1.13.6-getstarted",
+      "version-1.13.6-chaoshub",
+      "version-1.13.6-plugins",
+      "version-1.13.6-architecture",
+      "version-1.13.6-resources",
+      "version-1.13.6-community",
+      "version-1.13.6-devguide"
+    ],
+    "Litmus Demo": [
+      "version-1.13.6-litmus-demo"
+    ],
+    "Concepts": [
+      "version-1.13.6-chaosengine",
+      "version-1.13.6-chaosexperiment",
+      "version-1.13.6-chaosschedule",
+      "version-1.13.6-chaosresult",
+      "version-1.13.6-litmus-probe"
+    ],
+    "Platforms": [
+      {
+        "type": "subcategory",
+        "label": "OpenShift",
+        "ids": [
+          "version-1.13.6-openshift-litmus"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "Rancher",
+        "ids": [
+          "version-1.13.6-rancher-litmus"
+        ]
+      }
+    ],
+    "Experiments": [
+      {
+        "type": "subcategory",
+        "label": "Generic",
+        "ids": [
+          "version-1.13.6-pod-delete",
+          "version-1.13.6-container-kill",
+          "version-1.13.6-pod-network-latency",
+          "version-1.13.6-pod-network-loss",
+          "version-1.13.6-pod-network-corruption",
+          "version-1.13.6-pod-cpu-hog",
+          "version-1.13.6-pod-memory-hog",
+          "version-1.13.6-pod-dns-error",
+          "version-1.13.6-pod-dns-spoof",
+          "version-1.13.6-disk-fill",
+          "version-1.13.6-node-cpu-hog",
+          "version-1.13.6-node-memory-hog",
+          "version-1.13.6-node-drain",
+          "version-1.13.6-kubelet-service-kill",
+          "version-1.13.6-pod-network-duplication",
+          "version-1.13.6-node-taint",
+          "version-1.13.6-docker-service-kill",
+          "version-1.13.6-pod-autoscaler",
+          "version-1.13.6-Kubernetes-Chaostoolkit-Application",
+          "version-1.13.6-Kubernetes-Chaostoolkit-Service",
+          "version-1.13.6-pod-io-stress",
+          "version-1.13.6-node-io-stress",
+          "version-1.13.6-node-restart"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "Kube-AWS",
+        "ids": [
+          "version-1.13.6-Kubernetes-Chaostoolkit-AWS",
+          "version-1.13.6-ebs-loss-by-id",
+          "version-1.13.6-ebs-loss-by-tag",
+          "version-1.13.6-ec2-terminate-by-id",
+          "version-1.13.6-ec2-terminate-by-tag"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "VM-PowerOff",
+        "ids": [
+          "version-1.13.6-vm-poweroff"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "OpenEBS",
+        "ids": [
+          "version-1.13.6-openebs-target-container-failure",
+          "version-1.13.6-openebs-target-network-delay",
+          "version-1.13.6-openebs-target-network-loss",
+          "version-1.13.6-openebs-target-pod-failure",
+          "version-1.13.6-openebs-pool-pod-failure",
+          "version-1.13.6-openebs-pool-container-failure",
+          "version-1.13.6-openebs-pool-network-delay",
+          "version-1.13.6-openebs-pool-network-loss",
+          "version-1.13.6-openebs-control-plane-chaos",
+          "version-1.13.6-cStor-pool-chaos",
+          "version-1.13.6-openebs-pool-disk-loss",
+          "version-1.13.6-openebs-nfs-provisioner-kill"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "Kafka",
+        "ids": [
+          "version-1.13.6-kafka-broker-pod-failure",
+          "version-1.13.6-kafka-broker-disk-failure"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "CoreDns",
+        "ids": [
+          "version-1.13.6-coredns-pod-delete"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "Cassandra",
+        "ids": [
+          "version-1.13.6-cassandra-pod-delete"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "Kube-Components",
+        "ids": [
+          "version-1.13.6-Kubernetes-Chaostoolkit-Cluster-Kiam",
+          "version-1.13.6-Kubernetes-Chaostoolkit-Cluster-active-monitor-controller",
+          "version-1.13.6-Kubernetes-Chaostoolkit-Cluster-alb-ingress-controller",
+          "version-1.13.6-Kubernetes-Chaostoolkit-Cluster-kube-proxy",
+          "version-1.13.6-Kubernetes-Chaostoolkit-Cluster-prometheus-k8s-prometheus",
+          "version-1.13.6-Kubernetes-Chaostoolkit-Cluster-prometheus-pushgateway",
+          "version-1.13.6-Kubernetes-Chaostoolkit-Cluster-prometheus-operator",
+          "version-1.13.6-Kubernetes-Chaostoolkit-Cluster-Calico-Node",
+          "version-1.13.6-Kubernetes-Chaostoolkit-Cluster-Wavefront"
+        ]
+      }
+    ],
+    "Chaos Scheduler": [
+      "version-1.13.6-scheduling"
+    ],
+    "Chaos Workflows": [
+      "version-1.13.6-chaos-workflows"
+    ],
+    "Litmus Portal": [
+      "version-1.13.6-portal"
+    ],
+    "Litmus FAQs": [
+      "version-1.13.6-faq-general",
+      "version-1.13.6-faq-troubleshooting"
+    ],
+    "Advanced": [
+      "version-1.13.6-admin-mode",
+      "version-1.13.6-namespaced-mode",
+      "version-1.13.6-litmus-psp"
+    ]
+  }
+}
