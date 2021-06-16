@@ -1,8 +1,8 @@
 ---
-id: version-1.13.5-version-1.13.0-litmus-probe
+id: version-1.13.5-litmus-probe
 title: Declarative Approach to Chaos Hypothesis using Litmus Probes
 sidebar_label: Litmus Probe
-original_id: version-1.13.0-litmus-probe
+original_id: litmus-probe
 ---
 ------
 
