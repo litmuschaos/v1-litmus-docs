@@ -123,7 +123,6 @@ subjects:
 ### Prepare ChaosEngine
 
 - Provide the application info in `spec.appinfo`
-- Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
 - Override the experiment tunables if desired in `experiments.spec.components.env`
 - To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
 
@@ -155,7 +154,7 @@ subjects:
     <td> Defaults to 60s </td>
   </tr>
     <td> LIB  </td>
-    <td> The chaos lib used to inject the chaos. Available libs are <code>litmus</code> and <code>litmus</code> </td>
+    <td> The chaos lib used to inject the chaos. Available libs are <code>litmus</code> and <code>pumba</code> </td>
     <td> Optional </td>
     <td> Defaults to <code>litmus</code> </td>
   </tr>

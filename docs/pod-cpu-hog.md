@@ -43,7 +43,7 @@ sidebar_label: Pod CPU Hog
 
 ## Integrations
 
-- Pod CPU Hof can be effected using the chaos library: `litmus`
+- Pod CPU Hog can be affected using the chaos library: `litmus`
 
 ## Steps to Execute the Chaos Experiment
 
@@ -149,7 +149,7 @@ subjects:
   </tr>
   <tr>
     <td> LIB  </td>
-    <td> The chaos lib used to inject the chaos. Available libs are <code>litmus</code> and <code>litmus</code> </td>
+    <td> The chaos lib used to inject the chaos. Available libs are <code>litmus</code> and <code>pumba</code> </td>
     <td> Optional </td>
     <td> Default to <code>litmus</code> </td>
   </tr>
