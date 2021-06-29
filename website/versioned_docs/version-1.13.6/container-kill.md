@@ -182,7 +182,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> LIB Image used to kill the container </td>
     <td> Optional </td>
-    <td> Defaults to `litmuschaos/go-runner:1.13.6`</td>
+    <td> Defaults to `litmuschaos/go-runner:1.13.7`</td>
   </tr>
   <tr>
     <td> LIB  </td>
