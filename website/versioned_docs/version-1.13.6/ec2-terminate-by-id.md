@@ -207,6 +207,8 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
+  # It can be delete/retain
+  jobCleanUpPolicy: 'retain'   
   engineState: 'active'
   chaosServiceAccount: ec2-terminate-by-id-sa
   experiments:

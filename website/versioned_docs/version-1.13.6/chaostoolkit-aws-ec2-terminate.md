@@ -235,6 +235,8 @@ spec:
     appns: 'default'
     applabel: 'app=nginx'
     appkind: 'deployment'
+  # It can be delete/retain
+  jobCleanUpPolicy: 'retain'   
   engineState: 'active'
   chaosServiceAccount: chaos-admin
   components:

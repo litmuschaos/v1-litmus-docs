@@ -25,7 +25,7 @@ original_id: pod-network-loss
 
 - Ensure that Kubernetes Version > 1.15
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `pod-network-loss` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.6?file=charts/generic/pod-network-loss/experiment.yaml)
+- Ensure that the `pod-network-loss` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.7?file=charts/generic/pod-network-loss/experiment.yaml)
  
 ## Entry Criteria
 
@@ -240,6 +240,8 @@ metadata:
   name: nginx-network-chaos
   namespace: default
 spec:
+  # It can be delete/retain
+  jobCleanUpPolicy: 'retain'
   # It can be active/stop
   engineState: 'active'
   appinfo: 

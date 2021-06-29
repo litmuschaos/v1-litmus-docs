@@ -200,6 +200,7 @@ spec:
     appns: 'default'
     applabel: "k8s-app=prometheus-pushgateway"
     appkind: deployment
+  annotationCheck: 'false'
   engineState: 'active'
   chaosServiceAccount: chaos-admin
   experiments:

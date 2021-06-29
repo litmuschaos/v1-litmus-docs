@@ -141,7 +141,7 @@ The generic chaos experiments such as `pod-delete`,  `container-kill`,` pod-netw
 This is the first chart you are recommended to install.
 
 ```
-kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.13.6?file=charts/generic/experiments.yaml -n nginx
+kubectl apply -f https://hub.litmuschaos.io/api/chaos/1.13.7?file=charts/generic/experiments.yaml -n nginx
 ```
 
 Verify if the chaos experiments are installed.
@@ -238,6 +238,8 @@ spec:
     appns: 'nginx'
     applabel: 'app=nginx'
     appkind: 'deployment'
+  # It can be true/false
+  annotationCheck: 'true'
   # It can be active/stop
   engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx
