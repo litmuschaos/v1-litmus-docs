@@ -25,7 +25,7 @@ original_id: node-cpu-hog
 
 - Ensure that Kubernetes Version > 1.15
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `node-cpu-hog` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.6?file=charts/generic/node-cpu-hog/experiment.yaml)
+- Ensure that the `node-cpu-hog` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.7?file=charts/generic/node-cpu-hog/experiment.yaml)
 - There should be administrative access to the platform on which the Kubernetes cluster is hosted, as the recovery of the affected node could be manual. For example, gcloud access to the GKE project
 ## Entry Criteria
 
@@ -158,7 +158,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> Image used to run the stress command </td>
     <td> Optional  </td>
-    <td> Defaults to <code>litmuschaos/go-runner:1.13.6</code> </td>
+    <td> Defaults to <code>litmuschaos/go-runner:1.13.7</code> </td>
   </tr>
   <tr>
     <td> RAMP_TIME </td>
@@ -204,6 +204,8 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
+  # It can be delete/retain
+  jobCleanUpPolicy: 'retain'
   # It can be active/stop
   engineState: 'active'
   #ex. values: ns1:name=percona,ns2:run=nginx 

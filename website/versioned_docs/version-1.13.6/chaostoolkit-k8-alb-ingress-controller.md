@@ -200,6 +200,7 @@ spec:
     appns: 'default'
     applabel: "app=alb-ingress-controller"
     appkind: deployment
+  annotationCheck: 'false'
   engineState: 'active'
   chaosServiceAccount: chaos-admin
   experiments:

@@ -151,6 +151,8 @@ metadata:
   name: control-plane-chaos
   namespace: openebs
 spec:
+  # It can be true/false
+  annotationCheck: 'false'
   # It can be active/stop
   engineState: 'active'
   appinfo:

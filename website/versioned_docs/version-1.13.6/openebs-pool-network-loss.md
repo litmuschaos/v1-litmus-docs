@@ -213,6 +213,7 @@ metadata:
   namespace: default
 spec:
   auxiliaryAppInfo: ''
+  annotationCheck: 'false'
   # It can be active/stop
   engineState: 'active'
   appinfo:

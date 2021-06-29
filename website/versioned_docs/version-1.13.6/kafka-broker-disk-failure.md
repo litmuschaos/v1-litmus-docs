@@ -276,6 +276,8 @@ spec:
     appns: 'default'
     applabel: 'app=cp-kafka'
     appkind: 'statefulset'
+  # It can be delete/retain
+  jobCleanUpPolicy: 'retain'       
   chaosServiceAccount: kafka-broker-disk-failure-sa
   experiments:
     - name: kafka-broker-disk-failure
