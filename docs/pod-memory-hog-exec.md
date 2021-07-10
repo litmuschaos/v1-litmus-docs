@@ -1,7 +1,7 @@
 ---
-id: pod-memory-hog
-title: Pod Memory Hog Details
-sidebar_label: Pod Memory Hog
+id: pod-memory-hog-exec
+title: Pod Memory Hog Exec Details
+sidebar_label: Pod Memory Hog Exec
 ---
 ------
 
@@ -24,7 +24,7 @@ sidebar_label: Pod Memory Hog
 
 - Ensure that Kubernetes Version > 1.15
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `pod-memory-hog` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/pod-memory-hog/experiment.yaml)
+- Ensure that the `pod-memory-hog-exec` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/pod-memory-hog-exec/experiment.yaml)
 - Cluster must run docker container runtime
 
 ## Entry Criteria
@@ -39,7 +39,6 @@ sidebar_label: Pod Memory Hog
 
 - This experiment consumes the Memory resources on the application container on specified memory in megabytes.
 - It simulates conditions where app pods experience Memory spikes either due to expected/undesired processes thereby testing how the overall application stack behaves when this occurs.
-
 
 ## Integrations
 
@@ -57,25 +56,25 @@ Use this sample RBAC manifest to create a chaosServiceAccount in the desired (ap
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-memory-hog/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-memory-hog-exec/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: pod-memory-hog-sa
+  name: pod-memory-hog-exec-sa
   namespace: default
   labels:
-    name: pod-memory-hog-sa
+    name: pod-memory-hog-exec-sa
     app.kubernetes.io/part-of: litmus
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: pod-memory-hog-sa
+  name: pod-memory-hog-exec-sa
   namespace: default
   labels:
-    name: pod-memory-hog-sa
+    name: pod-memory-hog-exec-sa
     app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: [""]
@@ -103,18 +102,18 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: pod-memory-hog-sa
+  name: pod-memory-hog-exec-sa
   namespace: default
   labels:
-    name: pod-memory-hog-sa
+    name: pod-memory-hog-exec-sa
     app.kubernetes.io/part-of: litmus
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: pod-memory-hog-sa
+  name: pod-memory-hog-exec-sa
 subjects:
 - kind: ServiceAccount
-  name: pod-memory-hog-sa
+  name: pod-memory-hog-exec-sa
   namespace: default
 ```
 
@@ -142,33 +141,15 @@ subjects:
     <td> Defaults to 500MB (Up to 2000MB)</td>
   </tr>
   <tr>
-    <td> NUMBER_OF_WORKERS </td>
-    <td> The number of workers used to run the stress process  </td>
-    <td> Optional </td>
-    <td> Defaults to 1 </td>
-  </tr>  
-  <tr>
     <td> TOTAL_CHAOS_DURATION </td>
     <td> The time duration for chaos insertion (seconds)  </td>
     <td> Optional </td>
     <td> Defaults to 60s </td>
   </tr>
     <td> LIB  </td>
-    <td> The chaos lib used to inject the chaos. Available libs are <code>litmus</code> and <code>pumba</code> </td>
+    <td> The chaos lib used to inject the chaos. Available libs are <code>litmus</code></td>
     <td> Optional </td>
     <td> Defaults to <code>litmus</code> </td>
-  </tr>
-   <tr>
-    <td> LIB_IMAGE  </td>
-    <td> Image used to run the helper pod.</td>
-    <td> Optional  </td>
-    <td> Defaults to <code>litmuschaos/go-runner:ci<code> </td>
-  </tr>
-   <tr>
-    <td> STRESS_IMAGE  </td>
-    <td> Container run on the node at runtime by the pumba lib to inject stressors. Only used in LIB <code>pumba</code></td>
-    <td> Optional  </td>
-    <td> Default to <code>alexeiled/stress-ng:latest-ubuntu</code> </td>
   </tr>
   <tr>
     <td> TARGET_PODS </td>
@@ -183,17 +164,11 @@ subjects:
     <td> If not provided, it will select the first container of the target pod</td>
   </tr>   
   <tr>
-    <td> CONTAINER_RUNTIME  </td>
-    <td> container runtime interface for the cluster</td>
+    <td> CHAOS_KILL_COMMAND </td>
+    <td> The command to kill the chaos process</td>
     <td> Optional </td>
-    <td> Defaults to docker, supported values: docker, containerd and crio for litmus and only docker for pumba LIB </td>
-  </tr>
-  <tr>
-    <td> SOCKET_PATH </td>
-    <td> Path of the containerd/crio/docker socket file </td>
-    <td> Optional  </td>
-    <td> Defaults to `/var/run/docker.sock` </td>
-  </tr>          
+    <td> Defaults to <code>kill $(find /proc -name exe -lname '*/dd' 2>&1 | grep -v 'Permission denied' | awk -F/ '{print $(NF-1)}' | head -n 1)</code>. Another useful one that generally works (in case the default doesn't) is <code>kill -9 $(ps afx | grep \"[dd] if=/dev/zero\" | awk '{print $1}' | tr '\n' ' ')</code>. In case neither works, please check whether the target pod's base image offers a shell. If yes, identify appropriate shell command to kill the chaos process</td>
+  </tr>            
   <tr>
     <td> PODS_AFFECTED_PERC </td>
     <td> The Percentage of total pods to target  </td>
@@ -223,7 +198,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-memory-hog/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-memory-hog-exec/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -237,9 +212,9 @@ spec:
     appns: 'default'
     applabel: 'app=nginx'
     appkind: 'deployment'
-  chaosServiceAccount: pod-memory-hog-sa
+  chaosServiceAccount: pod-memory-hog-exec-sa
   experiments:
-    - name: pod-memory-hog
+    - name: pod-memory-hog-exec
       spec:
         components:
           env:
@@ -247,11 +222,9 @@ spec:
             - name: MEMORY_CONSUMPTION
               value: '500'
 
-            - name: NUMBER_OF_WORKERS
-              value: '1'              
-
             - name: TOTAL_CHAOS_DURATION
               value: '60' # in seconds
+            
 ```
 
 ### Create the ChaosEngine Resource
@@ -271,7 +244,7 @@ spec:
 
 ### Abort/Restart the Chaos Experiment
 
-- To stop the pod-memory-hog experiment immediately, either delete the ChaosEngine resource or execute the following command: 
+- To stop the pod-memory-hog-exec experiment immediately, either delete the ChaosEngine resource or execute the following command: 
 
   `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"stop"}}'` 
 
@@ -283,8 +256,8 @@ spec:
 
 - Check whether the application stack is resilient to Memory spikes on the app replica, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult nginx-chaos-pod-memory-hog -n <application-namespace>`
+  `kubectl describe chaosresult nginx-chaos-pod-memory-hog-exec -n <application-namespace>`
 
-## Pod Memory Hog Experiment Demo
+## Pod Memory Hog Exec Experiment Demo
 
-- A sample recording of this experiment execution is provided [here](https://www.youtube.com/watch?v=HuAXg8W5Tzo)
+- A sample recording will be added soon.

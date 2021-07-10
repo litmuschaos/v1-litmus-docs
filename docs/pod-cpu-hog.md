@@ -36,14 +36,14 @@ sidebar_label: Pod CPU Hog
 
 ## Details
 
-- This experiment consumes the CPU resources on the application container (upward of 80%) on specified number of cores
-- It simulates conditions where app pods experience CPU spikes either due to expected/undesired processes thereby testing how the
-  overall application stack behaves when this occurs.
-
+- This experiment consumes the CPU resources on the application container on specified number of cores
+- It simulates conditions where app pods experience CPU spikes either due to expected/undesired processes thereby testing how the overall application stack behaves when this occurs.
+- Causes CPU resource consumption on specified application containers using cgroups and litmus nsutil which consume CPU resources of the given target containers.
+- It can test the application's resilience to potential slowness/unavailability of some replicas due to high CPU load
 
 ## Integrations
 
-- Pod CPU can be effected using the chaos library: `litmus`
+- Pod CPU Hog can be effected using the chaos library: `litmus`
 
 ## Steps to Execute the Chaos Experiment
 
@@ -123,7 +123,6 @@ subjects:
 ### Prepare ChaosEngine
 
 - Provide the application info in `spec.appinfo`
-- Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
 - Override the experiment tunables if desired in `experiments.spec.components.env`
 - To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
 
@@ -156,9 +155,9 @@ subjects:
   </tr>
    <tr>
     <td> LIB_IMAGE  </td>
-    <td> Image used to run the pumba helper pod. Only used in LIB <code>pumba</code></td>
+    <td> Image used to run the helper pod.</td>
     <td> Optional  </td>
-    <td> Default to <code>litmuschaos/go-runner:latest</code> </td>
+    <td> Defaults to <code>litmuschaos/go-runner:ci<code> </td>
   </tr>
    <tr>
     <td> STRESS_IMAGE  </td>
@@ -185,17 +184,17 @@ subjects:
     <td> Defaults to 0 (corresponds to 1 replica), provide numeric value only </td>
   </tr>
   <tr>
-    <td> CHAOS_INJECT_COMMAND </td>
-    <td> The command to inject the cpu chaos </td>
+    <td> CONTAINER_RUNTIME  </td>
+    <td> container runtime interface for the cluster</td>
     <td> Optional </td>
-    <td> Default to <code>md5sum /dev/zero</code> </td>
-  </tr>  
+    <td> Defaults to docker, supported values: docker, containerd and crio for litmus and only docker for pumba LIB </td>
+  </tr>
   <tr>
-    <td> CHAOS_KILL_COMMAND </td>
-    <td> The command to kill the chaos process</td>
-    <td> Optional </td>
-    <td> Default to <code>kill $(find /proc -name exe -lname '*/md5sum' 2>&1 | grep -v 'Permission denied' | awk -F/ '{print $(NF-1)}')</code>. Another useful one that generally works (in case the default doesn't) is <code>kill -9 $(ps afx | grep \"[md5sum] /dev/zero\" | awk '{print$1}' | tr '\n' ' ')</code>. In case neither works, please check whether the target pod's base image offers a shell. If yes, identify appropriate shell command to kill the chaos process </td>
-  </tr>   
+    <td> SOCKET_PATH </td>
+    <td> Path of the containerd/crio/docker socket file </td>
+    <td> Optional  </td>
+    <td> Defaults to `/var/run/docker.sock` </td>
+  </tr> 
   <tr>
     <td> RAMP_TIME </td>
     <td> Period to wait before and after injection of chaos in sec </td>
@@ -261,6 +260,10 @@ spec:
 - Set up a watch on the applications interacting/dependent on the affected pods and verify whether they are running
 
   `watch kubectl get pods -n <application-namespace>`
+
+- Verify the resource consumption
+
+   `kubectl top pod <target-pod-name> -n <application-namespace>`
 
 ### Abort/Restart the Chaos Experiment
 
