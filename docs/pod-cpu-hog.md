@@ -39,7 +39,7 @@ sidebar_label: Pod CPU Hog
 - This experiment consumes the CPU resources on the application container on specified number of cores
 - It simulates conditions where app pods experience CPU spikes either due to expected/undesired processes thereby testing how the overall application stack behaves when this occurs.
 - Causes CPU resource consumption on specified application containers using cgroups and litmus nsutil which consume CPU resources of the given target containers.
-- It Can test the application's resilience to potential slowness/unavailability of some replicas due to high CPU load
+- It can test the application's resilience to potential slowness/unavailability of some replicas due to high CPU load
 
 ## Integrations
 
