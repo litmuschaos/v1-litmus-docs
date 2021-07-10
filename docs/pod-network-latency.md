@@ -164,9 +164,9 @@ subjects:
   </tr>   
   <tr>
     <td> DESTINATION_IPS </td>
-    <td> IP addresses of the services or pods, the accessibility to which, is impacted </td>
+    <td> IP addresses of the services or pods or the CIDR blocks(range of IPs), the accessibility to which is impacted </td>
     <td> Optional </td>
-    <td> if not provided, it will induce network chaos for all ips/destinations</td>
+    <td> comma separated IP(S) or CIDR(S) can be provided. if not provided, it will induce network chaos for all ips/destinations</td>
   </tr>  
   <tr>
     <td> DESTINATION_HOSTS </td>
