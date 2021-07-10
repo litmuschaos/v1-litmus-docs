@@ -43,7 +43,7 @@ sidebar_label: Pod CPU Hog
 
 ## Integrations
 
-- Pod CPU Hog can be affected using the chaos library: `litmus`
+- Pod CPU Hog can be effected using the chaos library: `litmus`
 
 ## Steps to Execute the Chaos Experiment
 
