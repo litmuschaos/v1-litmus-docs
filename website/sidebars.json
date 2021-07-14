@@ -89,7 +89,7 @@
         "type": "subcategory",
         "label": "Azure",
         "ids": [
-          "azure-instance-terminate"
+          "azure-instance-stop"
         ]
       },      
       {

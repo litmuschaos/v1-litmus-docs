@@ -1,7 +1,7 @@
 ---
-id: azure-instance-terminate
-title: Azure Instance Terminate Experiment Details
-sidebar_label: Azure Instance Terminate
+id: azure-instance-stop
+title: Azure Instance Stop Experiment Details
+sidebar_label: Azure Instance Stop
 ---
 ------
 
@@ -24,7 +24,7 @@ sidebar_label: Azure Instance Terminate
 
 - Ensure that Kubernetes Version > 1.13
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `azure-instance-terminate` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/kube-aws/azure-instance-terminate/experiment.yaml)
+- Ensure that the `azure-instance-stop` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/kube-aws/azure-instance-stop/experiment.yaml)
 - Ensure that you have sufficient Azure access to stop and start the an instance. 
 - We will use azure [ file-based authentication ](https://docs.microsoft.com/en-us/azure/developer/go/azure-sdk-authorization#use-file-based-authentication) to connect with the instance using azure GO SDK in the experiment. For generating auth file run `az ad sp create-for-rbac --sdk-auth > azure.auth` Azure CLI command.
 - Ensure to create a Kubernetes secret having the auth file created in the step in `CHAOS_NAMESPACE`. A sample secret file looks like:
@@ -70,7 +70,7 @@ ENV value on `experiment.yaml`with the same name.
 
 ## Integrations
 
--   Azure Instance Terminate can be effected using the chaos library: `litmus`, which makes use of azure sdk to start/stop an instance. 
+-   Azure Instance Stop can be effected using the chaos library: `litmus`, which makes use of azure sdk to start/stop an instance. 
 -   The desired chaoslib can be selected by setting the above options as value for the env variable `LIB`
 
 ## Steps to Execute the Chaos Experiment
@@ -85,24 +85,24 @@ ENV value on `experiment.yaml`with the same name.
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/azure/azure-instance-terminate/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/azure/azure-instance-stop/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: azure-instance-terminate-sa
+  name: azure-instance-stop-sa
   namespace: default
   labels:
-    name: azure-instance-terminate-sa
+    name: azure-instance-stop-sa
     app.kubernetes.io/part-of: litmus
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: azure-instance-terminate-sa
+  name: azure-instance-stop-sa
   labels:
-    name: azure-instance-terminate-sa
+    name: azure-instance-stop-sa
     app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: ["","litmuschaos.io","batch"]
@@ -112,17 +112,17 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: azure-instance-terminate-sa
+  name: azure-instance-stop-sa
   labels:
-    name: azure-instance-terminate-sa
+    name: azure-instance-stop-sa
     app.kubernetes.io/part-of: litmus
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: azure-instance-terminate-sa
+  name: azure-instance-stop-sa
 subjects:
 - kind: ServiceAccount
-  name: azure-instance-terminate-sa
+  name: azure-instance-stop-sa
   namespace: default
 ```
 
@@ -161,6 +161,18 @@ subjects:
     <td> Defaults to 30s </td>
   </tr>
   <tr>
+    <td> RAMP_TIME </td>
+    <td> Period to wait before injection of chaos in sec </td>
+    <td> Optional  </td>
+    <td> </td>
+  </tr>
+  <tr>
+    <td> SEQUENCE </td>
+    <td> It defines sequence of chaos execution for multiple target pods </td>
+    <td> Optional </td>
+    <td> Default value: parallel. Supported: serial, parallel </td>
+  </tr>  
+  <tr>
     <td> INSTANCE_ID </td>
     <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
     <td> Optional </td>
@@ -171,7 +183,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/azure/azure-instance-terminate/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/azure/azure-instance-stop/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -181,12 +193,12 @@ metadata:
 spec:
   annotationCheck: 'false'
   engineState: 'active'
-  chaosServiceAccount: azure-instance-terminate-sa
+  chaosServiceAccount: azure-instance-stop-sa
   monitoring: false
   # It can be retain/delete
   jobCleanUpPolicy: 'delete'
   experiments:
-    - name: azure-instance-terminate
+    - name: azure-instance-stop
       spec:
         components:
           env: 
@@ -221,12 +233,22 @@ spec:
 
 -  You can also use Azure console to keep a watch over the instance state.   
 
+### Abort/Restart the Chaos Experiment
+
+- To stop the azure-instance-terminate experiment immediately, either delete the ChaosEngine resource or execute the following command:
+
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"stop"}}'`
+
+- To restart the experiment, either re-apply the ChaosEngine YAML or execute the following command:
+
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"active"}}'`
+
 ### Check Chaos Experiment Result
 
-- Check whether the application is resilient to the azure-instance-terminate, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
+- Check whether the application is resilient to the azure-instance-stop, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult nginx-chaos-azure-instance-terminate -n <chaos-namespace>`
+  `kubectl describe chaosresult nginx-chaos-azure-instance-stop -n <chaos-namespace>`
 
-### EC2 Terminate Experiment Demo
+### EC2 Stop Experiment Demo
 
 - A sample recording of this experiment execution will be added soon.
