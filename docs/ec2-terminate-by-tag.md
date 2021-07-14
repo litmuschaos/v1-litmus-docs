@@ -186,7 +186,13 @@ subjects:
     <td> The region name of the target instace</td>
     <td> Optional </td>
     <td> </td>
-  </tr> 
+  </tr>
+  <tr>
+    <td> RAMP_TIME </td>
+    <td> Period to wait before and after injection of chaos in sec </td>
+    <td> Optional  </td>
+    <td> </td>
+  </tr>   
   <tr>
     <td> SEQUENCE </td>
     <td> It defines sequence of chaos execution for multiple instance</td>
@@ -239,6 +245,10 @@ spec:
             # enable it if the target instance is a part of self-managed nodegroup.
             - name: MANAGED_NODEGROUP
               value: 'disable'
+            
+             # Target the percentage of instance filtered from tag
+            - name: INSTANCE_AFFECTED_PERC
+              value: ''
 ```
 
 ### Create the ChaosEngine Resource
@@ -257,6 +267,16 @@ spec:
   `aws ec2 describe-instance-status --instance-ids <instance-id>`
 
 -  You can also use aws console to keep a watch over the instance state.   
+
+### Abort/Restart the Chaos Experiment
+
+- To stop the ec2-terminate-by-tag experiment immediately, either delete the ChaosEngine resource or execute the following command: 
+
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"stop"}}'` 
+
+- To restart the experiment, either re-apply the ChaosEngine YAML or execute the following command: 
+
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"active"}}'`
 
 ### Check Chaos Experiment Result
 

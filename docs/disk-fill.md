@@ -10,7 +10,7 @@ sidebar_label: Disk Fill
 <table>
   <tr>
     <th> Type </th>
-    <th>  Description  </th>
+    <th> Description  </th>
     <th> Tested K8s Platform </th>
   </tr>
   <tr>
@@ -272,13 +272,20 @@ spec:
       spec:
         components:
           env:
+            - name: TOTAL_CHAOS_DURATION
+              value: '60' 
+
             # specify the fill percentage according to the disk pressure required
             - name: FILL_PERCENTAGE
               value: '80'
-              
-            - name: TARGET_CONTAINER
-              value: 'nginx'
-              
+
+            - name: PODS_AFFECTED_PERC
+              value: ''
+
+            # Provide the container runtime path
+            # Default set to docker container path
+            - name: CONTAINER_PATH
+              value: '/var/lib/docker/containers'
 ```
 
 ### Create the ChaosEngine Resource

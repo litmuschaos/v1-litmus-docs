@@ -255,10 +255,6 @@ spec:
             - name: TOTAL_CHAOS_DURATION
               value: '60' # in seconds
 
-            #Network interface inside target container
-            - name: NETWORK_INTERFACE
-              value: 'eth0'    
-
             - name: NETWORK_PACKET_DUPLICATION_PERCENTAGE
               value: '100'
   
@@ -271,6 +267,10 @@ spec:
             # provide the socket file path
             - name: SOCKET_PATH
               value: '/var/run/docker.sock'
+              
+            ## percentage of total pods to target
+            - name: PODS_AFFECTED_PERC
+              value: ''
 ```
 
 

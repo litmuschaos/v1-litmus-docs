@@ -239,8 +239,13 @@ spec:
             - name: FILESYSTEM_UTILIZATION_PERCENTAGE
               value: '10'
 
-            - name: TARGET_POD
-              value: ''
+             ## provide the cluster runtime
+            - name: CONTAINER_RUNTIME
+              value: 'docker'   
+
+            # provide the socket file path
+            - name: SOCKET_PATH
+              value: '/var/run/docker.sock'     
 ```
 
 ### Create the ChaosEngine Resource

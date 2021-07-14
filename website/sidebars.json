@@ -80,7 +80,15 @@
       },
       {
         "type": "subcategory",
-        "label": "VM-PowerOff",
+        "label": "AWS-SSM",
+        "ids": [
+          "aws-ssm-chaos-by-id",
+          "aws-ssm-chaos-by-tag"
+        ]
+      },      
+      {
+        "type": "subcategory",
+        "label": "VMWare",
         "ids": [
           "vm-poweroff"
         ]

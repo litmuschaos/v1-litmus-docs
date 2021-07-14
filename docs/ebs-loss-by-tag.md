@@ -176,7 +176,19 @@ subjects:
     <td> The region name for the target volumes</td>
     <td> Optional </td>
     <td> </td>
-  </tr> 
+  </tr>
+  <tr>
+    <td> SEQUENCE </td>
+    <td> It defines sequence of chaos execution for multiple volumes</td>
+    <td> Optional </td>
+    <td> Default value: parallel. Supported: serial, parallel </td>
+  </tr>    
+  <tr>
+    <td> RAMP_TIME </td>
+    <td> Period to wait before and after injection of chaos in sec </td>
+    <td> Optional  </td>
+    <td> </td>
+  </tr>   
   <tr>
     <td> INSTANCE_ID </td>
     <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
@@ -218,6 +230,10 @@ spec:
             # provide the region name of the instance
             - name: REGION
               value: ''
+
+            - name: VOLUME_AFFECTED_PERC
+              value: '' 
+                   
 ```
 
 ### Create the ChaosEngine Resource
@@ -240,6 +256,17 @@ spec:
   `aws ec2 describe-volumes --filters Name=tag:Name,Values=Test* --query "Volumes[*].{ID:VolumeId,Tag:Tags}"`
 
 -  You can also use aws console to keep a watch over ebs attachment status.   
+
+### Abort/Restart the Chaos Experiment
+
+- To stop the ebs-loss-by-tag experiment immediately, either delete the ChaosEngine resource or execute the following command: 
+
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"stop"}}'` 
+
+- To restart the experiment, either re-apply the ChaosEngine YAML or execute the following command: 
+
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"active"}}'`
+
 
 ### Check Chaos Experiment Result
 

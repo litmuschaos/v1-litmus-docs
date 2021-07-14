@@ -223,6 +223,10 @@ spec:
             # pod failures without '--force' & default terminationGracePeriodSeconds
             - name: FORCE
               value: 'false'
+
+             ## percentage of total pods to target
+            - name: PODS_AFFECTED_PERC
+              value: ''
 ```
 
 ### Create the ChaosEngine Resource
