@@ -62,7 +62,9 @@
           "Kubernetes-Chaostoolkit-Service",
           "pod-io-stress",
           "node-io-stress",
-          "node-restart"
+          "node-restart",
+          "pod-cpu-hog-exec",
+          "pod-memory-hog-exec"          
         ]
       },
       {
@@ -76,6 +78,13 @@
           "ec2-terminate-by-tag"
         ]
       },
+      {
+        "type": "subcategory",
+        "label": "VMWare",
+        "ids": [
+          "vm-poweroff"
+        ]
+      },            
       {
         "type": "subcategory",
         "label": "Azure",

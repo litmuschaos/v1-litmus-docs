@@ -147,6 +147,12 @@ subjects:
     <td> Defaults to 5s </td>
   </tr>
   <tr>
+    <td> RANDOMNESS </td>
+    <td> Introduces randomness to pod deletions with a minimum period defined by CHAOS_INTERVAL </td>
+    <td> Optional </td>
+    <td> It supports true or false. Default value: false </td>
+  </tr>
+  <tr>
     <td> FORCE  </td>
     <td> Application Pod deletion mode. `False` indicates graceful deletion with default termination period of 30s. 'True' indicates an immediate forceful deletion with 0s grace period</td>
     <td> Optional  </td>

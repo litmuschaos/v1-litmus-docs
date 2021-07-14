@@ -1,7 +1,7 @@
 ---
 id: chaosschedule 
 title: Constructing the ChaosSchedule 
-sidebar_label: ChaosSchedule (alpha)
+sidebar_label: ChaosSchedule
 ---
 ------
 
@@ -10,9 +10,11 @@ around how the ChaosEngines are to be scheduled according to the specified templ
 
 This section describes the fields in the ChaosSchedule spec and the possible values that can be set against the same.
 
-<font style="font-family:verdana;color:yellow">Note</font> - This is the alpha version of ChaosScheduler. An enhanced version may be released in the future based on the user reviews
+<font style="font-family:verdana;color:yellow,font-weight:bold">Note</font> - This is the alpha version of ChaosScheduler. An enhanced version may be released in the future based on the user reviews
 
 ## Schedule Specification
+
+### Schedule NOW
 
 <table>
 <tr>
@@ -41,6 +43,8 @@ This section describes the fields in the ChaosSchedule spec and the possible val
 </tr>
 </table>
 
+### Schedule Once
+
 <table>
 <tr>
   <th>Field</th>
@@ -67,6 +71,8 @@ This section describes the fields in the ChaosSchedule spec and the possible val
   <td><code>.spec.schedule.once</code> refers to a single-instance execution of chaos at a particular timestamp specified by <code>.spec.schedule.once.executionTime</code></td>
 </tr>
 </table>
+
+### Schedule Repeat
 
 <table>
 <tr>
