@@ -23,11 +23,11 @@ sidebar_label: Azure Disk Loss
 ## Prerequisites
 
 - Ensure that Kubernetes Version > 1.15
-- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `azure-disk-loss` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/kube-aws/azure-disk-loss/experiment.yaml)
+- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in the operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
+- Ensure that the `azure-disk-loss` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/kube-aws/azure-disk-loss/experiment.yaml)
 - Ensure that you have sufficient Azure access to update the VM properties. 
-- We will use azure [ file-based authentication ](https://docs.microsoft.com/en-us/azure/developer/go/azure-sdk-authorization#use-file-based-authentication) to connect with the instance using azure GO SDK in the experiment. For generating auth file run `az ad sp create-for-rbac --sdk-auth > azure.auth` Azure CLI command.
-- Ensure to create a Kubernetes secret having the auth file created in the step in `CHAOS_NAMESPACE`. A sample secret file looks like:
+- We will use azure [ file-based authentication ](https://docs.microsoft.com/en-us/azure/developer/go/azure-sdk-authorization#use-file-based-authentication) to connect with the instance using azure GO SDK in the experiment. For generating auth file, run `az ad sp create-for-rbac --sdk-auth > azure.auth` Azure CLI command.
+- Ensure to create a Kubernetes secret having the auth file created in the step in `CHAOS_NAMESPACE`. A sample secret file looks like this:
 
 ```yaml
 apiVersion: v1
@@ -51,7 +51,7 @@ stringData:
     }
 ```
 
-- If you change the secret key name (from `azure.auth`) please also update the `AZURE_AUTH_LOCATION` 
+- If you change the secret key name (from `azure.auth`), please also update the `AZURE_AUTH_LOCATION` 
 ENV value on `experiment.yaml` with the same name.
 
 
@@ -67,17 +67,17 @@ ENV value on `experiment.yaml` with the same name.
 
 ## Details
 
--   Causes chaos to disrupt state of virtual disk by detaching it from the vm instance for a certain chaos duration using disk name and vm instance name.
+-   Causes chaos to disrupt the state of the virtual disk by detaching it from the VM instance for a certain chaos duration using disk name and VM instance name.
 -   It helps to check the performance of the application/process running on the instance.
 
 ## Integrations
 
 -   Azure Disk Loss can be effected using the chaos library: `litmus`, which makes use of azure sdk to attach/detach a disk. 
--   The desired chaoslib can be selected by setting the above options as value for the env variable `LIB`
+-   The desired chaoslib can be selected by setting the above option as a value for the env variable `LIB`
 
 ## Steps to Execute the Chaos Experiment
 
-- This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to provide in a ChaosEngine specification, refer [Getting Started](getstarted.md/#prepare-chaosengine)
+- This Chaos Experiment can be triggered by creating a ChaosEngine resource on the cluster. To understand the values to provide in a ChaosEngine specification, refer to [Getting Started](getstarted.md/#prepare-chaosengine)
 
 - Follow the steps in the sections below to create the chaosServiceAccount, prepare the ChaosEngine & execute the experiment.
 
@@ -130,10 +130,10 @@ subjects:
 
 ### Prepare ChaosEngine
 
-- Provide the application info in `spec.appinfo`. It is an optional parameter for infra level experiment.
+- Provide the application info in `spec.appinfo`. It is an optional parameter for an infra level experiment.
 - Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
 - Override the experiment tunables if desired in `experiments.spec.components.env`
-- To understand the values to provided in a ChaosEngine specification, refer [ChaosEngine Concepts](chaosengine-concepts.md)
+- To understand the values provided in a ChaosEngine specification, refer to [ChaosEngine Concepts](chaosengine-concepts.md)
 
 #### Supported Experiment Tunables
 
@@ -148,7 +148,7 @@ subjects:
     <td> VIRTUAL_DISK_NAMES </td>
     <td> Name of virtual disks to target.</td>
     <td> Mandatory </td>
-    <td> Provide comma seperated names for multiple disks</td>
+    <td> Provide comma separated names for multiple disks</td>
   </tr>
   <tr> 
     <td> AZURE_INSTANCE_NAME </td>
@@ -204,7 +204,7 @@ spec:
             - name: CHAOS_INTERVAL
               value: '30'
 
-            # provide the resouce group of the instance
+            # provide the resource group of the instance
             - name: RESOURCE_GROUP
               value: ''
 
@@ -212,7 +212,7 @@ spec:
             - name: AZURE_INSTANCE_NAME
               value: ''
 
-            # provide the virtual disk names (comma seperated if multiple)
+            # provide the virtual disk names (comma separated if multiple)
             - name: VIRTUAL_DISK_NAMES
               value: ''
 
@@ -224,7 +224,7 @@ spec:
 
 ### Create the ChaosEngine Resource
 
-- Create the ChaosEngine manifest prepared in the previous step to trigger the Chaos.
+- Create the ChaosEngine manifest prepared in the previous step to trigger the chaos.
 
   `kubectl apply -f chaosengine.yml`
 
@@ -237,7 +237,7 @@ spec:
 
   `az disk list -o table --query "[?name=='<disk-name>']"` (vm name without <>)
 
--  You can also use Azure console to keep a watch over the disk status.   
+-  You can also use the Azure console to keep a watch over the disk status.   
 
 ### Check Chaos Experiment Result
 
