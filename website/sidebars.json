@@ -64,7 +64,8 @@
           "node-io-stress",
           "node-restart",
           "pod-cpu-hog-exec",
-          "pod-memory-hog-exec"          
+          "pod-memory-hog-exec",
+          "gcp-vm-instance-delete"
         ]
       },
       {
@@ -76,6 +77,13 @@
           "ebs-loss-by-tag",
           "ec2-terminate-by-id",
           "ec2-terminate-by-tag"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "GCP",
+        "ids": [
+          "gcp-vm-instance-delete"
         ]
       },
       {
