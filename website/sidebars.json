@@ -80,6 +80,13 @@
       },
       {
         "type": "subcategory",
+        "label": "GCP",
+        "ids": [
+          "gcp-vm-disk-loss"
+        ]
+      },
+      {
+        "type": "subcategory",
         "label": "VM-PowerOff",
         "ids": [
           "vm-poweroff"
