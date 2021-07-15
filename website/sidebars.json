@@ -82,7 +82,7 @@
         "type": "subcategory",
         "label": "GCP",
         "ids": [
-          "gcp-vm-instance-delete"
+          "gcp-vm-instance-stop"
         ]
       },
       {
