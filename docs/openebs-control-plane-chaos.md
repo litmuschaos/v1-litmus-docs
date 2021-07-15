@@ -162,17 +162,7 @@ spec:
       spec:
         components:
           env:
-            - name: OPENEBS_NAMESPACE
-              value: 'openebs'
-
-            ## Period to wait before injection of chaos  
-            - name: RAMP_TIME
-              value: '10'
-
             - name: FORCE
-              value: ''
-
-            - name: LIB
               value: ''
 ```
 

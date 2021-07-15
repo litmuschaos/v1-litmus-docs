@@ -202,11 +202,11 @@ spec:
         #   kubernetes.io/hostname: 'node02'        
           env:
             - name: TOTAL_CHAOS_DURATION
-              value: '90' # in seconds
+              value: '60' # in seconds
               
              # provide the target node name
             - name: TARGET_NODE
-              value: 'node-01'
+              value: ''
 ```
 
 ### Create the ChaosEngine Resource

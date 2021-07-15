@@ -232,6 +232,9 @@ spec:
       spec:
         components:
           env:
+            - name: TOTAL_CHAOS_DURATION
+              value: '120' # in seconds
+
             - name: TARGET_CONTAINER
               value: 'cstor-istgt'
 
@@ -240,9 +243,6 @@ spec:
 
             - name: DEPLOY_TYPE
               value: 'deployment'  
-
-            - name: TOTAL_CHAOS_DURATION
-              value: '120' # in seconds
 ```
 
 ### Create the ChaosEngine Resource

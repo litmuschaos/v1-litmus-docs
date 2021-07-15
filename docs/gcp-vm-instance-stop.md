@@ -239,7 +239,7 @@ spec:
 
             # enable it if the target instance is a part of self-managed auto scaling group.
             - name: AUTO_SCALING_GROUP
-              value: 'disable'              
+              value: 'disable'
 ```
 
 ### Create the ChaosEngine Resource

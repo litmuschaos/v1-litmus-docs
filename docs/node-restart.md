@@ -239,9 +239,12 @@ spec:
         #   # provide the node labels
         #   kubernetes.io/hostname: 'node02' 
           env:
+            - name: TOTAL_CHAOS_DURATION
+              value: '60'
+
              # ENTER THE TARGET NODE NAME
             - name: TARGET_NODE
-              value: 'node01'
+              value: ''
 
             # ENTER THE TARGET NODE IP
             - name: TARGET_NODE_IP
@@ -249,7 +252,7 @@ spec:
 
              # ENTER THE USER TO BE USED FOR SSH AUTH
             - name: SSH_USER
-              value: ''
+              value: 'root'
 ```
 
 ### Create the ChaosEngine Resource

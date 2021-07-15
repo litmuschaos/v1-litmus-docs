@@ -218,6 +218,10 @@ spec:
             # provide the region name of the instance
             - name: REGION
               value: ''
+
+            - name: VOLUME_AFFECTED_PERC
+              value: '' 
+                   
 ```
 
 ### Create the ChaosEngine Resource

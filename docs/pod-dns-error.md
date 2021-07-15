@@ -229,6 +229,9 @@ spec:
       spec:
         components:
           env:
+            - name: TOTAL_CHAOS_DURATION
+              value: "60" # in seconds
+
             # list of the target hostnames or kewywords eg. '["litmuschaos","chaosnative.io"]' . If empty all hostnames are targets
             - name: TARGET_HOSTNAMES
               value: ""
@@ -237,9 +240,6 @@ spec:
             - name: MATCH_SCHEME
               value: "exact"
 
-            - name: TOTAL_CHAOS_DURATION
-              value: "60" # in seconds
-
             # provide the name of container runtime, it supports docker, containerd, crio
             - name: CONTAINER_RUNTIME
               value: "docker"
@@ -247,6 +247,10 @@ spec:
             # provide the socket file path
             - name: SOCKET_PATH
               value: "/var/run/docker.sock"
+
+             ## percentage of total pods to target
+            - name: PODS_AFFECTED_PERC
+              value: ""
 ```
 
 ### Create the ChaosEngine Resource

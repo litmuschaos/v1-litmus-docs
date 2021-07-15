@@ -175,7 +175,7 @@ spec:
               value: '90' # in seconds
               
             - name: TARGET_NODE
-              value: 'node-01'
+              value: ''
 ```
 
 ### Create the ChaosEngine Resource
