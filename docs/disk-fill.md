@@ -10,7 +10,7 @@ sidebar_label: Disk Fill
 <table>
   <tr>
     <th> Type </th>
-    <th>  Description  </th>
+    <th> Description  </th>
     <th> Tested K8s Platform </th>
   </tr>
   <tr>

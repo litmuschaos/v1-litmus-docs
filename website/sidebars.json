@@ -80,6 +80,14 @@
       },
       {
         "type": "subcategory",
+        "label": "AWS-SSM",
+        "ids": [
+          "aws-ssm-chaos-by-id",
+          "aws-ssm-chaos-by-tag"
+        ]
+      },        
+      {
+        "type": "subcategory",
         "label": "GCP",
         "ids": [
           "gcp-vm-instance-stop"
