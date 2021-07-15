@@ -1,7 +1,7 @@
 ---
-id: gcp-vm-instance-stop
-title: GCP VM Instance Stop Experiment Details
-sidebar_label: GCP VM Instance Stop
+id: gcp-vm-disk-loss
+title: GCP VM Disk Loss Experiment Details
+sidebar_label: GCP VM Disk Loss
 ---
 ------
 
@@ -10,27 +10,23 @@ sidebar_label: GCP VM Instance Stop
 <table>
   <tr>
     <th> Type </th>
-    <th> Description  </th>
+    <th>  Description  </th>
     <th> Tested K8s Platform </th>
   </tr>
   <tr>
     <td> GCP </td>
-    <td> Stops GCP VM instances and GKE nodes for a specified duration of time and later restarts them </td>
+    <td> Causes loss of a non-boot storage persistent disk from a GCP VM instance for a specified duration of time </td>
     <td> GKE, Minikube </td>
   </tr>
 </table>
 
-### WARNING
-```
-If the target GCP VM instance is a part of a self-managed nodegroup:
-Make sure to drain the target node if any application is running on it and also ensure to cordon the target node before running the experiment so that the experiment pods do not schedule on it. 
-```
 ## Prerequisites
 
 - Ensure that Kubernetes Version > 1.15
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `gcp-vm-instance-stop` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/gcp/gcp-vm-instance-stop/experiment.yaml)
-- Ensure that you have sufficient GCP permissions to stop and start the GCP VM instances. 
+- Ensure that the `gcp-vm-disk-loss` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/gcp/gcp-vm-disk-loss/experiment.yaml)
+- Ensure that your service account has an editor access or owner access for the GCP project.
+- Ensure the target disk volume to be detached should not be the root volume its instance.
 - Ensure to create a Kubernetes secret having the GCP service account credentials in the default namespace. A sample secret file looks like:
 
 ```yaml
@@ -54,17 +50,15 @@ stringData:
 
 ## Entry-Criteria
 
--   VM instance is healthy before chaos injection.
+- Disk volumes are attached to their respective instances
 
 ## Exit-Criteria
 
--   VM instance is healthy post chaos injection.
+- Disk volumes are attached to their respective instances
 
 ## Details
 
--   Causes power-off of a GCP VM instance by instance name or list of instance names before bringing it back to the running state after the specified chaos duration. 
--   It helps to check the performance of the application/process running on the VM instance.
--   When the `AUTO_SCALING_GROUP` is enable then the experiment will not try to start the instance post chaos, instead it will check the addition of the new node instances to the cluster.
+-  Causes chaos to disrupt state of GCP persistent disk volume by detaching it from its VM instance for a certain chaos duration using the disk name.
 
 ## Steps to Execute the Chaos Experiment
 
@@ -78,24 +72,24 @@ stringData:
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/gcp/gcp-vm-instance-stop/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/gcp/gcp-vm-disk-loss/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: gcp-vm-instance-stop-sa
+  name: gcp-vm-disk-loss-sa
   namespace: default
   labels:
-    name: gcp-vm-instance-stop-sa
+    name: gcp-vm-disk-loss-sa
     app.kubernetes.io/part-of: litmus
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: gcp-vm-instance-stop-sa
+  name: gcp-vm-disk-loss-sa
   labels:
-    name: gcp-vm-instance-stop-sa
+    name: gcp-vm-disk-loss-sa
     app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: [""]
@@ -110,24 +104,21 @@ rules:
 - apiGroups: ["litmuschaos.io"]
   resources: ["chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update"]
-- apiGroups: [""]
-  resources: ["nodes"]
-  verbs: ["get","list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: gcp-vm-instance-stop-sa
+  name: gcp-vm-disk-loss-sa
   labels:
-    name: gcp-vm-instance-stop-sa
+    name: gcp-vm-disk-loss-sa
     app.kubernetes.io/part-of: litmus
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: gcp-vm-instance-stop-sa
+  name: gcp-vm-disk-loss-sa
 subjects:
 - kind: ServiceAccount
-  name: gcp-vm-instance-stop-sa
+  name: gcp-vm-disk-loss-sa
   namespace: default
 ```
 
@@ -143,22 +134,28 @@ subjects:
 <table>
   <tr> 
     <td> GCP_PROJECT_ID </td>
-    <td> GCP project ID to which the VM instances belong </td>
+    <td> The ID of the GCP Project of which the disk volumes are a part of </td>
     <td> Mandatory </td>
-    <td> All the VM instances must belong to a single GCP project </td>
+    <td> All the target disk volumes should belong to a single GCP Project </td>
   </tr>
   <tr> 
-    <td> VM_INSTANCE_NAMES </td>
-    <td> Name of target VM instances </td>
+    <td> DISK_VOLUME_NAMES </td>
+    <td> Target non-boot persistent disk volume names</td>
     <td> Mandatory </td>
-    <td> Multiple instance names can be provided as instance1,instance2,... </td>
+    <td> Multiple disk volume names can be provided as disk1,disk2,... </td>
+  </tr>  
+  <tr>
+    <td> DISK_ZONES </td>
+    <td> The zones of respective target disk volumes </td>
+    <td> Mandatory </td>
+    <td> Provide the zone for every target disk name as zone1,zone2... in the respective order of <code>DISK_VOLUME_NAMES</code>  </td>
   </tr>
   <tr>
-    <td> INSTANCE_ZONES </td>
-    <td> The zones of the target VM instances </td>
+    <td> DEVICE_NAMES </td>
+    <td> The device names of respective target disk volumes </td>
     <td> Mandatory </td>
-    <td> Zone for every instance name has to be provided as zone1,zone2,... in the same order of <code>VM_INSTANCE_NAMES</code> </td>
-  </tr>
+    <td> Provide the device name for every target disk name as deviceName1,deviceName2... in the respective order of <code>DISK_VOLUME_NAMES</code>  </td>
+  </tr> 
   <tr>
     <th> Variables </th>
     <th> Description </th>
@@ -167,37 +164,31 @@ subjects:
   </tr>
   <tr> 
     <td> TOTAL_CHAOS_DURATION </td>
-    <td> The total time duration for chaos insertion (sec) </td>
+    <td> The time duration for chaos insertion (sec) </td>
     <td> Optional </td>
     <td> Defaults to 30s </td>
   </tr>
   <tr> 
     <td> CHAOS_INTERVAL </td>
-    <td> The interval (in sec) between successive instance termination </td>
+    <td> The time interval between the successive chaos iterations (sec) </td>
     <td> Optional </td>
     <td> Defaults to 30s </td>
-  </tr>  
-  <tr> 
-    <td> AUTO_SCALING_GROUP </td>
-    <td> Set to <code>enable</code> if the target instance is the part of a auto-scaling group </td>
-    <td> Optional </td>
-    <td> Defaults to <code>disable</code> </td>
-  </tr>  
-  <tr>
-    <td> SEQUENCE </td>
-    <td> It defines sequence of chaos execution for multiple instance </td>
-    <td> Optional </td>
-    <td> Default value: parallel. Supported: serial, parallel </td>
-  </tr> 
+  </tr>
   <tr>
     <td> RAMP_TIME </td>
     <td> Period to wait before injection of chaos in sec </td>
     <td> Optional  </td>
-    <td> Defaults to 0 sec </td>
-  </tr>  
+    <td> Default is 0 sec </td>
+  </tr>
+  <tr>
+    <td> SEQUENCE </td>
+    <td> It defines sequence of chaos execution for multiple instance</td>
+    <td> Optional </td>
+    <td> Default value: parallel. Supported: serial, parallel </td>
+  </tr> 
   <tr>
     <td> INSTANCE_ID </td>
-    <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name </td>
+    <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
     <td> Optional </td>
     <td> Ensure that the overall length of the chaosresult CR is still < 64 characters </td>
   </tr>
@@ -206,17 +197,19 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/gcp/gcp-vm-instance-stop/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/gcp/gcp-vm-disk-loss/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
-  name: gcp-vm-chaos
+  name: gcp-disk-chaos
+  namespace: default
 spec:
+  # It can be active/stop
   engineState: 'active'
-  chaosServiceAccount: gcp-vm-instance-stop-sa
+  chaosServiceAccount: gcp-vm-disk-loss-sa
   experiments:
-    - name: gcp-vm-instance-stop
+    - name: gcp-vm-disk-loss
       spec:
         components:
           env:
@@ -227,25 +220,27 @@ spec:
             # set chaos interval (in sec) as desired
             - name: CHAOS_INTERVAL
               value: '30'
-            
-            # Instance name of the target vm instance(s)
-            # Multiple instance names can be provided as comma separated values ex: instance1,instance2
-            - name: VM_INSTANCE_NAMES
-              value: ''
-            
-            # GCP project ID to which the vm instances belong
+
+            # set the GCP project id
             - name: GCP_PROJECT_ID
               value: ''
 
-            # Instance zone(s) of the target vm instance(s)
-            # If more than one instance is targetted, provide zone for each in the order of their 
-            # respective instance name in VM_INSTANCE_NAME as comma separated values ex: zone1,zone2
-            - name: INSTANCE_ZONES
+            # set the disk volume name(s) as comma seperated values 
+            # eg. volume1,volume2,...
+            - name: DISK_VOLUME_NAMES
               value: ''
-
-            # enable it if the target instance is a part of self-managed auto scaling group.
-            - name: AUTO_SCALING_GROUP
-              value: 'disable'
+              
+            # set the disk zone(s) as comma seperated values in the corresponding 
+            # order of DISK_VOLUME_NAME  
+            # eg. zone1,zone2,...
+            - name: DISK_ZONES
+              value: ''
+            
+            # set the device name(s) as comma seperated values in the corresponding 
+            # order of DISK_VOLUME_NAME 
+            # eg. device1,device2,...
+            - name: DEVICE_NAMES
+              value: ''
 ```
 
 ### Create the ChaosEngine Resource
@@ -258,15 +253,15 @@ spec:
 
 ### Watch Chaos progress
   
-- Monitor the VM Instance status using GCP Cloud SDK:
+- Monitor the attachment status for ebs volume from AWS CLI.
 
-  `gcloud compute instances describe INSTANCE_NAME --zone=INSTANCE_ZONE`
+  `gcloud compute disks describe DISK_NAME --zone=DISK_ZONE`
 
--  GCP console can also be used to monitor the instance status.
+- GCP console can also be used to monitor the disk volume attachment status.
 
 ### Abort/Restart the ChaosExperiment
 
-- To stop the gcp-vm-instance-stop experiment immediately, either delete the ChaosEngine resource or execute the following command:
+- To stop the gcp-vm-disk-loss experiment immediately, either delete the ChaosEngine resource or execute the following command:
 
   `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"stop"}}'`
 
@@ -276,11 +271,10 @@ spec:
 
 ### Check Chaos Experiment Result
 
-- Check whether the application is resilient to the gcp-vm-instance-stop, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
+- Check whether the application is resilient to the GCP disk loss, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult gcp-vm-chaos-gcp-vm-instance-stop`
+  `kubectl describe chaosresult gcp-disk-chaos-gcp-vm-disk-loss`
 
-### GCP VM Instance Stop Experiment Demo
+### GCP VM Disk Loss Experiment Demo
 
 - A sample recording of this experiment execution will be added soon.
-
