@@ -239,6 +239,10 @@ spec:
             # enable it if the target instance is a part of self-managed nodegroup.
             - name: MANAGED_NODEGROUP
               value: 'disable'
+            
+             # Target the percentage of instance filtered from tag
+            - name: INSTANCE_AFFECTED_PERC
+              value: ''
 ```
 
 ### Create the ChaosEngine Resource

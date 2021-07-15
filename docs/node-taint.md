@@ -204,14 +204,18 @@ spec:
         #   # provide the node labels
         #   kubernetes.io/hostname: 'node02'        
           env:
+            - name: TOTAL_CHAOS_DURATION
+              value: '60'
+              
             # set target node name
             - name: TARGET_NODE
-              value: 'node-01'
+              value: ''
               
              # set taint label & effect
              # key=value:effect or key:effect
             - name: TAINTS
               value: 'node.kubernetes.io/unreachable:NoExecute'
+              
 ```
 
 ### Create the ChaosEngine Resource

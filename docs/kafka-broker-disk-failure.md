@@ -281,6 +281,10 @@ spec:
       spec:
         components:  
           env:
+            # set chaos duration (in sec) as desired
+            - name: TOTAL_CHAOS_DURATION
+              value: '60'
+
             # choose based on available kafka broker replicas           
             - name: KAFKA_REPLICATION_FACTOR
               value: '3'
@@ -337,11 +341,7 @@ spec:
             # Uses 'disk-1' attached to the node on which it is scheduled
             - name: KAFKA_BROKER
               value: 'kafka-0'
-
-            # set chaos duration (in sec) as desired
-            - name: TOTAL_CHAOS_DURATION
-              value: '60'
-              
+                           
 ```
 
 ### Create the ChaosEngine Resource 
