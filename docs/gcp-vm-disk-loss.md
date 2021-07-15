@@ -259,6 +259,6 @@ spec:
 
   `kubectl describe chaosresult gcp-disk-chaos-gcp-vm-disk-loss`
 
-### EBS Loss Experiment Demo
+### GCP VM Disk Loss Experiment Demo
 
 - A sample recording of this experiment execution will be added soon.
