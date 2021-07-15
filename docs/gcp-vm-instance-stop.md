@@ -62,7 +62,7 @@ stringData:
 
 ## Details
 
--   Causes termination of a GCP VM instance by instance name or list of instance names before bringing it back to the running state after the specified chaos duration. 
+-   Causes power-off of a GCP VM instance by instance name or list of instance names before bringing it back to the running state after the specified chaos duration. 
 -   It helps to check the performance of the application/process running on the VM instance.
 -   When the `AUTO_SCALING_GROUP` is enable then the experiment will not try to start the instance post chaos, instead it will check the addition of the new node instances to the cluster.
 
@@ -257,6 +257,16 @@ spec:
   `gcloud compute instances describe INSTANCE_NAME --zone=INSTANCE_ZONE`
 
 -  GCP console can also be used to monitor the instance status.
+
+### Abort/Restart the ChaosExperiment
+
+- To stop the gcp-vm-instance-stop experiment immediately, either delete the ChaosEngine resource or execute the following command:
+
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"stop"}}'`
+
+- To restart the experiment, either re-apply the ChaosEngine YAML or execute the following command:
+
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"active"}}'`
 
 ### Check Chaos Experiment Result
 
