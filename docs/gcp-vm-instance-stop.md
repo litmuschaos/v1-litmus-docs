@@ -274,6 +274,6 @@ spec:
 
   `kubectl describe chaosresult gcp-vm-chaos-gcp-vm-instance-stop`
 
-### EC2 Terminate Experiment Demo
+### GCP VM Instance Stop Experiment Demo
 
 - A sample recording of this experiment execution will be added soon.
