@@ -25,7 +25,7 @@ original_id: pod-dns-spoof
 
 - Ensure that Kubernetes Version > 1.16
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `pod-dns-spoof` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/pod-dns-spoof/experiment.yaml)
+- Ensure that the `pod-dns-spoof` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.8?file=charts/generic/pod-dns-spoof/experiment.yaml)
  
 ## Entry Criteria
 
@@ -53,7 +53,7 @@ original_id: pod-dns-spoof
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-dns-spoof/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/v1.13.x/charts/generic/pod-dns-spoof/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
@@ -178,7 +178,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> Image used to run the netem command </td>
     <td> Optional  </td>
-    <td> Defaults to `litmuschaos/go-runner:latest` </td>
+    <td> Defaults to `litmuschaos/go-runner:1.13.8` </td>
   </tr>
   <tr>
     <td> RAMP_TIME </td>
@@ -203,7 +203,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-dns-spoof/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/v1.13.x/charts/generic/pod-dns-spoof/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
