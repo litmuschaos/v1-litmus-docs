@@ -64,8 +64,7 @@
           "node-io-stress",
           "node-restart",
           "pod-cpu-hog-exec",
-          "pod-memory-hog-exec",
-          "gcp-vm-instance-delete"
+          "pod-memory-hog-exec"
         ]
       },
       {
