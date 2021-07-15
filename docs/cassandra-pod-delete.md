@@ -265,7 +265,10 @@ spec:
             - name: CASSANDRA_LIVENESS_CHECK
               value: ''
 
-            
+             ## percentage of total pods to target
+            - name: PODS_AFFECTED_PERC
+              value: ''
+              
 ```
 
 ### Create the ChaosEngine Resource
