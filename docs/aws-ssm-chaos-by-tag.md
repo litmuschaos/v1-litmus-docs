@@ -146,22 +146,22 @@ subjects:
     <th> Notes </th>
   </tr>
   <tr> 
-    <td> EC2_INSTANCE_ID </td>
-    <td> Instance ID of the target ec2 instance. Multiple IDs can also be provided as a comma(,) separated values</td>
-    <td> Optional </td>
-    <td> Multiple IDs can be provided as `id1,id2` </td>
+    <td> EC2_INSTANCE_TAG </td>
+    <td> Instance Tag to filter the target ec2 instance.</td>
+    <td> Mandatory </td>
+    <td> The <code>EC2_INSTANCE_TAG</code> should be provided as <code>key:value</code> ex: <code>chaos:ssm</code></td>
   </tr>
   <tr> 
     <td> TOTAL_CHAOS_DURATION </td>
     <td> The total time duration for chaos insertion (sec) </td>
     <td> Optional </td>
-    <td> Defaults to 30s </td>
+    <td> Defaults to 60s </td>
   </tr>
   <tr> 
     <td> CHAOS_INTERVAL </td>
     <td> The interval (in sec) between successive instance termination.</td>
     <td> Optional </td>
-    <td> Defaults to 30s </td>
+    <td> Defaults to 60s </td>
   </tr>
   <tr> 
     <td> AWS_SHARED_CREDENTIALS_FILE </td>
