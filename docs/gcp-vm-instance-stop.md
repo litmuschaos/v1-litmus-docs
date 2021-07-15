@@ -193,7 +193,7 @@ subjects:
     <td> RAMP_TIME </td>
     <td> Period to wait before injection of chaos in sec </td>
     <td> Optional  </td>
-    <td> </td>
+    <td> Defaults to 0 sec </td>
   </tr>  
   <tr>
     <td> INSTANCE_ID </td>
