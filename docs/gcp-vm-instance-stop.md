@@ -155,7 +155,7 @@ subjects:
   </tr>
   <tr>
     <td> INSTANCE_ZONES </td>
-    <td> The zones of the target VM instaces </td>
+    <td> The zones of the target VM instances </td>
     <td> Mandatory </td>
     <td> Zone for every instance name has to be provided as zone1,zone2,... in the same order of <code>VM_INSTANCE_NAMES</code> </td>
   </tr>
