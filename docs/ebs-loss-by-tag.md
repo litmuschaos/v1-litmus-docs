@@ -22,7 +22,7 @@ sidebar_label: EBS Loss By Tag
 
 ## Prerequisites
 
-- Ensure that Kubernetes Version > 1.15
+- Ensure that Kubernetes Version > 1.16
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `ebs-loss-by-tag` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/kube-aws/ebs-loss-by-tag/experiment.yaml)
 - Ensure that you have sufficient AWS access to attach or detach an ebs volume from the instance.

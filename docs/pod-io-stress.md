@@ -22,7 +22,7 @@ sidebar_label: Pod IO Stress
 
 ## Prerequisites
 
-- Ensure that Kubernetes Version > 1.15
+- Ensure that Kubernetes Version > 1.16
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `pod-io-stress` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/pod-io-stress/experiment.yaml)
 - Cluster must run docker container runtime
@@ -41,7 +41,7 @@ sidebar_label: Pod IO Stress
 
 ## Integrations
 
-- Pod IO Stress can be effected using the chaos library: `pumba`
+- Pod IO Stress can be effected using the chaos library: `litmus` and  `pumba`
 
 ## Steps to Execute the Chaos Experiment
 
@@ -168,7 +168,7 @@ subjects:
     <td> LIB  </td>
     <td> The chaos lib used to inject the chaos </td>
     <td> Optional </td>
-    <td> Default to </code>pumba<code> </td>
+    <td> Default to </code>litmus<code>. Available litmus and pumba. </td>
   </tr>
    <tr>
     <td> LIB_IMAGE  </td>
@@ -187,7 +187,19 @@ subjects:
     <td> The Percentage of total pods to target  </td>
     <td> Optional </td>
     <td> Defaults to 0 (corresponds to 1 replica), provide numeric value only </td>
-  </tr> 
+  </tr>
+  <tr>
+    <td> CONTAINER_RUNTIME  </td>
+    <td> container runtime interface for the cluster</td>
+    <td> Optional </td>
+    <td> Defaults to docker, supported values: docker, containerd and crio for litmus and only docker for pumba LIB </td>
+  </tr>
+  <tr>
+    <td> SOCKET_PATH </td>
+    <td> Path of the containerd/crio/docker socket file </td>
+    <td> Optional  </td>
+    <td> Defaults to `/var/run/docker.sock` </td>
+  </tr>    
   <tr>
     <td> RAMP_TIME </td>
     <td> Period to wait before and after injection of chaos in sec </td>
