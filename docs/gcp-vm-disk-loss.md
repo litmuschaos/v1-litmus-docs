@@ -257,7 +257,17 @@ spec:
 
   `gcloud compute disks describe DISK_NAME --zone=DISK_ZONE`
 
-- GCP console can also be used to monitor the disk volume attachment status.   
+- GCP console can also be used to monitor the disk volume attachment status.
+
+### Abort/Restart the ChaosExperiment
+
+- To stop the gcp-vm-disk-loss experiment immediately, either delete the ChaosEngine resource or execute the following command:
+
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"stop"}}'`
+
+- To restart the experiment, either re-apply the ChaosEngine YAML or execute the following command:
+
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"active"}}'`
 
 ### Check Chaos Experiment Result
 
