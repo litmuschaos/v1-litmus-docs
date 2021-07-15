@@ -170,7 +170,7 @@ subjects:
   </tr>
   <tr> 
     <td> CHAOS_INTERVAL </td>
-    <td> The time duration between the attachment and detachment of the volumes (sec) </td>
+    <td> The time interval between the successive chaos iterations (sec) </td>
     <td> Optional </td>
     <td> Defaults to 30s </td>
   </tr>
