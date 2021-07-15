@@ -174,19 +174,19 @@ subjects:
   <tr> 
     <td> GCP_PROJECT_ID </td>
     <td> GCP project ID to which the VM instances belong </td>
-    <td> Required </td>
+    <td> Mandatory </td>
     <td> All the VM instances must belong to a single GCP project </td>
   </tr>
   <tr> 
     <td> VM_INSTANCE_NAMES </td>
     <td> Name of target VM instances </td>
-    <td> Required </td>
+    <td> Mandatory </td>
     <td> Multiple instance names can be provided as instance1,instance2,... </td>
   </tr>
   <tr>
     <td> INSTANCE_ZONES </td>
     <td> The zones of the target VM instaces </td>
-    <td> Required </td>
+    <td> Mandatory </td>
     <td> Zone for every instance name has to be provided as zone1,zone2,... in the same order of <code>VM_INSTANCE_NAMES</code> </td>
   </tr> 
   <tr>
