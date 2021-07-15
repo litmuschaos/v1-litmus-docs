@@ -132,24 +132,6 @@ subjects:
 #### Supported Experiment Tunables
 
 <table>
-  <tr>
-    <th> Variables </th>
-    <th> Description </th>
-    <th> Specify In ChaosEngine </th>
-    <th> Notes </th>
-  </tr>
-  <tr> 
-    <td> TOTAL_CHAOS_DURATION </td>
-    <td> The time duration for chaos insertion (sec) </td>
-    <td> Optional </td>
-    <td> Defaults to 30s </td>
-  </tr>
-  <tr> 
-    <td> CHAOS_INTERVAL </td>
-    <td> The time duration between the attachment and detachment of the volumes (sec) </td>
-    <td> Optional </td>
-    <td> Defaults to 30s </td>
-  </tr>
   <tr> 
     <td> GCP_PROJECT_ID </td>
     <td> The ID of the GCP Project of which the disk volumes are a part of </td>
@@ -174,6 +156,24 @@ subjects:
     <td> Mandatory </td>
     <td> Provide the device name for every target disk name as deviceName1,deviceName2... in the respective order of <code>DISK_VOLUME_NAMES</code>  </td>
   </tr> 
+  <tr>
+    <th> Variables </th>
+    <th> Description </th>
+    <th> Specify In ChaosEngine </th>
+    <th> Notes </th>
+  </tr>
+  <tr> 
+    <td> TOTAL_CHAOS_DURATION </td>
+    <td> The time duration for chaos insertion (sec) </td>
+    <td> Optional </td>
+    <td> Defaults to 30s </td>
+  </tr>
+  <tr> 
+    <td> CHAOS_INTERVAL </td>
+    <td> The time duration between the attachment and detachment of the volumes (sec) </td>
+    <td> Optional </td>
+    <td> Defaults to 30s </td>
+  </tr>
   <tr>
     <td> SEQUENCE </td>
     <td> It defines sequence of chaos execution for multiple instance</td>
