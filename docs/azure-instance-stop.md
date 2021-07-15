@@ -24,7 +24,7 @@ sidebar_label: Azure Instance Stop
 
 - Ensure that Kubernetes Version > 1.13
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `azure-instance-stop` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/kube-aws/azure-instance-stop/experiment.yaml)
+- Ensure that the `azure-instance-stop` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/azure/azure-instance-stop/experiment.yaml)
 - Ensure that you have sufficient Azure access to stop and start the an instance. 
 - We will use azure [ file-based authentication ](https://docs.microsoft.com/en-us/azure/developer/go/azure-sdk-authorization#use-file-based-authentication) to connect with the instance using azure GO SDK in the experiment. For generating auth file run `az ad sp create-for-rbac --sdk-auth > azure.auth` Azure CLI command.
 - Ensure to create a Kubernetes secret having the auth file created in the step in `CHAOS_NAMESPACE`. A sample secret file looks like:
@@ -105,9 +105,18 @@ metadata:
     name: azure-instance-stop-sa
     app.kubernetes.io/part-of: litmus
 rules:
-- apiGroups: ["","litmuschaos.io","batch"]
-  resources: ["pods","jobs","secrets","events","pods/log","pods/exec","chaosengines","chaosexperiments","chaosresults"]
-  verbs: ["create","list","get","patch","update","delete"]
+- apiGroups: [""]
+  resources: ["pods","events","secrets"]
+  verbs: ["create","list","get","patch","update","delete","deletecollection"]
+- apiGroups: [""]
+  resources: ["pods/exec","pods/log"]
+  verbs: ["create","list","get"]
+- apiGroups: ["batch"]
+  resources: ["jobs"]
+  verbs: ["create","list","get","delete","deletecollection"]
+- apiGroups: ["litmuschaos.io"]
+  resources: ["chaosengines","chaosexperiments","chaosresults"]
+  verbs: ["create","list","get","patch","update"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -160,6 +169,12 @@ subjects:
     <td> Optional </td>
     <td> Defaults to 30s </td>
   </tr>
+  <tr> 
+    <td> CHAOS_INTERVAL </td>
+    <td> The interval (in sec) between successive instance poweroff.</td>
+    <td> Optional </td>
+    <td> Defaults to 30s </td>
+  </tr>   
   <tr>
     <td> RAMP_TIME </td>
     <td> Period to wait before injection of chaos in sec </td>
@@ -191,12 +206,8 @@ metadata:
   name: nginx-chaos
   namespace: default
 spec:
-  annotationCheck: 'false'
   engineState: 'active'
   chaosServiceAccount: azure-instance-stop-sa
-  monitoring: false
-  # It can be retain/delete
-  jobCleanUpPolicy: 'delete'
   experiments:
     - name: azure-instance-stop
       spec:
@@ -205,6 +216,10 @@ spec:
             # set chaos duration (in sec) as desired
             - name: TOTAL_CHAOS_DURATION
               value: '30'
+
+            # set chaos intreval (in sec) as desired
+            - name: CHAOS_INTERVAL
+              value: '30'            
 
             # provide the target instance name
             - name: AZURE_INSTANCE_NAME
@@ -249,6 +264,6 @@ spec:
 
   `kubectl describe chaosresult nginx-chaos-azure-instance-stop -n <chaos-namespace>`
 
-### EC2 Stop Experiment Demo
+### Azure Instance Stop Experiment Demo
 
 - A sample recording of this experiment execution will be added soon.
