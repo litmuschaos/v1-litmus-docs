@@ -175,6 +175,12 @@ subjects:
     <td> Defaults to 30s </td>
   </tr>
   <tr>
+    <td> RAMP_TIME </td>
+    <td> Period to wait before injection of chaos in sec </td>
+    <td> Optional  </td>
+    <td> </td>
+  </tr>
+  <tr>
     <td> SEQUENCE </td>
     <td> It defines sequence of chaos execution for multiple instance</td>
     <td> Optional </td>
