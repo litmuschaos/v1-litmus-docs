@@ -141,6 +141,24 @@ subjects:
 #### Supported Experiment Tunables
 
 <table>
+  <tr> 
+    <td> GCP_PROJECT_ID </td>
+    <td> GCP project ID to which the VM instances belong </td>
+    <td> Mandatory </td>
+    <td> All the VM instances must belong to a single GCP project </td>
+  </tr>
+  <tr> 
+    <td> VM_INSTANCE_NAMES </td>
+    <td> Name of target VM instances </td>
+    <td> Mandatory </td>
+    <td> Multiple instance names can be provided as instance1,instance2,... </td>
+  </tr>
+  <tr>
+    <td> INSTANCE_ZONES </td>
+    <td> The zones of the target VM instaces </td>
+    <td> Mandatory </td>
+    <td> Zone for every instance name has to be provided as zone1,zone2,... in the same order of <code>VM_INSTANCE_NAMES</code> </td>
+  </tr>
   <tr>
     <th> Variables </th>
     <th> Description </th>
@@ -170,25 +188,7 @@ subjects:
     <td> It defines sequence of chaos execution for multiple instance </td>
     <td> Optional </td>
     <td> Default value: parallel. Supported: serial, parallel </td>
-  </tr>  
-  <tr> 
-    <td> GCP_PROJECT_ID </td>
-    <td> GCP project ID to which the VM instances belong </td>
-    <td> Mandatory </td>
-    <td> All the VM instances must belong to a single GCP project </td>
-  </tr>
-  <tr> 
-    <td> VM_INSTANCE_NAMES </td>
-    <td> Name of target VM instances </td>
-    <td> Mandatory </td>
-    <td> Multiple instance names can be provided as instance1,instance2,... </td>
-  </tr>
-  <tr>
-    <td> INSTANCE_ZONES </td>
-    <td> The zones of the target VM instaces </td>
-    <td> Mandatory </td>
-    <td> Zone for every instance name has to be provided as zone1,zone2,... in the same order of <code>VM_INSTANCE_NAMES</code> </td>
-  </tr> 
+  </tr>   
   <tr>
     <td> INSTANCE_ID </td>
     <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name </td>
