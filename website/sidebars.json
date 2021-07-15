@@ -87,9 +87,16 @@
       },
       {
         "type": "subcategory",
-        "label": "VM-PowerOff",
+        "label": "VMWare",
         "ids": [
           "vm-poweroff"
+        ]
+      },            
+      {
+        "type": "subcategory",
+        "label": "Azure",
+        "ids": [
+          "azure-instance-stop"
         ]
       },      
       {

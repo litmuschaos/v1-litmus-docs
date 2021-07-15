@@ -1,7 +1,7 @@
 ---
-id: ec2-terminate-by-id
-title: EC2 Terminate By ID Experiment Details
-sidebar_label: EC2 Terminate By ID
+id: azure-instance-stop
+title: Azure Instance Stop Experiment Details
+sidebar_label: Azure Instance Stop
 ---
 ------
 
@@ -14,24 +14,20 @@ sidebar_label: EC2 Terminate By ID
     <th> Tested K8s Platform </th>
   </tr>
   <tr>
-    <td> Kube AWS </td>
-    <td> Termination of an EC2 instance by id for a certain chaos duration</td>
+    <td> Azure </td>
+    <td> Termination of an azure instance for a certain chaos duration</td>
     <td> EKS </td>
   </tr>
 </table>
 
-### WARNING
-```
-If the target EC2 instance is a part of a self-managed nodegroup:
-Make sure to drain the target node if any application is running on it and also ensure to cordon the target node before running the experiment so that the experiment pods do not schedule on it. 
-```
 ## Prerequisites
 
-- Ensure that Kubernetes Version > 1.15
+- Ensure that Kubernetes Version > 1.13
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
-- Ensure that the `ec2-terminate-by-id` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/kube-aws/ec2-terminate-by-id/experiment.yaml)
-- Ensure that you have sufficient AWS access to stop and start an ec2 instance. 
-- Ensure to create a Kubernetes secret having the AWS access configuration(key) in the `CHAOS_NAMESPACE`. A sample secret file looks like:
+- Ensure that the `azure-instance-stop` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/azure/azure-instance-stop/experiment.yaml)
+- Ensure that you have sufficient Azure access to stop and start the an instance. 
+- We will use azure [ file-based authentication ](https://docs.microsoft.com/en-us/azure/developer/go/azure-sdk-authorization#use-file-based-authentication) to connect with the instance using azure GO SDK in the experiment. For generating auth file run `az ad sp create-for-rbac --sdk-auth > azure.auth` Azure CLI command.
+- Ensure to create a Kubernetes secret having the auth file created in the step in `CHAOS_NAMESPACE`. A sample secret file looks like:
 
 ```yaml
 apiVersion: v1
@@ -40,34 +36,41 @@ metadata:
   name: cloud-secret
 type: Opaque
 stringData:
-  cloud_config.yml: |-
-    # Add the cloud AWS credentials respectively
-    [default]
-    aws_access_key_id = XXXXXXXXXXXXXXXXXXX
-    aws_secret_access_key = XXXXXXXXXXXXXXX
+  azure.auth: |-
+    {
+      "clientId": "XXXXXXXXX",
+      "clientSecret": "XXXXXXXXX",
+      "subscriptionId": "XXXXXXXXX",
+      "tenantId": "XXXXXXXXX",
+      "activeDirectoryEndpointUrl": "XXXXXXXXX",
+      "resourceManagerEndpointUrl": "XXXXXXXXX",
+      "activeDirectoryGraphResourceId": "XXXXXXXXX",
+      "sqlManagementEndpointUrl": "XXXXXXXXX",
+      "galleryEndpointUrl": "XXXXXXXXX",
+      "managementEndpointUrl": "XXXXXXXXX"
+    }
 ```
 
-- If you change the secret key name (from `cloud_config.yml`) please also update the `AWS_SHARED_CREDENTIALS_FILE` 
+- If you change the secret key name (from `azure.auth`) please also update the `AZURE_AUTH_LOCATION` 
 ENV value on `experiment.yaml`with the same name.
 
 
 ## Entry-Criteria
 
--   EC2 instance is healthy before chaos injection.
+-   Azure instance is healthy before chaos injection.
 
 ## Exit-Criteria
 
--   EC2 instance is healthy post chaos injection.
+-   Azure instance is healthy post chaos injection.
 
 ## Details
 
--   Causes termination of an EC2 instance by instance ID or list of instance IDs before bringing it back to running state after the specified chaos duration. 
--   It helps to check the performance of the application/process running on the ec2 instance.
--   When the `MANAGED_NODEGROUP` is enable then the experiment will not try to start the instance post chaos instead it will check of the addition of the new node instance to the cluster.
+-   Causes PowerOff an Azure instance before bringing it back to running state after the specified chaos duration. 
+-   It helps to check the performance of the application/process running on the instance.
 
 ## Integrations
 
--   EC2 Terminate can be effected using the chaos library: `litmus`, which makes use of aws sdk to start/stop an EC2 instance. 
+-   Azure Instance Stop can be effected using the chaos library: `litmus`, which makes use of azure sdk to start/stop an instance. 
 -   The desired chaoslib can be selected by setting the above options as value for the env variable `LIB`
 
 ## Steps to Execute the Chaos Experiment
@@ -82,24 +85,24 @@ ENV value on `experiment.yaml`with the same name.
 
 #### Sample Rbac Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kube-aws/ec2-terminate-by-id/rbac.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/azure/azure-instance-stop/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: ec2-terminate-by-id-sa
+  name: azure-instance-stop-sa
   namespace: default
   labels:
-    name: ec2-terminate-by-id-sa
+    name: azure-instance-stop-sa
     app.kubernetes.io/part-of: litmus
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: ec2-terminate-by-id-sa
+  name: azure-instance-stop-sa
   labels:
-    name: ec2-terminate-by-id-sa
+    name: azure-instance-stop-sa
     app.kubernetes.io/part-of: litmus
 rules:
 - apiGroups: [""]
@@ -114,24 +117,21 @@ rules:
 - apiGroups: ["litmuschaos.io"]
   resources: ["chaosengines","chaosexperiments","chaosresults"]
   verbs: ["create","list","get","patch","update"]
-- apiGroups: [""]
-  resources: ["nodes"]
-  verbs: ["patch","get","list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: ec2-terminate-by-id-sa
+  name: azure-instance-stop-sa
   labels:
-    name: ec2-terminate-by-id-sa
+    name: azure-instance-stop-sa
     app.kubernetes.io/part-of: litmus
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: ec2-terminate-by-id-sa
+  name: azure-instance-stop-sa
 subjects:
 - kind: ServiceAccount
-  name: ec2-terminate-by-id-sa
+  name: azure-instance-stop-sa
   namespace: default
 ```
 
@@ -152,41 +152,41 @@ subjects:
     <th> Notes </th>
   </tr>
   <tr> 
-    <td> EC2_INSTANCE_ID </td>
-    <td> Instance ID of the target ec2 instance. Multiple IDs can also be provided as a comma(,) separated values</td>
+    <td> AZURE_INSTANCE_NAME </td>
+    <td> Instance name of the target azure instance.</td>
     <td> Mandatory </td>
-    <td> Multiple IDs can be provided as `id1,id2` </td>
+    <td>  </td>
   </tr>
+  <tr>
+    <td> RESOURCE_GROUP </td>
+    <td> The resource group of the target instance</td>
+    <td> Mandatory </td>
+    <td> </td>
+  </tr> 
   <tr> 
     <td> TOTAL_CHAOS_DURATION </td>
-    <td> The total time duration for chaos insertion (sec) </td>
+    <td> The time duration for chaos insertion (sec) </td>
     <td> Optional </td>
     <td> Defaults to 30s </td>
   </tr>
   <tr> 
     <td> CHAOS_INTERVAL </td>
-    <td> The interval (in sec) between successive instance termination.</td>
+    <td> The interval (in sec) between successive instance poweroff.</td>
     <td> Optional </td>
     <td> Defaults to 30s </td>
-  </tr>  
-  <tr> 
-    <td> MANAGED_NODEGROUP </td>
-    <td> Set to <code>enable</code> if the target instance is the part of self-managed nodegroups </td>
-    <td> Optional </td>
-    <td> Defaults to <code>disable</code> </td>
-  </tr>  
+  </tr>   
+  <tr>
+    <td> RAMP_TIME </td>
+    <td> Period to wait before injection of chaos in sec </td>
+    <td> Optional  </td>
+    <td> </td>
+  </tr>
   <tr>
     <td> SEQUENCE </td>
-    <td> It defines sequence of chaos execution for multiple instance</td>
+    <td> It defines sequence of chaos execution for multiple target pods </td>
     <td> Optional </td>
     <td> Default value: parallel. Supported: serial, parallel </td>
   </tr>  
-  <tr>
-    <td> REGION </td>
-    <td> The region name of the target instace</td>
-    <td> Optional </td>
-    <td> </td>
-  </tr> 
   <tr>
     <td> INSTANCE_ID </td>
     <td> A user-defined string that holds metadata/info about current run/instance of chaos. Ex: 04-05-2020-9-00. This string is appended as suffix in the chaosresult CR name.</td>
@@ -198,7 +198,7 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/kube-aws/ec2-terminate-by-id/engine.yaml yaml)
+[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/azure/azure-instance-stop/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -207,9 +207,9 @@ metadata:
   namespace: default
 spec:
   engineState: 'active'
-  chaosServiceAccount: ec2-terminate-by-id-sa
+  chaosServiceAccount: azure-instance-stop-sa
   experiments:
-    - name: ec2-terminate-by-id
+    - name: azure-instance-stop
       spec:
         components:
           env: 
@@ -217,22 +217,18 @@ spec:
             - name: TOTAL_CHAOS_DURATION
               value: '30'
 
-            # set interval duration (in sec) as desired
+            # set chaos intreval (in sec) as desired
             - name: CHAOS_INTERVAL
-              value: '30'
+              value: '30'            
 
-             # Instance ID of the target ec2 instance
-             # Multiple IDs can also be provided as comma separated values ex: id1,id2
-            - name: EC2_INSTANCE_ID
-              value: ''
-              
-            # provide the region name of the instance
-            - name: REGION
+            # provide the target instance name
+            - name: AZURE_INSTANCE_NAME
               value: ''
 
-            # enable it if the target instance is a part of self-managed nodegroup.
-            - name: MANAGED_NODEGROUP
-              value: 'disable'              
+            # provide the resource group of the instance
+            - name: RESOURCE_GROUP
+              value: ''
+
 ```
 
 ### Create the ChaosEngine Resource
@@ -246,18 +242,28 @@ spec:
 
 ### Watch Chaos progress
   
-- Monitor the ec2 state from AWS CLI.
+- Monitor the azure state from Azure CLI.
 
-  `aws ec2 describe-instance-status --instance-ids <instance-id>`
+  `az vm list -d -o table --query "[?name=='<vm-name>']"` (vm name without <>)
 
--  You can also use aws console to keep a watch over the instance state.   
+-  You can also use Azure console to keep a watch over the instance state.   
+
+### Abort/Restart the Chaos Experiment
+
+- To stop the azure-instance-terminate experiment immediately, either delete the ChaosEngine resource or execute the following command:
+
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"stop"}}'`
+
+- To restart the experiment, either re-apply the ChaosEngine YAML or execute the following command:
+
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"active"}}'`
 
 ### Check Chaos Experiment Result
 
-- Check whether the application is resilient to the ec2-terminate-by-id, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
+- Check whether the application is resilient to the azure-instance-stop, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
-  `kubectl describe chaosresult nginx-chaos-ec2-terminate-by-id -n <application-namespace>`
+  `kubectl describe chaosresult nginx-chaos-azure-instance-stop -n <chaos-namespace>`
 
-### EC2 Terminate Experiment Demo
+### Azure Instance Stop Experiment Demo
 
 - A sample recording of this experiment execution will be added soon.
