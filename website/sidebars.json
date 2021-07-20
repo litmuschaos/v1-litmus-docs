@@ -83,14 +83,29 @@
           "aws-ssm-chaos-by-id",
           "aws-ssm-chaos-by-tag"
         ]
-      },        
+      },  
+      {
+        "type": "subcategory",
+        "label": "GCP",
+        "ids": [
+          "gcp-vm-instance-stop",
+          "gcp-vm-disk-loss"
+        ]
+      },      
       {
         "type": "subcategory",
         "label": "VMWare",
         "ids": [
           "vm-poweroff"
         ]
-      },    
+      },
+      {
+        "type": "subcategory",
+        "label": "Azure",
+        "ids": [
+          "azure-instance-stop"
+        ]
+      },     
       {
         "type": "subcategory",
         "label": "OpenEBS",
