@@ -24,8 +24,10 @@ original_id: pod-dns-error
 ## Prerequisites
 
 - Ensure that Kubernetes Version > 1.15
+- This experiment is only supported for Docker container environments
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `pod-dns-error` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/1.13.5?file=charts/generic/pod-dns-error/experiment.yaml)
+
  
 ## Entry Criteria
 
@@ -166,11 +168,11 @@ subjects:
     <td> CONTAINER_RUNTIME  </td>
     <td> container runtime interface for the cluster</td>
     <td> Optional </td>
-    <td> Defaults to docker, supported values: docker, containerd and crio </td>
+    <td> Defaults to docker, supported values: docker </td>
   </tr>
   <tr>
     <td> SOCKET_PATH </td>
-    <td> Path of the containerd/crio/docker socket file </td>
+    <td> Path of the docker socket file </td>
     <td> Optional  </td>
     <td> Defaults to `/var/run/docker.sock` </td>
   </tr>
