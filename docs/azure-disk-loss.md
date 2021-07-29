@@ -130,7 +130,7 @@ subjects:
 
 ### Prepare ChaosEngine
 
-- Provide the application info in `spec.appinfo`. It is an optional parameter for an infra level experiment.
+- Provide the application info in `spec.appinfo`. It is an optional parameter for an infra-level experiment.
 - Provide the auxiliary applications info (ns & labels) in `spec.auxiliaryAppInfo`
 - Override the experiment tunables if desired in `experiments.spec.components.env`
 - To understand the values provided in a ChaosEngine specification, refer to [ChaosEngine Concepts](chaosengine-concepts.md)
@@ -143,6 +143,12 @@ subjects:
     <th> Description </th>
     <th> Specify In ChaosEngine </th>
     <th> Notes </th>
+  </tr>
+  <tr>
+    <td> IS_SCALE_SET </td>
+    <td> If the virtual instance is part of scale set (AKS node) or not</td>
+    <td> Optional </td>
+    <td> Default value is false </td>
   </tr>
   <tr> 
     <td> VIRTUAL_DISK_NAMES </td>
@@ -215,6 +221,10 @@ spec:
             # provide the virtual disk names (comma separated if multiple)
             - name: VIRTUAL_DISK_NAMES
               value: ''
+            
+            # accepts true/false value. Mark as true if disk is attached to scale set vm
+            - name: IS_SCALE_SET
+              value: ''
 
             # provide the sequence type for the run. Options: serial/parallel
             - name: SEQUENCE
@@ -241,7 +251,7 @@ spec:
 
 ### Check Chaos Experiment Result
 
-- Check whether the application is resilient to the azure-disk-loss, once the experiment (job) is completed. The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
+- Check whether the application is resilient to the azure-disk-loss, after the experiment (job). The ChaosResult resource name is derived like this: `<ChaosEngine-Name>-<ChaosExperiment-Name>`.
 
   `kubectl describe chaosresult nginx-chaos-azure-disk-loss -n <chaos-namespace>`
 
