@@ -162,7 +162,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> Image used to run the helper pod.</td>
     <td> Optional  </td>
-    <td> Defaults to <code>litmuschaos/go-runner:ci<code> </td>
+    <td> Defaults to <code>litmuschaos/go-runner:1.13.8<code> </td>
   </tr>
    <tr>
     <td> STRESS_IMAGE  </td>
