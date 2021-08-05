@@ -163,6 +163,12 @@ subjects:
     <td> Mandatory </td>
     <td> </td>
   </tr> 
+  <tr>
+    <td> SCALE_SET </td>
+    <td> Whether instance is part of Scale set</td>
+    <td> Mandatory </td>
+    <td> Accepts "enable"/"disable". Default is "disable"</td>
+  </tr> 
   <tr> 
     <td> TOTAL_CHAOS_DURATION </td>
     <td> The time duration for chaos insertion (sec) </td>
@@ -227,6 +233,10 @@ spec:
 
             # provide the resource group of the instance
             - name: RESOURCE_GROUP
+              value: ''
+            
+            # accepts enable/disable value. default is disable
+            - name: SCALE_SET
               value: ''
 
 ```

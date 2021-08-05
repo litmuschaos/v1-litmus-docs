@@ -145,22 +145,16 @@ subjects:
     <th> Notes </th>
   </tr>
   <tr>
-    <td> IS_SCALE_SET </td>
-    <td> If the virtual instance is part of scale set (AKS node) or not</td>
+    <td> SCALE_SET </td>
+    <td> Whether disk is connected to Scale set instance</td>
     <td> Optional </td>
-    <td> Default value is false </td>
+    <td> Accepts "enable"/"disable". Default is "disable"</td>
   </tr>
   <tr> 
     <td> VIRTUAL_DISK_NAMES </td>
     <td> Name of virtual disks to target.</td>
     <td> Mandatory </td>
     <td> Provide comma separated names for multiple disks</td>
-  </tr>
-  <tr> 
-    <td> AZURE_INSTANCE_NAME </td>
-    <td> Instance name of the target azure instance.</td>
-    <td> Mandatory </td>
-    <td>  </td>
   </tr>
   <tr>
     <td> RESOURCE_GROUP </td>
@@ -214,16 +208,12 @@ spec:
             - name: RESOURCE_GROUP
               value: ''
 
-            # provide the target instance name
-            - name: AZURE_INSTANCE_NAME
-              value: ''
-
             # provide the virtual disk names (comma separated if multiple)
             - name: VIRTUAL_DISK_NAMES
               value: ''
             
-            # accepts true/false value. Mark as true if disk is attached to scale set vm
-            - name: IS_SCALE_SET
+            # accepts enable/disable value. default is disable
+            - name: SCALE_SET
               value: ''
 
             # provide the sequence type for the run. Options: serial/parallel
