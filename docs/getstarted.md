@@ -36,7 +36,7 @@ Running chaos on your application involves the following steps:
 Apply the LitmusChaos Operator manifest:
  
 ```
-kubectl apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.13.5.yaml
+kubectl apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.13.8.yaml
 ```
 
 The above command installs all the CRDs, required service account configuration, and chaos-operator. 
@@ -260,6 +260,10 @@ spec:
             # pod failures without '--force' & default terminationGracePeriodSeconds
             - name: FORCE
               value: 'false'
+
+             ## percentage of total pods to target
+            - name: PODS_AFFECTED_PERC
+              value: ''
 ```
 
 
@@ -310,7 +314,7 @@ kubectl delete chaosengine --all -n <namespace>
 ```
 
 ```console
-kubectl delete -f https://litmuschaos.github.io/litmus/litmus-operator-v1.13.5.yaml
+kubectl delete -f https://litmuschaos.github.io/litmus/litmus-operator-v1.13.8.yaml
 ```
 
 **NOTE**

@@ -22,7 +22,7 @@ sidebar_label: Pod Network Latency
 
 ## Prerequisites
 
-- Ensure that Kubernetes Version > 1.15
+- Ensure that Kubernetes Version > 1.16
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `pod-network-latency` experiment resource is available in the cluster by executing kubectl `get chaosexperiments` in the desired namespace. . If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/pod-network-latency/experiment.yaml)
 
@@ -254,15 +254,11 @@ spec:
       spec:
         components:
           env:
-            #Network interface inside target container
-            - name: NETWORK_INTERFACE
-              value: 'eth0'     
+            - name: TOTAL_CHAOS_DURATION
+              value: '60' # in seconds
 
             - name: NETWORK_LATENCY
               value: '2000'
-
-            - name: TOTAL_CHAOS_DURATION
-              value: '60' # in seconds
 
             # provide the name of container runtime
             # for litmus LIB, it supports docker, containerd, crio
@@ -273,6 +269,10 @@ spec:
             # provide the socket file path
             - name: SOCKET_PATH
               value: '/var/run/docker.sock'
+
+             ## percentage of total pods to target
+            - name: PODS_AFFECTED_PERC
+              value: ''
 ```
 
 ### Create the ChaosEngine Resource

@@ -58,20 +58,18 @@
           "node-taint",
           "docker-service-kill",
           "pod-autoscaler",
-          "Kubernetes-Chaostoolkit-Application",
-          "Kubernetes-Chaostoolkit-Service",
+          "byoc-pod-delete",
           "pod-io-stress",
           "node-io-stress",
           "node-restart",
           "pod-cpu-hog-exec",
-          "pod-memory-hog-exec"          
+          "pod-memory-hog-exec"
         ]
       },
       {
         "type": "subcategory",
         "label": "Kube-AWS",
         "ids": [
-          "Kubernetes-Chaostoolkit-AWS",
           "ebs-loss-by-id",
           "ebs-loss-by-tag",
           "ec2-terminate-by-id",
@@ -79,19 +77,35 @@
         ]
       },
       {
-        "type": "subcategory",
-        "label": "Azure",
+        "label": "AWS-SSM",
         "ids": [
-          "azure-disk-loss"
+          "aws-ssm-chaos-by-id",
+          "aws-ssm-chaos-by-tag"
+        ]
+      },  
+      {
+        "type": "subcategory",
+        "label": "GCP",
+        "ids": [
+          "gcp-vm-instance-stop",
+          "gcp-vm-disk-loss"
+        ]
+      },      
+      {
+        "type": "subcategory",
+        "label": "VMWare",
+        "ids": [
+          "vm-poweroff"
         ]
       },
       {
         "type": "subcategory",
-        "label": "VM-PowerOff",
+        "label": "Azure",
         "ids": [
-          "vm-poweroff"
+          "azure-instance-stop",
+          "azure-disk-loss"
         ]
-      },      
+      },     
       {
         "type": "subcategory",
         "label": "OpenEBS",
@@ -130,21 +144,6 @@
         "label": "Cassandra",
         "ids": [
           "cassandra-pod-delete"
-        ]
-      },
-      {
-        "type": "subcategory",
-        "label": "Kube-Components",
-        "ids": [
-          "Kubernetes-Chaostoolkit-Cluster-Kiam",
-          "Kubernetes-Chaostoolkit-Cluster-active-monitor-controller",
-          "Kubernetes-Chaostoolkit-Cluster-alb-ingress-controller",
-          "Kubernetes-Chaostoolkit-Cluster-kube-proxy",
-          "Kubernetes-Chaostoolkit-Cluster-prometheus-k8s-prometheus",
-          "Kubernetes-Chaostoolkit-Cluster-prometheus-pushgateway",
-          "Kubernetes-Chaostoolkit-Cluster-prometheus-operator",
-          "Kubernetes-Chaostoolkit-Cluster-Calico-Node",
-          "Kubernetes-Chaostoolkit-Cluster-Wavefront"
         ]
       }
     ],

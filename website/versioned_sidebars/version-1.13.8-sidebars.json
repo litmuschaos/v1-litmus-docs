@@ -1,0 +1,169 @@
+{
+  "version-1.13.8-docs": {
+    "Getting Started": [
+      "version-1.13.8-getstarted",
+      "version-1.13.8-chaoshub",
+      "version-1.13.8-plugins",
+      "version-1.13.8-architecture",
+      "version-1.13.8-resources",
+      "version-1.13.8-community",
+      "version-1.13.8-devguide"
+    ],
+    "Litmus Demo": [
+      "version-1.13.8-litmus-demo"
+    ],
+    "Concepts": [
+      "version-1.13.8-chaosengine",
+      "version-1.13.8-chaosexperiment",
+      "version-1.13.8-chaosschedule",
+      "version-1.13.8-chaosresult",
+      "version-1.13.8-litmus-probe"
+    ],
+    "Platforms": [
+      {
+        "type": "subcategory",
+        "label": "OpenShift",
+        "ids": [
+          "version-1.13.8-openshift-litmus"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "Rancher",
+        "ids": [
+          "version-1.13.8-rancher-litmus"
+        ]
+      }
+    ],
+    "Experiments": [
+      {
+        "type": "subcategory",
+        "label": "Generic",
+        "ids": [
+          "version-1.13.8-pod-delete",
+          "version-1.13.8-container-kill",
+          "version-1.13.8-pod-network-latency",
+          "version-1.13.8-pod-network-loss",
+          "version-1.13.8-pod-network-corruption",
+          "version-1.13.8-pod-cpu-hog",
+          "version-1.13.8-pod-memory-hog",
+          "version-1.13.8-pod-dns-error",
+          "version-1.13.8-pod-dns-spoof",
+          "version-1.13.8-disk-fill",
+          "version-1.13.8-node-cpu-hog",
+          "version-1.13.8-node-memory-hog",
+          "version-1.13.8-node-drain",
+          "version-1.13.8-kubelet-service-kill",
+          "version-1.13.8-pod-network-duplication",
+          "version-1.13.8-node-taint",
+          "version-1.13.8-docker-service-kill",
+          "version-1.13.8-pod-autoscaler",
+          "version-1.13.8-byoc-pod-delete",
+          "version-1.13.8-pod-io-stress",
+          "version-1.13.8-node-io-stress",
+          "version-1.13.8-node-restart",
+          "version-1.13.8-pod-cpu-hog-exec",
+          "version-1.13.8-pod-memory-hog-exec"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "Kube-AWS",
+        "ids": [
+          "version-1.13.8-ebs-loss-by-id",
+          "version-1.13.8-ebs-loss-by-tag",
+          "version-1.13.8-ec2-terminate-by-id",
+          "version-1.13.8-ec2-terminate-by-tag"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "AWS-SSM",
+        "ids": [
+          "version-1.13.8-aws-ssm-chaos-by-id",
+          "version-1.13.8-aws-ssm-chaos-by-tag"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "GCP",
+        "ids": [
+          "version-1.13.8-gcp-vm-instance-stop",
+          "version-1.13.8-gcp-vm-disk-loss"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "VMWare",
+        "ids": [
+          "version-1.13.8-vm-poweroff"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "Azure",
+        "ids": [
+          "version-1.13.8-azure-instance-stop"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "OpenEBS",
+        "ids": [
+          "version-1.13.8-openebs-target-container-failure",
+          "version-1.13.8-openebs-target-network-delay",
+          "version-1.13.8-openebs-target-network-loss",
+          "version-1.13.8-openebs-target-pod-failure",
+          "version-1.13.8-openebs-pool-pod-failure",
+          "version-1.13.8-openebs-pool-container-failure",
+          "version-1.13.8-openebs-pool-network-delay",
+          "version-1.13.8-openebs-pool-network-loss",
+          "version-1.13.8-openebs-control-plane-chaos",
+          "version-1.13.8-cStor-pool-chaos",
+          "version-1.13.8-openebs-pool-disk-loss",
+          "version-1.13.8-openebs-nfs-provisioner-kill"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "Kafka",
+        "ids": [
+          "version-1.13.8-kafka-broker-pod-failure",
+          "version-1.13.8-kafka-broker-disk-failure"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "CoreDns",
+        "ids": [
+          "version-1.13.8-coredns-pod-delete"
+        ]
+      },
+      {
+        "type": "subcategory",
+        "label": "Cassandra",
+        "ids": [
+          "version-1.13.8-cassandra-pod-delete"
+        ]
+      }
+    ],
+    "Chaos Scheduler": [
+      "version-1.13.8-scheduling"
+    ],
+    "Chaos Workflows": [
+      "version-1.13.8-chaos-workflows"
+    ],
+    "Litmus Portal": [
+      "version-1.13.8-portal"
+    ],
+    "Litmus FAQs": [
+      "version-1.13.8-faq-general",
+      "version-1.13.8-faq-troubleshooting"
+    ],
+    "Advanced": [
+      "version-1.13.8-admin-mode",
+      "version-1.13.8-namespaced-mode",
+      "version-1.13.8-litmus-psp"
+    ]
+  }
+}

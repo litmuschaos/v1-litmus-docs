@@ -22,7 +22,7 @@ sidebar_label: Pod Memory Hog Exec
 
 ## Prerequisites
 
-- Ensure that Kubernetes Version > 1.15
+- Ensure that Kubernetes Version > 1.16
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `pod-memory-hog-exec` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/pod-memory-hog-exec/experiment.yaml)
 - Cluster must run docker container runtime
@@ -218,13 +218,17 @@ spec:
       spec:
         components:
           env:
+            - name: TOTAL_CHAOS_DURATION
+              value: '60' # in seconds
+
             # Enter the amount of memory in megabytes to be consumed by the application pod
             - name: MEMORY_CONSUMPTION
               value: '500'
 
-            - name: TOTAL_CHAOS_DURATION
-              value: '60' # in seconds
-            
+            ## percentage of total pods to target
+            - name: PODS_AFFECTED_PERC
+              value: ''
+                     
 ```
 
 ### Create the ChaosEngine Resource

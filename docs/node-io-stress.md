@@ -22,7 +22,7 @@ sidebar_label: Node IO Stress
 
 ## Prerequisites
 
-- Ensure that Kubernetes Version > 1.15
+- Ensure that Kubernetes Version > 1.16
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `node-io-stress` experiment resource is available in the cluster  by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/node-io-stress/experiment.yaml)
 
@@ -251,7 +251,11 @@ spec:
             - name: NUMBER_OF_WORKERS
               value: '4'                               
             
-             ## enter the comma separated target nodes name
+             ## percentage of total nodes to target
+            - name: NODES_AFFECTED_PERC
+              value: ''
+
+            # provide the comma separated target node names
             - name: TARGET_NODES
               value: ''
 ```

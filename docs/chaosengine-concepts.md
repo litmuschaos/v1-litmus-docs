@@ -243,7 +243,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 <table>
 <tr>
   <th>Field</th>
-  <td><code>.spec.jobCleanupPolicy</code></td>
+  <td><code>.spec.jobCleanUpPolicy</code></td>
 </tr>
 <tr>
   <th>Description</th>
@@ -263,7 +263,7 @@ This section describes the fields in the ChaosEngine spec and the possible value
 </tr>
 <tr>
   <th>Notes</th>
-  <td><The <code>jobCleanupPolicy</code> controls whether or not the experiment pods are removed once execution completes. Set to <code>retain</code> for debug purposes (in the absence of standard logging mechanisms).</td>
+  <td><The <code>jobCleanUpPolicy</code> controls whether or not the experiment pods are removed once execution completes. Set to <code>retain</code> for debug purposes (in the absence of standard logging mechanisms).</td>
 </tr>
 </table>
 

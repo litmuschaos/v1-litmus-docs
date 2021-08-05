@@ -27,7 +27,7 @@ Make sure to drain the target node if any application is running on it and also 
 ```
 ## Prerequisites
 
-- Ensure that Kubernetes Version > 1.15
+- Ensure that Kubernetes Version > 1.16
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `ec2-terminate-by-id` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/kube-aws/ec2-terminate-by-id/experiment.yaml)
 - Ensure that you have sufficient AWS access to stop and start an ec2 instance. 
@@ -154,7 +154,7 @@ subjects:
   <tr> 
     <td> EC2_INSTANCE_ID </td>
     <td> Instance ID of the target ec2 instance. Multiple IDs can also be provided as a comma(,) separated values</td>
-    <td> Optional </td>
+    <td> Mandatory </td>
     <td> Multiple IDs can be provided as `id1,id2` </td>
   </tr>
   <tr> 
@@ -180,7 +180,13 @@ subjects:
     <td> It defines sequence of chaos execution for multiple instance</td>
     <td> Optional </td>
     <td> Default value: parallel. Supported: serial, parallel </td>
-  </tr>  
+  </tr>
+  <tr>
+    <td> RAMP_TIME </td>
+    <td> Period to wait before and after injection of chaos in sec </td>
+    <td> Optional  </td>
+    <td> </td>
+  </tr>    
   <tr>
     <td> REGION </td>
     <td> The region name of the target instace</td>
@@ -251,6 +257,16 @@ spec:
   `aws ec2 describe-instance-status --instance-ids <instance-id>`
 
 -  You can also use aws console to keep a watch over the instance state.   
+
+### Abort/Restart the Chaos Experiment
+
+- To stop the ec2-terminate-by-id experiment immediately, either delete the ChaosEngine resource or execute the following command: 
+
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"stop"}}'` 
+
+- To restart the experiment, either re-apply the ChaosEngine YAML or execute the following command: 
+
+  `kubectl patch chaosengine <chaosengine-name> -n <namespace> --type merge --patch '{"spec":{"engineState":"active"}}'`
 
 ### Check Chaos Experiment Result
 

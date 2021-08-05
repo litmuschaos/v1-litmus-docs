@@ -244,6 +244,9 @@ spec:
       spec:
         components:
           env:
+            - name: TOTAL_CHAOS_DURATION
+              value: '60' # in seconds
+
             - name: TARGET_CONTAINER
               value: 'cstor-istgt'
 
@@ -256,8 +259,6 @@ spec:
             - name: NETWORK_DELAY
               value: '30000'
               
-            - name: TOTAL_CHAOS_DURATION
-              value: '60' # in seconds
 ```
 
 ### Create the ChaosEngine Resource

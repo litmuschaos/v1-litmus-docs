@@ -22,7 +22,7 @@ sidebar_label: Node Taint
 
 ## Prerequisites
 
-- Ensure that Kubernetes Version > 1.15
+- Ensure that Kubernetes Version > 1.16
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `node-taint` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/node-taint/experiment.yaml)
 - Ensure that the node specified in the experiment ENV variable `TARGET_NODE` (the node which will be tainted) should be cordoned before execution of the chaos experiment (before applying the chaosengine manifest) to ensure that the litmus experiment runner pods are not scheduled on it / subjected to eviction. This can be achieved with the following steps: 
@@ -204,14 +204,18 @@ spec:
         #   # provide the node labels
         #   kubernetes.io/hostname: 'node02'        
           env:
+            - name: TOTAL_CHAOS_DURATION
+              value: '60'
+              
             # set target node name
             - name: TARGET_NODE
-              value: 'node-01'
+              value: ''
               
              # set taint label & effect
              # key=value:effect or key:effect
             - name: TAINTS
               value: 'node.kubernetes.io/unreachable:NoExecute'
+              
 ```
 
 ### Create the ChaosEngine Resource

@@ -22,7 +22,7 @@ sidebar_label: Pod CPU Hog
 
 ## Prerequisites
 
-- Ensure that Kubernetes Version > 1.15
+- Ensure that Kubernetes Version > 1.16
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `pod-cpu-hog` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/pod-cpu-hog/experiment.yaml)
 
@@ -157,7 +157,7 @@ subjects:
     <td> LIB_IMAGE  </td>
     <td> Image used to run the helper pod.</td>
     <td> Optional  </td>
-    <td> Defaults to <code>litmuschaos/go-runner:ci<code> </td>
+    <td> Defaults to <code>litmuschaos/go-runner:1.13.8<code> </td>
   </tr>
    <tr>
     <td> STRESS_IMAGE  </td>
@@ -239,11 +239,23 @@ spec:
       spec:
         components:
           env:
-            - name: CPU_CORES
-              value: '1'         
-
             - name: TOTAL_CHAOS_DURATION
               value: '60' # in seconds
+
+            - name: CPU_CORES
+              value: '1'    
+
+            ## Percentage of total pods to target
+            - name: PODS_AFFECTED_PERC
+              value: ''   
+
+            ## provide the cluster runtime
+            - name: CONTAINER_RUNTIME
+              value: 'docker'        
+
+            # provide the socket file path
+            - name: SOCKET_PATH
+              value: '/var/run/docker.sock'    
 ```
 
 ### Create the ChaosEngine Resource

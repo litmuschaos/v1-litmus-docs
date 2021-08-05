@@ -22,7 +22,7 @@ sidebar_label: Pod DNS Error
 
 ## Prerequisites
 
-- Ensure that Kubernetes Version > 1.15
+- Ensure that Kubernetes Version > 1.16
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `pod-dns-error` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/pod-dns-error/experiment.yaml)
  
@@ -229,6 +229,9 @@ spec:
       spec:
         components:
           env:
+            - name: TOTAL_CHAOS_DURATION
+              value: "60" # in seconds
+
             # list of the target hostnames or kewywords eg. '["litmuschaos","chaosnative.io"]' . If empty all hostnames are targets
             - name: TARGET_HOSTNAMES
               value: ""
@@ -237,9 +240,6 @@ spec:
             - name: MATCH_SCHEME
               value: "exact"
 
-            - name: TOTAL_CHAOS_DURATION
-              value: "60" # in seconds
-
             # provide the name of container runtime, it supports docker, containerd, crio
             - name: CONTAINER_RUNTIME
               value: "docker"
@@ -247,6 +247,10 @@ spec:
             # provide the socket file path
             - name: SOCKET_PATH
               value: "/var/run/docker.sock"
+
+             ## percentage of total pods to target
+            - name: PODS_AFFECTED_PERC
+              value: ""
 ```
 
 ### Create the ChaosEngine Resource

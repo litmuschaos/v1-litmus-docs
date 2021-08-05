@@ -22,7 +22,7 @@ sidebar_label: Pod CPU Hog Exec
 
 ## Prerequisites
 
-- Ensure that Kubernetes Version > 1.15
+- Ensure that Kubernetes Version > 1.16
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `pod-cpu-hog-exec` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/pod-cpu-hog-exec/experiment.yaml)
 
@@ -226,13 +226,18 @@ spec:
       spec:
         components:
           env:
+            - name: TOTAL_CHAOS_DURATION
+              value: '60' # in seconds
+
             #number of cpu cores to be consumed
             #verify the resources the app has been launched with
             - name: CPU_CORES
               value: '1'
 
-            - name: TOTAL_CHAOS_DURATION
-              value: '60' # in seconds
+             ## Percentage of total pods to target
+            - name: PODS_AFFECTED_PERC
+              value: ''    
+                      
 ```
 
 ### Create the ChaosEngine Resource

@@ -22,7 +22,7 @@ sidebar_label: Pod DNS Spoof
 
 ## Prerequisites
 
-- Ensure that Kubernetes Version > 1.15
+- Ensure that Kubernetes Version > 1.16
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `pod-dns-spoof` experiment resource is available in the cluster by executing                         `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/pod-dns-spoof/experiment.yaml)
  
@@ -223,12 +223,12 @@ spec:
       spec:
         components:
           env:
+            - name: TOTAL_CHAOS_DURATION
+              value: "60" # in seconds
+
             # map of the target hostnames eg. '{"abc.com":"spoofabc.com"}' . If empty no queries will be spoofed
             - name: SPOOF_MAP
               value: '{"google.com":"fakegoogle.com"}'
-
-            - name: TOTAL_CHAOS_DURATION
-              value: "60" # in seconds
 
             # provide the name of container runtime, it supports docker, containerd, crio
             - name: CONTAINER_RUNTIME
@@ -237,6 +237,10 @@ spec:
             # provide the socket file path
             - name: SOCKET_PATH
               value: "/var/run/docker.sock"
+
+             ## percentage of total pods to target
+            - name: PODS_AFFECTED_PERC
+              value: ""
 ```
 
 ### Create the ChaosEngine Resource

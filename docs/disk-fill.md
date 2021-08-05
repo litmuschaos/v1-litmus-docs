@@ -10,7 +10,7 @@ sidebar_label: Disk Fill
 <table>
   <tr>
     <th> Type </th>
-    <th>  Description  </th>
+    <th> Description  </th>
     <th> Tested K8s Platform </th>
   </tr>
   <tr>
@@ -22,7 +22,7 @@ sidebar_label: Disk Fill
 
 ## Prerequisites
 
-- Ensure that Kubernetes Version > 1.15
+- Ensure that Kubernetes Version > 1.16
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `disk-fill` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/disk-fill/experiment.yaml)
 - Cluster must run docker container runtime
@@ -272,13 +272,20 @@ spec:
       spec:
         components:
           env:
+            - name: TOTAL_CHAOS_DURATION
+              value: '60' 
+
             # specify the fill percentage according to the disk pressure required
             - name: FILL_PERCENTAGE
               value: '80'
-              
-            - name: TARGET_CONTAINER
-              value: 'nginx'
-              
+
+            - name: PODS_AFFECTED_PERC
+              value: ''
+
+            # Provide the container runtime path
+            # Default set to docker container path
+            - name: CONTAINER_PATH
+              value: '/var/lib/docker/containers'
 ```
 
 ### Create the ChaosEngine Resource

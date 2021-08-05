@@ -224,21 +224,14 @@ spec:
       spec:
         components:
           env:
-          - name: FORCE
-            value: 'true'
+          - name: TOTAL_CHAOS_DURATION
+            value: '120' # in seconds
 
           - name: APP_PVC
             value: 'demo-nginx-claim'
 
-          - name: OPENEBS_NAMESPACE
-            value: 'openebs'
-
           - name: NETWORK_PACKET_LOSS_PERCENTAGE
             value: '100'
-
-          - name: TOTAL_CHAOS_DURATION
-            value: '120' # in seconds
-      
 ```
 
 ### Create the ChaosEngine Resource
