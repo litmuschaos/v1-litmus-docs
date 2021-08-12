@@ -15,8 +15,8 @@ sidebar_label: Azure Instance Stop
   </tr>
   <tr>
     <td> Azure </td>
-    <td> Termination of an azure instance for a certain chaos duration</td>
-    <td> EKS </td>
+    <td> Power off of an azure instance for a certain chaos duration</td>
+    <td> EKS, AKS, K3s </td>
   </tr>
 </table>
 
@@ -153,15 +153,21 @@ subjects:
   </tr>
   <tr> 
     <td> AZURE_INSTANCE_NAME </td>
-    <td> Instance name of the target azure instance.</td>
+    <td> Instance name(s) of the target azure instance (comma separated if multiple).</td>
     <td> Mandatory </td>
-    <td>  </td>
+    <td>For AKS ndoes, the instance name is from the scale set section in Azure and not the node name from AKS node pool </td>
   </tr>
   <tr>
     <td> RESOURCE_GROUP </td>
     <td> The resource group of the target instance</td>
     <td> Mandatory </td>
     <td> </td>
+  </tr>
+  <tr>
+    <td> SCALE_SET </td>
+    <td> Whether instance is part of Scale set</td>
+    <td> Mandatory </td>
+    <td> Accepts "enable"/"disable". Default is "disable"</td>
   </tr> 
   <tr> 
     <td> TOTAL_CHAOS_DURATION </td>
@@ -227,6 +233,10 @@ spec:
 
             # provide the resource group of the instance
             - name: RESOURCE_GROUP
+              value: ''
+            
+            # accepts enable/disable value. default is disable
+            - name: SCALE_SET
               value: ''
 
 ```
