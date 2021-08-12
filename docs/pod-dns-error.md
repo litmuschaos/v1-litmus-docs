@@ -165,11 +165,11 @@ subjects:
     <td> CONTAINER_RUNTIME  </td>
     <td> container runtime interface for the cluster</td>
     <td> Optional </td>
-    <td> Defaults to docker, supported values: docker, containerd and crio </td>
+    <td> Defaults to docker, supported values: docker </td>
   </tr>
   <tr>
     <td> SOCKET_PATH </td>
-    <td> Path of the containerd/crio/docker socket file </td>
+    <td> Path of the docker socket file </td>
     <td> Optional  </td>
     <td> Defaults to `/var/run/docker.sock` </td>
   </tr>

@@ -26,7 +26,7 @@ sidebar_label: Disk Fill
 - Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `disk-fill` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/disk-fill/experiment.yaml)
 - Cluster must run docker container runtime
-- Appropriate Ephemeral Storage Requests and Limits should be set for the application before running the experiment. 
+- Either an appropriate Ephemeral Storage Requests and Limits should be set for the application or `EPHEMERAL_STORAGE_MEBIBYTES` ENV should be defined in the ChaosEngine before running the experiment. 
   An example specification is shown below:
   
 ```
