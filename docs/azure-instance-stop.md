@@ -155,7 +155,7 @@ subjects:
     <td> AZURE_INSTANCE_NAME </td>
     <td> Instance name of the target azure instance.</td>
     <td> Mandatory </td>
-    <td>  </td>
+    <td>For AKS ndoes, the instance name is from the scale set section in Azure and not the node name from AKS node pool</td>
   </tr>
   <tr>
     <td> RESOURCE_GROUP </td>
