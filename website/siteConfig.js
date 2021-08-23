@@ -23,7 +23,7 @@ const users = [
 const siteConfig = {
   title: 'Litmus Docs', // Title for your website.
   tagline: 'A website for testing',
-  url: 'https://docs.litmuschaos.io', // Your website URL
+  url: 'https://v1-docs.litmuschaos.io', // Your website URL
   baseUrl: '/', // Base URL for your project */
   // For github.io type URLs, you would set the url and baseUrl like:
   //   url: 'https://facebook.github.io',
@@ -48,6 +48,7 @@ const siteConfig = {
     { href: 'https://github.com/litmuschaos/litmus', label: 'GitHub' },
     { href: 'https://kubernetes.slack.com/messages/CNXNB0ZTN', label: 'Slack' },
     { href: 'https://hub.litmuschaos.io/', label: 'Chaos Hub' },
+    { href: 'https://docs.litmuschaos.io/', label: 'V2 Docs', external: true},
     { search: true },
   ],
 
