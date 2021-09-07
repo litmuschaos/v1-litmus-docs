@@ -130,7 +130,7 @@ application.
 - The ChaosOperator collects some usage metrics (operator installation count & experiment run count) via a google analytics
   hook. This is done in order to gather chaos trends that will help us to improve the project. However, if you would like to
   prevent the collection of the same or are operating in an airgapped environment, you can disable it using the procedure
-  suggested [here](https://docs.litmuschaos.io/docs/faq-general/#does-litmus-track-any-usage-metrics-on-the-test-clusters).
+  suggested [here](https://v1-docs.litmuschaos.io/docs/faq-general/#does-litmus-track-any-usage-metrics-on-the-test-clusters).
 
 ### Install Chaos Experiments
 
@@ -239,7 +239,7 @@ ChaosEngine connects the application instance to a Chaos Experiment. Copy the fo
 `chaosengine.yaml` and update the values of `applabel` , `appns`, `appkind` and `experiments` as per your choice.
 Change the `chaosServiceAccount` to the name of service account created in above previous steps.
 
-<strong> NOTE:</strong> To learn more about the various fields in the ChaosEngine spec and their supported values, refer to [Constructing ChaosEngine](https://docs.litmuschaos.io/docs/chaosengine/)
+<strong> NOTE:</strong> To learn more about the various fields in the ChaosEngine spec and their supported values, refer to [Constructing ChaosEngine](https://v1-docs.litmuschaos.io/docs/chaosengine/)
 
 [embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/v1.12.x/charts/generic/pod-delete/engine_nginx_getstarted.yaml yaml)
 ```yaml
@@ -335,15 +335,15 @@ kubectl delete -f https://litmuschaos.github.io/litmus/litmus-operator-v1.12.0.y
 **NOTE**
 
 - Ensure that the chaosengine resources are deleted before removal of the chaos-operator deployment via operator manifest.
-  Failure to do so can cause the uninstall operation to be "stuck". Refer to the these [steps](https://docs.litmuschaos.io/docs/faq-troubleshooting/#litmus-uninstallation-is-not-successful-and-namespace-is-stuck-in-terminating-state) to resolve this condition and complete the uninstall.
+  Failure to do so can cause the uninstall operation to be "stuck". Refer to the these [steps](https://v1-docs.litmuschaos.io/docs/faq-troubleshooting/#litmus-uninstallation-is-not-successful-and-namespace-is-stuck-in-terminating-state) to resolve this condition and complete the uninstall.
 
 ## Troubleshooting
 
-For any issues experienced in running through the the aforementioned steps, refer to the [Troubleshooting](https://docs.litmuschaos.io/docs/faq-troubleshooting/) section.
+For any issues experienced in running through the the aforementioned steps, refer to the [Troubleshooting](https://v1-docs.litmuschaos.io/docs/faq-troubleshooting/) section.
 
 ## More Chaos Experiments
 
-- For more details on supported chaos experiments and the steps to run them, refer the respective [Experiment](https://docs.litmuschaos.io/docs/chaoshub/#generic-chaos) docs.
+- For more details on supported chaos experiments and the steps to run them, refer the respective [Experiment](https://v1-docs.litmuschaos.io/docs/chaoshub/#generic-chaos) docs.
 
 ## Join our community
 

@@ -33,11 +33,11 @@ const communities = [
 const resources = [
   {
     name: 'Docs',
-    url: 'https://docs.litmuschaos.io/',
+    url: 'https://v1-docs.litmuschaos.io/',
   },
   {
     name: 'FAQ',
-    url: 'https://docs.litmuschaos.io/docs/faq-general/',
+    url: 'https://v1-docs.litmuschaos.io/docs/faq-general/',
   },
   {
     name: 'Issues',
