@@ -66,7 +66,7 @@ The nginx default web site should be available now.
 
 
 ###  Install Litmus
-Followed the steps in the [Getting Started Guide](https://docs.litmuschaos.io/docs/getstarted/)* to install litmus in a `nginx` namespace with an nginx application.
+Followed the steps in the [Getting Started Guide](https://v1-docs.litmuschaos.io/docs/getstarted/)* to install litmus in a `nginx` namespace with an nginx application.
 
 Download `litmus-operator-v1.13.5.yaml` from https://litmuschaos.github.io/litmus/litmus-operator-v1.13.5.yaml.
 Modify it to use the `nginx` namespace in three places (at lines 10, 41, and 47 approximately).

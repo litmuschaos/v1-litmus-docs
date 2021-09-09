@@ -46,7 +46,7 @@ It supports http `Get` and `Post` methods.
 
 In HTTP `Get` method it sends a http `GET` request to the provided url and matches the response code based on the given criteria(`==`, `!=`, `oneOf`).
 
-In HTTP `Post` method it sends a http `POST` request to the provided url. The http body can be provided in the `body` field. In the case of a complex POST request in which the body spans multiple lines, the `bodyPath` attribute can be used to provide the path to a file consisting of the same. This file can be made available to the experiment pod via a ConfigMap resource, with the ConfigMap name being defined in the [ChaosEngine](https://docs.litmuschaos.io/docs/chaosengine/#experiment-specification) OR the [ChaosExperiment](https://docs.litmuschaos.io/docs/chaosexperiment/#configuration-specification) CR.  
+In HTTP `Post` method it sends a http `POST` request to the provided url. The http body can be provided in the `body` field. In the case of a complex POST request in which the body spans multiple lines, the `bodyPath` attribute can be used to provide the path to a file consisting of the same. This file can be made available to the experiment pod via a ConfigMap resource, with the ConfigMap name being defined in the [ChaosEngine](https://v1-docs.litmuschaos.io/docs/chaosengine/#experiment-specification) OR the [ChaosExperiment](https://v1-docs.litmuschaos.io/docs/chaosexperiment/#configuration-specification) CR.  
  It can be defined at `.spec.experiments[].spec.probe` inside ChaosEngine.
 
  <strong>NOTE:</strong> `body` and `bodyPath` are mutually exclusive.
@@ -133,7 +133,7 @@ probe:
 
 The `promProbe` allows users to run Prometheus queries and match the resulting output against specific conditions. The intent behind this probe is to allow users to define metrics-based SLOs in a declarative way and determine the experiment verdict based on its success. The probe runs the query on a Prometheus server defined by the `endpoint`, and checks whether the output satisfies the specified `criteria`.
 
-The promql query can be provided in the `query` field. In the case of complex queries that span multiple lines, the `queryPath` attribute can be used to provide the link to a file consisting of the query. This file can be made available in the experiment pod via a ConfigMap resource, with the ConfigMap being passed in the [ChaosEngine](https://docs.litmuschaos.io/docs/chaosengine/#experiment-specification) OR the [ChaosExperiment](https://docs.litmuschaos.io/docs/chaosexperiment/#configuration-specification) CR.  
+The promql query can be provided in the `query` field. In the case of complex queries that span multiple lines, the `queryPath` attribute can be used to provide the link to a file consisting of the query. This file can be made available in the experiment pod via a ConfigMap resource, with the ConfigMap being passed in the [ChaosEngine](https://v1-docs.litmuschaos.io/docs/chaosengine/#experiment-specification) OR the [ChaosExperiment](https://v1-docs.litmuschaos.io/docs/chaosexperiment/#configuration-specification) CR.  
 
 <strong>NOTE:</strong> `query` and `queryPath` are mutually exclusive.
 

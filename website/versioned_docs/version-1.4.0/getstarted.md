@@ -103,7 +103,7 @@ application.
 - The chaos operator collects some usage metrics (operator installation count & experiment run count) via a google analytics 
   hook. This is done in order to gather chaos trends that will help us to improve the project. However, if you would like to
   prevent the collection of the same or are operating in an airgapped environment, you can disable it using the procedure 
-  suggested [here](https://docs.litmuschaos.io/docs/faq-general/#does-litmus-track-any-usage-metrics-on-the-test-clusters).
+  suggested [here](https://v1-docs.litmuschaos.io/docs/faq-general/#does-litmus-track-any-usage-metrics-on-the-test-clusters).
 
 ### Install Chaos Experiments
 

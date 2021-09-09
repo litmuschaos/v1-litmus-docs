@@ -8,7 +8,7 @@ original_id: portal
 
 ##  What is the Litmus Portal
 
-It is a centralized web portal for creating, scheduling, and monitoring [Chaos Workflows](https://docs.litmuschaos.io/docs/chaos-workflows/).
+It is a centralized web portal for creating, scheduling, and monitoring [Chaos Workflows](https://v1-docs.litmuschaos.io/docs/chaos-workflows/).
 The Litmus Portal simplifies the chaos engineering experience for users by providing multiple features, some of which are listed below. It is 
 in the `beta-0` phase as of the 1.11.0 release & is undergoing active [development](https://github.com/litmuschaos/litmus/tree/master/litmus-portal). 
 

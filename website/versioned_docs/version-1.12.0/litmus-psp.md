@@ -80,7 +80,7 @@ spec:
   other hand, in case of CRI-O runtime, network-chaos tests need the chaos pods executed in privileged mode. It is also possible that different PSP configs are
   used in different namespaces based on ChaosExperiments installed/executed in them. 
 
-- Subscribe to the created PSP in the experiment RBAC (or in the [admin-mode](https://docs.litmuschaos.io/docs/admin-mode/#prepare-rbac-manifest) rbac, as applicable).
+- Subscribe to the created PSP in the experiment RBAC (or in the [admin-mode](https://v1-docs.litmuschaos.io/docs/admin-mode/#prepare-rbac-manifest) rbac, as applicable).
   For example, the pod-delete experiment rbac instrumented with the PSP is shown below:
 
 [embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/v1.12.x/charts/generic/pod-delete/rbac-psp.yaml yaml) 

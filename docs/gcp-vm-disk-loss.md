@@ -23,7 +23,7 @@ sidebar_label: GCP VM Disk Loss
 ## Prerequisites
 
 - Ensure that Kubernetes Version > 1.16
-- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
+- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://v1-docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `gcp-vm-disk-loss` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/gcp/gcp-vm-disk-loss/experiment.yaml)
 - Ensure that your service account has an editor access or owner access for the GCP project.
 - Ensure the target disk volume to be detached should not be the root volume its instance.
@@ -249,7 +249,7 @@ spec:
 
   `kubectl apply -f chaosengine.yml`
 
-- If the chaos experiment is not executed, refer to the [troubleshooting](https://docs.litmuschaos.io/docs/faq-troubleshooting/) section to identify the root cause and fix the issues.
+- If the chaos experiment is not executed, refer to the [troubleshooting](https://v1-docs.litmuschaos.io/docs/faq-troubleshooting/) section to identify the root cause and fix the issues.
 
 ### Watch Chaos progress
   
