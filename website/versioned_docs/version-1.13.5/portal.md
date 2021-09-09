@@ -25,7 +25,7 @@ in the `beta-6` phase as of the 1.13.5 release & is undergoing active [developme
 The portal also allows execution of "predefined chaos workflows" that can be uploaded on-demand to aid more customization, especially in the cases where the workflows
 involve other Kubernetes actions (such as load generation) apart from chaos experiments. 
 
-Refer to the Litmus Portal [User Guide](https://litmusdocs-beta.netlify.app/docs/introduction) to get started with the installation and usage. 
+Refer to the Litmus Portal [User Guide](https://docs.litmuschaos.io/) to get started with the installation and usage. 
 
 
 <img src="/docs/assets/portal-arch.jpg" width="800">

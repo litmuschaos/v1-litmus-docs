@@ -103,7 +103,7 @@ const siteConfig = {
   // No .html extensions for paths.
   cleanUrl: true,
 
-  editUrl: 'https://github.com/litmuschaos/litmus-docs/edit/staging/docs/',
+  editUrl: 'https://github.com/litmuschaos/v1-litmus-docs/edit/staging/docs/',
 
   // Open Graph and Twitter card images.
   ogImage: 'img/undraw_online.svg',
