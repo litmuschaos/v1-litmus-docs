@@ -7,7 +7,7 @@ sidebar_label: Introduction
 
 ## Pre-requisites
 
-Kubernetes 1.15 or later.
+Kubernetes 1.16 or later.
 
 ## Getting Started
 
@@ -18,8 +18,6 @@ Running chaos on your application involves the following steps:
 [Install Chaos Experiments](#install-chaos-experiments)
 
 [Setup Service Account](#setup-service-account)
-
-[Annotate your application](#annotate-your-application)
 
 [Prepare ChaosEngine](#prepare-chaosengine)
 
