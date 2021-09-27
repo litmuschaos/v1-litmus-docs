@@ -70,7 +70,7 @@ namespaces. Ensure that you have the right permission to be able to create the s
   ```
 
 - Install the litmus-admin service account to be used by the chaos-operator while executing the experiment (this example
-  uses the [admin-mode](https://docs.litmuschaos.io/docs/next/admin-mode/) of chaos execution)
+  uses the [admin-mode](https://v1-docs.litmuschaos.io/docs/next/admin-mode/) of chaos execution)
 
 ### Install the RBAC & experiment CR for litmus
 

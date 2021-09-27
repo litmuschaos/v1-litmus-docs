@@ -108,7 +108,7 @@ applications across namespaces & therefore need their serviceaccounts mapped to 
 Litmus has a low entry barrier and is easy to install/use. Typically, it involves installing the chaos-operator, 
 chaos experiment CRs from the [charthub](https://hub.litmuschaos.io), annotating an application for chaos and creating 
 a chaosengine CR to map your application instance with a desired chaos experiment. Refer to 
-the [getting started](https://docs.litmuschaos.io/docs/getstarted/) documentation to learn more on how to run a 
+the [getting started](https://v1-docs.litmuschaos.io/docs/getstarted/) documentation to learn more on how to run a 
 simple chaos experiment. 
 
 ### How to view and interpret the results of a chaos experiment? 

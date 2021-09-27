@@ -22,7 +22,7 @@ sidebar_label: Cassandra Pod Delete
 
 ## Prerequisites
 
-- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`).If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
+- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`).If not, install from [here](https://v1-docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `cassandra-pod-delete` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/cassandra/cassandra-pod-delete/experiment.yaml)
 
 ## Entry Criteria
@@ -261,7 +261,7 @@ spec:
               value: '9042'
 
             # SET THE CASSANDRA_LIVENESS_CHECK
-            # IT CAN BE `enabled` OR `disabled`
+            # IT CAN BE `enable` OR `disable`
             - name: CASSANDRA_LIVENESS_CHECK
               value: ''
 
@@ -277,7 +277,7 @@ spec:
 
   `kubectl apply -f chaosengine.yml`
 
-- If the chaos experiment is not executed, refer to the [troubleshooting](https://docs.litmuschaos.io/docs/faq-troubleshooting/) 
+- If the chaos experiment is not executed, refer to the [troubleshooting](https://v1-docs.litmuschaos.io/docs/faq-troubleshooting/) 
   section to identify the root cause and fix the issues.
 
 ### Watch Chaos progress

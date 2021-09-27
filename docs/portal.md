@@ -7,7 +7,7 @@ sidebar_label: Litmus Portal (beta-0)
 
 ##  What is the Litmus Portal
 
-It is a centralized web portal for creating, scheduling, and monitoring [Chaos Workflows](https://docs.litmuschaos.io/docs/chaos-workflows/).
+It is a centralized web portal for creating, scheduling, and monitoring [Chaos Workflows](https://v1-docs.litmuschaos.io/docs/chaos-workflows/).
 The Litmus Portal simplifies the chaos engineering experience for users by providing multiple features, some of which are listed below. It is 
 in the `beta-9` phase as of the 1.13.8 release & is undergoing active [development](https://github.com/litmuschaos/litmus/tree/master/litmus-portal). 
 
@@ -24,7 +24,7 @@ in the `beta-9` phase as of the 1.13.8 release & is undergoing active [developme
 The portal also allows execution of "predefined chaos workflows" that can be uploaded on-demand to aid more customization, especially in the cases where the workflows
 involve other Kubernetes actions (such as load generation) apart from chaos experiments. 
 
-Refer to the Litmus Portal [User Guide](https://litmusdocs-beta.netlify.app/docs/introduction) to get started with the installation and usage. 
+Refer to the Litmus Portal [User Guide](https://docs.litmuschaos.io/) to get started with the installation and usage. 
 
 
 <img src="/docs/assets/portal-arch.jpg" width="800">

@@ -23,7 +23,7 @@ original_id: node-restart
 
 ## Prerequisites
 
-- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
+- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://v1-docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `node-restart` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace. If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/generic/node-restart/experiment.yaml)
 - Create a Kubernetes secret having the private SSH key for `SSH_USER` used to connect to `TARGET_NODE`. The name of secret should be `id-rsa` along with private SSH key data, named `ssh-privatekey`. A sample secret example is given below:
 
@@ -243,7 +243,7 @@ spec:
 
   `kubectl apply -f chaosengine.yml`
 
-- If the chaos experiment is not executed, refer to the [troubleshooting](https://docs.litmuschaos.io/docs/faq-troubleshooting/) 
+- If the chaos experiment is not executed, refer to the [troubleshooting](https://v1-docs.litmuschaos.io/docs/faq-troubleshooting/) 
   section to identify the root cause and fix the issues.
 
 ### Watch Chaos progress

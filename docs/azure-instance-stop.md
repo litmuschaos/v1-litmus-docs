@@ -23,7 +23,7 @@ sidebar_label: Azure Instance Stop
 ## Prerequisites
 
 - Ensure that Kubernetes Version > 1.16
-- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://docs.litmuschaos.io/docs/getstarted/#install-litmus)
+- Ensure that the Litmus Chaos Operator is running by executing `kubectl get pods` in operator namespace (typically, `litmus`). If not, install from [here](https://v1-docs.litmuschaos.io/docs/getstarted/#install-litmus)
 - Ensure that the `azure-instance-stop` experiment resource is available in the cluster by executing `kubectl get chaosexperiments` in the desired namespace If not, install from [here](https://hub.litmuschaos.io/api/chaos/master?file=charts/azure/azure-instance-stop/experiment.yaml)
 - Ensure that you have sufficient Azure access to stop and start the an instance. 
 - We will use azure [ file-based authentication ](https://docs.microsoft.com/en-us/azure/developer/go/azure-sdk-authorization#use-file-based-authentication) to connect with the instance using azure GO SDK in the experiment. For generating auth file run `az ad sp create-for-rbac --sdk-auth > azure.auth` Azure CLI command.
@@ -227,7 +227,7 @@ spec:
             - name: CHAOS_INTERVAL
               value: '30'            
 
-            # provide the target instance name
+            # provide the target instance name(s) (comma separated if multiple)
             - name: AZURE_INSTANCE_NAME
               value: ''
 
@@ -235,7 +235,7 @@ spec:
             - name: RESOURCE_GROUP
               value: ''
             
-            # accepts enable/disable value. default is disable
+            # accepts enable/disable, default is disable
             - name: SCALE_SET
               value: ''
 
@@ -247,7 +247,7 @@ spec:
 
   `kubectl apply -f chaosengine.yml`
 
-- If the chaos experiment is not executed, refer to the [troubleshooting](https://docs.litmuschaos.io/docs/faq-troubleshooting/) 
+- If the chaos experiment is not executed, refer to the [troubleshooting](https://v1-docs.litmuschaos.io/docs/faq-troubleshooting/) 
   section to identify the root cause and fix the issues.
 
 ### Watch Chaos progress
