@@ -152,10 +152,10 @@ subjects:
     <th> Notes </th>
   </tr>
   <tr> 
-    <td> INSTANCE_TAG </td>
+    <td> EC2_INSTANCE_TAG </td>
     <td> Instance Tag to filter the target ec2 instance.</td>
     <td> Optional </td>
-    <td> The <code>INSTANCE_TAG</code> should be provided as <code>key:value</code> ex: <code>team:devops</code></td>
+    <td> The <code>EC2_INSTANCE_TAG</code> should be provided as <code>key:value</code> ex: <code>team:devops</code></td>
   </tr>
   <tr> 
     <td> TOTAL_CHAOS_DURATION </td>
@@ -235,7 +235,7 @@ spec:
 
              # Instance Tag of the target ec2 instances
              # ex: team:devops (key:value)
-            - name: INSTANCE_TAG
+            - name: EC2_INSTANCE_TAG
               value: ''
               
             # provide the region name of the instance
