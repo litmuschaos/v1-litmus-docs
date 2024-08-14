@@ -98,21 +98,38 @@ metadata:
     name: gcp-vm-instance-stop-sa
     app.kubernetes.io/part-of: litmus
 rules:
-- apiGroups: [""]
-  resources: ["pods","events","secrets"]
-  verbs: ["create","list","get","patch","update","delete","deletecollection"]
-- apiGroups: [""]
-  resources: ["pods/exec","pods/log"]
-  verbs: ["create","list","get"]
-- apiGroups: ["batch"]
-  resources: ["jobs"]
-  verbs: ["create","list","get","delete","deletecollection"]
-- apiGroups: ["litmuschaos.io"]
-  resources: ["chaosengines","chaosexperiments","chaosresults"]
-  verbs: ["create","list","get","patch","update"]
-- apiGroups: [""]
-  resources: ["nodes"]
-  verbs: ["get","list"]
+  # Create and monitor the experiment & helper pods
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["create","delete","get","list","patch","update", "deletecollection"]
+  # Performs CRUD operations on the events inside chaosengine and chaosresult
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["create","get","list","patch","update"]
+  # Fetch configmaps & secrets details and mount it to the experiment pod (if specified)
+  - apiGroups: [""]
+    resources: ["secrets","configmaps"]
+    verbs: ["get","list",]
+  # Track and get the runner, experiment, and helper pods log 
+  - apiGroups: [""]
+    resources: ["pods/log"]
+    verbs: ["get","list","watch"]  
+  # for creating and managing to execute comands inside target container
+  - apiGroups: [""]
+    resources: ["pods/exec"]
+    verbs: ["get","list","create"]
+  # for configuring and monitor the experiment job by the chaos-runner pod
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    verbs: ["create","list","get","delete","deletecollection"]
+  # for creation, status polling and deletion of litmus chaos resources used within a chaos workflow
+  - apiGroups: ["litmuschaos.io"]
+    resources: ["chaosengines","chaosexperiments","chaosresults"]
+    verbs: ["create","list","get","patch","update","delete"]
+  # for experiment to perform node status checks
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get","list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -240,12 +257,16 @@ spec:
             # Instance zone(s) of the target vm instance(s)
             # If more than one instance is targetted, provide zone for each in the order of their 
             # respective instance name in VM_INSTANCE_NAME as comma separated values ex: zone1,zone2
-            - name: INSTANCE_ZONES
+            - name: ZONES
               value: ''
 
-            # enable it if the target instance is a part of self-managed auto scaling group.
-            - name: AUTO_SCALING_GROUP
+            # enable it if the target instance is a part of a managed instance group.
+            - name: MANAGED_INSTANCE_GROUP
               value: 'disable'
+
+            # parallel or serial; determines how chaos is injected
+            - name: SEQUENCE
+              value: 'parallel'
 ```
 
 ### Create the ChaosEngine Resource

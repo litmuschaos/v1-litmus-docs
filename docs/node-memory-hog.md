@@ -79,21 +79,38 @@ metadata:
     name: node-memory-hog-sa
     app.kubernetes.io/part-of: litmus
 rules:
-- apiGroups: [""]
-  resources: ["pods","events"]
-  verbs: ["create","list","get","patch","update","delete","deletecollection"]
-- apiGroups: [""]
-  resources: ["pods/exec","pods/log"]
-  verbs: ["create","list","get"]
-- apiGroups: ["batch"]
-  resources: ["jobs"]
-  verbs: ["create","list","get","delete","deletecollection"]
-- apiGroups: ["litmuschaos.io"]
-  resources: ["chaosengines","chaosexperiments","chaosresults"]
-  verbs: ["create","list","get","patch","update"]
-- apiGroups: [""]
-  resources: ["nodes"]
-  verbs: ["get","list"]
+  # Create and monitor the experiment & helper pods
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["create","delete","get","list","patch","update", "deletecollection"]
+  # Performs CRUD operations on the events inside chaosengine and chaosresult
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["create","get","list","patch","update"]
+  # Fetch configmaps details and mount it to the experiment pod (if specified)
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get","list",]
+  # Track and get the runner, experiment, and helper pods log 
+  - apiGroups: [""]
+    resources: ["pods/log"]
+    verbs: ["get","list","watch"]  
+  # for creating and managing to execute comands inside target container
+  - apiGroups: [""]
+    resources: ["pods/exec"]
+    verbs: ["get","list","create"]
+  # for configuring and monitor the experiment job by the chaos-runner pod
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    verbs: ["create","list","get","delete","deletecollection"]
+  # for creation, status polling and deletion of litmus chaos resources used within a chaos workflow
+  - apiGroups: ["litmuschaos.io"]
+    resources: ["chaosengines","chaosexperiments","chaosresults"]
+    verbs: ["create","list","get","patch","update","delete"]
+  # for experiment to perform node status checks
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get","list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -230,11 +247,6 @@ spec:
             - name: TOTAL_CHAOS_DURATION
               value: '120'
 
-            ## Specify the size as percent of total node capacity Ex: '30'
-            ## Note: For consuming memory in mebibytes change the variable to MEMORY_CONSUMPTION_MEBIBYTES
-            - name: MEMORY_CONSUMPTION_PERCENTAGE
-              value: '30'
-            
             ## percentage of total nodes to target
             - name: NODES_AFFECTED_PERC
               value: ''
@@ -242,6 +254,16 @@ spec:
             # provide the comma separated target node names
             - name: TARGET_NODES
               value: ''
+            
+            ## Specify the size as percent of total node capacity Ex: '30'
+            ## NOTE: for selecting this option keep MEMORY_CONSUMPTION_MEBIBYTES empty
+            - name: MEMORY_CONSUMPTION_PERCENTAGE
+              value: '0'
+              
+            ## Specify the amount of memory to be consumed in mebibytes
+            ## NOTE: for selecting this option keep MEMORY_CONSUMPTION_PERCENTAGE empty
+            - name: MEMORY_CONSUMPTION_MEBIBYTES
+              value: '0'
 ```
 
 ### Create the ChaosEngine Resource
