@@ -103,7 +103,6 @@ sidebar_label: Service Pod - Application
 
 #### Sample RBAC Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/byoc-pod-delete/rbac.yaml yaml)
 ```yaml
 ---
 apiVersion: v1
@@ -216,7 +215,6 @@ subjects:
 
 #### Sample ChaosEngine Manifest
 
-[embedmd]:# (https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/byoc-pod-delete/engine.yaml yaml)
 ```yaml
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine

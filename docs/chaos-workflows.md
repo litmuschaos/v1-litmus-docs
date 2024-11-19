@@ -31,7 +31,7 @@ namespaces. Ensure that you have the right permission to be able to create the s
 - Create the CRDs, workflow controller deployment with associated RBAC
 
   ```
-  kubectl apply -f https://raw.githubusercontent.com/argoproj/argo/stable/manifests/install.yaml -n argo
+  kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-workflows/master/manifests/quick-start-minimal.yaml -n argo
   ```
 
 - Install the argo CLI on the test harness machine (where the kubeconfig is available)

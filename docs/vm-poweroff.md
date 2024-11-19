@@ -95,18 +95,34 @@ metadata:
     name: vm-poweroff-sa
     app.kubernetes.io/part-of: litmus
 rules:
-- apiGroups: [""]
-  resources: ["pods","events","secrets"]
-  verbs: ["create","list","get","patch","update","delete","deletecollection"]
-- apiGroups: [""]
-  resources: ["pods/exec","pods/log"]
-  verbs: ["create","list","get"]
-- apiGroups: ["batch"]
-  resources: ["jobs"]
-  verbs: ["create","list","get","delete","deletecollection"]
-- apiGroups: ["litmuschaos.io"]
-  resources: ["chaosengines","chaosexperiments","chaosresults"]
-  verbs: ["create","list","get","patch","update"]
+  # Create and monitor the experiment & helper pods
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["create","delete","get","list","patch","update", "deletecollection"]
+  # Performs CRUD operations on the events inside chaosengine and chaosresult
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["create","get","list","patch","update"]
+  # Fetch configmaps & secrets details and mount it to the experiment pod (if specified)
+  - apiGroups: [""]
+    resources: ["secrets","configmaps"]
+    verbs: ["get","list",]
+  # Track and get the runner, experiment, and helper pods log 
+  - apiGroups: [""]
+    resources: ["pods/log"]
+    verbs: ["get","list","watch"]  
+  # for creating and managing to execute comands inside target container
+  - apiGroups: [""]
+    resources: ["pods/exec"]
+    verbs: ["get","list","create"]
+  # for configuring and monitor the experiment job by the chaos-runner pod
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    verbs: ["create","list","get","delete","deletecollection"]
+  # for creation, status polling and deletion of litmus chaos resources used within a chaos workflow
+  - apiGroups: ["litmuschaos.io"]
+    resources: ["chaosengines","chaosexperiments","chaosresults"]
+    verbs: ["create","list","get","patch","update","delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -172,7 +188,7 @@ subjects:
 apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
-  name: nginx-chaos
+  name: vmware-vm-chaos
   namespace: default
 spec:
   # It can be active/stop
@@ -189,8 +205,12 @@ spec:
             - name: TOTAL_CHAOS_DURATION
               value: '30'
 
-            # provide vm moid
-            - name: APP_VM_MOID
+            # set chaos interval (in sec) as desired
+            - name: CHAOS_INTERVAL
+              value: '30'
+
+            # provide VM MOIDs as comma separated values 
+            - name: APP_VM_MOIDS
               value: ''
 ```
 
